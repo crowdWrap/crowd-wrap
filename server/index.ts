@@ -1,11 +1,11 @@
 import express from "express";
+import { router } from "./routes/engineers";
 
 const app = express();
-const engineers = require("./routes/engineers.ts");
 
 const port = 8000;
 
-app.use("/crowdWrap/engineers", engineers);
+app.use("/crowdWrap/engineers", router);
 
 app.get("/crowdWrap", (req, res) => {
   res.send("hey guys");
