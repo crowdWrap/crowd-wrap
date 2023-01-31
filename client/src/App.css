@@ -1,4 +1,4 @@
-.butt {
+.startBtn {
   width: 50px;
   height: 50px;
   background-color: #61dafb;
@@ -8,9 +8,19 @@
   animation: App-logo-spin infinite 20s linear;
 }
 
-.butt:hover {
+.startBtn:hover {
   background-color: #00bdf1;
   border: 5px solid rgb(94, 136, 242);
+}
+
+.startBtnActivated {
+  background-color: rgb(173, 255, 169);
+  border: 5px solid black;
+  opacity: 1;
+}
+
+.startBtnBuffer {
+  opacity: 0.6;
 }
 
 .App {
