@@ -1,3 +1,5 @@
+import Engineer from "./Engineer";
+
 interface engineerPerson {
   allEngineers: string[];
 }
@@ -7,7 +9,7 @@ export default function Engineers(engineers: engineerPerson) {
     <div className="engineer">
       <ul>
         {engineers.allEngineers.map((e) => {
-          return <li key={e}> {e} </li>;
+          return <Engineer e={e} />;
         })}
       </ul>
     </div>
