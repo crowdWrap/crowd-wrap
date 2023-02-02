@@ -1,13 +1,13 @@
-export default function Engineers({
-  engineers,
-}: {
-  engineers: Array<{ engineer: string }>;
-}) {
+interface engineerPerson {
+  allEngineers: string[];
+}
+
+export default function Engineers(engineers: engineerPerson) {
   return (
     <div className="engineer">
       <ul>
-        {engineers.map((e) => {
-          return <li key={e.engineer}> {e.engineer} </li>;
+        {engineers.allEngineers.map((e) => {
+          return <li key={e}> {e} </li>;
         })}
       </ul>
     </div>

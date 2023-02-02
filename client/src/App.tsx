@@ -18,7 +18,7 @@ function changeDisplay(props: string) {
 
 function App() {
   const [counter, setCounter] = useState<number>(0);
-  const [allEngineers, setAllEngineers] = useState([]);
+  const [allEngineers, setAllEngineers] = useState<string[]>([]);
   const [showEngineers, setShowEngineers] = useState<Boolean>(false);
 
   const handleClick = async () => {
@@ -39,7 +39,7 @@ function App() {
     <div className="App">
       <h1>Server Test {counter} </h1>
       <button className="startBtn" onClick={handleClick} />
-      {showEngineers && <Engineers engineers={allEngineers} />}
+      {showEngineers && <Engineers allEngineers={allEngineers} />}
     </div>
   );
 }
