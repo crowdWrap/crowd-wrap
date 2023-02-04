@@ -4,9 +4,9 @@
   "description": "Backend for crowdwrap",
   "main": "index.js",
   "scripts": {
-    "start":"concurrently 'npm run tsc_watch' 'npm run disc_src'",
-    "tsc_watch": "tsc -w",
-    "disc_src": "nodemon ./dist/index.js",
+    "start":"concurrently 'npm run tsc:watch' 'npm run disc:src'",
+    "tsc:watch": "tsc -w",
+    "disc:src": "nodemon ./dist/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
