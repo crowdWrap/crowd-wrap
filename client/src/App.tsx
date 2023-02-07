@@ -1,28 +1,22 @@
 import "./App.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Engineers from "./components/Engineers";
-
-function changeDisplay(props: string) {
-  (document.querySelector(props) as HTMLElement).classList.add(
-    "startBtnActivated"
-  );
-  (document.querySelector(props) as HTMLElement).classList.toggle(
-    "startBtnBuffer"
-  );
-  setTimeout(() => {
-    (document.querySelector(props) as HTMLElement).classList.toggle(
-      "startBtnBuffer"
-    );
-  }, 250);
-}
 
 function App() {
   const [counter, setCounter] = useState<number>(0);
   const [allEngineers, setAllEngineers] = useState<string[]>([]);
   const [showEngineers, setShowEngineers] = useState<Boolean>(false);
+  const [className, setClassName] = useState<string>("");
+
+  useEffect(() => {
+    setClassName("startBtn startBtnActivated startBtnBuffer");
+    setTimeout(() => {
+      setClassName("startBtn startBtnActivated ");
+      setShowEngineers(false);
+    }, 250);
+  }, [showEngineers]);
 
   const handleClick = async () => {
-    changeDisplay(".startBtn");
     setCounter(counter + 1);
     setShowEngineers(true);
 
@@ -38,7 +32,7 @@ function App() {
   return (
     <div className="App">
       <h1>Server Test {counter} </h1>
-      <button className="startBtn" onClick={handleClick} />
+      <button className={className} onClick={handleClick} />
       {showEngineers && <Engineers allEngineers={allEngineers} />}
     </div>
   );

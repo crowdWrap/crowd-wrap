@@ -9,7 +9,7 @@ export default function Engineers(engineers: EngineerPerson) {
     <div className="engineer">
       <ul>
         {engineers.allEngineers.map((engineer) => (
-          <Engineer person={engineer} />
+          <Engineer key={engineer} name={engineer} />
         ))}
       </ul>
     </div>
