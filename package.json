@@ -21,6 +21,7 @@
   "homepage": "https://github.com/crowdWrap/crowd-wrap#readme",
   "devDependencies": {
     "concurrently": "^7.6.0",
+    "dotenv": "^16.0.3",
     "nodemon": "^2.0.20"
   }
 }
