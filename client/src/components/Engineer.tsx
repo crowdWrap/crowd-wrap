@@ -1,3 +1,3 @@
-export default function Engineer(props: { person: string }) {
-  return <li key={props.person}> {props.person} </li>;
+export default function Engineer(props: { name: string }) {
+  return <li key={props.name}> {props.name} </li>;
 }
