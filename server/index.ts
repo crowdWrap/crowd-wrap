@@ -1,4 +1,5 @@
 import express from "express";
+import session from "express-session";
 import { router } from "./routes/engineers";
 
 const app = express();
@@ -12,3 +13,9 @@ app.get("/crowdWrap", (req, res) => {
 });
 
 app.listen(port);
+
+//Sessions
+
+app.use(session);
+
+app.get("/", (req, res) => {});

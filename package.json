@@ -20,7 +20,11 @@
   },
   "homepage": "https://github.com/crowdWrap/crowd-wrap#readme",
   "devDependencies": {
+    "@types/express-session": "^1.17.6",
     "concurrently": "^7.6.0",
     "nodemon": "^2.0.20"
+  },
+  "dependencies": {
+    "express-session": "^1.17.3"
   }
 }
