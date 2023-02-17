@@ -1,6 +1,9 @@
 import "./App.css";
 import { useEffect, useState } from "react";
 import Engineers from "./components/Engineers";
+import LogoutButton from "./components/logout";
+import LoginButton from "./components/login";
+import SignupButton from "./components/signup";
 
 function App() {
   const [counter, setCounter] = useState<number>(0);
@@ -31,9 +34,12 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Server Test {counter} </h1>
+      <h1 className="title">Server Test {counter} </h1>
+      <LogoutButton />
       <button className={className} onClick={handleClick} />
       {showEngineers && <Engineers allEngineers={allEngineers} />}
+      <LoginButton />
+      <SignupButton />
     </div>
   );
 }

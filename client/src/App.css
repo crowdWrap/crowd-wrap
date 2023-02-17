@@ -1,4 +1,13 @@
+.title {
+  grid-column-start: 2;
+  grid-row-start: 2;
+
+  justify-self: center;
+}
+
 .startBtn {
+  grid-column-start: 2;
+  grid-row-start: 2;
   width: 50px;
   height: 50px;
   background-color: #61dafb;
@@ -6,6 +15,9 @@
   border: 5px solid rgb(144, 210, 245);
   transition: 0.25s ease-in-out;
   animation: App-logo-spin infinite 20s linear;
+
+  align-self: center;
+  justify-self: center;
 }
 
 .startBtn:hover {
@@ -24,15 +36,127 @@
 }
 
 .App {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  display: grid;
+  grid-template-rows: 0.1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
+  /* flex-direction: column; */
 }
 
 .engineer {
   margin-top: 50px;
+  grid-row: 2;
+  align-self: flex-end;
+  grid-column: 2;
 }
 
+/* Logout button - start */
+
+.logoutBtn {
+  border: 1px solid rgb(0, 0, 0);
+  width: 50px;
+  height: 50px;
+  border-radius: 25px;
+  background-image: url("https://cdn.discordapp.com/attachments/463174949310562304/1075952796660146196/IMG_3462.png");
+  background-size: cover;
+  transition: 0.25s ease-in-out;
+}
+
+.logoutBtnClicked {
+  width: 50px;
+  height: 50px;
+  border-radius: 25px;
+  background-image: url("https://cdn.discordapp.com/attachments/463174949310562304/1075952796660146196/IMG_3462.png");
+  background-size: cover;
+  background-color: none;
+  transition: 0.25s ease-in-out;
+  border: 1px solid #00bdf1;
+}
+
+.logoutBtn:hover,
+.logoutBtnClicked:hover {
+  opacity: 0.8;
+}
+
+.logoutPop {
+  position: absolute;
+  border: 2px solid rgb(0, 0, 0);
+  background-color: #5199ad;
+  border-radius: 25px;
+  margin-left: -70px;
+  margin-top: 10px;
+}
+
+.logoutPop ul {
+  height: 100%;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr;
+  justify-items: left;
+  align-items: center;
+  user-select: none;
+  transition: 0.25s ease-in-out;
+  color: white;
+}
+
+.logoutPop ul li {
+  transition: 0.25s ease-in-out;
+  border-radius: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  gap: 5px;
+  padding: 12px;
+
+  width: 80%;
+}
+
+.logoutPop li:hover {
+  background-color: rgba(8, 8, 8, 0.61);
+}
+
+.logoutPop ul li svg {
+  height: 15px;
+  fill: white;
+  width: 15px;
+}
+
+.logoutBtnCover {
+  grid-column-start: 3;
+
+  justify-self: end;
+  align-self: center;
+  margin-right: 10px;
+  margin-top: 10px;
+}
+
+/* Logout button - end */
+
+/* Login button - start */
+
+.loginBtn {
+  width: 50px;
+  height: 50px;
+  grid-row-start: 3;
+  grid-column-start: 2;
+}
+
+/* Login button - end */
+
+/* signUp button - start */
+
+.signupBtn {
+  width: 50px;
+  height: 50px;
+  grid-row-start: 3;
+  grid-column-start: 2;
+  justify-self: right;
+}
+
+/* signUp button - end */
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
