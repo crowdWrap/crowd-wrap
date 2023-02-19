@@ -21,10 +21,14 @@
   "homepage": "https://github.com/crowdWrap/crowd-wrap#readme",
   "devDependencies": {
     "@types/express-session": "^1.17.6",
+    "@types/passport": "^1.0.12",
+    "@types/passport-local": "^1.0.35",
     "concurrently": "^7.6.0",
     "nodemon": "^2.0.20"
   },
   "dependencies": {
-    "express-session": "^1.17.3"
+    "express-session": "^1.17.3",
+    "passport": "^0.6.0",
+    "passport-local": "^1.0.0"
   }
 }
