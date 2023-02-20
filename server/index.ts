@@ -1,9 +1,13 @@
 import express from "express";
 import { router } from "./routes/engineers";
 
+import dotenv from "dotenv";
+
+dotenv.config();
+
 const app = express();
 
-const port = 8000;
+const port = process.env.PORT;
 
 app.use("/crowdWrap/engineers", router);
 
