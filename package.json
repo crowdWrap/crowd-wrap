@@ -24,6 +24,7 @@
     "@types/passport": "^1.0.12",
     "@types/passport-local": "^1.0.35",
     "concurrently": "^7.6.0",
+    "dotenv": "^16.0.3",
     "nodemon": "^2.0.20"
   },
   "dependencies": {
