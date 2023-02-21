@@ -1,13 +1,13 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
-
+//postgresql://postgres:crowdwrap5!@database-test-init.cslvgaes6juz.us-west-2.rds.amazonaws.com:5432/database-test-init
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
-  url      = "postgresql://postgres:crowdwrap5!@database-test-init.cslvgaes6juz.us-west-2.rds.amazonaws.com:5432/database-test-init"
+  url      = ""
 }
 
 model User {

@@ -1,7 +1,7 @@
 .startBtn {
   width: 50px;
   height: 50px;
-  background-color: #61dafb;
+  background-color: #61dafb; /*Could be excluded*/
   border-radius: 15px;
   border: 5px solid rgb(144, 210, 245);
   transition: 0.25s ease-in-out;
