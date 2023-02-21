@@ -3,11 +3,11 @@ import { router } from "./routes/engineers";
 
 import dotenv from "dotenv";
 
-dotenv.config();
+dotenv.config({ path: "../.env" });
 
 const app = express();
 
-const port = env("PORT");
+const port = process.env.PORT;
 
 app.use("/crowdWrap/engineers", router);
 
@@ -16,7 +16,3 @@ app.get("/crowdWrap", (req, res) => {
 });
 
 app.listen(port);
-
-function env(arg0: string) {
-  throw new Error("problem with port global env variable");
-}
