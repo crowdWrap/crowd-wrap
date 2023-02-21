@@ -20,17 +20,8 @@
   },
   "homepage": "https://github.com/crowdWrap/crowd-wrap#readme",
   "devDependencies": {
-    "@types/express-session": "^1.17.6",
-    "@types/passport": "^1.0.12",
-    "@types/passport-local": "^1.0.35",
     "concurrently": "^7.6.0",
     "dotenv": "^16.0.3",
     "nodemon": "^2.0.20"
-  },
-  "dependencies": {
-    "@quixo3/prisma-session-store": "^3.1.10",
-    "express-session": "^1.17.3",
-    "passport": "^0.6.0",
-    "passport-local": "^1.0.0"
   }
 }
