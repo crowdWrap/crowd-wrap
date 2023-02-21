@@ -61,6 +61,7 @@
   background-image: url("https://cdn.discordapp.com/attachments/463174949310562304/1075952796660146196/IMG_3462.png");
   background-size: cover;
   transition: 0.25s ease-in-out;
+  cursor: pointer;
 }
 
 .logoutBtnClicked {
@@ -72,6 +73,7 @@
   background-color: none;
   transition: 0.25s ease-in-out;
   border: 1px solid #00bdf1;
+  cursor: pointer;
 }
 
 .logoutBtn:hover,
@@ -81,8 +83,8 @@
 
 .logoutPop {
   position: absolute;
-  border: 2px solid rgb(0, 0, 0);
-  background-color: #5199ad;
+  border: 2px solid black;
+  background-color: rgb(36, 140, 204);
   border-radius: 25px;
   margin-left: -70px;
   margin-top: 10px;
@@ -110,12 +112,13 @@
   justify-content: left;
   gap: 5px;
   padding: 12px;
+  cursor: pointer;
 
   width: 80%;
 }
 
 .logoutPop li:hover {
-  background-color: rgba(8, 8, 8, 0.61);
+  background-color: rgba(233, 246, 253, 0.37);
 }
 
 .logoutPop ul li svg {
