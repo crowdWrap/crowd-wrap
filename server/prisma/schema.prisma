@@ -7,7 +7,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = ""
+  url      = "postgresql://garv:123@localhost:5432/var/run/postgresql"
 }
 
 model User {
@@ -24,4 +24,11 @@ model Post {
   published Boolean @default(false)
   author    User    @relation(fields: [authorId], references: [id])
   authorId  Int
+}
+
+model Session {
+  id        String   @id
+  sid       String   @unique
+  data      String
+  expiresAt   DateTime
 }
