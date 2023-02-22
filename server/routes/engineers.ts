@@ -14,5 +14,7 @@ readFile("../engineers.txt", "utf8", async (err, data) => {
 });
 
 router.get("/", (req, res) => {
+  res.set('Content-Type', 'application/json');
+  console.log("ROUTER")
   res.json(engineersArray);
 });
