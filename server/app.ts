@@ -6,54 +6,57 @@ import expressSession from "express-session";
 import { Prisma, PrismaClient, User } from "@prisma/client";
 import { PrismaSessionStore } from "@quixo3/prisma-session-store";
 import bcrypt from "bcryptjs";
+import dotenv from "dotenv";
 
-const app = express();
-const prisma = new PrismaClient();
 
-async function getUserByEmail(email: string): Promise<User | null> {
-  const user = await prisma.user.findUnique({ where: { email } });
-  return user;
-}
+// const app = express();
+// const prisma = new PrismaClient();
 
-app.use(
-  expressSession({
-    cookie: {
-      maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
-    },
-    secret: env("SECRET"),
-    resave: true,
-    saveUninitialized: true,
-    store: new PrismaSessionStore(new PrismaClient(), {
-      checkPeriod: 2 * 60 * 1000, //ms
-      dbRecordIdIsSessionId: true,
-      dbRecordIdFunction: undefined,
-    }),
-  })
-);
+// async function getUserByEmail(email: string): Promise<User | null> {
+//   const user = await prisma.user.findUnique({ where: { email } });
+//   return user;
+// }
+// dotenv.config({ path: "../.env" });
 
-app.use(passport.initialize());
-app.use(passport.session());
-app.use(express.urlencoded({ extended: false }));
+// app.use(
+//   expressSession({
+//     cookie: {
+//       maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
+//     },
+//     secret: env("SECRET"),
+//     resave: true,
+//     saveUninitialized: true,
+//     store: new PrismaSessionStore(new PrismaClient(), {
+//       checkPeriod: 2 * 60 * 1000, //ms
+//       dbRecordIdIsSessionId: true,
+//       dbRecordIdFunction: undefined,
+//     }),
+//   })
+// );
+
+// app.use(passport.initialize());
+// app.use(passport.session());
+// app.use(express.urlencoded({ extended: false }));
 
 //Authentication
 
-passport.use(
-  new LocalStrategy(async (email: string, password, done) => {
-    try {
-      const user = await prisma.user.findUnique({ where: { email } });
-      if (!user) {
-        return done(null, false, { message: "Invalid email" });
-      }
-      const passwordMatch = await bcrypt.compare(password, user.password);
-      if (!passwordMatch) {
-        return done(null, false, { message: "Invalid password" });
-      }
-      return done(null, user);
-    } catch (err) {
-      return done(err);
-    }
-  })
-);
+// passport.use(
+//   new LocalStrategy(async (email: string, password, done) => {
+//     try {
+//       const user = await prisma.user.findUnique({ where: { email } });
+//       if (!user) {
+//         return done(null, false, { message: "Invalid email" });
+//       }
+//       const passwordMatch = await bcrypt.compare(password, user.password);
+//       if (!passwordMatch) {
+//         return done(null, false, { message: "Invalid password" });
+//       }
+//       return done(null, user);
+//     } catch (err) {
+//       return done(err);
+//     }
+//   })
+// );
 
 // passport.serializeUser((user, done) => {
 //   done(null, user.id);
@@ -80,12 +83,12 @@ passport.use(
 //   })
 // );
 
-app.get("/", (req, res) => {
-  console.log(req.session);
-  console.log(req.session.id);
-  res.send("Hi");
-});
+// app.get("/", (req, res) => {
+//   console.log(req.session);
+//   console.log(req.session.id);
+//   res.send("Hi");
+// });
 
-function env(arg0: string): string | string[] {
-  throw new Error("problem with secret env variable.");
-}
+// function env(arg0: string): string | string[] {
+//   throw new Error("problem with secret env variable.");
+// }

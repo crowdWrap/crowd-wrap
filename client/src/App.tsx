@@ -25,7 +25,10 @@ function App() {
       const json = await response.json();
       setAllEngineers(json);
     } catch (error) {
-      console.log(error);
+      const response = await fetch("/crowdWrap/engineers");
+      const json = await response.json();
+      console.log(json)
+      console.log(response, error);
     }
   };
 

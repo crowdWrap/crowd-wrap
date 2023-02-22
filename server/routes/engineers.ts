@@ -9,8 +9,8 @@ readFile("../engineers.txt", "utf8", async (err, data) => {
   }
 
   const response = await data;
-  const editedReponse = response.split("\n");
-  engineersArray = editedReponse.splice(0, editedReponse.length - 1);
+  const editedResponse = response.split("\n");
+  engineersArray = editedResponse.splice(0, editedResponse.length - 1);
 });
 
 router.get("/", (req, res) => {
