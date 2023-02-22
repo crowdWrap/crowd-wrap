@@ -3,7 +3,7 @@ import express from "express";
 import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import expressSession from "express-session";
-import { Prisma, PrismaClient } from "@prisma/client";
+import { Prisma, PrismaClient, User } from "@prisma/client";
 import { PrismaSessionStore } from "@quixo3/prisma-session-store";
 import bcrypt from "bcryptjs";
 
