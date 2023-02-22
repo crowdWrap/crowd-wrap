@@ -1,7 +1,9 @@
 import express from "express";
+import morgan from 'morgan';
 import { router } from "./routes/engineers";
 
 const app = express();
+app.use(morgan('combined'));
 
 const port = 8000;
 

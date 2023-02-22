@@ -20,7 +20,12 @@
   },
   "homepage": "https://github.com/crowdWrap/crowd-wrap#readme",
   "devDependencies": {
+    "@types/morgan": "^1.9.4",
     "concurrently": "^7.6.0",
-    "nodemon": "^2.0.20"
+    "nodemon": "^2.0.20",
+    "prisma": "^4.10.1"
+  },
+  "dependencies": {
+    "morgan": "^1.10.0"
   }
 }
