@@ -1,5 +1,5 @@
 import React from "react"; 
-import '../form.css';
+import '../assets/form.css';
 import { useState } from "react";
 import {Link, Router} from 'react-router-dom'
 
