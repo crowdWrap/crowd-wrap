@@ -151,9 +151,9 @@
 .signupBtn {
   width: 50px;
   height: 50px;
+  margin-top: 60px;
   grid-row-start: 3;
   grid-column-start: 2;
-  justify-self: right;
 }
 
 /* signUp button - end */

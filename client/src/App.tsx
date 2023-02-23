@@ -2,8 +2,8 @@ import "./App.css";
 import { useEffect, useState } from "react";
 import Engineers from "./components/Engineers";
 import LogoutButton from "./components/logout";
-import LoginButton from "./components/login";
 import {SignupForm} from "./components/signupForm";
+import {LoginForm} from "./components/loginForm";
 
 function App() {
   const [counter, setCounter] = useState<number>(0);
@@ -19,7 +19,7 @@ function App() {
   }
 
   const openLoginPage = () => {
-    
+    setIsLoginOpen(true)
   }
 
   useEffect(() => {
@@ -49,11 +49,17 @@ function App() {
       <LogoutButton />
       <button className={className} onClick={handleClick} />
       {showEngineers && <Engineers allEngineers={allEngineers} />}
-      <LoginButton />
+      
       <button onClick={openRegisterPage} className="signupBtn">SignUp</button>;
       {isRegOpen && <SignupForm/>}
+
+      <button onClick={openLoginPage} className="loginBtn">Login</button>;
+      {isLoginOpen && <LoginForm/>}
     </div>
   );
 }
 
 export default App;
+
+
+//React-router-dom, create new page so it links to it.
