@@ -10,7 +10,8 @@ export default function SignupForm(){
   const [registerPass, setRegisterPassword] = useState<string>("")
   const [registerConfirmPass, setRegisterConfirmPassword] = useState<string>("")
   
-  const handleSubmit = () => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+   event.preventDefault();
     if (registerPass != registerConfirmPass) {
         console.log("Passwords do not match.");
     }
@@ -20,15 +21,19 @@ export default function SignupForm(){
             email: registerEmail,
             password: registerPass
           });
-
+          console.log(data);
+          
         fetch('/register', {
+        
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: data
         })
-        .then(response => response.json())
+        .then(response => {
+            console.log(response);
+            response.json()})
         .then(data => console.log(data))
         .catch(error => console.error(error));
     }
@@ -58,7 +63,7 @@ export default function SignupForm(){
                      <input type='confirm password' name='confirm password' placeholder="Confirm Password" onChange={e => setRegisterConfirmPassword(e.target.value)}/>
                   </div>
                   <div className='submit'>
-                     <button onClick={handleSubmit}>Sign Up</button>
+                     <button type='submit'>Sign Up</button>
                   </div>
              </form>
          </div>

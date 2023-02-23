@@ -6,14 +6,14 @@ import cookieParser from 'cookie-parser';
 import bcryptjs from 'bcryptjs';
 import session from 'express-session';
 import dotenv from "dotenv";
+import { app } from './';
 
+  
 dotenv.config();
 const secretVal = process.env.SECRET || "N/A";
 if (secretVal !== undefined) {
   console.log(secretVal);
 }
-
-const app = express();
 
 // Middleware 
 app.use(passport.initialize());
@@ -33,12 +33,5 @@ app.use(cookieParser(secretVal));
 
 // Routes
 
-app.post("/login", (req, res) => {
-    console.log(req.body);
-})
 
-app.post("/register", (req, res) => {
-    console.log(req.body);
-})
 
-app.post("/profile", (req, res) => {})

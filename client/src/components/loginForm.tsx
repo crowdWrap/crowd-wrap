@@ -9,7 +9,9 @@ export default function LoginForm(){
   const [loginEmail, setLoginEmail] = useState<string>("")
   const [loginPass, setLoginPassword] = useState<string>("")
 
-  const handleSubmit = () => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+   event.preventDefault();
+
       const data = JSON.stringify({
          username: loginUsername,
          email: loginEmail,
@@ -45,7 +47,7 @@ export default function LoginForm(){
                      <input type='password' name='password' onChange= {e => setLoginPassword(e.target.value)}/>
                   </div>
                   <div className='submit'>
-                  <button onClick={handleSubmit}>Login</button>
+                  <button type='submit' >Login</button>
                   </div>
              </form>
          </div>
