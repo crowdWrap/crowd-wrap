@@ -22,6 +22,10 @@ export class SignupForm extends React.Component{
                      <label htmlFor="password">Password</label>
                      <input type='password' name='password' onChange={this.handleChange}/>
                   </div>
+                  <div className='confirm password'>
+                     <label htmlFor="confirm password"> Confirm Password</label>
+                     <input type='confirm password' name='confirm password' onChange={this.handleChange}/>
+                  </div>
                   <div className='submit'>
                      <button>Sign Up</button>
                   </div>

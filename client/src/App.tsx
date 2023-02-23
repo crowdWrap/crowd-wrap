@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import Engineers from "./components/Engineers";
 import LogoutButton from "./components/logout";
 import LoginButton from "./components/login";
-import SignupButton from "./components/signup";
+import {SignupForm} from "./components/signupForm";
 
 function App() {
   const [counter, setCounter] = useState<number>(0);
@@ -11,11 +11,15 @@ function App() {
   const [showEngineers, setShowEngineers] = useState<Boolean>(false);
   const [className, setClassName] = useState<string>("");
 
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-  const []
+  const [isRegOpen, setIsRegOpen] = useState<boolean>(false);
+  const [isLoginOpen, setIsLoginOpen] = useState<boolean>(false);
 
-  const openRegisterPage() => {
-    setIsOpen(true)
+  const openRegisterPage = () => {
+    setIsRegOpen(true)
+  }
+
+  const openLoginPage = () => {
+    
   }
 
   useEffect(() => {
@@ -37,7 +41,7 @@ function App() {
     } catch (error) {
       console.log(error);
     }
-  };
+  };  
 
   return (
     <div className="App">
@@ -46,7 +50,8 @@ function App() {
       <button className={className} onClick={handleClick} />
       {showEngineers && <Engineers allEngineers={allEngineers} />}
       <LoginButton />
-      <SignupButton />
+      <button onClick={openRegisterPage} className="signupBtn">SignUp</button>;
+      {isRegOpen && <SignupForm/>}
     </div>
   );
 }
