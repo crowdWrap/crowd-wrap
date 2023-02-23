@@ -2,8 +2,8 @@ import "./App.css";
 import { useEffect, useState } from "react";
 import Engineers from "./components/Engineers";
 import LogoutButton from "./components/logout";
-import {SignupForm} from "./components/signupForm";
-import {LoginForm} from "./components/loginForm";
+import SignupForm from "./components/signupForm";
+import LoginForm from "./components/loginForm";
 
 function App() {
   const [counter, setCounter] = useState<number>(0);
