@@ -11,12 +11,12 @@ export default function LoginForm(){
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
    event.preventDefault();
-
       const data = JSON.stringify({
          username: loginUsername,
          email: loginEmail,
          password: loginPass
       });
+     
 
       fetch('/login', {
       method: 'POST',
@@ -25,8 +25,11 @@ export default function LoginForm(){
       },
       body: data
       })
-      .then(response => response.json())
-      .then(data => console.log(data))
+      .then(response => {
+         console.log(response);
+         response.json();
+         console.log(data);
+      })
       .catch(error => console.error(error));
    };    
         return (

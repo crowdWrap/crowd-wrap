@@ -10,10 +10,12 @@ import { app } from './';
 
   
 dotenv.config();
+
 const secretVal = process.env.SECRET || "N/A";
 if (secretVal !== undefined) {
   console.log(secretVal);
 }
+
 
 // Middleware 
 app.use(passport.initialize());
@@ -32,6 +34,4 @@ app.use(session({
 app.use(cookieParser(secretVal));
 
 // Routes
-
-
 

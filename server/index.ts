@@ -21,7 +21,8 @@ app.post("/register", (req, res) => {
 })
 
 app.post("/login", (req, res) => {
-  console.log(req.body);
+  console.log(req.body, "BACKEND");
+  res.status(200).json({ message: "login successful" });
 })
 
 app.post("/profile", (req, res) => {})

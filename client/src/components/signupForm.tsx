@@ -12,7 +12,7 @@ export default function SignupForm(){
   
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
    event.preventDefault();
-    if (registerPass != registerConfirmPass) {
+    if (registerPass !== registerConfirmPass) {
         console.log("Passwords do not match.");
     }
     else {
@@ -32,10 +32,11 @@ export default function SignupForm(){
         body: data
         })
         .then(response => {
-            console.log(response);
-            response.json()})
-        .then(data => console.log(data))
-        .catch(error => console.error(error));
+         console.log(response);
+         response.json();
+         console.log(data);
+      })
+      .catch(error => console.error(error));
     }
     };
 
