@@ -2,9 +2,14 @@ p, div {
     font-family: Neue Montreal;
   }
 
+  body{
+    margin:0;
+    padding:0;
+  }
+
   .wrapper {
-    height: 97vh;
-    width: 100%;
+    height: 100vh;
+    width: 100vw;
     display: flex;
     flex-direction: column;
     justify-content: center;

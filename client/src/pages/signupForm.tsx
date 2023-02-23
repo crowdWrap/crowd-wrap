@@ -1,7 +1,7 @@
 import React from "react"; 
-import '../signupForm.css';
+import '../form.css';
 import { useState } from "react";
-
+import {Link, Router} from 'react-router-dom'
 
 export default function SignupForm(){
 
@@ -47,9 +47,9 @@ export default function SignupForm(){
             <div className='form-wrapper'>
                <h2>Sign Up</h2>
                <form onSubmit={handleSubmit} noValidate >
-                  <div className='fullName'>
-                     <label htmlFor="fullName">Full Name</label>
-                     <input type='text' name='fullName' placeholder="Full Name" onChange= {e => setRegisterUsername(e.target.value)}/>
+                  <div className='username'>
+                     <label htmlFor="username">Username</label>
+                     <input type='text' name='username' placeholder="Username" onChange= {e => setRegisterUsername(e.target.value)}/>
                   </div>
                   <div className='email'>
                      <label htmlFor="email">Email</label>
@@ -66,7 +66,14 @@ export default function SignupForm(){
                   <div className='submit'>
                      <button type='submit'>Sign Up</button>
                   </div>
+
              </form>
+             
+         </div>
+
+         <div className="btnWrap">
+         <Link to="/login"><button className="signupBtn"> Already Have an Account?</button></Link>
+         <Link to="/"><button className="signupBtn"> Home</button></Link>  
          </div>
       </div>
      );   

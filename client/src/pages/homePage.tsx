@@ -59,9 +59,8 @@ export default function HomePage() {
       {isLoginOpen && <LoginForm/>} */}
       
       <div className="btnWrap">
-      <Link to="/register" className="signupBtn"><button className="signupBtn"> Sign up</button></Link>
-      <Link to="/login" className="loginBtn"><button className="loginBtn"> Login</button></Link> 
-     
+      <Link to="/register"><button className="signupBtn"> Sign up</button></Link>
+      <Link to="/login"><button className="loginBtn"> Login</button></Link> 
       </div>
     </div>
    

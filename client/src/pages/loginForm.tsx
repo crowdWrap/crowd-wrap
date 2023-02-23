@@ -1,6 +1,7 @@
 import React from "react"; 
-import '../signupForm.css';
+import '../form.css';
 import { useState } from "react";
+import {Link, Router} from 'react-router-dom'
 
 export default function LoginForm(){
 
@@ -37,23 +38,30 @@ export default function LoginForm(){
             <div className='form-wrapper'>
                <h2>Log In</h2>
                <form onSubmit={handleSubmit} noValidate >
-                  <div className='fullName'>
-                     <label htmlFor="fullName">Full Name</label>
-                     <input type='text' name='fullName' onChange= {e => setLoginUsername(e.target.value)}/>
+                  <div className='username'>
+                     <label htmlFor="username">Username</label>
+                     <input type='text' name='username' placeholder="Username" onChange= {e => setLoginUsername(e.target.value)}/>
                   </div>
                   <div className='email'>
                      <label htmlFor="email">Email</label>
-                     <input type='email' name='email' onChange={e => setLoginEmail(e.target.value)}/>
+                     <input type='email' name='email' placeholder="Email" onChange={e => setLoginEmail(e.target.value)}/>
                   </div>
                   <div className='password'>
                      <label htmlFor="password">Password</label>
-                     <input type='password' name='password' onChange= {e => setLoginPassword(e.target.value)}/>
+                     <input type='password' name='password' placeholder="Password" onChange= {e => setLoginPassword(e.target.value)}/>
                   </div>
                   <div className='submit'>
                   <button type='submit' >Login</button>
                   </div>
+
              </form>
+
+             
          </div>
+         <div className="btnWrap">
+      <Link to="/register"><button className="signupBtn"> Don't Have an Account?</button></Link>
+      <Link to="/"><button className="loginBtn"> Home</button></Link> 
+      </div>
       </div>
      );
 }
