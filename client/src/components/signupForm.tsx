@@ -12,15 +12,21 @@ export default function SignupForm(){
   
   const handleSubmit = () => {
     if (registerPass != registerConfirmPass) {
-        console.log("Passwords must match");
+        console.log("Passwords do not match.");
     }
     else {
+        const data = JSON.stringify({
+            username: registerUsername,
+            email: registerEmail,
+            password: registerPass
+          });
+
         fetch('/register', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ data: () })
+        body: data
         })
         .then(response => response.json())
         .then(data => console.log(data))

@@ -9,8 +9,24 @@ export default function LoginForm(){
   const [loginEmail, setLoginEmail] = useState<string>("")
   const [loginPass, setLoginPassword] = useState<string>("")
 
-    const handleSubmit = (event : any) => {}
-    
+  const handleSubmit = () => {
+      const data = JSON.stringify({
+         username: loginUsername,
+         email: loginEmail,
+         password: loginPass
+      });
+
+      fetch('/login', {
+      method: 'POST',
+      headers: {
+         'Content-Type': 'application/json'
+      },
+      body: data
+      })
+      .then(response => response.json())
+      .then(data => console.log(data))
+      .catch(error => console.error(error));
+   };    
         return (
           <div className='wrapper loginForm'>
             <div className='form-wrapper'>
@@ -29,7 +45,7 @@ export default function LoginForm(){
                      <input type='password' name='password' onChange= {e => setLoginPassword(e.target.value)}/>
                   </div>
                   <div className='submit'>
-                     <button>Sign Up</button>
+                  <button onClick={handleSubmit}>Login</button>
                   </div>
              </form>
          </div>
