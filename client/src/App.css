@@ -41,7 +41,7 @@
   display: grid;
   grid-template-rows: 0.1fr 1fr 1fr;
   grid-template-columns: 1fr 1fr 1fr;
-  /* flex-direction: column; */
+  flex-direction: column; 
 }
 
 .engineer {
@@ -138,22 +138,23 @@
 /* Login button - start */
 
 .loginBtn {
-  width: 50px;
+  width: 200px;
   height: 50px;
-  grid-row-start: 3;
-  grid-column-start: 2;
 }
 
 /* Login button - end */
 
+.btnWrap{
+  grid-row-start: 3;
+  grid-column-start: 2;
+}
+
 /* signUp button - start */
 
 .signupBtn {
-  width: 50px;
+  width: 200px;
   height: 50px;
-  margin-top: 60px;
-  grid-row-start: 3;
-  grid-column-start: 2;
+
 }
 
 /* signUp button - end */

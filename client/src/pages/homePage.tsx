@@ -58,9 +58,11 @@ export default function HomePage() {
       <button onClick={openLoginPage} className="loginBtn">Login</button>;
       {isLoginOpen && <LoginForm/>} */}
       
+      <div className="btnWrap">
       <Link to="/register" className="signupBtn"><button className="signupBtn"> Sign up</button></Link>
       <Link to="/login" className="loginBtn"><button className="loginBtn"> Login</button></Link> 
      
+      </div>
     </div>
    
   );
