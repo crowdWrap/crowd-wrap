@@ -11,6 +11,13 @@ function App() {
   const [showEngineers, setShowEngineers] = useState<Boolean>(false);
   const [className, setClassName] = useState<string>("");
 
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const []
+
+  const openRegisterPage() => {
+    setIsOpen(true)
+  }
+
   useEffect(() => {
     setClassName("startBtn startBtnActivated startBtnBuffer");
     setTimeout(() => {
