@@ -7,17 +7,16 @@ export default function LoginForm(){
 
 
   const [loginUsername, setLoginUsername] = useState<string>("")
-  const [loginEmail, setLoginEmail] = useState<string>("")
+//   const [loginEmail, setLoginEmail] = useState<string>("")
   const [loginPass, setLoginPassword] = useState<string>("")
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
    event.preventDefault();
       const data = JSON.stringify({
          username: loginUsername,
-         email: loginEmail,
+         // email: loginEmail,
          password: loginPass
       });
-     
 
       fetch('/login', {
       method: 'POST',
@@ -27,9 +26,10 @@ export default function LoginForm(){
       body: data
       })
       .then(response => {
-         console.log(response);
+         console.log("Response Frontend:", response);
          response.json();
-         console.log(data);
+         console.log("Data Frontend:", data);
+         console.log(loginUsername)
       })
       .catch(error => console.error(error));
    };    
@@ -42,10 +42,10 @@ export default function LoginForm(){
                      <label htmlFor="username">Username</label>
                      <input type='text' name='username' placeholder="Username" onChange= {e => setLoginUsername(e.target.value)}/>
                   </div>
-                  <div className='email'>
+                  {/* <div className='email'>
                      <label htmlFor="email">Email</label>
                      <input type='email' name='email' placeholder="Email" onChange={e => setLoginEmail(e.target.value)}/>
-                  </div>
+                  </div> */}
                   <div className='password'>
                      <label htmlFor="password">Password</label>
                      <input type='password' name='password' placeholder="Password" onChange= {e => setLoginPassword(e.target.value)}/>

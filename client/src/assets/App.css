@@ -15,7 +15,7 @@
   border: 5px solid rgb(144, 210, 245);
   transition: 0.25s ease-in-out;
   animation: App-logo-spin infinite 20s linear;
-
+  min-width: 50px;
   align-self: center;
   justify-self: center;
 }
