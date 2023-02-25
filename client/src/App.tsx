@@ -1,6 +1,7 @@
-import {createBrowserRouter, createRoutesFromElements, NavLink, Link, Route, RouterProvider} from 'react-router-dom'
+import {createBrowserRouter, createRoutesFromElements, Route, RouterProvider} from 'react-router-dom'
 
 //layout
+
 import RootLayout from './layouts/rootLayout'
 
 //pages
@@ -8,6 +9,7 @@ import RootLayout from './layouts/rootLayout'
 import HomePage from './pages/homePage'
 import LoginForm from './pages/loginForm'
 import SignupForm from './pages/signupForm'
+import LoggedIn from './pages/loggedIn'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -15,6 +17,8 @@ const router = createBrowserRouter(
       <Route index element={<HomePage/>}></Route>
       <Route path='/register'element={<SignupForm/>}></Route>
       <Route path='/login'element={<LoginForm/>}></Route>
+      <Route path='/profile' element={<LoggedIn/>}></Route>
+      <Route path='/logout' element={<RootLayout/>}></Route>
     </Route>
   )
 )

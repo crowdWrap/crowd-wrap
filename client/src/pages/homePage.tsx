@@ -48,7 +48,7 @@ export default function HomePage() {
    
     <div className="App">
       <h1 className="title">Server Test {counter} </h1>
-      <LogoutButton />
+      {/* <LogoutButton /> */}
       <button className={className} onClick={handleClick} />
       {showEngineers && <Engineers allEngineers={allEngineers} />}
       

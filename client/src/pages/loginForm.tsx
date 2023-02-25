@@ -1,15 +1,16 @@
 import React from "react"; 
 import '../assets/form.css';
 import { useState } from "react";
-import {Link, Router} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 
 export default function LoginForm(){
-
+   const navigate = useNavigate();
   const [loginUsername, setLoginUsername] = useState<string>("")
 //   const [loginEmail, setLoginEmail] = useState<string>("")
   const [loginPass, setLoginPassword] = useState<string>("")
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  async function handleSubmit (event: React.FormEvent<HTMLFormElement>) {
+   
    event.preventDefault();
       const data = JSON.stringify({
          username: loginUsername,
@@ -17,19 +18,21 @@ export default function LoginForm(){
          password: loginPass
       });
 
-      fetch('/login', {
+      const response: Response = await fetch('/login', {
       method: 'POST',
       headers: {
          'Content-Type': 'application/json'
       },
       body: data
       })
-      .then(response => {
-         console.log("Response Frontend:", response);
-         response.json();
-         console.log("Data Frontend:", data);
-      })
-      .catch(error => console.error(error));
+
+      const receivedData = await response.json();
+
+      if (response.ok) {
+         navigate('/profile');
+       } else {
+         alert(receivedData.message);
+       }
    };    
         return (
           <div className='wrapper loginForm'>
@@ -38,7 +41,7 @@ export default function LoginForm(){
                <form onSubmit={handleSubmit} noValidate >
                   <div className='username'>
                      <label htmlFor="username">Username</label>
-                     <input type='text' name='username' placeholder="Username" onChange= {e => setLoginUsername(e.target.value)}/>
+                     <input type='text' name='username' placeholder="Username" required onChange= {e => setLoginUsername(e.target.value)}/>
                   </div>
                   {/* <div className='email'>
                      <label htmlFor="email">Email</label>
@@ -46,7 +49,7 @@ export default function LoginForm(){
                   </div> */}
                   <div className='password'>
                      <label htmlFor="password">Password</label>
-                     <input type='password' name='password' placeholder="Password" onChange= {e => setLoginPassword(e.target.value)}/>
+                     <input type='password' name='password' placeholder="Password" required onChange= {e => setLoginPassword(e.target.value)}/>
                   </div>
                   <div className='submit'>
                   <button type='submit' >Login</button>

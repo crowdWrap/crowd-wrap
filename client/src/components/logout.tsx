@@ -1,6 +1,7 @@
 import { useState } from "react";
 import ClickPopup from "./logoutPop";
 
+
 export default function LogoutButton() {
   const [clicked, setClicked] = useState<boolean>(false);
   const click = () => {

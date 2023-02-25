@@ -52,22 +52,10 @@ export async function getProfileByUsername(username: string) {
       }
     })
     if (userProfile) {
+      console.log("IN QUERY PROFILE: ", userProfile);
       return userProfile
     } else {
       console.log("Profile not found.")
       throw new Error(`Profile '${email}' doesn't exist.`);
     }
   }
-
-  
-  
-  // getProfile("")
-  //   .then(async (e) => {
-  //     console.log(e)
-  //     await prisma.$disconnect()
-  //   })
-  //   .catch(async (e) => {
-  //     console.error(e)
-  //     await prisma.$disconnect()
-  //     process.exit(1)
-  //   })
