@@ -5,7 +5,6 @@ import {Link, Router} from 'react-router-dom'
 
 export default function LoginForm(){
 
-
   const [loginUsername, setLoginUsername] = useState<string>("")
 //   const [loginEmail, setLoginEmail] = useState<string>("")
   const [loginPass, setLoginPassword] = useState<string>("")
@@ -29,7 +28,6 @@ export default function LoginForm(){
          console.log("Response Frontend:", response);
          response.json();
          console.log("Data Frontend:", data);
-         console.log(loginUsername)
       })
       .catch(error => console.error(error));
    };    

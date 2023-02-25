@@ -2,30 +2,64 @@ import { PrismaClient } from '@prisma/client'
 
 export const prisma = new PrismaClient()
 
-async function createUser(username: string, email: string, password: string) {
-  await prisma.user.create({
-    data: {
-      username,
-      email,
-      password
-    },
-  })
+export async function createUser(username: string, email: string, password: string) {
+  try {
+    await prisma.user.create({
+      data: {
+        username,
+        email,
+        password
+      },
+    })
+  } catch (error) {
+    console.error(error);
+    throw new Error(`Username '${username}' or email '${email}' already exists.`);
+  }
 }
 
-// createUser("garv", "garv@gmail.com", "123")
+export async function getProfileById(id: number) {
+  const userProfile = await prisma.user.findUniqueOrThrow({
+    where: {
+      id
+    }
+  })
+  if (userProfile) {
+    return userProfile
+  } else {
+    console.log("Profile not found.")
+    throw new Error(`Profile '${id}' doesn't exist.`);
+  }
+}
 
-export default async function getProfile(username: string) {
+export async function getProfileByUsername(username: string) {
     const userProfile = await prisma.user.findUniqueOrThrow({
       where: {
-        username: username,
+        username
       }
     })
     if (userProfile) {
       return userProfile
     } else {
       console.log("Profile not found.")
+      throw new Error(`Profile '${username}' doesn't exist.`);
     }
   }
+
+  export async function getProfileByEmail(email: string) {
+    const userProfile = await prisma.user.findUniqueOrThrow({
+      where: {
+        email
+      }
+    })
+    if (userProfile) {
+      return userProfile
+    } else {
+      console.log("Profile not found.")
+      throw new Error(`Profile '${email}' doesn't exist.`);
+    }
+  }
+
+  
   
   // getProfile("")
   //   .then(async (e) => {
