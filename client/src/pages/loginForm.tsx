@@ -2,6 +2,20 @@ import React from "react";
 import '../assets/form.css';
 import { useState } from "react";
 import {Link, useNavigate} from 'react-router-dom'
+import { useEffect } from "react";
+
+async function fetchData(navigate:any){
+    
+   const response: Response = await fetch('/login', {
+       method: 'GET'})
+ 
+       const receivedData = await response.json();
+ 
+       if (response.ok) {
+        } else {
+          navigate('/profile')
+        }      
+}
 
 export default function LoginForm(){
    const navigate = useNavigate();
@@ -9,6 +23,10 @@ export default function LoginForm(){
 //   const [loginEmail, setLoginEmail] = useState<string>("")
   const [loginPass, setLoginPassword] = useState<string>("")
 
+  useEffect(() => {
+   fetchData(navigate)
+}, []);
+  
   async function handleSubmit (event: React.FormEvent<HTMLFormElement>) {
    
    event.preventDefault();
@@ -29,10 +47,14 @@ export default function LoginForm(){
       const receivedData = await response.json();
 
       if (response.ok) {
+         alert(receivedData.message);
          navigate('/profile');
        } else {
          alert(receivedData.message);
        }
+
+
+       
    };    
         return (
           <div className='wrapper loginForm'>

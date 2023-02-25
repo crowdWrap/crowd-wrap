@@ -79,7 +79,7 @@ app.post("/login", async (req, res, next) => {
   })(req, res, next);
 })
 
-app.post("/logout", (req,res) => {
+app.get("/logout", (req,res) => {
   req.logout(function(err) {
     if (err) { res.status(401).json({ message: "Logout failed" });}
   });  
@@ -91,10 +91,15 @@ app.post("/profile", (req, res) => {
   
 })
 
-app.get('/profile', (req, res) => {
-  if (!req.session.id) {
-    return res.status(401).json({ message: 'Unauthorized' });
+app.get('/login', (req, res)=> {
+  if (req.session.user) {
+    return res.status(401).json({ message: 'Youre already logged in' });
+  } else {
+    return res.status(200).json({ message: 'Okay log in' });
   }
+})
+
+app.get('/profile', (req, res) => {
   if (req.session.user) {
   return res.status(200).json(getProfileById(Number(req.session.user)))
   } else {
@@ -105,4 +110,3 @@ app.get('/profile', (req, res) => {
 app.listen(8000, () => {
   console.log('Server is listening on port 8000');
 });
-

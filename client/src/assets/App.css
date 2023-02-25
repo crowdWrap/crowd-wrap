@@ -60,6 +60,7 @@
   border-radius: 25px;
   background-image: url("https://cdn.discordapp.com/attachments/463174949310562304/1075952796660146196/IMG_3462.png");
   background-size: cover;
+  min-width:50px;
   transition: 0.25s ease-in-out;
 }
 
@@ -71,6 +72,7 @@
   background-size: cover;
   background-color: none;
   transition: 0.25s ease-in-out;
+  min-width:50px;
   border: 1px solid #00bdf1;
 }
 
@@ -82,7 +84,7 @@
 .logoutPop {
   position: absolute;
   border: 2px solid rgb(0, 0, 0);
-  background-color: #5199ad;
+  background-color: #5199ad;  
   border-radius: 25px;
   margin-left: -70px;
   margin-top: 10px;
@@ -123,12 +125,13 @@
   fill: white;
   width: 15px;
 }
-
 .logoutBtnCover {
   grid-column-start: 3;
-
+  min-width:50px;
   justify-self: end;
   align-self: center;
+  border-radius: 25px;
+  width:50px;
   margin-right: 10px;
   margin-top: 10px;
 }
