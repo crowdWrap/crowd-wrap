@@ -1,41 +1,36 @@
-import React from 'react';
-import LogoutButton from '../components/logout';
-import {useNavigate} from 'react-router-dom'
-import { useEffect } from 'react';
+import React, { useState, useEffect } from "react";
+import LogoutButton from "../components/logout";
+import { useNavigate } from "react-router-dom";
 
-async function fetchData(navigate:any){
-    
-    const response: Response = await fetch('/profile', {
-        method: 'GET'})
-  
-        const receivedData = await response.json();
-  
-        if (response.ok) {
-           navigate('/profile');
-         } else {
-           navigate('/login')
-           alert(receivedData.message);
-         }
-        
+async function fetchData(navigate: any, setUsername: any) {
+  const response: Response = await fetch("/profile", {
+    method: "GET",
+  });
+
+  const receivedData = await response.json();
+
+  if (response.ok) {
+    navigate("/profile");
+    setUsername(receivedData.user.username);
+  } else {
+    navigate("/login");
+    alert(receivedData.message);
+  }
 }
 
 function LoggedIn() {
-    const navigate = useNavigate();
-    useEffect(() => {
-        fetchData(navigate)
-    }, []);
+  const [username, setUsername] = useState<string>("");
+  const navigate = useNavigate();
+  useEffect(() => {
+    fetchData(navigate, setUsername);
+  }, []);
   return (
     <div>
-        <LogoutButton/>
-      <h1>Welcome User</h1>
+      <LogoutButton />
+      <h1>Welcome {username}</h1>
       <p>Logged in</p>
-     
     </div>
   );
 }
 
 export default LoggedIn;
-
-
-
-
