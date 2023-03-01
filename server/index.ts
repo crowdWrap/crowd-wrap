@@ -59,11 +59,17 @@ app.get("/crowdWrap", (req, res) => {
 app.post("/", (req, res) => {});
 
 app.post("/register", async (req, res) => {
-  const { username, email, password } = req.body;
-  const hashedPass = await bcrypt.hash(password, 10);
+  try {
+    const { username, email, password } = req.body;
+    const hashedPass = await bcrypt.hash(password, 10);
 
-  //Create user and send to DB
-  createUser(username, email, hashedPass);
+    //Create user and send to DB
+    createUser(username, email, hashedPass);
+    return res.status(200).json({ message: "Registration succesful" });
+  } catch (e) {
+    console.log(e);
+    return res.status(401).json({ message: "registration failed" });
+  }
 });
 
 app.post("/login", async (req, res, next) => {
