@@ -41,7 +41,7 @@
   display: grid;
   grid-template-rows: 0.1fr 1fr 1fr;
   grid-template-columns: 1fr 1fr 1fr;
-  flex-direction: column; 
+  flex-direction: column;
 }
 
 .engineer {
@@ -60,19 +60,11 @@
   border-radius: 25px;
   background-image: url("https://cdn.discordapp.com/attachments/463174949310562304/1075952796660146196/IMG_3462.png");
   background-size: cover;
-  min-width:50px;
+  min-width: 50px;
   transition: 0.25s ease-in-out;
 }
 
 .logoutBtnClicked {
-  width: 50px;
-  height: 50px;
-  border-radius: 25px;
-  background-image: url("https://cdn.discordapp.com/attachments/463174949310562304/1075952796660146196/IMG_3462.png");
-  background-size: cover;
-  background-color: none;
-  transition: 0.25s ease-in-out;
-  min-width:50px;
   border: 1px solid #00bdf1;
 }
 
@@ -84,7 +76,7 @@
 .logoutPop {
   position: absolute;
   border: 2px solid rgb(0, 0, 0);
-  background-color: #5199ad;  
+  background-color: #5199ad;
   border-radius: 25px;
   margin-left: -70px;
   margin-top: 10px;
@@ -96,6 +88,7 @@
   margin: 0;
   padding: 0;
   display: grid;
+  gap: 2px;
   grid-template-rows: 1fr 1fr 1fr;
   justify-items: left;
   align-items: center;
@@ -109,31 +102,46 @@
   border-radius: 25px;
   display: flex;
   align-items: center;
-  justify-content: left;
-  gap: 5px;
-  padding: 12px;
-
-  width: 80%;
+  padding: 15px;
+  width: 90px;
 }
 
 .logoutPop li:hover {
   background-color: rgba(8, 8, 8, 0.61);
 }
 
-.logoutPop ul li svg {
-  height: 15px;
-  fill: white;
-  width: 15px;
-}
 .logoutBtnCover {
   grid-column-start: 3;
-  min-width:50px;
+  min-width: 50px;
   justify-self: end;
   align-self: center;
   border-radius: 25px;
-  width:50px;
+  width: 50px;
   margin-right: 10px;
   margin-top: 10px;
+}
+
+.individualBtn {
+  position: absolute;
+  left: 0;
+  width: 50px;
+  min-width: 40;
+  height: 40px;
+  background-color: transparent;
+  color: none;
+  border-radius: 25px;
+  padding: 0;
+  margin: 0;
+  text-align: center;
+  cursor: pointer;
+}
+
+.firstIndiv {
+  margin-left: 5px;
+}
+
+.individualBtn:hover {
+  background-color: transparent;
 }
 
 /* Logout button - end */
@@ -147,7 +155,7 @@
 
 /* Login button - end */
 
-.btnWrap{
+.btnWrap {
   grid-row-start: 3;
   grid-column-start: 2;
 }
@@ -157,7 +165,6 @@
 .signupBtn {
   width: 200px;
   height: 50px;
-
 }
 
 /* signUp button - end */
