@@ -1,12 +1,12 @@
 import express from "express";
 import morgan from "morgan";
 import { router } from "./routes/engineers";
+import { createUser } from "./userQueries";
 import {
   getProfileByUsername,
   getProfileByEmail,
   getProfileById,
-  createUser,
-} from "./queries";
+} from "./profileQueries";
 import bcrypt from "bcryptjs";
 import cors from "cors";
 import { User } from "@prisma/client";
@@ -23,14 +23,9 @@ intializePassport(passport, getProfileByUsername, getProfileById);
 
 dotenv.config();
 
-const secretVal = process.env.SECRET || "N/A";
-if (secretVal !== undefined) {
-  console.log(secretVal);
-}
-
 app.use(
   session({
-    secret: secretVal,
+    secret: "process.env.SECRET",
     cookie: { maxAge: 864000 },
     resave: false,
     saveUninitialized: false,
