@@ -43,6 +43,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(morgan("combined"));
+
+//Used in order to let typescript know that req.session.user is a string
 declare module "express-session" {
   interface Session {
     user: string;
@@ -123,3 +125,5 @@ app.get("/profile", async (req, res) => {
 app.listen(8000, () => {
   console.log("Server is listening on port 8000");
 });
+
+//have landing page change once the user is logged in, displaying the logout button etc, removing login button, etc
