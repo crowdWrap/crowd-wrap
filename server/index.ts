@@ -117,8 +117,9 @@ app.get("/profile", async (req, res) => {
   }
 });
 
-app.listen(8000, () => {
-  console.log("Server is listening on port 8000");
+app.listen(process.env.PORT, () => {
+  console.log(`Server is listening on port ${process.env.PORT}`);
 });
 
 //have landing page change once the user is logged in, displaying the logout button etc, removing login button, etc
+//since user is already logged in have them redirect from signup to profile
