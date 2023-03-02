@@ -7,7 +7,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = "postgresql://garv:123@localhost:5432/var/run/postgresql"
+  url      = "process.env.DATABASE_URL"
 }
 
 model User {
