@@ -56,41 +56,69 @@ app.get("/crowdWrap", (req, res) => {
 app.post("/", (req, res) => {});
 
 app.post("/register", async (req, res) => {
-  try {
-    const { username, email, password } = req.body;
-    const hashedPass = await bcrypt.hash(password, 10);
+  if (req.body.googleAccessToken) {
+    try {
+      //google oauth
+    } catch {}
+  } else {
+    //normal
+    try {
+      const { username, email, password } = req.body;
 
-    //Create user and send to DB
-    createUser(username, email, hashedPass);
-    return res.status(200).json({ message: "Registration succesful" });
-  } catch (e) {
-    console.log(e);
-    return res.status(401).json({ message: "registration failed" });
+      //makes sure the fields arent blank and pass is > 8
+      if (!username || !email || !password || password.length < 8) {
+        return res.status(400).json({ message: "invalid fields" });
+      }
+
+      //makes sure that the user doesnt exist
+      const userExists = await getProfileByEmail(email);
+
+      if (userExists) {
+        return res.status(400).json({ message: "user exists" });
+      }
+
+      //then continues normal process
+      const hashedPass = await bcrypt.hash(password, 10);
+
+      //Create user and send to DB
+      createUser(username, email, hashedPass);
+      return res.status(200).json({ message: "Registration succesful" });
+    } catch (e) {
+      console.log("the error:", e);
+      return res.status(401).json({ message: "registration failed" });
+    }
   }
 });
 
 app.post("/login", async (req, res, next) => {
-  passport.authenticate("local", (err: Error, user: User) => {
-    if (err) {
-      return next(err);
-    }
-    if (!user) {
-      return res.status(401).json({ message: "Authentication failed" });
-    }
-    req.logIn(user, (err) => {
+  if (req.body.googleAccessToken) {
+    try {
+      //google oauth
+    } catch {}
+  } else {
+    //normal auhtentication and session
+    passport.authenticate("local", (err: Error, user: User) => {
       if (err) {
         return next(err);
       }
-      req.session.user = user.id.toString();
-      return res.json({ message: "Authentication successful" });
-    });
-  })(req, res, next);
+      if (!user) {
+        return res.status(401).json({ message: "Authentication failed" });
+      }
+      req.logIn(user, (err) => {
+        if (err) {
+          return next(err);
+        }
+        req.session.user = user.id.toString();
+        return res.status(200).json({ message: "Authentication successful" });
+      });
+    })(req, res, next);
+  }
 });
 
 app.get("/logout", (req, res) => {
   req.logout(function (err) {
     if (err) {
-      res.status(401).json({ message: "Logout failed" });
+      return res.status(401).json({ message: "Logout failed" });
     }
   });
   res.setHeader("Set-Cookie", "");
@@ -117,9 +145,10 @@ app.get("/profile", async (req, res) => {
   }
 });
 
-app.listen(process.env.PORT, () => {
-  console.log(`Server is listening on port ${process.env.PORT}`);
+app.listen(8000, () => {
+  console.log(`Server is listening on port 8000`);
 });
 
 //have landing page change once the user is logged in, displaying the logout button etc, removing login button, etc
 //since user is already logged in have them redirect from signup to profile
+//need form validation
