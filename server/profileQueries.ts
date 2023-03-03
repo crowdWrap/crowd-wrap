@@ -29,16 +29,17 @@ export async function getProfileByUsername(username: string) {
 }
 
 export async function getProfileByEmail(email: string) {
-  const userProfile = await prisma.user.findUniqueOrThrow({
-    where: {
-      email,
-    },
-  });
-  if (userProfile) {
-    console.log("IN QUERY PROFILE: ", userProfile);
-    return userProfile;
-  } else {
-    console.log("Profile not found.");
-    throw new Error(`Profile '${email}' doesn't exist.`);
+  try {
+    const userProfile = await prisma.user.findUnique({
+      where: {
+        email,
+      },
+    });
+    if (userProfile) {
+      console.log("IN QUERY PROFILE: ", userProfile);
+      return userProfile;
+    }
+  } catch (e) {
+    console.log(e);
   }
 }
