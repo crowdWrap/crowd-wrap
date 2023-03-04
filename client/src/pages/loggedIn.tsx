@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import LogoutButton from "../components/logout";
 import { useNavigate } from "react-router-dom";
 
-async function fetchData(navigate: any, setUsername: any) {
+async function fetchLoginData(navigate: any, setUsername: any) {
   const response: Response = await fetch("/profile", {
     method: "GET",
   });
@@ -22,7 +22,7 @@ function LoggedIn() {
   const [username, setUsername] = useState<string>("");
   const navigate = useNavigate();
   useEffect(() => {
-    fetchData(navigate, setUsername);
+    fetchLoginData(navigate, setUsername);
   }, []);
   return (
     <div>
