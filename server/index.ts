@@ -267,7 +267,6 @@ app.post("/setUsername", async (req, res) => {
 app.get("/profilePicRequest", async (req, res) => {
   if (req.session.user) {
     const user = await getProfileById(Number(req.session.user));
-    console.log(user.picture);
     res.send(user.picture);
   }
 });

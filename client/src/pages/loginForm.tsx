@@ -52,7 +52,7 @@ export default function LoginForm() {
       navigate("/profile");
     } else {
       alert(receivedData.message);
-      navigate("/register");
+      // navigate("/register");
     }
   }
   return (

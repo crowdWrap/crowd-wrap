@@ -30,12 +30,9 @@ export default function LogoutButton() {
     });
   };
 
-  // useEffect(() => {}, []);
-
-  //so what i just did was have it get the pfp from the backend and display it, now I just have to make
-  //it upload the profilepci when google logins and make sure everythijng work
-
+  // useEffect(() => {
   fetchProfilePic(setBackgroundImage);
+  // }, []);
 
   return (
     <div className="logoutBtnCover">
