@@ -7,6 +7,7 @@ import {
   getProfileByEmail,
   getProfileById,
   updateUser,
+  updateUserName,
 } from "./profileQueries";
 import bcrypt from "bcryptjs";
 import cors from "cors";
@@ -44,7 +45,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(morgan("combined"));
 
-//Used in order to let typescript know that req.session.user is a string
+//Used in order to let typescript know that req.session.user is a strings
 declare module "express-session" {
   interface Session {
     user: string;
@@ -67,8 +68,6 @@ app.post("/register/setUsername", async (req, res) => {
   if (usernameExists) {
     return res.status(400).json({ message: "user exists" });
   }
-
-  // updateUser()
 });
 
 app.post("/register", async (req, res) => {
@@ -156,6 +155,7 @@ app.post("/login", async (req, res, next) => {
       verify().then(async () => {
         const email = payload.email;
         const picture = payload.picture;
+        const sub = payload.sub;
 
         const emailExists = await getProfileByEmail(email);
 
@@ -169,9 +169,16 @@ app.post("/login", async (req, res, next) => {
           if (err) {
             return next(err);
           }
-          updateUser(email, picture);
+          // updateUser(email, picture);
           req.session.user = user.id.toString();
-          return res.status(200).json({ message: "Authentication successful" });
+
+          if (user.username == sub) {
+            return res.status(200).json({ message: "Needs username" });
+          } else {
+            return res
+              .status(200)
+              .json({ message: "Authentication successful" });
+          }
         });
       });
       //google oauth
@@ -217,6 +224,7 @@ app.get("/login", (req, res) => {
 });
 
 app.get("/profile", async (req, res) => {
+  //are they  able to bypass the setusername part if they go to /profile? should i leave it or is there a resolution?
   if (req.session.user) {
     const user = await getProfileById(Number(req.session.user));
     res.setHeader("Content-Type", "application/json");
@@ -226,9 +234,40 @@ app.get("/profile", async (req, res) => {
   }
 });
 
+app.get("/register/setUsername", async (req, res) => {
+  if (req.session.user) {
+    const user = await getProfileById(Number(req.session.user));
+    res.setHeader("Content-Type", "application/json");
+    return res.status(200).json({ message: "authorized" });
+  } else {
+    return res.status(401).json({ message: "Unauthorized" });
+  }
+});
+
+app.post("/setUsername", async (req, res) => {
+  console.log("beginning");
+  if (req.session.user) {
+    const user = await getProfileById(Number(req.session.user));
+    res.setHeader("Content-Type", "application/json");
+
+    const usernameExists = await getProfileByUsername(req.body.username);
+    if (usernameExists) {
+      return res.status(400).json({ message: "user exists" });
+    }
+
+    updateUserName(user.email, req.body.username);
+
+    return res.status(200).json({ message: "complete" });
+  } else {
+    console.log("not");
+    return res.status(401).json({ message: "not authorized" });
+  }
+});
+
 app.get("/profilePicRequest", async (req, res) => {
   if (req.session.user) {
     const user = await getProfileById(Number(req.session.user));
+    console.log(user.picture);
     res.send(user.picture);
   }
 });

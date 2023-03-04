@@ -19,10 +19,12 @@ export default function SignInGoogle() {
         body: credential,
       })
         .then(async (response) => {
-          if (response.ok) {
+          const newResponse = await response.json();
+          if (newResponse.message == "Needs username") {
+            navigate("/register/setUsername");
+          } else if (response.ok) {
             navigate("/profile");
           } else {
-            const newResponse = await response.json();
             console.log(newResponse.message);
           }
         })

@@ -55,3 +55,15 @@ export async function updateUser(email: string, newPic: string) {
   console.log(updatedUser);
   return updatedUser;
 }
+
+export async function updateUserName(email: string, newUsername: string) {
+  const user = await getProfileByEmail(email);
+  console.log(user);
+  const updatedUser = await prisma.user.update({
+    where: { email },
+    data: { username: newUsername },
+  });
+
+  console.log(updatedUser);
+  return updatedUser;
+}
