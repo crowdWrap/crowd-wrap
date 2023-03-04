@@ -6,6 +6,7 @@ import {
   getProfileByUsername,
   getProfileByEmail,
   getProfileById,
+  updateUser,
 } from "./profileQueries";
 import bcrypt from "bcryptjs";
 import cors from "cors";
@@ -15,6 +16,10 @@ import cookieParser from "cookie-parser";
 import session from "express-session";
 import { Session, MemoryStore } from "express-session";
 import dotenv from "dotenv";
+import { OAuth2Client } from "google-auth-library";
+const clientid =
+  "951239670358-q89e1msbgovmepbaq4fplqc20qn62ha9.apps.googleusercontent.com";
+const client = new OAuth2Client(clientid);
 
 export const app = express();
 
@@ -55,11 +60,55 @@ app.get("/crowdWrap", (req, res) => {
 
 app.post("/", (req, res) => {});
 
+app.post("/register/setUsername", async (req, res) => {
+  const username = req.body.username;
+  const usernameExists = await getProfileByUsername(username);
+
+  if (usernameExists) {
+    return res.status(400).json({ message: "user exists" });
+  }
+
+  // updateUser()
+});
+
 app.post("/register", async (req, res) => {
-  if (req.body.googleAccessToken) {
+  if (req.body.credential) {
     try {
-      //google oauth
-    } catch {}
+      const token = req.body.credential;
+      // console.log(req.body.credential);
+      let payload: any;
+      async function verify() {
+        const ticket = await client.verifyIdToken({
+          idToken: token,
+          audience: clientid,
+        });
+        payload = ticket.getPayload();
+        const userid = payload["sub"];
+      }
+      verify()
+        .then(async () => {
+          const firstname = payload.given_name;
+          const lastname = payload.family_name;
+          const email = payload.email;
+          const picture = payload.picture;
+          const sub = payload.sub;
+
+          console.log(payload);
+          //makes sure that the user doesnt exist
+          const emailExists = await getProfileByEmail(email);
+
+          if (emailExists) {
+            return res.status(400).json({ message: "user exists" });
+          }
+
+          createUser(sub, email, "");
+          updateUser(email, picture);
+          return res.status(200).json({ message: "Registration succesful" });
+        })
+        .catch((e) => console.log(e));
+    } catch (e) {
+      console.log(e);
+    }
   } else {
     //normal
     try {
@@ -71,9 +120,10 @@ app.post("/register", async (req, res) => {
       }
 
       //makes sure that the user doesnt exist
-      const userExists = await getProfileByEmail(email);
+      const emailExists = await getProfileByEmail(email);
+      const usernameExists = await getProfileByUsername(username);
 
-      if (userExists) {
+      if (emailExists || usernameExists) {
         return res.status(400).json({ message: "user exists" });
       }
 
@@ -91,10 +141,43 @@ app.post("/register", async (req, res) => {
 });
 
 app.post("/login", async (req, res, next) => {
-  if (req.body.googleAccessToken) {
+  if (req.body.credential) {
     try {
+      const token = req.body.credential;
+      let payload: any;
+      async function verify() {
+        const ticket = await client.verifyIdToken({
+          idToken: token,
+          audience: clientid,
+        });
+        payload = ticket.getPayload();
+        const userid = payload["sub"];
+      }
+      verify().then(async () => {
+        const email = payload.email;
+        const picture = payload.picture;
+
+        const emailExists = await getProfileByEmail(email);
+
+        if (!emailExists) {
+          return res.status(400).json({ message: "user doesnt exist" });
+        }
+
+        const user: any = await getProfileByEmail(email);
+
+        req.logIn(user, (err) => {
+          if (err) {
+            return next(err);
+          }
+          updateUser(email, picture);
+          req.session.user = user.id.toString();
+          return res.status(200).json({ message: "Authentication successful" });
+        });
+      });
       //google oauth
-    } catch {}
+    } catch (e) {
+      console.log(e);
+    }
   } else {
     //normal auhtentication and session
     passport.authenticate("local", (err: Error, user: User) => {
@@ -125,8 +208,6 @@ app.get("/logout", (req, res) => {
   res.status(200).json({ message: "Logout successful" });
 });
 
-// app.post("/profile", (req, res) => {});
-
 app.get("/login", (req, res) => {
   if (req.session.user) {
     return res.status(401).json({ message: "Youre already logged in" });
@@ -145,10 +226,15 @@ app.get("/profile", async (req, res) => {
   }
 });
 
+app.get("/profilePicRequest", async (req, res) => {
+  if (req.session.user) {
+    const user = await getProfileById(Number(req.session.user));
+    res.send(user.picture);
+  }
+});
+
 app.listen(8000, () => {
   console.log(`Server is listening on port 8000`);
 });
 
 //have landing page change once the user is logged in, displaying the logout button etc, removing login button, etc
-//since user is already logged in have them redirect from signup to profile
-//need form validation

@@ -2,7 +2,7 @@ import { GoogleLogin } from "@react-oauth/google";
 import jwtDecode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 
-export default function SignInGoogle() {
+export default function SignUpGoogle() {
   const navigate = useNavigate();
 
   const succesfulSignIn = async (credentialResponse: any) => {
@@ -11,7 +11,7 @@ export default function SignInGoogle() {
         credential: credentialResponse.credential,
       });
 
-      fetch("/login", {
+      fetch("/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -20,7 +20,7 @@ export default function SignInGoogle() {
       })
         .then(async (response) => {
           if (response.ok) {
-            navigate("/profile");
+            navigate("/login");
           } else {
             const newResponse = await response.json();
             console.log(newResponse.message);

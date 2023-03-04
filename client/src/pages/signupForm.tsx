@@ -2,7 +2,7 @@ import React from "react";
 import "../assets/form.css";
 import { useState } from "react";
 import { Link, Router, useNavigate } from "react-router-dom";
-import SignInGoogle from "../api/googleSignin";
+import SignUpGoogle from "../api/googleSignup";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 
 export default function SignupForm() {
@@ -92,7 +92,7 @@ export default function SignupForm() {
         </form>
       </div>
       <GoogleOAuthProvider clientId="951239670358-q89e1msbgovmepbaq4fplqc20qn62ha9.apps.googleusercontent.com">
-        <SignInGoogle />
+        <SignUpGoogle />
       </GoogleOAuthProvider>
       <div className="btnWrap">
         <Link to="/login">
