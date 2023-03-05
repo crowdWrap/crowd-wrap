@@ -21,8 +21,8 @@ async function fetchData(navigate: any) {
 
 export default function LoginForm() {
   const navigate = useNavigate();
-  const [loginUsername, setLoginUsername] = useState<string>("");
-  //   const [loginEmail, setLoginEmail] = useState<string>("")
+  const [usernameOrEmail, setusernameOrEmail] = useState<string>("");
+  const [loginEmail, setLoginEmail] = useState<string>("");
   const [loginPass, setLoginPassword] = useState<string>("");
 
   useEffect(() => {
@@ -32,8 +32,7 @@ export default function LoginForm() {
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const data = JSON.stringify({
-      username: loginUsername,
-      // email: loginEmail,
+      username: usernameOrEmail,
       password: loginPass,
     });
 
@@ -61,19 +60,15 @@ export default function LoginForm() {
         <h2>Log In</h2>
         <form onSubmit={handleSubmit} noValidate>
           <div className="username">
-            <label htmlFor="username">Username</label>
+            <label htmlFor="username">Username or Email</label>
             <input
               type="text"
               name="username"
-              placeholder="Username"
+              placeholder="Username or Email"
               required
-              onChange={(e) => setLoginUsername(e.target.value)}
+              onChange={(e) => setusernameOrEmail(e.target.value)}
             />
           </div>
-          {/* <div className='email'>
-                     <label htmlFor="email">Email</label>
-                     <input type='email' name='email' placeholder="Email" onChange={e => setLoginEmail(e.target.value)}/>
-                  </div> */}
           <div className="password">
             <label htmlFor="password">Password</label>
             <input
