@@ -25,7 +25,12 @@ const client = new OAuth2Client(clientid);
 export const app = express();
 
 import intializePassport from "./passport";
-intializePassport(passport, getProfileByUsername, getProfileById);
+intializePassport(
+  passport,
+  getProfileByUsername,
+  getProfileById,
+  getProfileByEmail
+);
 
 dotenv.config();
 
