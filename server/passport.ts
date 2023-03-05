@@ -5,14 +5,24 @@ import { User } from "@prisma/client";
 export default function intializePassport(
   passport: any,
   getProfileByUsername: any,
-  getProfileById: Function
+  getProfileById: Function,
+  getProfileByEmail: any
 ) {
   const authenticateUser = async (
     username: string,
+    // email: string,
     password: string,
     done: any
   ) => {
-    const user = await getProfileByUsername(username);
+    let user;
+
+    const isInputEmail = username.includes("@");
+
+    if (!isInputEmail) {
+      user = await getProfileByUsername(username);
+    } else if (isInputEmail) {
+      user = await getProfileByEmail(username);
+    }
 
     if (user == null) {
       return done(null, false, {
