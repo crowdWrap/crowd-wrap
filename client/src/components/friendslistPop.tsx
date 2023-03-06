@@ -8,20 +8,14 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import friendsList from "./friendslist";
 
-export default function ClickPopup() {
+//So the process would be to make a restricting field where they can scroll, etc, and then have it
+//grab the data from the database for the friends(which youll have to make in the schema prob as an array)
+//if the response is okay then foreach array make an account thing and append it
+//overflow:scroll
+//On the account field have their account, profile picture, name , online status,
+
+export default function FriendslistPop() {
   const navigate = useNavigate();
-  const logoutSession = async () => {
-    const response: Response = await fetch("/logout", { method: "get" });
-    const receivedData = await response.json();
-
-    console.log(receivedData);
-
-    if (response.ok) {
-      navigate("/login");
-    } else {
-      alert(receivedData.message);
-    }
-  };
 
   return (
     <div className="logoutPop">
@@ -35,15 +29,10 @@ export default function ClickPopup() {
           <FontAwesomeIcon icon={faUser} />
           <p>Profile</p>
         </button>
-        {/* 
-        <button className="individualBtn" onClick={}>
+
+        <button className="individualBtn" onClick={friendsList}>
           <FontAwesomeIcon icon={faAddressBook} />
           <p>Friends</p>
-        </button> */}
-
-        <button className="individualBtn" onClick={logoutSession}>
-          <FontAwesomeIcon icon={faRightFromBracket} />
-          <p>Logout</p>
         </button>
       </ul>
     </div>

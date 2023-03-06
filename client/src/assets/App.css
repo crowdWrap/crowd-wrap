@@ -69,6 +69,29 @@
   align-items: end;
 }
 
+.friendsList {
+  min-width: 35px;
+  border-radius: 25px;
+  height: 35px;
+  margin: 0;
+  padding: 0;
+  /* doesnt work */
+  margin-right: 8px;
+  transition: 0.25s ease-in-out;
+  margin-bottom: 8px;
+}
+
+.friendsList:hover {
+  opacity: 0.8;
+}
+
+.friendsListCover {
+  min-width: 50px;
+  border-radius: 25px;
+  width: 50px;
+  margin-top: 10px;
+}
+
 /* LoggedIn page  - End */
 
 /* Logout button - start */
@@ -138,10 +161,7 @@
 }
 
 .logoutBtnCover {
-  grid-column-start: 3;
   min-width: 50px;
-  justify-self: end;
-  align-self: center;
   border-radius: 25px;
   width: 50px;
   margin-right: 10px;
