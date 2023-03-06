@@ -118,16 +118,22 @@
   color: white;
 }
 
-.logoutPop ul li {
+.logoutPop ul button {
   transition: 0.25s ease-in-out;
   border-radius: 25px;
   display: flex;
   align-items: center;
-  padding: 15px;
-  width: 90px;
+  /* padding: 15px; */
+  /* min-width: 90px; */
+  width: 115px;
 }
 
-.logoutPop li:hover {
+.logoutPop ul button p {
+  font-family: "Roboto", sans-serif;
+  margin-left: 10px;
+}
+
+.logoutPop button:hover {
   background-color: rgba(8, 8, 8, 0.61);
 }
 
@@ -143,22 +149,25 @@
 }
 
 .individualBtn {
-  position: absolute;
-  left: 0;
-  width: 50px;
-  min-width: 40;
+  /* position: absolute; */
+
+  /* left: 0; */
+  /* width: 50px; */
+  /* min-width: 40px; */
   height: 40px;
   background-color: transparent;
   color: none;
   border-radius: 25px;
-  padding: 0;
+  /* padding: 0; */
   margin: 0;
-  text-align: center;
+  /* text-align: center; */
+  /* margin-left: 50px; */
   cursor: pointer;
 }
 
-.firstIndiv {
-  margin-left: 5px;
+.individualBtn svg {
+  height: 15px;
+  width: 15px;
 }
 
 .individualBtn:hover {

@@ -1,5 +1,1 @@
-@font-face {
-    font-family: 'MyFont';
-    src: url('./fonts/MyFont.ttf') format('truetype');
-  }
-  
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");

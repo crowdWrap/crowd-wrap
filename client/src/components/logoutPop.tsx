@@ -3,6 +3,7 @@ import {
   faGear,
   faUser,
   faRightFromBracket,
+  faAddressBook,
 } from "@fortawesome/free-solid-svg-icons";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -24,21 +25,26 @@ export default function ClickPopup() {
   return (
     <div className="logoutPop">
       <ul>
-        <li>
+        <button className="individualBtn">
           <FontAwesomeIcon icon={faGear} />
-          <button className="individualBtn firstIndiv">Settings</button>
-        </li>
-        <li>
+          <p>Settings</p>
+        </button>
+
+        <button className="individualBtn">
           <FontAwesomeIcon icon={faUser} />
-          <button className="individualBtn">Profile</button>
-        </li>
-        <li>
+          <p>Profile</p>
+        </button>
+
+        <button className="individualBtn">
+          <FontAwesomeIcon icon={faAddressBook} />
+          <p>Friends</p>
+        </button>
+
+        <button className="individualBtn" onClick={logoutSession}>
+          {" "}
           <FontAwesomeIcon icon={faRightFromBracket} />
-          <button className="individualBtn" onClick={logoutSession}>
-            {" "}
-            Logout
-          </button>
-        </li>
+          <p>Logout</p>
+        </button>
       </ul>
     </div>
   );
