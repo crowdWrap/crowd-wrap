@@ -51,9 +51,30 @@
   grid-column: 2;
 }
 
+/* LoggedIn page - start */
+
+.loggedIn {
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  grid-template-rows: 0.05fr 1fr;
+}
+
+.loggedInNavbar {
+  padding: 0;
+  margin: 0;
+  grid-row-start: 1;
+  display: flex;
+  justify-content: end;
+  align-items: end;
+}
+
+/* LoggedIn page  - End */
+
 /* Logout button - start */
 
 .logoutBtn {
+  margin: 0;
   border: 1px solid rgb(0, 0, 0);
   width: 50px;
   height: 50px;

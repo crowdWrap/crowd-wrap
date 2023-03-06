@@ -25,8 +25,10 @@ function LoggedIn() {
     fetchLoginData(navigate, setUsername);
   }, []);
   return (
-    <div>
-      <LogoutButton />
+    <div className="loggedIn">
+      <nav className="loggedInNavbar">
+        <LogoutButton />
+      </nav>
       <h1>Welcome {username}</h1>
       <p>Logged in</p>
     </div>
