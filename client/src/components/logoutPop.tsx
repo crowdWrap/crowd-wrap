@@ -25,27 +25,25 @@ export default function ClickPopup() {
 
   return (
     <div className="logoutPop">
-      <ul>
-        <button className="individualBtn">
-          <FontAwesomeIcon icon={faGear} />
-          <p>Settings</p>
-        </button>
+      <button className="individualBtn">
+        <FontAwesomeIcon icon={faGear} />
+        <p>Settings</p>
+      </button>
 
-        <button className="individualBtn">
-          <FontAwesomeIcon icon={faUser} />
-          <p>Profile</p>
-        </button>
-        {/* 
+      <button className="individualBtn">
+        <FontAwesomeIcon icon={faUser} />
+        <p>Profile</p>
+      </button>
+      {/* 
         <button className="individualBtn" onClick={}>
           <FontAwesomeIcon icon={faAddressBook} />
           <p>Friends</p>
         </button> */}
 
-        <button className="individualBtn" onClick={logoutSession}>
-          <FontAwesomeIcon icon={faRightFromBracket} />
-          <p>Logout</p>
-        </button>
-      </ul>
+      <button className="individualBtn" onClick={logoutSession}>
+        <FontAwesomeIcon icon={faRightFromBracket} />
+        <p>Logout</p>
+      </button>
     </div>
   );
 }
