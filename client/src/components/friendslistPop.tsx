@@ -13,6 +13,9 @@ import friendsList from "./friendslist";
 //if the response is okay then foreach array make an account thing and append it
 //overflow:scroll
 //On the account field have their account, profile picture, name , online status,
+//sorta like the library/todo project except with backend and for react.
+//on each of these you should probably run the auth get first to make sure they are actually authed.
+//you can have session checked every second, maybe even store the session expiration.
 
 export default function FriendslistPop() {
   const navigate = useNavigate();
