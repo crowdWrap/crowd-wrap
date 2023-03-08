@@ -25,7 +25,7 @@ dotenv.config();
 
 app.use(
   session({
-    secret: "process.env.SECRET",
+    secret: process.env.SECRET as string,
     cookie: { maxAge: 864000 },
     resave: false,
     saveUninitialized: false,
@@ -62,7 +62,7 @@ app.post("/register", async (req, res) => {
 
     //Create user and send to DB
     createUser(username, email, hashedPass);
-    return res.status(200).json({ message: "Registration succesful" });
+    return res.status(201).json({ message: "Registration succesful" });
   } catch (e) {
     console.log(e);
     return res.status(401).json({ message: "registration failed" });
