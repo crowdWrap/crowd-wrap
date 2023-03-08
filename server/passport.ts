@@ -34,7 +34,6 @@ export default function intializePassport(
     }
   };
 
-  // passport.use(new LocalStrategy(authenticateUser))
   passport.use(new LocalStrategy(authenticateUser));
   passport.serializeUser((user: User, done: any) => done(null, user.id));
   passport.deserializeUser((id: Number, done: any) => {
