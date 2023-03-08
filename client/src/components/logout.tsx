@@ -5,10 +5,10 @@ export default function LogoutButton() {
   const [clicked, setClicked] = useState<boolean>(false);
 
   const clickHandler = (event: MouseEvent) => {
-    logoutRemoval(event, setClicked);
+    logoutRemoval(event);
   };
 
-  const logoutRemoval = (e: MouseEvent, setClicked: any) => {
+  const logoutRemoval = (e: MouseEvent) => {
     const target = e.target as Element;
     if (target && !target.closest(".logoutBtnCover")) {
       setClicked(false);
