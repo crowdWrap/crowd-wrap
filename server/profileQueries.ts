@@ -44,6 +44,8 @@ export async function getProfileByEmail(email: string) {
   }
 }
 
+//Move to userqueries
+
 export async function updateUser(email: string, newPic: string) {
   const user = await getProfileByEmail(email);
   console.log(user);

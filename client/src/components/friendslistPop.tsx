@@ -24,6 +24,9 @@ import { useEffect, useState } from "react";
 //or the search button is clicked and with that it will look in the database with someone with that username
 //you can have it that instead of on enter it cna be on every btuton press where it searchs the database for someone with that name
 // and if anything pops up it can display them.
+//have a way to accept and deny friend request
+//have button on the left to bring popup to add friend
+//have sent friend requests displayed on bottom right.
 
 export default function FriendslistPop() {
   const [clicked, setClicked] = useState<boolean>(false);
