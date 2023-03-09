@@ -3,6 +3,8 @@ import '../assets/form.css';
 import { useState } from "react";
 import {Link, useNavigate} from 'react-router-dom'
 import { useEffect } from "react";
+import Header from "../components/Header";
+//fefefe background-color: #0efefe;
 
 async function fetchData(navigate:any){
     
@@ -58,8 +60,9 @@ export default function LoginForm(){
    };    
         return (
           <div className='wrapper loginForm'>
+            <Header/>
             <div className='form-wrapper'>
-               <h2>Log In</h2>
+               <div className="logintitle">Login</div>
                <form onSubmit={handleSubmit} noValidate >
                   <div className='username'>
                      <label htmlFor="username">Username</label>
@@ -73,18 +76,18 @@ export default function LoginForm(){
                      <label htmlFor="password">Password</label>
                      <input type='password' name='password' placeholder="Password" required onChange= {e => setLoginPassword(e.target.value)}/>
                   </div>
+
                   <div className='submit'>
-                  <button type='submit' >Login</button>
+                     <button type='submit'>Login</button>
+                     <Link to="/register">Don't Have an account yet? Register for free.</Link>
+  
                   </div>
-
-             </form>
-
-             
+               </form>
+            </div>
+            {/*<div className="btnWrap">
+               <Link to="/register"><button className="signupBtn"> Don't Have an Account?</button></Link>
+               <Link to="/"><button className="loginBtn"> Home</button></Link>  style={{ textDecoration: 'none' }}
+               </div>*/}
          </div>
-         <div className="btnWrap">
-      <Link to="/register"><button className="signupBtn"> Don't Have an Account?</button></Link>
-      <Link to="/"><button className="loginBtn"> Home</button></Link> 
-      </div>
-      </div>
      );
 }
