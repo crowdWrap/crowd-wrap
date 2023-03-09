@@ -1,41 +1,32 @@
-import "./App.css";
-import { useEffect, useState } from "react";
-import Engineers from "./components/Engineers";
+import {createBrowserRouter, createRoutesFromElements, Route, RouterProvider} from 'react-router-dom'
 
-function App() {
-  const [counter, setCounter] = useState<number>(0);
-  const [allEngineers, setAllEngineers] = useState<string[]>([]);
-  const [showEngineers, setShowEngineers] = useState<Boolean>(false);
-  const [className, setClassName] = useState<string>("");
+//layout
 
-  useEffect(() => {
-    setClassName("startBtn startBtnActivated startBtnBuffer");
-    setTimeout(() => {
-      setClassName("startBtn startBtnActivated ");
-      setShowEngineers(false);
-    }, 250);
-  }, [showEngineers]);
+import RootLayout from './layouts/rootLayout'
 
-  const handleClick = async () => {
-    setCounter(counter + 1);
-    setShowEngineers(true);
+//pages
 
-    try {
-      const response = await fetch("/crowdWrap/engineers");
-      const json = await response.json();
-      setAllEngineers(json);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+import HomePage from './pages/homePage'
+import LoginForm from './pages/loginForm'
+import SignupForm from './pages/signupForm'
+import LoggedIn from './pages/loggedIn'
+
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route path='/' element={<RootLayout/>}>
+      <Route index element={<HomePage/>}></Route>
+      <Route path='/register'element={<SignupForm/>}></Route>
+      <Route path='/login'element={<LoginForm/>}></Route>
+      <Route path='/profile' element={<LoggedIn/>}></Route>
+      <Route path='/logout' element={<RootLayout/>}></Route>
+    </Route>
+  )
+)
+
+export default function App() {
+
 
   return (
-    <div className="App">
-      <h1>Server Test {counter} </h1>
-      <button className={className} onClick={handleClick} />
-      {showEngineers && <Engineers allEngineers={allEngineers} />}
-    </div>
-  );
-}
-
-export default App;
+    <RouterProvider router={router}/>
+  )
+} 
