@@ -31,9 +31,9 @@ dotenv.config();
 
 app.use(
   session({
-    secret: "process.env.SECRET",
-    cookie: { maxAge: 864000 },
-    resave: false,
+    secret: process.env.SECRET as string,
+    cookie: { maxAge: 24 * 60 * 60 * 1000 }, //24 hour
+    resave: true,
     saveUninitialized: false,
   })
 );
