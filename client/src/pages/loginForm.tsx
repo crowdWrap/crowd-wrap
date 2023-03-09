@@ -3,6 +3,8 @@ import "../assets/form.css";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import SignInGoogle from "../api/googleSignin";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 async function fetchData(navigate: any) {
   const response: Response = await fetch("/login", {
@@ -84,6 +86,10 @@ export default function LoginForm() {
           <div className="submit">
             <button type="submit">Login</button>
           </div>
+
+          <GoogleOAuthProvider clientId="951239670358-q89e1msbgovmepbaq4fplqc20qn62ha9.apps.googleusercontent.com">
+            <SignInGoogle />
+          </GoogleOAuthProvider>
         </form>
       </div>
       <div className="btnWrap">

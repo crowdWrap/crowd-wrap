@@ -13,6 +13,8 @@ export async function createUser(
         username,
         email,
         password,
+        picture:
+          "https://vectorified.com/images/no-profile-picture-icon-28.png",
       },
     });
   } catch (error) {
