@@ -14,8 +14,11 @@ p, div {
     padding:0;
   }
 
-  .Link {
-    text-decoration: 'none';
+  .linkstyle {
+    text-decoration: none;
+    text-align: center;
+    color: black;
+    font-size: smaller;
   }
 
   .wrapper {
