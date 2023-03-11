@@ -4,6 +4,9 @@ import { useState } from "react";
 import {Link, useNavigate} from 'react-router-dom'
 import { useEffect } from "react";
 import Header from "../components/Header";
+import  "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 //fefefe background-color: #0efefe;
 
 async function fetchData(navigate:any){
@@ -79,8 +82,7 @@ export default function LoginForm(){
 
                   <div className='submit'>
                      <button type='submit'>Login</button>
-                     <Link to="/register" className="linkstyle" style={{ fontSize: 10}}>Don't Have an account yet? Register for free.</Link>
-  
+                     <Link to="/register" className="linkstyle" style={{ fontSize: 10 }}>Don't Have an account yet? Register for free.</Link>
                   </div>
                </form>
             </div>

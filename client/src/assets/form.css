@@ -19,6 +19,8 @@ p, div {
     text-align: center;
     color: black;
     font-size: smaller;
+    margin-left: 45px;
+    margin-top: 10px;
   }
 
   .wrapper {
