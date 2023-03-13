@@ -6,7 +6,7 @@ import {
   faAddressBook,
 } from "@fortawesome/free-solid-svg-icons";
 import { Link, useNavigate } from "react-router-dom";
-import friendsList from "./friendslist";
+// import friendsList from "./friendList/friendslist";
 
 export default function ClickPopup() {
   const navigate = useNavigate();

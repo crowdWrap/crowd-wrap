@@ -11,6 +11,7 @@ import { useState } from "react";
 
 export default function FriendsList() {
   const [clicked, setClicked] = useState<boolean>(false);
+  //add another one of these for the other buttons
 
   const clickHandler = (event: MouseEvent) => {
     logoutRemoval(event, setClicked);

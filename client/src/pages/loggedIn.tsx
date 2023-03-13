@@ -3,7 +3,7 @@ import LogoutButton from "../components/logout";
 import { useNavigate } from "react-router-dom";
 import { faUserGroup } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import FriendsList from "../components/friendslist";
+import FriendsList from "../components/friendList/friendslist";
 
 async function fetchLoginData(navigate: any, setUsername: any) {
   const response: Response = await fetch("/profile", {

@@ -93,19 +93,65 @@
 }
 
 .friendslistPop {
+  position: absolute;
+  /* height: 300px; */
+  margin-left: -70px;
+  border-radius: 25px;
+  margin-top: 10px;
+  /* overflow-y: scroll;
+  overflow-x: hidden; */
+}
+
+.friendListCover {
+  border: 5px solid black;
   display: flex;
   flex-direction: column;
   gap: 10px;
-  overflow: scroll;
-  position: absolute;
+  height: 310px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+
+  position: relative;
   border: 2px solid rgb(0, 0, 0);
   background-color: #5199ad;
   border-radius: 25px;
-  margin-left: -70px;
-  margin-top: 10px;
-  height: 300px;
   width: 150px;
   padding: 10px;
+}
+
+.friendsListCover div:nth-of-type(2) {
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+}
+
+.friendsListRow {
+  padding: 5px;
+  position: absolute;
+  display: flex;
+  justify-content: space-evenly;
+  background-color: #5199ad;
+  border: 1px solid black;
+  border-bottom-left-radius: 25px;
+  border-bottom-right-radius: 25px;
+  bottom: 0;
+  z-index: 2;
+
+  left: 1px;
+  width: 160px;
+}
+
+.friendsListRow button {
+  min-width: auto;
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+  transition: 0.25s ease-in-out;
+}
+
+.friendsListRow button:hover {
+  background-color: transparent;
+  color: black;
 }
 
 .friendslistPop ul {
@@ -129,9 +175,28 @@
   margin-top: 30px;
 }
 
+.friend:last-of-type {
+  margin-bottom: 25px;
+}
+
 .search input {
-  width: 125px;
-  border-radius: 25px;
+  width: 140px;
+  border-radius: 0px;
+  z-index: 1;
+  border-radius: 10px;
+  transition: 0.25s ease-in-out;
+  top: 8px;
+  left: 5px;
+  height: 8px;
+  border: none;
+  border-bottom: 1px solid black;
+  appearance: none;
+  background-color: #5199ad;
+  position: absolute;
+}
+
+.search input::placeholder {
+  color: black;
 }
 
 .search {
@@ -148,23 +213,57 @@
 }
 
 .searchIcon {
-  position: absolute;
+  /* position: absolute;
   right: 30px;
   top: -5px;
-  color: black;
+  color: black; */
 }
 .searchIconCover {
+  z-index: 2;
   position: absolute;
-  min-width: none;
+  min-width: 20px;
   margin: 0;
   padding: 0;
   background-color: transparent;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  /* color: black; */
+  transition: 0.25s ease-in-out;
+}
+
+.searchIconCover:hover {
+  background-color: transparent;
+  color: black;
 }
 
 .friend img {
   width: 40px;
   border-radius: 25px;
   height: 40px;
+}
+
+.friendListInboxTitle {
+  display: flex;
+}
+
+.friendListInboxTitle button {
+  min-width: 73px;
+  max-width: 73px;
+  background: rgb(255, 255, 255);
+  color: black;
+  transition: 0.25s ease-in-out;
+  height: 30px;
+  border-radius: 25px;
+  margin-top: -6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.friendListInboxTitle .selected {
+  color: white;
+  background-color: black;
 }
 
 /* LoggedIn page  - End */
