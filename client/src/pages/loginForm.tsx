@@ -82,7 +82,7 @@ export default function LoginForm(){
 
                   <div className='submit'>
                      <button type='submit'>Login</button>
-                     <Link to="/register" className="linkstyle" style={{ fontSize: 10 }}>Don't Have an account yet? Register for free.</Link>
+                     <Link to="/register" className="linkstyle" style={{ fontSize: 12 }}>Don't Have an account yet? <span style={{ color: 'pink' }}>Register for free.</span></Link>
                   </div>
                </form>
             </div>
