@@ -29,6 +29,21 @@ export async function getProfileByUsername(username: string) {
   }
 }
 
+export async function getProfilesByPartialUsername(partialUsername: string) {
+  try {
+    const userProfiles = await prisma.user.findMany({
+      where: {
+        username: {
+          contains: partialUsername,
+        },
+      },
+    });
+    return userProfiles;
+  } catch (e) {
+    console.log(e);
+  }
+}
+
 export async function getProfileByEmail(email: string) {
   try {
     const userProfile = await prisma.user.findUnique({

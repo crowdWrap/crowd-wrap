@@ -8,6 +8,7 @@ import {
   getProfileById,
   updateUser,
   updateUserName,
+  getProfilesByPartialUsername,
 } from "./profileQueries";
 import bcrypt from "bcryptjs";
 import cors from "cors";
@@ -269,6 +270,16 @@ app.get("/profilePicRequest", async (req, res) => {
     const user = await getProfileById(Number(req.session.user));
     res.send(user.picture);
   }
+});
+
+app.get("/friendSearch", async (req, res) => {
+  const userSearch: any = req.query.user_search;
+  console.log(userSearch);
+  const profiles = await getProfilesByPartialUsername(userSearch);
+  let accounts = profiles?.map((item) => {
+    return { username: item.username, profilePic: item.picture };
+  });
+  res.send(accounts);
 });
 
 app.listen(8000, () => {
