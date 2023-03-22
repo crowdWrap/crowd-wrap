@@ -10,6 +10,7 @@ import HomePage from './pages/homePage'
 import LoginForm from './pages/loginForm'
 import SignupForm from './pages/signupForm'
 import LoggedIn from './pages/loggedIn'
+import LandingPage from './pages/landingPage'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -19,6 +20,7 @@ const router = createBrowserRouter(
       <Route path='/login'element={<LoginForm/>}></Route>
       <Route path='/profile' element={<LoggedIn/>}></Route>
       <Route path='/logout' element={<RootLayout/>}></Route>
+      <Route path = '/landingPage' element = {<LandingPage/>}></Route>
     </Route>
   )
 )

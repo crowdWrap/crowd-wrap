@@ -1,0 +1,91 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+
+.navbar {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #fff;
+  height: 75px;
+  color: black;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  font-family: 'Neue Montreal ';
+}
+
+.nav-links {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 75px;
+  background-color: #fff;
+  color: black;
+}
+
+.nav-links {
+  display: flex;
+  justify-content: flex-end;
+  list-style: none;
+  width: 75%;
+}
+
+
+.nav-links a {
+  text-decoration: none;
+  color: black;
+  padding: 0 15px;
+  font-size: 16px;
+  transition: color 0.3s;
+}
+
+.nav-links a:hover {
+  color: purple;
+}
+
+.signup {
+  border: 2px solid black;
+  background-color: white;
+  color: black;
+  text-align: center; 
+  font-size: 16px;
+  cursor: pointer;
+  border-color: #e7e7e7;
+  color: black;
+  height: 35px;
+  align-items: center;
+  line-height: 30px;
+}
+
+.main-content {
+  background-color: #E5E5E5;
+  width:100%;
+}
+.cta-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.9em; /* Adjust the gap between the CTA and image as needed */
+
+}
+
+.cta {
+  font-weight: normal;
+}
+
+.landing-image {
+  /* Style the image container (assuming you'll use this class in the LandingImage component) */
+}
+
+
+
+@font-face {
+  font-family: 'Neue Montreal';
+}
+
