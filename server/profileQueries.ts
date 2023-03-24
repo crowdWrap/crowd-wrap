@@ -49,7 +49,7 @@ export async function updateUser(email: string, newPic: string) {
   console.log(user);
   const updatedUser = await prisma.user.update({
     where: { email },
-    data: { picture: newPic },
+    data: { pictureUrl: newPic },
   });
 
   console.log(updatedUser);

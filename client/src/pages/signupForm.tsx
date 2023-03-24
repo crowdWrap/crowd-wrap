@@ -16,9 +16,7 @@ export default function SignupForm() {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (registerPass !== registerConfirmPass) {
-      return console.log("Passwords do not match.");
-    } else {
+    if (registerPass == registerConfirmPass) {
       const data = JSON.stringify({
         username: registerUsername,
         email: registerEmail,

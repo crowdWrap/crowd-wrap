@@ -74,7 +74,6 @@ app.post("/register", async (req, res) => {
   if (req.body.credential) {
     try {
       const token = req.body.credential;
-      // console.log(req.body.credential);
       let payload: any;
       async function verify() {
         const ticket = await client.verifyIdToken({
@@ -90,7 +89,7 @@ app.post("/register", async (req, res) => {
           const lastname = payload.family_name;
           const email = payload.email;
           const picture = payload.picture;
-          const sub = payload.sub;
+          const userData = payload.sub;
 
           console.log(payload);
           //makes sure that the user doesnt exist
@@ -169,7 +168,6 @@ app.post("/login", async (req, res, next) => {
           if (err) {
             return next(err);
           }
-          // updateUser(email, picture);
           req.session.user = user.id.toString();
 
           if (user.username == sub) {
