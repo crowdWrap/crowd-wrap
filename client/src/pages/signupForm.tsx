@@ -2,9 +2,10 @@ import React from "react";
 import "../assets/form.css";
 import { useState } from "react";
 import { Link, Router, useNavigate } from "react-router-dom";
+import Header from "../components/Header";
 
 export default function SignupForm() {
-  const [registerUsername, setRegisterUsername] = useState<string>("");
+  const [registerFirstname, setRegisterFirstname] = useState<string>("");
   const [registerEmail, setRegisterEmail] = useState<string>("");
   const [registerPass, setRegisterPassword] = useState<string>("");
   const [registerConfirmPass, setRegisterConfirmPassword] =
@@ -18,7 +19,7 @@ export default function SignupForm() {
       console.log("Passwords do not match.");
     } else {
       const data = JSON.stringify({
-        username: registerUsername,
+        firstname: registerFirstname,
         email: registerEmail,
         password: registerPass,
       });
@@ -44,16 +45,17 @@ export default function SignupForm() {
 
   return (
     <div className="wrapper signupForm">
+      <Header />
       <div className="form-wrapper">
-        <h2>Sign Up</h2>
+      <div className= "logintitle">Sign Up</div>
         <form onSubmit={handleSubmit} noValidate>
-          <div className="username">
-            <label htmlFor="username">Username</label>
+          <div className="firstname">
+            <label htmlFor="firstname">First name</label>
             <input
               type="text"
-              name="username"
-              placeholder="Username"
-              onChange={(e) => setRegisterUsername(e.target.value)}
+              name="firstname"
+              placeholder="First name"
+              onChange={(e) => setRegisterFirstname(e.target.value)}
             />
           </div>
           <div className="email">
@@ -86,17 +88,16 @@ export default function SignupForm() {
           <div className="submit">
             <button type="submit">Sign Up</button>
           </div>
+          <div className="submit">
+        <Link to="/login" className="linkstyle" style={{ fontSize: 12 }}>
+          Already have an account?{" "}
+          <span style={{ color: "pink" }}>Login</span>
+        </Link>
+      </div>
         </form>
       </div>
 
-      <div className="btnWrap">
-        <Link to="/login">
-          <button className="signupBtn"> Already Have an Account?</button>
-        </Link>
-        <Link to="/">
-          <button className="signupBtn"> Home</button>
-        </Link>
-      </div>
+      
     </div>
   );
 }
