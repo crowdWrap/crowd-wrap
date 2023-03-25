@@ -3,12 +3,13 @@ import "../assets/form.css";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import Header from "../components/Header";
 
 async function fetchData(navigate: any) {
   const response: Response = await fetch("/login", {
     method: "GET",
   });
-
+  // eslint-disable-next-line
   const receivedData = await response.json();
 
   if (response.ok) {
@@ -19,19 +20,18 @@ async function fetchData(navigate: any) {
 
 export default function LoginForm() {
   const navigate = useNavigate();
-  const [loginUsername, setLoginUsername] = useState<string>("");
-  //   const [loginEmail, setLoginEmail] = useState<string>("")
-  const [loginPass, setLoginPassword] = useState<string>("");
+  const [loginUsername, setLoginUsername] = useState < string > ("");
+  const [loginPass, setLoginPassword] = useState < string > ("");
 
   useEffect(() => {
     fetchData(navigate);
+    // eslint-disable-next-line
   }, []);
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const data = JSON.stringify({
       username: loginUsername,
-      // email: loginEmail,
       password: loginPass,
     });
 
@@ -54,8 +54,9 @@ export default function LoginForm() {
   }
   return (
     <div className="wrapper loginForm">
+      <Header />
       <div className="form-wrapper">
-        <h2>Log In</h2>
+        <div className="logintitle">Login</div>
         <form onSubmit={handleSubmit} noValidate>
           <div className="username">
             <label htmlFor="username">Username</label>
@@ -67,10 +68,6 @@ export default function LoginForm() {
               onChange={(e) => setLoginUsername(e.target.value)}
             />
           </div>
-          {/* <div className='email'>
-                     <label htmlFor="email">Email</label>
-                     <input type='email' name='email' placeholder="Email" onChange={e => setLoginEmail(e.target.value)}/>
-                  </div> */}
           <div className="password">
             <label htmlFor="password">Password</label>
             <input
@@ -81,19 +78,17 @@ export default function LoginForm() {
               onChange={(e) => setLoginPassword(e.target.value)}
             />
           </div>
+
           <div className="submit">
             <button type="submit">Login</button>
+            <Link to="/register" className="linkstyle" style={{ fontSize: 12 }}>
+              Don't Have an account yet?{" "}
+              <span style={{ color: "pink" }}>Register for free.</span>
+            </Link>
           </div>
         </form>
-      </div>
-      <div className="btnWrap">
-        <Link to="/register">
-          <button className="signupBtn"> Don't Have an Account?</button>
-        </Link>
-        <Link to="/">
-          <button className="loginBtn"> Home</button>
-        </Link>
       </div>
     </div>
   );
 }
+
