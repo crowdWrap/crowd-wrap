@@ -114,6 +114,7 @@ p, div {
   }
 
   .firstname,
+  .lastname,
   .email,
   .password {
     display: flex;
