@@ -1,123 +1,131 @@
 p, div {
-    font-family: PP Neue Montreal;
-  }
-  
-  .logintitle {
-    font-size: 24px;
-    line-height: 60px;
-    float: left;
-    font-weight: bold;
-    font-family: Neue Montreal;
-    text-align: center;
-  }
+  font-family: PP Neue Montreal;
+}
 
-  body{
-    margin:0;
-    padding:0;
-  }
+.logintitle { 
+  font-size: 24px;
+  line-height: 60px;
+  float: left;
+  font-weight: bold;
+  font-family: PP Neue Montreal;
+  text-align: center;
+}
 
-  .linkstyle {
-    text-decoration: none;
-    text-align: center;
-    color: black;
-    font-size: smaller;
-    margin-left: 25px;
-    margin-top: 15px;
-  }
+.signuptitle { 
+  font-size: 24px;
+  line-height: 60px;
+  float: left;
+  font-weight: bold;
+  font-family: PP Neue Montreal;
+  text-align: left;
+}
 
-  .wrapper {
-    height: 100vh;
-    width: 100vw;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: rgb(233, 246, 253);
-    background-image: url('blue-pink-present.png');
-    background-size: 200%;
-    background-position-y: 30%;
-    opacity: 0.9;
-    background-size: cover;
-  }
+body{
+  margin:0;
+  padding:0;
+}
 
-  .form-wrapper {
-    display: flex;
-    flex-direction: column;
-    width: 280px;
-    max-width: 80%;
-    min-width: 100px;
-    min-height: 400px;
-    padding: 20px 40px;
-    border-radius: 25px;
-    box-shadow: 0px 8px 36px #222;
-    background-color: #fefefe;
-  }
+.linkstyle {
+  text-decoration: none;
+  text-align: center;
+  color: black;
+  font-size: smaller;
+  margin-left: 25px;
+  margin-top: 15px;
+}
 
-  .form-wrapper > h2 {
-    display: flex;
-    justify-content: center;
-    font-family: "Segoe UI", "Neue Montreal", "Ubuntu", "Roboto", "Open Sans", "Helvetica Neue", sans-serif;
-    font-size: 2em;
-    font-weight: lighter;
-    margin-top: 0.25em;
-    color: #222;
-  }
+.wrapper {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(233, 246, 253);
+  background-image: url('blue-pink-better-theme.png');
+  background-position-y: 30%;
+  opacity: 0.9;
+  background-size: cover;
+}
 
-  form {
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-  }
+.form-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  max-width: 80%;
+  min-width: 100px;
+  min-height: 300px;
+  padding: 20px 40px;
+  border-radius: 25px;
+  box-shadow: 0px 8px 36px #222;
+  background-color: #fefefe;
+}
 
-  label {
-    margin-bottom: 0.5em;
-    color: #444;
-    font-weight: lighter;
-  }
+.form-wrapper > h2 {
+  display: flex;
+  justify-content: center;
+  font-family: "Segoe UI", "Neue Montreal", "Ubuntu", "Roboto", "Open Sans", "Helvetica Neue", sans-serif;
+  font-size: 2em;
+  font-weight: lighter;
+  margin-top: 0.25em;
+  color: #222;
+}
 
-  input {
-    padding: 15px 15px;
-    border-radius: 15px;
-    outline: none;
-    border: 1px solid #d6d1d5;
-  }
+form {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
 
-  input::placeholder {
-    font-size: 1.2em;
-    font-weight: lighter;
-    color: #bbb;
-  }
+label {
+  margin-bottom: 0.5em;
+  color: #444;
+  font-weight: lighter;
+}
 
-  button {
-    min-width: 100%;
-    cursor: pointer;
-    margin-right: 0.25em;
-    margin-top: 0.5em;
-    padding:  0.938em;
-    border: none;
-    border-radius: 15px;
-    background-color: rgb(0, 3, 1);
-    color: #fefefe;
-  }
+input {
+  padding: 15px 15px;
+  border-radius: 15px;
+  outline: none;
+  border: 1px solid #d6d1d5;
+}
 
-  button:hover {
-    background-color: rgb(0, 0, 0);
-    color: #fefefe;
-  }
+input::placeholder {
+  font-size: 1.2em;
+  font-weight: lighter;
+  color: #bbb;
+}
 
-  .username,
-  .email,
-  .password {
-    display: flex;
-    border-radius: 5px 20px 5px;
-    flex-direction: column;
-    margin-bottom: 15px;
-    width: 100%;
-  }
+button {
+  min-width: 100%;
+  cursor: pointer;
+  margin-right: 0.25em;
+  margin-top: 0.5em;
+  padding:  0.938em;
+  border: none;
+  border-radius: 15px;
+  background-color: rgb(92, 202, 251);
+  color: #fefefe;
+}
 
-  .submit {
-    width: 100%;
-    border-radius: 500px;
-    display: flex;
-    flex-wrap: wrap;
-  }
+button:hover {
+  background-color: rgb(247, 182, 210);
+  color: #fefefe;
+}
+
+.username,
+.email,
+.password {
+  display: flex;
+  border-radius: 5px 20px 5px;
+  flex-direction: column;
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+.submit {
+  width: 100%;
+  border-radius: 500px;
+  display: flex;
+  flex-wrap: wrap;
+}

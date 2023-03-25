@@ -2,6 +2,7 @@ import React from "react";
 import "../assets/form.css";
 import { useState } from "react";
 import { Link, Router, useNavigate } from "react-router-dom";
+import Header from "../components/Header";
 
 export default function SignupForm() {
   const [registerUsername, setRegisterUsername] = useState<string>("");
@@ -44,6 +45,7 @@ export default function SignupForm() {
 
   return (
     <div className="wrapper signupForm">
+      <Header />
       <div className="form-wrapper">
         <h2>Sign Up</h2>
         <form onSubmit={handleSubmit} noValidate>
@@ -89,14 +91,14 @@ export default function SignupForm() {
         </form>
       </div>
 
-      <div className="btnWrap">
+      {/*<div className="btnWrap">
         <Link to="/login">
           <button className="signupBtn"> Already Have an Account?</button>
         </Link>
         <Link to="/">
           <button className="signupBtn"> Home</button>
         </Link>
-      </div>
+      </div> */}
     </div>
   );
 }
