@@ -2,16 +2,15 @@ import { useEffect, useState } from "react";
 import ClickPopup from "./logoutPop";
 
 async function fetchProfilePic(setBackgroundImage: any) {
-  const response: Response = await fetch(
-    "https://people.googleapis.com/v1/people/106877212988625954306?personFields=photos&key=AIzaSyD680Eb2E2_haJNH-3Dqa75uHLgD8Amr44",
-    {
-      method: "GET",
-    }
-  );
-  const receivedData = await response.json();
+  const response: Response = await fetch("/profilePicRequest", {
+    method: "GET",
+  });
+
+  const receivedData = await response.text();
+
   if (response.ok) {
-    setBackgroundImage(receivedData.photos[0].url);
-  } else if (response.status == 403) {
+    setBackgroundImage(receivedData);
+  } else {
     console.log("error");
   }
 }
@@ -37,7 +36,7 @@ export default function LogoutButton() {
     <div className="logoutBtnCover">
       <button
         style={{
-          backgroundImage: `url(${backgroundImage}`,
+          backgroundImage: `url(${backgroundImage}?timestamp=${Date.now()})`,
         }}
         className={!clicked ? "logoutBtn" : "logoutBtn logoutBtnClicked"}
         onClick={click}
