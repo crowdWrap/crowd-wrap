@@ -201,7 +201,7 @@
 }
 
 .friend:nth-of-type(1) {
-  margin-top: 30px;
+  margin-top: 40px;
 }
 
 .friend:last-of-type {
@@ -214,13 +214,11 @@
   z-index: 1;
   border-radius: 10px;
   transition: 0.25s ease-in-out;
-  top: 8px;
-  left: 5px;
-  height: 8px;
+  height: 5px;
   border: none;
   border-bottom: 1px solid black;
   appearance: none;
-  background-color: #5199ad;
+  background-color: transparent;
   position: absolute;
 }
 
@@ -309,7 +307,7 @@
   background-size: cover;
   min-width: 50px;
   transition: 0.25s ease-in-out;
-  font: PP Neue Montreal
+  font: PP Neue Montreal;
 }
 
 .logoutBtnClicked {
@@ -422,7 +420,7 @@
 .signupBtn {
   width: 200px;
   height: 50px;
-  font: PP Neue Montreal
+  font: PP Neue Montreal;
 }
 
 /* signUp button - end */
