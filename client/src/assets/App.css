@@ -65,8 +65,8 @@
   margin: 0;
   grid-row-start: 1;
   display: flex;
-  justify-content: end;
-  align-items: end;
+  justify-content: flex-end;
+  align-items: flex-end;
 }
 
 .friendsList {
@@ -106,7 +106,7 @@
   border: 5px solid black;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 15px;
   height: 310px;
   overflow-y: scroll;
   overflow-x: hidden;
@@ -123,6 +123,30 @@
   display: flex;
   gap: 10px;
   flex-direction: column;
+}
+
+.friendAddButton {
+  position: relative;
+  z-index: 3;
+  min-width: 10px;
+  width: 10px;
+  height: 10px;
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+  color: white;
+  transition: 0.25s ease-in-out;
+}
+
+.friendAddButtonCover {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.friendAddButton:hover {
+  color: green;
+  background-color: transparent;
 }
 
 .friendsListRow {
@@ -159,6 +183,10 @@
 }
 
 .friend {
+  overflow: hidden;
+  overflow-x: scroll;
+  min-height: 40px;
+  height: 40px;
   gap: 20px;
   align-items: center;
   display: flex;
@@ -169,6 +197,7 @@
   padding: 0;
   background-color: rgba(35, 35, 83, 0.11);
   border-radius: 10px;
+  user-select: none;
 }
 
 .friend:nth-of-type(1) {
