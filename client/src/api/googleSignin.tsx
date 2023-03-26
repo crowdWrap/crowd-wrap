@@ -1,5 +1,4 @@
 import { GoogleLogin } from "@react-oauth/google";
-import jwtDecode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 
 export default function SignInGoogle() {
@@ -20,7 +19,7 @@ export default function SignInGoogle() {
       })
         .then(async (response) => {
           const newResponse = await response.json();
-          if (newResponse.message == "Needs username") {
+          if (newResponse.message === "Needs username") {
             navigate("/register/setUsername");
           } else if (response.ok) {
             navigate("/profile");
