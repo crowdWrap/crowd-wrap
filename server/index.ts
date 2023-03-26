@@ -130,7 +130,7 @@ app.post("/register", async (req, res) => {
 
       //Create user and send to DB
       createUser(username, email, hashedPass);
-      return res.status(200).json({ message: "Registration succesful" });
+      return res.status(201).json({ message: "Registration succesful" });
     } catch (e) {
       console.log("the error:", e);
       return res.status(401).json({ message: "registration failed" });
