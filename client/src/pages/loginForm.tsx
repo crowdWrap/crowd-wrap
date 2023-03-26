@@ -10,9 +10,6 @@ async function fetchData(navigate: any) {
   const response: Response = await fetch("/login", {
     method: "GET",
   });
-
-  const receivedData = await response.json();
-
   if (response.ok) {
   } else {
     navigate("/profile");
@@ -22,18 +19,16 @@ async function fetchData(navigate: any) {
 export default function LoginForm() {
   const navigate = useNavigate();
   const [loginUsername, setLoginUsername] = useState<string>("");
-  //   const [loginEmail, setLoginEmail] = useState<string>("")
   const [loginPass, setLoginPassword] = useState<string>("");
 
   useEffect(() => {
     fetchData(navigate);
-  }, []);
+  }, [navigate]);
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const data = JSON.stringify({
       username: loginUsername,
-      // email: loginEmail,
       password: loginPass,
     });
 

@@ -1,17 +1,11 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faGear,
-  faUser,
-  faRightFromBracket,
-  faAddressBook,
-  faUserGroup,
-} from "@fortawesome/free-solid-svg-icons";
+import { faUserGroup } from "@fortawesome/free-solid-svg-icons";
 import FriendslistPop from "./friendslistPop";
 import { useState } from "react";
 
 export default function FriendsList() {
   const [clicked, setClicked] = useState<boolean>(false);
-  //add another one of these for the other buttons
+  // add another one of these for the other buttons
 
   const clickHandler = (event: MouseEvent) => {
     logoutRemoval(event, setClicked);
@@ -26,7 +20,7 @@ export default function FriendsList() {
   };
 
   const click = () => {
-    setClicked(clicked == false);
+    setClicked(clicked === false);
     document.addEventListener("click", clickHandler);
   };
   return (

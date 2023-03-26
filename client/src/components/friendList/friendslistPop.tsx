@@ -1,16 +1,10 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faGear,
-  faUser,
-  faRightFromBracket,
-  faAddressBook,
   faMagnifyingGlass,
   faPlus,
   faInbox,
 } from "@fortawesome/free-solid-svg-icons";
-import { Link, useNavigate } from "react-router-dom";
-import friendsList from "./friendslist";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import FriendsListSearch from "./friendsListSearch";
 import FriendListInbox from "./friendListInbox";
 import FriendsListCover from "./friendsListCover";
@@ -42,17 +36,22 @@ import FriendListAdd from "./friendListAdd";
 //how are you going to empty the friend part of the list the rest can stay
 //remove search too, or else there will be too much difficulty
 
+//add refresh button
+
 export default function FriendslistPop() {
   const [selectedButton, setSelectedButton] = useState(null);
-  const [handleDisplay, setHandleDisplay] =
-    useState<string>("FriendsListSearch");
-  const navigate = useNavigate();
+  const [fetchedData, setFetchedData] = useState<any>(null);
+
+  const handleDataUpdate = async (newData: any) => {
+    setFetchedData(newData);
+  };
 
   const handleButtonClick = (input: any) => {
-    if (input == selectedButton) {
+    if (input === selectedButton) {
       setSelectedButton(null);
     } else {
       setSelectedButton(input);
+      setFetchedData(null);
     }
   };
 
@@ -67,8 +66,8 @@ export default function FriendslistPop() {
         </button>
       </div>
 
-      {selectedButton != "friendListInbox" &&
-        selectedButton != "friendListAdd" && (
+      {selectedButton !== "friendListInbox" &&
+        selectedButton !== "friendListAdd" && (
           <div className="search">
             <button
               onClick={() => handleButtonClick("friendListSearch")}
@@ -79,13 +78,17 @@ export default function FriendslistPop() {
                 icon={faMagnifyingGlass}
               />
             </button>
-            {selectedButton == "friendListSearch" && <FriendsListSearch />}
+            {selectedButton === "friendListSearch" && (
+              <FriendsListSearch updateData={handleDataUpdate} />
+            )}
           </div>
         )}
-      {selectedButton != "friendListInbox" &&
-        selectedButton != "friendListAdd" && <FriendsListCover />}
-      {selectedButton == "friendListInbox" && <FriendListInbox />}
-      {selectedButton == "friendListAdd" && <FriendListAdd />}
+      {selectedButton !== "friendListInbox" &&
+        selectedButton !== "friendListAdd" && (
+          <FriendsListCover data={fetchedData} />
+        )}
+      {selectedButton === "friendListInbox" && <FriendListInbox />}
+      {selectedButton === "friendListAdd" && <FriendListAdd />}
     </div>
   );
 }
