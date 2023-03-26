@@ -30,11 +30,6 @@ async function sendFriendRequest(item: string, element: HTMLSpanElement) {
   }
 }
 
-//Everything is working well, didnt test the feature to actually add to friend requests sent, but
-//the problem is when trying to remove from the list it for some reason removes the friendslistpop
-//this can be seen when u remove the function for removing friendslistpop when clicked outside
-//I am not sure what to do, maybe I will remove the functionun logoutremoval and rebuild it so its better
-
 export default function FriendListAdd() {
   const [searchText, setSearchText] = useState<string>("");
   const [accounts, setAccounts] = useState<Account[]>([]);

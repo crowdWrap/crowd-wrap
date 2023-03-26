@@ -86,7 +86,6 @@ export default function FriendListInboxSent() {
             </button>
           </span>
         ))}
-      {/* need an X */}
     </div>
   );
 }

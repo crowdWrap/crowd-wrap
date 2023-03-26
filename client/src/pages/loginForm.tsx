@@ -47,7 +47,6 @@ export default function LoginForm() {
       navigate("/profile");
     } else {
       alert(receivedData.message);
-      // navigate("/register");
     }
   }
   return (
@@ -65,10 +64,6 @@ export default function LoginForm() {
               onChange={(e) => setLoginUsername(e.target.value)}
             />
           </div>
-          {/* <div className='email'>
-                     <label htmlFor="email">Email</label>
-                     <input type='email' name='email' placeholder="Email" onChange={e => setLoginEmail(e.target.value)}/>
-                  </div> */}
           <div className="password">
             <label htmlFor="password">Password</label>
             <input

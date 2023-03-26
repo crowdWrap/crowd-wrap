@@ -65,7 +65,7 @@ export default function FriendsListCover(data: any) {
     };
   }, []);
 
-  //Why isnt it working!? When clicking on the button it should be null...so why is still displayed, does
+  //When clicking on the button it should be null...so why is still displayed, does
   //the component need to be updated?
 
   return (

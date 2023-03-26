@@ -42,8 +42,6 @@ async function addToFriend(item: string, element: HTMLSpanElement) {
   }
 }
 
-//copy everything from friendlistsent and do that here
-
 interface Account {
   username: string;
   profilePic: string;
@@ -122,7 +120,6 @@ export default function FriendListInboxReceived() {
                 }
               >
                 <FontAwesomeIcon icon={faPlus} />
-                {/* On click this will go to the removeFriendSent and same for the other except received */}
               </button>
             </div>
           </span>

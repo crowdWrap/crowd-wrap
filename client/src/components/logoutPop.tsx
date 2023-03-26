@@ -5,7 +5,6 @@ import {
   faRightFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
-// import friendsList from "./friendList/friendslist";
 
 export default function ClickPopup() {
   const navigate = useNavigate();
@@ -33,12 +32,6 @@ export default function ClickPopup() {
         <FontAwesomeIcon icon={faUser} />
         <p>Profile</p>
       </button>
-      {/* 
-        <button className="individualBtn" onClick={}>
-          <FontAwesomeIcon icon={faAddressBook} />
-          <p>Friends</p>
-        </button> */}
-
       <button className="individualBtn" onClick={logoutSession}>
         <FontAwesomeIcon icon={faRightFromBracket} />
         <p>Logout</p>
