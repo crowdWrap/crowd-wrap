@@ -3,9 +3,8 @@ import {
   faGear,
   faUser,
   faRightFromBracket,
-  faAddressBook,
 } from "@fortawesome/free-solid-svg-icons";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 // import friendsList from "./friendList/friendslist";
 
 export default function ClickPopup() {

@@ -1,15 +1,9 @@
-import {NavLink, Outlet} from 'react-router-dom'
+import { Outlet } from "react-router-dom";
 
 export default function RootLayout() {
-
-    return (
-        <div className='root-layout'>
-
-
-        
-                <Outlet />
-           
-
-        </div>
-    )
+  return (
+    <div className="root-layout">
+      <Outlet />
+    </div>
+  );
 }

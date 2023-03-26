@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import "../assets/form.css";
 import { useState } from "react";
-import { Link, Router, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 async function fetchData(navigate: any, setRegisterUsername: any) {
   //to check if the user is authenticated beforehand
@@ -14,7 +14,7 @@ async function fetchData(navigate: any, setRegisterUsername: any) {
   if (response.ok) {
   } else {
     navigate("/login");
-    //navigate to login if they arent authenticated
+    //navigate to login if they arent authenticateds
     alert(receivedData.message);
   }
 }
@@ -26,7 +26,7 @@ export default function SetUsername() {
 
   useEffect(() => {
     fetchData(navigate, setRegisterUsername);
-  }, []);
+  }, [navigate]);
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();

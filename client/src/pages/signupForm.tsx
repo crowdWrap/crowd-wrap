@@ -1,7 +1,7 @@
 import React from "react";
 import "../assets/form.css";
 import { useState } from "react";
-import { Link, Router, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import SignUpGoogle from "../api/googleSignup";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 

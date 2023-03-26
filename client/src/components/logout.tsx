@@ -22,17 +22,17 @@ export default function LogoutButton() {
   const clickHandler = (event: MouseEvent) => {
     logoutRemoval(event, setClicked);
   };
-
   const logoutRemoval = (e: MouseEvent, setClicked: any) => {
     const target = e.target as Element;
     if (target && !target.closest(".logoutBtnCover")) {
+      // check if target is not within logoutCover
       setClicked(false);
       document.removeEventListener("click", clickHandler);
     }
   };
 
   const click = () => {
-    setClicked(clicked == false);
+    setClicked(clicked === false);
     document.addEventListener("click", clickHandler);
   };
 
