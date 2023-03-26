@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import FriendListInboxReceived from "./friendListInboxReceived";
 import FriendListInboxSent from "./friendListInboxSent";
 
@@ -14,19 +14,19 @@ export default function FriendListInbox() {
       <div className="friendListInboxTitle">
         <button
           onClick={() => handleButtonClick("received")}
-          className={selectedButton == "received" ? "selected" : ""}
+          className={selectedButton === "received" ? "selected" : ""}
         >
           received
         </button>
         <button
           onClick={() => handleButtonClick("sent")}
-          className={selectedButton == "sent" ? "selected" : ""}
+          className={selectedButton === "sent" ? "selected" : ""}
         >
           sent
         </button>
       </div>
-      {selectedButton == "received" && <FriendListInboxReceived />}
-      {selectedButton == "sent" && <FriendListInboxSent />}
+      {selectedButton === "received" && <FriendListInboxReceived />}
+      {selectedButton === "sent" && <FriendListInboxSent />}
     </div>
   );
 }
