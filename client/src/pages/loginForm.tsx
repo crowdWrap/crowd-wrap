@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import SignInGoogle from "../api/googleSignin";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import Header from "../components/Header";
 
 async function fetchData(navigate: any) {
   const response: Response = await fetch("/login", {
@@ -51,8 +52,9 @@ export default function LoginForm() {
   }
   return (
     <div className="wrapper loginForm">
+      <Header />
       <div className="form-wrapper">
-        <h2>Log In</h2>
+        <div className="logintitle">Login</div>
         <form onSubmit={handleSubmit} noValidate>
           <div className="username">
             <label htmlFor="username">Username</label>
@@ -74,22 +76,18 @@ export default function LoginForm() {
               onChange={(e) => setLoginPassword(e.target.value)}
             />
           </div>
+
           <div className="submit">
             <button type="submit">Login</button>
+            <Link to="/register" className="linkstyle" style={{ fontSize: 12 }}>
+              Don't Have an account yet?{" "}
+              <span style={{ color: "pink" }}>Register for free.</span>
+            </Link>
           </div>
-
-          <GoogleOAuthProvider clientId="951239670358-q89e1msbgovmepbaq4fplqc20qn62ha9.apps.googleusercontent.com">
-            <SignInGoogle />
-          </GoogleOAuthProvider>
         </form>
-      </div>
-      <div className="btnWrap">
-        <Link to="/register">
-          <button className="signupBtn"> Don't Have an Account?</button>
-        </Link>
-        <Link to="/">
-          <button className="loginBtn"> Home</button>
-        </Link>
+        <GoogleOAuthProvider clientId="951239670358-q89e1msbgovmepbaq4fplqc20qn62ha9.apps.googleusercontent.com">
+          <SignInGoogle />
+        </GoogleOAuthProvider>
       </div>
     </div>
   );

@@ -41,10 +41,10 @@ dotenv.config();
 
 app.use(
   session({
-    secret: "process.env.SECRET", //Still resolving issue, so for now it is a string.
-    cookie: { maxAge: 864000 },
+    secret: process.env.SECRET as string,
+    cookie: { maxAge: 24 * 60 * 60 * 1000 }, //24 hour
     resave: true,
-    saveUninitialized: true,
+    saveUninitialized: false,
   })
 );
 
@@ -140,7 +140,7 @@ app.post("/register", async (req, res) => {
 
       //Create user and send to DB
       createUser(username, email, hashedPass);
-      return res.status(200).json({ message: "Registration succesful" });
+      return res.status(201).json({ message: "Registration succesful" });
     } catch (e) {
       console.log("thirdError:", e);
       return res.status(401).json({ message: "registration failed" });
@@ -298,12 +298,6 @@ app.get("/friendSearch", async (req, res) => {
         console.log("item: ", item);
         return { username: item.username, profilePic: item.picture };
       });
-  } else {
-    return {
-      username: "not found!",
-      profilePic:
-        "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.imgflip.com%2F1baz27.jpg&f=1&nofb=1&ipt=06e9ff8329421518862f3695387f4163d6d53c23a31eb3057830b1fa95fb1828&ipo=images",
-    };
   }
   res.send(accounts);
 });

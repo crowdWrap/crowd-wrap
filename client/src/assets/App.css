@@ -309,6 +309,7 @@
   background-size: cover;
   min-width: 50px;
   transition: 0.25s ease-in-out;
+  font: PP Neue Montreal
 }
 
 .logoutBtnClicked {
@@ -421,6 +422,7 @@
 .signupBtn {
   width: 200px;
   height: 50px;
+  font: PP Neue Montreal
 }
 
 /* signUp button - end */
