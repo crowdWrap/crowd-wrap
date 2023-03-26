@@ -1,4 +1,3 @@
-import React from "react";
 import "../assets/form.css";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
