@@ -170,6 +170,8 @@ app.post("/login", async (req, res, next) => {
           }
           req.session.user = user.id.toString();
 
+          updateUser(email, picture);
+
           if (user.username == sub) {
             return res.status(200).json({ message: "Needs username" });
           } else {
@@ -265,7 +267,7 @@ app.post("/setUsername", async (req, res) => {
 app.get("/profilePicRequest", async (req, res) => {
   if (req.session.user) {
     const user = await getProfileById(Number(req.session.user));
-    res.send(user.picture);
+    return res.status(200).json({ message: user.picture });
   }
 });
 
