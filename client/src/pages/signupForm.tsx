@@ -5,7 +5,8 @@ import { Link, Router, useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 
 export default function SignupForm() {
-  const [registerFirstname, setRegisterFirstname] = useState<string>("");
+  const [registerFullname, setRegisterFullname] = useState<string>("");
+  const [registerUsername, setRegisterUsername] = useState<string>("");
   const [registerEmail, setRegisterEmail] = useState<string>("");
   const [registerPass, setRegisterPassword] = useState<string>("");
   const [registerConfirmPass, setRegisterConfirmPassword] =
@@ -19,7 +20,8 @@ export default function SignupForm() {
       console.log("Passwords do not match.");
     } else {
       const data = JSON.stringify({
-        firstname: registerFirstname,
+        fullname: registerFullname,
+        username: registerUsername,
         email: registerEmail,
         password: registerPass,
       });
@@ -47,19 +49,26 @@ export default function SignupForm() {
     <div className="wrapper signupForm">
       <Header />
       <div className="form-wrapper">
-      <div className= "logintitle">Sign Up</div>
+      <div className= "signuptitle">Sign Up</div>
+      <div className="signuptitletwo">The perfect gift, everytime.</div>
         <form onSubmit={handleSubmit} noValidate>
-          <div className="firstname">
-            <label htmlFor="firstname">First name</label>
+          <div className="fullname">
             <input
               type="text"
-              name="firstname"
-              placeholder="First name"
-              onChange={(e) => setRegisterFirstname(e.target.value)}
+              name="fullname"
+              placeholder="Full Name"
+              onChange={(e) => setRegisterFullname(e.target.value)}
+            />
+          </div>
+          <div className="username">
+            <input
+              type="username"
+              name="username"
+              placeholder="Username"
+              onChange={(e) => setRegisterUsername(e.target.value)}
             />
           </div>
           <div className="email">
-            <label htmlFor="email">Email</label>
             <input
               type="email"
               name="email"
@@ -68,7 +77,6 @@ export default function SignupForm() {
             />
           </div>
           <div className="password">
-            <label htmlFor="password">Password</label>
             <input
               type="password"
               name="password"
@@ -77,7 +85,6 @@ export default function SignupForm() {
             />
           </div>
           <div className="confirm password">
-            <label htmlFor="confirm password"> Confirm Password</label>
             <input
               type="password"
               name="confirm password"
@@ -86,12 +93,12 @@ export default function SignupForm() {
             />
           </div>
           <div className="submit">
-            <button type="submit">Sign Up</button>
+            <button type="submit">Create Account</button>
           </div>
           <div className="submit">
         <Link to="/login" className="linkstyle" style={{ fontSize: 12 }}>
           Already have an account?{" "}
-          <span style={{ color: "pink" }}>Login</span>
+          <span style={{ color: "pink" }}>Sign In</span>
         </Link>
       </div>
         </form>

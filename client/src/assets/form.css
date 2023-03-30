@@ -1,5 +1,5 @@
 p, div {
-    font-family: PP Neue Montreal;
+    font-family: Neue Montreal;
   }
   
   .logintitle { 
@@ -7,16 +7,23 @@ p, div {
     line-height: 60px;
     float: left;
     font-weight: bold;
-    font-family: PP Neue Montreal;
+    font-family: Neue Montreal;
     text-align: center;
   }
 
   .signuptitle { 
-    font-size: 24px;
+    font-size: 18px;
     line-height: 60px;
     float: left;
-    font-weight: bold;
-    font-family: PP Neue Montreal;
+    font-weight: normal;
+    text-align: left;
+  }
+  .signuptitletwo { 
+    font-size: 16px;
+    line-height: 40px;
+    margin-bottom: 15px;
+    float: left;
+    font-weight: normal;
     text-align: left;
   }
 
@@ -30,7 +37,7 @@ p, div {
     text-align: center;
     color: black;
     font-size: smaller;
-    margin-left: 25px;
+    margin-left: 145px;
     margin-top: 15px;
   }
 
@@ -42,7 +49,7 @@ p, div {
     justify-content: center;
     align-items: center;
     background-color: rgb(233, 246, 253);
-    background-image: url('background-2-edit.jpg');
+    background-image: url('Signup\ D.jpg');
     background-position-y: 30%;
     opacity: 0.9;
     background-size: cover;
@@ -51,7 +58,7 @@ p, div {
   .form-wrapper {
     display: flex;
     flex-direction: column;
-    width: 400px;
+    width: 450px;
     max-width: 50%;
     min-width: 100px;
     min-height: 300px;
@@ -64,7 +71,6 @@ p, div {
   .form-wrapper > h2 {
     display: flex;
     justify-content: center;
-    font-family: "Segoe UI", "Neue Montreal", "Ubuntu", "Roboto", "Open Sans", "Helvetica Neue", sans-serif;
     font-size: 2em;
     font-weight: lighter;
     margin-top: 0.25em;
@@ -85,15 +91,17 @@ p, div {
 
   input {
     padding: 15px 15px;
-    border-radius: 15px;
+    border-radius: 20px;
+    font-family: Neue Montreal;
     outline: none;
-    border: 1px solid #d6d1d5;
+    border: 2px solid #E5E5E5;
   }
 
   input::placeholder {
-    font-size: 1.2em;
+    font-size: 1.0em;
+    font-weight: bold;
     font-weight: lighter;
-    color: #bbb;
+    color: #000;
   }
 
   button {
@@ -103,25 +111,27 @@ p, div {
     margin-top: 0.5em;
     padding:  0.938em;
     border: none;
-    border-radius: 15px;
-    background-color: rgb(92, 202, 251);
+    font-family: Neue Montreal;
+    font-weight: normal;
+    border-radius: 5px;
+    background-color: rgb(0, 0, 0);
     color: #fefefe;
   }
 
   button:hover {
-    background-color: rgb(247, 182, 210);
+    background-color: rgb(92, 202, 251);
     color: #fefefe;
   }
 
-  .firstname,
-  .lastname,
+  .fullname,
+  .username,
   .email,
   .password {
     display: flex;
     border-radius: 5px 20px 5px;
     flex-direction: column;
     margin-bottom: 15px;
-    width: 80%;
+    width: 100%;
   }
 
   .submit {

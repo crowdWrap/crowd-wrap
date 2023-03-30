@@ -1,0 +1,652 @@
+[33mcommit c0889417d5a87314b54baae7e048b87d439b8482[m[33m ([m[1;36mHEAD -> [m[1;32msana-branch-signup[m[33m, [m[1;31morigin/sana-branch-signup[m[33m)[m
+Author: Sana <silyas11@berkeley.edu>
+Date:   Sat Mar 25 15:43:09 2023 -0700
+
+    last name is not showing
+
+[33mcommit 2db761eadb303ff0a67e2902c6c209215ff1fe8e[m
+Author: Sana <silyas11@berkeley.edu>
+Date:   Sat Mar 25 15:31:23 2023 -0700
+
+    How do I add fonts?, unfinished sign-up
+
+[33mcommit 9f95fc35fdec14a06a8c60f98aa73da61b47f9b9[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m
+Merge: 3afb1a4 d793e19
+Author: Vinh Pham <viph0009@gmail.com>
+Date:   Fri Mar 24 20:28:20 2023 -0700
+
+    weird
+
+[33mcommit d793e19ae48e2d9c2e2809b886aa8e5e6e79d240[m
+Author: VinnyXP <96674324+VinnyXP@users.noreply.github.com>
+Date:   Fri Mar 24 20:22:43 2023 -0700
+
+    T40: Build Login Page (#13)
+    
+    * login page initial push
+    
+    * small changes
+    
+    * mvp for login page
+    
+    * Fixed: login window's title and colored the register option. Deleted: unnecessary background assets.
+    
+    * Update: fixed to the latest PR's comments
+    
+    * Update: changed background image
+    
+    * Fixed: logout.tsx, Deleted: workspace file.
+    
+    * Update: server/package-lock.json to main's
+    
+    ---------
+    
+    Co-authored-by: garvsl <garvsehgal7@gmail.com>
+    Co-authored-by: qadeerassan <45184523+qadeerassan@users.noreply.github.com>
+
+[33mcommit 3afb1a41493ec302683e8c244a8ef33048e77a48[m
+Author: Vinh Pham <viph0009@gmail.com>
+Date:   Fri Mar 24 18:56:13 2023 -0700
+
+    Update: changed background image
+
+[33mcommit 4e03f51c7665e24982cb7f584c8701180bb1f30d[m
+Author: Vinh Pham <viph0009@gmail.com>
+Date:   Fri Mar 24 15:40:32 2023 -0700
+
+    Update: fixed to the latest PR's comments
+
+[33mcommit ee035ed0008d860026250a749a0ae8a74fbd7965[m
+Author: Vinh Pham <viph0009@gmail.com>
+Date:   Wed Mar 15 18:47:30 2023 -0700
+
+    Fixed: login window's title and colored the register option. Deleted: unnecessary background assets.
+
+[33mcommit d5235970edd07f49c887e51eb53ec4b9c4db5af2[m
+Merge: 9459acf 416de40
+Author: Vinh Pham <viph0009@gmail.com>
+Date:   Fri Mar 10 17:53:21 2023 -0800
+
+    MVP Login Page
+
+[33mcommit 9459acf68163b8b33c90682149a284399a39f7e7[m
+Author: Vinh Pham <viph0009@gmail.com>
+Date:   Fri Mar 10 17:41:47 2023 -0800
+
+    mvp for login page
+
+[33mcommit 638ba905ef976ab8785d41f2213eccd693dfc2e5[m[33m ([m[1;31morigin/vinny-branch-login[m[33m, [m[1;31morigin/signUp[m[33m)[m
+Author: Vinh Pham <viph0009@gmail.com>
+Date:   Thu Mar 9 13:36:09 2023 -0800
+
+    small changes
+
+[33mcommit 8a5ebad2aea86f2f54fa76351380e135fbe1340b[m
+Author: Vinh Pham <viph0009@gmail.com>
+Date:   Thu Mar 9 13:17:58 2023 -0800
+
+    login page initial push
+
+[33mcommit 416de40db34f5af6d29839334857839f8c3fdd88[m
+Author: Garv <39009375+garvsl@users.noreply.github.com>
+Date:   Thu Mar 9 11:56:14 2023 -0500
+
+    T41, T49, T53, T42, T46 (#10)
+    
+    * add logout btn and change layout
+    
+    * prisma data source provider init and schema
+    
+    * Co-authored-by: Garv, Sana
+    Signup+Passport
+    
+    * signup form, schema resetup, auth functionality
+    
+    * signup setup, added fonts - sana, garv
+    
+    * login signup button setup - garv, sana
+    
+    * /register fetch initial setup
+    Co-authored-by: Garv
+    
+    * signupform, loginform fetch setup
+    
+    * working routes and api endpoints
+    
+    * api endpoint bugs fixed
+    
+    * react router setup for page switching
+    
+    * centered circus
+    
+    * completed page linking
+    
+    * directory organization for css files
+    
+    * basic query setup and testing
+    Co-authored-by: Garv
+    
+    * queryUser and createUser functionality
+    
+    * auth, localstrategy, sessions initial setup w garv
+    
+    * completed authentication and sessions
+    
+    Co-authored-by: Garv
+    
+    * cannot go to login page when logged in and cleanup
+    
+    * have username be displayed once logged in
+    
+    * have signup page redirect to login on success
+    
+    * use dotenv for database url
+    
+    * have popup remove once doc is clicked
+    
+    * install fontAwesome
+    
+    * fix css for logoutpop and incorporate fontawesome
+    
+    * cleanup homepage
+    
+    * another cleanup of homepage
+    
+    * clarify some messages and fixes
+    
+    * change name of queries and splitup functions
+    
+    * remove old queries and fix imports
+    
+    * mistake in adding file
+    
+    * fix env
+    
+    * have the evenlistener removed afterwards
+    
+    * remove unecessary logging
+    
+    * remove workspace and fixes in index.ts
+    
+    * remove setclicked
+    
+    * fix indentation
+    
+    * fix sessions settings
+    
+    * remove comment
+    
+    * comment out posts
+    
+    ---------
+    
+    Co-authored-by: qadeerassan <45184523+qadeerassan@users.noreply.github.com>
+
+[33mcommit a92fc829212ed31037f9081ce69e2774b60adbf6[m
+Merge: 56d55d9 66726a0
+Author: garvsl <garvsehgal7@gmail.com>
+Date:   Thu Mar 2 01:18:35 2023 -0500
+
+    fix merge conflicts into main
+
+[33mcommit 56d55d91a3b6363ea35501446c214934368181f1[m
+Author: garvsl <garvsehgal7@gmail.com>
+Date:   Thu Mar 2 01:03:37 2023 -0500
+
+    mistake in adding file
+
+[33mcommit dc64294090a1e11b0e934d8fe3f7dc11ece43f32[m
+Author: garvsl <garvsehgal7@gmail.com>
+Date:   Thu Mar 2 01:02:58 2023 -0500
+
+    remove old queries and fix imports
+
+[33mcommit aeaab65e0dc164d4a53793e304f5277b0d3b2426[m
+Author: garvsl <garvsehgal7@gmail.com>
+Date:   Thu Mar 2 01:02:03 2023 -0500
+
+    change name of queries and splitup functions
+
+[33mcommit a76cc1b3b097e883f86301aea6290ad17f750970[m
+Author: garvsl <garvsehgal7@gmail.com>
+Date:   Thu Mar 2 00:51:40 2023 -0500
+
+    clarify some messages and fixes
+
+[33mcommit 75c58ce4ee7a7215ac0b5982cdff1128d8c5b4cb[m
+Author: garvsl <garvsehgal7@gmail.com>
+Date:   Thu Mar 2 00:38:22 2023 -0500
+
+    another cleanup of homepage
+
+[33mcommit f086c348b7287c7e4a6373526982fc395ecb639a[m
+Author: garvsl <garvsehgal7@gmail.com>
+Date:   Thu Mar 2 00:37:48 2023 -0500
+
+    cleanup homepage
+
+[33mcommit e9fd588d5172047d4bac6c0b0184c43d34dd86cb[m
+Author: garvsl <garvsehgal7@gmail.com>
+Date:   Thu Mar 2 00:35:33 2023 -0500
+
+    fix css for logoutpop and incorporate fontawesome
+
+[33mcommit ca1a94696d9d3d93e4467686ff2eb3c921af7e39[m
+Author: garvsl <garvsehgal7@gmail.com>
+Date:   Thu Mar 2 00:34:38 2023 -0500
+
+    install fontAwesome
+
+[33mcommit 996009149885785db5ae4f5ffb31da145396d6f7[m
+Author: garvsl <garvsehgal7@gmail.com>
+Date:   Thu Mar 2 00:34:14 2023 -0500
+
+    have popup remove once doc is clicked
+
+[33mcommit 4dd7e8dc7c2d4cf4eda1aa7935e12745a3b0f36c[m
+Author: garvsl <garvsehgal7@gmail.com>
+Date:   Wed Mar 1 23:32:04 2023 -0500
+
+    use dotenv for database url
+
+[33mcommit 5ac4e32a9f7af2062f228f678e4a91ad7fc18455[m
+Author: garvsl <garvsehgal7@gmail.com>
+Date:   Wed Mar 1 12:40:58 2023 -0500
+
+    have signup page redirect to login on success
+
+[33mcommit c4c489720fd8640aa1ab28ec70bb80ab0314009c[m
+Author: garvsl <garvsehgal7@gmail.com>
+Date:   Wed Mar 1 12:13:17 2023 -0500
+
+    have username be displayed once logged in
+
+[33mcommit 16a6d8c43b649755b1a300d30b15eeab88758db8[m
+Author: qadeerassan <45184523+qadeerassan@users.noreply.github.com>
+Date:   Sat Feb 25 17:25:28 2023 -0500
+
+    cannot go to login page when logged in and cleanup
+
+[33mcommit 88ace9363be9a4ddf0b8bd415993fa4788e3ed85[m
+Author: qadeerassan <45184523+qadeerassan@users.noreply.github.com>
+Date:   Sat Feb 25 16:55:49 2023 -0500
+
+    completed authentication and sessions
+    
+    Co-authored-by: Garv
+
+[33mcommit 9207ca0fd5f5482a1bd3a473d362c20ff06946f1[m
+Author: qadeerassan <45184523+qadeerassan@users.noreply.github.com>
+Date:   Fri Feb 24 20:05:30 2023 -0500
+
+    auth, localstrategy, sessions initial setup w garv
+
+[33mcommit 70e75810ddbc4b4585e23e5f6085025dd62993a0[m
+Author: qadeerassan <45184523+qadeerassan@users.noreply.github.com>
+Date:   Fri Feb 24 17:35:53 2023 -0500
+
+    queryUser and createUser functionality
+
+[33mcommit 2198b3327c1d163d49877229c14bb0c6fb83dd8c[m
+Author: qadeerassan <45184523+qadeerassan@users.noreply.github.com>
+Date:   Fri Feb 24 17:35:33 2023 -0500
+
+    basic query setup and testing
+    Co-authored-by: Garv
+
+[33mcommit 4122963809262e33ff5a897f97d1ae8f94839d95[m
+Author: qadeerassan <45184523+qadeerassan@users.noreply.github.com>
+Date:   Thu Feb 23 14:47:30 2023 -0500
+
+    directory organization for css files
+
+[33mcommit ea19c21c2d7816c7e97290fbcd3a5138a9afc73a[m
+Author: qadeerassan <45184523+qadeerassan@users.noreply.github.com>
+Date:   Thu Feb 23 14:44:40 2023 -0500
+
+    completed page linking
+
+[33mcommit e0f2b9efe86c00e63eccee300480aa7e1cd8f9f3[m
+Author: qadeerassan <45184523+qadeerassan@users.noreply.github.com>
+Date:   Thu Feb 23 14:34:08 2023 -0500
+
+    centered circus
+
+[33mcommit 185941e56d02597b56b1e3c096baec5d7741651e[m
+Author: qadeerassan <45184523+qadeerassan@users.noreply.github.com>
+Date:   Thu Feb 23 14:29:12 2023 -0500
+
+    react router setup for page switching
+
+[33mcommit 755a30ae2883f71ca05438495f9931a65549e0d0[m
+Author: qadeerassan <45184523+qadeerassan@users.noreply.github.com>
+Date:   Thu Feb 23 13:16:21 2023 -0500
+
+    api endpoint bugs fixed
+
+[33mcommit 7bb4fcaf7977df7f7b01ba1672cae066c093b357[m
+Author: qadeerassan <45184523+qadeerassan@users.noreply.github.com>
+Date:   Thu Feb 23 12:45:45 2023 -0500
+
+    working routes and api endpoints
+
+[33mcommit e7203895a8c295ff80ddcaa7720e43e48c8f43be[m
+Author: qadeerassan <45184523+qadeerassan@users.noreply.github.com>
+Date:   Thu Feb 23 11:59:12 2023 -0500
+
+    signupform, loginform fetch setup
+
+[33mcommit 6c47de26d6b28606336b42bfc10ac35737c2ee80[m
+Author: qadeerassan <45184523+qadeerassan@users.noreply.github.com>
+Date:   Thu Feb 23 11:55:06 2023 -0500
+
+    /register fetch initial setup
+    Co-authored-by: Garv
+
+[33mcommit 7924cbbaa68d86b7cf77aac61eea245b9399f152[m
+Author: qadeerassan <45184523+qadeerassan@users.noreply.github.com>
+Date:   Wed Feb 22 20:49:59 2023 -0500
+
+    login signup button setup - garv, sana
+
+[33mcommit 814d9828328a2a7b011881734750af36eb0e2731[m
+Author: qadeerassan <45184523+qadeerassan@users.noreply.github.com>
+Date:   Wed Feb 22 20:33:53 2023 -0500
+
+    signup setup, added fonts - sana, garv
+
+[33mcommit 02d7ac57297189bc25c868a4a05ef75c0b9fc4d0[m
+Author: qadeerassan <45184523+qadeerassan@users.noreply.github.com>
+Date:   Wed Feb 22 20:05:33 2023 -0500
+
+    signup form, schema resetup, auth functionality
+
+[33mcommit 40cffef1ae27a7559261a109552630edbb78dee4[m
+Author: qadeerassan <45184523+qadeerassan@users.noreply.github.com>
+Date:   Wed Feb 22 20:04:40 2023 -0500
+
+    Co-authored-by: Garv, Sana
+    Signup+Passport
+
+[33mcommit 377ad3eb81d7c1375668791f22ab1fa6b1c4ac0f[m
+Author: qadeerassan <45184523+qadeerassan@users.noreply.github.com>
+Date:   Wed Feb 22 18:17:48 2023 -0500
+
+    prisma data source provider init and schema
+
+[33mcommit 66726a0492ea109245c74d500625dae19c77c8e1[m[33m ([m[1;31morigin/sana-branch-frontend[m[33m)[m
+Author: garvsl <garvsehgal7@gmail.com>
+Date:   Wed Feb 22 17:14:18 2023 -0500
+
+    test
+
+[33mcommit 81dae4456a0c8f1cde2ceefca638f84cfbe7d919[m
+Author: VinnyXP <96674324+VinnyXP@users.noreply.github.com>
+Date:   Mon Feb 20 17:25:34 2023 -0800
+
+    #9 and #28 - Choose a Database and Connect to Database (#7)
+    
+    * add button for test
+    
+    * add nodemon
+    
+    * set proxy to 8000
+    
+    * create function to display engineers
+    
+    * create router and middleman
+    
+    * add script to start
+    
+    * add scripts and fix proxy
+    
+    * create new file for Engineers.tsx component
+    
+    * change class names and make new ones
+    
+    * cleanup file
+    
+    * change import statements
+    
+    * change start command
+    
+    * improve display to screen
+    
+    * connect text file
+    
+    * add new component
+    
+    * change li into component
+    
+    * simplify component
+    
+    * correct names
+    
+    * fix quotes
+    
+    * setting up postgreSQL db on AWS rds
+    
+    * fixed some issues with running server code and client code
+    
+    * Eliminate prev url
+    
+    ---------
+    
+    Co-authored-by: garvsl <garvsehgal7@gmail.com>
+
+[33mcommit 96b07de2f5716ed79ead262176c0b7a0e72fa6f3[m
+Author: Garv <39009375+garvsl@users.noreply.github.com>
+Date:   Sun Feb 19 23:34:27 2023 -0500
+
+    T48 - Incorporate environment variable and display a simple use (#8)
+    
+    * add button for test
+    
+    * add nodemon
+    
+    * set proxy to 8000
+    
+    * create function to display engineers
+    
+    * create router and middleman
+    
+    * add script to start
+    
+    * add scripts and fix proxy
+    
+    * create new file for Engineers.tsx component
+    
+    * change class names and make new ones
+    
+    * cleanup file
+    
+    * change import statements
+    
+    * change start command
+    
+    * improve display to screen
+    
+    * connect text file
+    
+    * add new component
+    
+    * change li into component
+    
+    * simplify component
+    
+    * correct names
+    
+    * fix quotes
+    
+    * final fixes
+    
+    * fix merge header
+    
+    * install and use dotenv
+    
+    * fix requested changes
+
+[33mcommit 0a9ed247095182c25fe8bbba8cd86bac1f29dfb6[m
+Author: Qadeer <45184523+qadeersan@users.noreply.github.com>
+Date:   Sun Feb 19 00:51:19 2023 -0500
+
+    Create pull_request_template.md
+    
+    PR Template setup
+
+[33mcommit 9a00251bae635dce7c342cd273dbd0103d8a2c4d[m
+Author: Qadeer <45184523+qadeersan@users.noreply.github.com>
+Date:   Sun Feb 19 00:29:05 2023 -0500
+
+    T31 (#2)
+    
+    * updated favicon (#FAA, #411 colour codes)
+    
+    * official favicon update
+    
+    * server bug fix
+    
+    ---------
+    
+    Co-authored-by: qadeerassan <45184523+qadeerassan@users.noreply.github.com>
+
+[33mcommit d10ede6000f2e801065fba612c35b695eac30395[m
+Author: garvsl <garvsehgal7@gmail.com>
+Date:   Thu Feb 16 21:34:32 2023 -0500
+
+    add logout btn and change layout
+
+[33mcommit f647ae20c0bff7fab87b463a59b50724f4712f49[m
+Author: Garv <39009375+garvsl@users.noreply.github.com>
+Date:   Mon Feb 6 22:11:51 2023 -0500
+
+    Connecting server and client - T21 & adding command to start server/client together - T34  (#1)
+    
+    * add button for test
+    
+    * add nodemon
+    
+    * set proxy to 8000
+    
+    * create function to display engineers
+    
+    * create router and middleman
+    
+    * add script to start
+    
+    * add scripts and fix proxy
+    
+    * create new file for Engineers.tsx component
+    
+    * change class names and make new ones
+    
+    * cleanup file
+    
+    * change import statements
+    
+    * change start command
+    
+    * improve display to screen
+    
+    * connect text file
+    
+    * add new component
+    
+    * change li into component
+    
+    * simplify component
+    
+    * correct names
+    
+    * fix quotes
+    
+    * final fixes
+    
+    * fix merge header
+
+[33mcommit 256347a0bd8833bbcfb89751779db4074a442f02[m
+Author: VinnyXP <96674324+VinnyXP@users.noreply.github.com>
+Date:   Fri Feb 3 21:06:23 2023 -0800
+
+    T34: Add npm scripts for developing (#5)
+    
+    * Added Vinh to engineer.txt
+    
+    * Added Vinh to engineer.txt
+    
+    * Technical issues
+    
+    * Added Vinh to engineer.txt
+    
+    * Technical issues
+    
+    * I think I got it
+    
+    * script to transpile ts
+    
+    * downloaded Concurrently and placed commands into separate scripts
+    
+    * oopsie forgot changes in client/package.json too
+    
+    * Edited server/package.json for cleaner scripts' names and deleted code used in testing in server/index.ts
+
+[33mcommit 86930dfd2fa6fb227eda6198216002b060994adc[m
+Author: Qadeer <45184523+qadeersan@users.noreply.github.com>
+Date:   Wed Jan 25 23:10:11 2023 -0500
+
+    Update engineers.txt
+
+[33mcommit aa2b19a3b3bb64a5c2d7ae78a6df0ed0c1c0ee8f[m
+Author: VinnyXP <96674324+VinnyXP@users.noreply.github.com>
+Date:   Wed Jan 25 17:32:29 2023 -0800
+
+    Update engineers.txt
+
+[33mcommit 311ef27d6ed76eba594b7e5e1781dda7b79a185c[m
+Author: ily-xo <107831319+ily-xo@users.noreply.github.com>
+Date:   Wed Jan 25 17:28:13 2023 -0800
+
+    Update engineers.txt
+
+[33mcommit 87890d7bfbf445795b7eac785c5e35dddd1c632f[m
+Author: Favour Adekoya <fadekoya10838@gmail.com>
+Date:   Wed Jan 25 20:14:40 2023 -0500
+
+    add name
+
+[33mcommit df7fcefe97c81d55b02e035ef8263543adf659b4[m
+Author: garvsl <garvsehgal7@gmail.com>
+Date:   Wed Jan 25 20:06:02 2023 -0500
+
+    add my name
+
+[33mcommit aeb217a74347446f189289710404d6f0299b3ca6[m
+Author: garvsl <garvsehgal7@gmail.com>
+Date:   Wed Jan 25 20:01:52 2023 -0500
+
+    create react app
+
+[33mcommit 811e7c371be76b9f4b256a83a18519a530a0ed5c[m
+Merge: b1bb46e f015f05
+Author: garvsl <garvsehgal7@gmail.com>
+Date:   Wed Jan 25 19:29:07 2023 -0500
+
+    Merge remote-tracking branch 'refs/remotes/origin/main'
+
+[33mcommit b1bb46e7741bfe71b49f345a12dcfa0dd657c85c[m
+Author: garvsl <garvsehgal7@gmail.com>
+Date:   Wed Jan 25 19:28:06 2023 -0500
+
+    server folder setup
+
+[33mcommit f015f05f41cb43cff8a2b6dffaa859c46ed5beda[m
+Author: Seunghun Kim <somedoodoo@Seunghuns-MacBook-Pro.local>
+Date:   Wed Jan 25 16:25:12 2023 -0800
+
+    Add a list of engineers text file
+
+[33mcommit 7f2f852fef1fa36114abc8b3dbf18eb4b4b7a243[m
+Author: Garv <39009375+garvsl@users.noreply.github.com>
+Date:   Wed Jan 25 19:08:26 2023 -0500
+
+    Initial commit

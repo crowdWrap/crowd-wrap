@@ -15,7 +15,6 @@ import cookieParser from "cookie-parser";
 import session from "express-session";
 import { Session, MemoryStore } from "express-session";
 import dotenv from "dotenv";
-
 export const app = express();
 
 import intializePassport from "./passport";
