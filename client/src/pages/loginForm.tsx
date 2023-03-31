@@ -1,5 +1,5 @@
 import React from "react";
-import "../assets/form.css";
+import "../assets/css_group/form.css";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
@@ -80,7 +80,7 @@ export default function LoginForm() {
           </div>
 
           <div className="submit">
-            <button type="submit">Login</button>
+            <button type="submit" className="buttonNormal">Login</button>
             <Link to="/register" className="linkstyle" style={{ fontSize: 12 }}>
               Don't Have an account yet?{" "}
               <span style={{ color: "pink" }}>Register for free.</span>
