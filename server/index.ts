@@ -95,7 +95,7 @@ app.post("/register", async (req, res) => {
           const lastname = payload.family_name;
           const email = payload.email;
           const picture = payload.picture;
-          const sub = payload.sub;
+          const userData = payload.sub;
 
           console.log(payload);
           //makes sure that the user doesnt exist
@@ -105,7 +105,7 @@ app.post("/register", async (req, res) => {
             return res.status(400).json({ message: "user exists" });
           }
 
-          createUser(sub, email, "");
+          createUser(userData, email, "");
           updateUser(email, picture);
           return res.status(200).json({ message: "Registration succesful" });
         })
@@ -136,7 +136,7 @@ app.post("/register", async (req, res) => {
 
       //Create user and send to DB
       createUser(username, email, hashedPass);
-      return res.status(200).json({ message: "Registration succesful" });
+      return res.status(201).json({ message: "Registration succesful" });
     } catch (e) {
       console.log("the error:", e);
       return res.status(401).json({ message: "registration failed" });

@@ -88,6 +88,10 @@ export default function LoginForm() {
               <span style={{ color: "pink" }}>Register for free.</span>
             </Link>
           </div>
+
+          <GoogleOAuthProvider clientId="951239670358-q89e1msbgovmepbaq4fplqc20qn62ha9.apps.googleusercontent.com">
+            <SignInGoogle />
+          </GoogleOAuthProvider>
         </form>
         <GoogleOAuthProvider clientId="951239670358-q89e1msbgovmepbaq4fplqc20qn62ha9.apps.googleusercontent.com">
           <SignInGoogle />
