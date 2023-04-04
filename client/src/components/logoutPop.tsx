@@ -12,8 +12,6 @@ export default function ClickPopup() {
     const response: Response = await fetch("/logout", { method: "get" });
     const receivedData = await response.json();
 
-    console.log(receivedData);
-
     if (response.ok) {
       navigate("/login");
     } else {

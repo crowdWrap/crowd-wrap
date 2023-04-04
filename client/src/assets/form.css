@@ -1,10 +1,28 @@
 p, div {
+    font-family: PP Neue Montreal;
+  }
+  
+  .logintitle {
+    font-size: 24px;
+    line-height: 60px;
+    float: left;
+    font-weight: bold;
     font-family: Neue Montreal;
+    text-align: center;
   }
 
   body{
     margin:0;
     padding:0;
+  }
+
+  .linkstyle {
+    text-decoration: none;
+    text-align: center;
+    color: black;
+    font-size: smaller;
+    margin-left: 25px;
+    margin-top: 15px;
   }
 
   .wrapper {
@@ -15,6 +33,11 @@ p, div {
     justify-content: center;
     align-items: center;
     background-color: rgb(233, 246, 253);
+    background-image: url('blue-pink-present.png');
+    background-size: 200%;
+    background-position-y: 30%;
+    opacity: 0.9;
+    background-size: cover;
   }
 
   .form-wrapper {
@@ -25,7 +48,7 @@ p, div {
     min-width: 100px;
     min-height: 400px;
     padding: 20px 40px;
-    border-radius: 6px;
+    border-radius: 25px;
     box-shadow: 0px 8px 36px #222;
     background-color: #fefefe;
   }
@@ -53,8 +76,8 @@ p, div {
   }
 
   input {
-    padding: 10px 10px;
-    border-radius: 5px;
+    padding: 15px 15px;
+    border-radius: 15px;
     outline: none;
     border: 1px solid #d6d1d5;
   }
@@ -72,7 +95,7 @@ p, div {
     margin-top: 0.5em;
     padding:  0.938em;
     border: none;
-    border-radius: 4px;
+    border-radius: 15px;
     background-color: rgb(0, 3, 1);
     color: #fefefe;
   }
@@ -86,6 +109,7 @@ p, div {
   .email,
   .password {
     display: flex;
+    border-radius: 5px 20px 5px;
     flex-direction: column;
     margin-bottom: 15px;
     width: 100%;
@@ -93,6 +117,7 @@ p, div {
 
   .submit {
     width: 100%;
+    border-radius: 500px;
     display: flex;
     flex-wrap: wrap;
   }
