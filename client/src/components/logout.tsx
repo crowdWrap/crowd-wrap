@@ -1,7 +1,22 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ClickPopup from "./logoutPop";
 
+async function fetchProfilePic(setBackgroundImage: any) {
+  const response: Response = await fetch("/profilePicRequest", {
+    method: "GET",
+  });
+
+  const receivedData = await response.text();
+
+  if (response.ok) {
+    setBackgroundImage(receivedData);
+  } else {
+    console.log("error");
+  }
+}
+
 export default function LogoutButton() {
+  const [backgroundImage, setBackgroundImage] = useState("");
   const [clicked, setClicked] = useState<boolean>(false);
   const click = () => {
     setClicked(clicked == false);
@@ -12,9 +27,17 @@ export default function LogoutButton() {
       }
     });
   };
+
+  useEffect(() => {
+    fetchProfilePic(setBackgroundImage);
+  }, []);
+
   return (
     <div className="logoutBtnCover">
       <button
+        style={{
+          backgroundImage: `url(${backgroundImage}?timestamp=${Date.now()})`,
+        }}
         className={!clicked ? "logoutBtn" : "logoutBtn logoutBtnClicked"}
         onClick={click}
       ></button>

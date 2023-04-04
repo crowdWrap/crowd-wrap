@@ -2,6 +2,8 @@ import React from "react";
 import "../assets/form.css";
 import { useState } from "react";
 import { Link, Router, useNavigate } from "react-router-dom";
+import SignUpGoogle from "../api/googleSignup";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 export default function SignupForm() {
   const [registerUsername, setRegisterUsername] = useState<string>("");
@@ -14,9 +16,7 @@ export default function SignupForm() {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (registerPass !== registerConfirmPass) {
-      console.log("Passwords do not match.");
-    } else {
+    if (registerPass == registerConfirmPass) {
       const data = JSON.stringify({
         username: registerUsername,
         email: registerEmail,
@@ -31,11 +31,12 @@ export default function SignupForm() {
         body: data,
       })
         .then((response) => {
-          response.json();
           if (response.ok) {
             navigate("/login");
           } else {
-            console.log("registration failed");
+            response.json().then((data) => {
+              console.log(data.message);
+            });
           }
         })
         .catch((error) => console.error(error));
@@ -88,7 +89,9 @@ export default function SignupForm() {
           </div>
         </form>
       </div>
-
+      <GoogleOAuthProvider clientId="951239670358-q89e1msbgovmepbaq4fplqc20qn62ha9.apps.googleusercontent.com">
+        <SignUpGoogle />
+      </GoogleOAuthProvider>
       <div className="btnWrap">
         <Link to="/login">
           <button className="signupBtn"> Already Have an Account?</button>
