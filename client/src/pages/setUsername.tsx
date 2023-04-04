@@ -1,5 +1,5 @@
-import { useEffect } from "react";
 import "../assets/form.css";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -11,10 +11,9 @@ async function fetchData(navigate: any, setRegisterUsername: any) {
 
   const receivedData = await response.json();
 
-  if (response.ok) {
-  } else {
+  if (!response.ok) {
     navigate("/login");
-    //navigate to login if they arent authenticateds
+    //navigate to login if they arent authenticated
     alert(receivedData.message);
   }
 }

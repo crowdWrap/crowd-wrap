@@ -16,18 +16,16 @@ export default function SignInGoogle() {
           "Content-Type": "application/json",
         },
         body: credential,
-      })
-        .then(async (response) => {
-          const newResponse = await response.json();
-          if (newResponse.message === "Needs username") {
-            navigate("/register/setUsername");
-          } else if (response.ok) {
-            navigate("/profile");
-          } else {
-            console.log(newResponse.message);
-          }
-        })
-        .catch((error) => console.error(error));
+      }).then(async (response) => {
+        const newResponse = await response.json();
+        if (newResponse.message == "Needs username") {
+          navigate("/register/setUsername");
+        } else if (response.ok) {
+          navigate("/profile");
+        } else {
+          console.log(newResponse.message);
+        }
+      });
     } catch (error) {
       console.error(error);
     }

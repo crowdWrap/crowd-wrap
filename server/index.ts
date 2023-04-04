@@ -100,8 +100,9 @@ app.post("/register", async (req, res) => {
           const lastname = payload.family_name;
           const email = payload.email;
           const picture = payload.picture;
-          const sub = payload.sub;
+          const userData = payload.sub;
 
+          console.log(payload);
           //makes sure that the user doesnt exist
           const emailExists = await getProfileByEmail(email);
 
@@ -109,7 +110,7 @@ app.post("/register", async (req, res) => {
             return res.status(400).json({ message: "user exists" });
           }
 
-          createUser(sub, email, "");
+          createUser(userData, email, "");
           updateUser(email, picture);
           return res.status(200).json({ message: "Registration succesful" });
         })
