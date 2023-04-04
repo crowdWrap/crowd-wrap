@@ -11,9 +11,7 @@ async function fetchData(navigate: any, setRegisterUsername: any) {
 
   const receivedData = await response.json();
 
-  if (response.ok) {
-    //Then they are good to go! They will be redirected via the login redirect.
-  } else {
+  if (!response.ok) {
     navigate("/login");
     //navigate to login if they arent authenticated
     alert(receivedData.message);
