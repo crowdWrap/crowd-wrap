@@ -30,8 +30,7 @@ async function sendFriendRequest(item: string, element: HTMLSpanElement) {
   }
 }
 
-export default function FriendListAdd() {
-  const [searchText, setSearchText] = useState<string>("");
+export default function FriendListAdd(props: { searchText: string }) {
   const [accounts, setAccounts] = useState<Account[]>([]);
   const elements = useRef<(HTMLSpanElement | null)[]>([]);
 
@@ -54,33 +53,25 @@ export default function FriendListAdd() {
     let loaded = true;
     (async () => {
       if (loaded) {
-        setAccounts(await fetchData(searchText));
+        setAccounts(await fetchData(props.searchText));
       }
     })();
     return () => {
       loaded = false;
       setAccounts([]);
     };
-  }, [searchText]);
+  }, [props.searchText]);
 
   return (
-    <div className="friendListCover">
-      <input
-        style={{
-          marginBottom: "-20px",
-        }}
-        placeholder="Search Friend"
-        type="text"
-        onChange={(e) => setSearchText(e.target.value)}
-      />
+    <>
       {accounts &&
         accounts.map((item, index) => (
-          <span
+          <div
             className="friend"
             key={item.username}
             ref={(currentElement) => (elements.current[index] = currentElement)}
           >
-            <img src={item.profilePic} alt="" />
+            <img alt="" src={item.profilePic} />
             <p>{item.username}</p>
             <button
               onClick={(event) =>
@@ -90,8 +81,23 @@ export default function FriendListAdd() {
             >
               <FontAwesomeIcon icon={faPlus} />
             </button>
-          </span>
+          </div>
         ))}
+    </>
+  );
+}
+
+export function FriendListAddSearch(props: {
+  setSearchText: (text: string) => void;
+}) {
+  return (
+    <div id="search">
+      <input
+        type="text"
+        id="searchfield"
+        placeholder="Search friends"
+        onChange={(e) => props.setSearchText(e.target.value)}
+      />
     </div>
   );
 }

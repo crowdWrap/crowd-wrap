@@ -10,23 +10,23 @@ export default function FriendListInbox() {
   };
 
   return (
-    <div className="friendListCover">
+    <>
       <div className="friendListInboxTitle">
         <button
           onClick={() => handleButtonClick("received")}
           className={selectedButton === "received" ? "selected" : ""}
         >
-          received
+          Received
         </button>
         <button
           onClick={() => handleButtonClick("sent")}
           className={selectedButton === "sent" ? "selected" : ""}
         >
-          sent
+          Sent
         </button>
       </div>
       {selectedButton === "received" && <FriendListInboxReceived />}
       {selectedButton === "sent" && <FriendListInboxSent />}
-    </div>
+    </>
   );
 }

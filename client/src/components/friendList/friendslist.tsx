@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserGroup } from "@fortawesome/free-solid-svg-icons";
 import FriendslistPop from "./friendslistPop";
 import { useState } from "react";
+import "./friendslist.css";
 
 export default function FriendsList() {
   const [clicked, setClicked] = useState<boolean>(false);

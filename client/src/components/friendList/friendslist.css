@@ -1,0 +1,231 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap");
+
+* {
+  margin: 0px;
+  padding: 0px;
+}
+body {
+  background: #f0f1f2;
+  font: 12px "Open Sans", sans-serif;
+}
+
+#chatbox {
+  width: 290px;
+  background: #fff;
+  overflow: hidden;
+  border-radius: 25px;
+  height: 484px;
+  position: absolute;
+  right: 10px;
+  top: 70px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.363);
+}
+
+#friendslist {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 290px;
+  height: 484px;
+}
+#topmenu {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 69px;
+  width: 290px;
+  border-bottom: 1px solid #d8dfe3;
+}
+
+#topmenu .fontAwesome {
+  width: 30px;
+  color: rgba(111, 111, 184, 0.479);
+  height: 25px;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+
+#topmenu .fontAwesome:hover {
+  color: #bfdef3;
+}
+
+#topmenu .selected {
+  color: rgb(66, 66, 175);
+}
+
+.currentMover {
+  border: 1.5px solid rgb(49, 137, 238);
+  height: 0px;
+  top: 68px;
+  left: 0;
+  width: 97px;
+  position: absolute;
+  transition: 0.25s ease-in-out;
+}
+.move-standard {
+  left: 0px;
+}
+
+.currentMover .move-middle .fontAwesome {
+  color: red;
+}
+.move-middle {
+  left: 96.6px;
+}
+.move-right {
+  left: 193.2px;
+}
+
+.friendAddButton {
+  position: relative;
+  z-index: 3;
+  right: 20px;
+  min-width: 20px;
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+  color: rgb(0, 0, 0);
+  transition: 0.25s ease-in-out;
+}
+
+.friendAddButton svg {
+  width: 20px;
+  height: 20px;
+}
+
+.friendAddButton:hover {
+  color: green;
+  background-color: transparent;
+}
+
+.friend {
+  height: 70px;
+  border-bottom: 1px solid #e7ebee;
+  position: relative;
+  display: flex;
+  align-items: center;
+  transition: 0.2s ease-in-out;
+}
+
+.friendListInboxTitle {
+  display: flex;
+  justify-content: space-around;
+  height: 40px;
+  align-items: center;
+  /* padding: 2px; */
+  margin-top: 1px;
+  border-bottom: 1px solid #d8dfe3;
+  gap: 2px;
+  transition: 0.25s ease-in-out;
+}
+
+.friendListInboxTitle button {
+  background-color: transparent;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  color: #597a96;
+  min-width: auto;
+  width: 290px;
+  margin: 0;
+  padding: 0;
+  border-radius: 0px;
+  transition: 0.25s ease-in-out;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.25s ease-in-out;
+}
+
+.friendListInboxTitle button:hover {
+  opacity: 0.7;
+}
+
+.friendListInboxTitle button:nth-last-of-type(1) {
+  border-left: 1px solid #d8dfe3;
+}
+
+.friendListInboxTitle .selected {
+  color: rgb(66, 66, 175);
+}
+
+.searchedFriends {
+  position: absolute;
+}
+
+.friend:last-of-type {
+  margin-bottom: 68px;
+}
+.friend:hover {
+  background-color: #f1f4f6;
+}
+.friend img {
+  width: 40px;
+  border-radius: 50%;
+  margin: 15px;
+}
+
+.friend p {
+  width: 220px;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  color: #597a96;
+}
+
+.friendCover {
+  height: 422px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+.friend .status {
+  background: #26c281;
+  border-radius: 50%;
+  width: 9px;
+  height: 9px;
+  position: absolute;
+  top: 31px;
+  right: 17px;
+}
+.friend .status.away {
+  background: #ffce54;
+}
+.friend .status.inactive {
+  background: #eaeef0;
+}
+#search {
+  background: #e3e9ed;
+  height: 60px;
+  width: 290px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+#searchfield {
+  background: #e3e9ed;
+  margin: 21px 0 0 55px;
+  border: none;
+  padding: 0;
+  font-size: 14px;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 400px;
+  color: #8198ac;
+}
+
+.friendsList {
+  min-width: 55px;
+  border-radius: 25px;
+  height: 35px;
+  margin: 0;
+  padding: 0;
+  margin-right: 8px;
+  transition: 0.25s ease-in-out;
+  margin-bottom: 8px;
+}
+
+.friendsList:hover {
+  opacity: 0.8;
+}

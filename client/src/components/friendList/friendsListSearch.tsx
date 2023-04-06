@@ -28,10 +28,13 @@ export default function FriendsListSearch({ updateData }: any) {
   }, [searchText]);
 
   return (
-    <input
-      placeholder="Search Friend"
-      type="text"
-      onChange={(e) => setSearchText(e.target.value)}
-    />
+    <div id="search">
+      <input
+        type="text"
+        id="searchfield"
+        placeholder="Search friends"
+        onChange={(e) => setSearchText(e.target.value)}
+      />
+    </div>
   );
 }

@@ -66,26 +66,28 @@ export default function FriendListInboxSent() {
   }, []);
 
   return (
-    <div>
+    <>
       {accounts &&
         accounts.map((item, index) => (
-          <span
+          <div
             className="friend"
             key={item.username}
             ref={(currentElement) => (elements.current[index] = currentElement)}
           >
-            <img src={item.profilePic} alt="" />
+            <img alt="" src={item.profilePic} />
             <p>{item.username}</p>
-            <button
-              onClick={(event) =>
-                handleButtonClick(item.username, index, event)
-              }
-              className="friendAddButton"
-            >
-              <FontAwesomeIcon icon={faX} />
-            </button>
-          </span>
+            <div className="friendAddButtonCover">
+              <button
+                onClick={(event) =>
+                  handleButtonClick(item.username, index, event)
+                }
+                className="friendAddButton"
+              >
+                <FontAwesomeIcon icon={faX} />
+              </button>
+            </div>
+          </div>
         ))}
-    </div>
+    </>
   );
 }

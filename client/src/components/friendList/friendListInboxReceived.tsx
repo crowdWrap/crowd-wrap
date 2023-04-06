@@ -94,15 +94,15 @@ export default function FriendListInboxReceived() {
     };
   }, []);
   return (
-    <div>
+    <>
       {accounts &&
         accounts.map((item, index) => (
-          <span
+          <div
             className="friend"
             key={item.username}
             ref={(currentElement) => (elements.current[index] = currentElement)}
           >
-            <img src={item.profilePic} alt="" />
+            <img alt="" src={item.profilePic} />
             <p>{item.username}</p>
             <div className="friendAddButtonCover">
               <button
@@ -122,8 +122,8 @@ export default function FriendListInboxReceived() {
                 <FontAwesomeIcon icon={faPlus} />
               </button>
             </div>
-          </span>
+          </div>
         ))}
-    </div>
+    </>
   );
 }
