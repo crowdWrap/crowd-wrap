@@ -188,7 +188,7 @@ app.post("/login", async (req, res, next) => {
             return res
               .status(200)
               .json({ message: "Authentication successful" });
-          }
+          } //
         });
       });
       //google oauth
@@ -296,7 +296,6 @@ app.get("/friendSearch", async (req, res) => {
         (item) => !user.friends.some((el) => el.username === item.username)
       )
       .map((item) => {
-        console.log("item: ", item);
         return { username: item.username, profilePic: item.picture };
       });
   }
