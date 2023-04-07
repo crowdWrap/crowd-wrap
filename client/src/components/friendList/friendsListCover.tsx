@@ -109,7 +109,7 @@ export default function FriendsListCover() {
 
   const handleMoveBar = (input: string) => {
     setMoveBar(input);
-    if (input == "currentMover move-standard") {
+    if (input === "currentMover move-standard") {
       setRefresh(true);
     }
   };
@@ -121,7 +121,7 @@ export default function FriendsListCover() {
           <FontAwesomeIcon
             icon={faUserGroup}
             className={
-              moveBar == "currentMover move-standard"
+              moveBar === "currentMover move-standard"
                 ? "fontAwesome selected"
                 : "fontAwesome"
             }
@@ -130,7 +130,7 @@ export default function FriendsListCover() {
           <FontAwesomeIcon
             icon={faClockRotateLeft}
             className={
-              moveBar == "currentMover move-middle"
+              moveBar === "currentMover move-middle"
                 ? "fontAwesome selected"
                 : "fontAwesome"
             }
@@ -139,7 +139,7 @@ export default function FriendsListCover() {
           <FontAwesomeIcon
             icon={faUserPlus}
             className={
-              moveBar == "currentMover move-right"
+              moveBar === "currentMover move-right"
                 ? "fontAwesome selected"
                 : "fontAwesome"
             }
@@ -152,7 +152,7 @@ export default function FriendsListCover() {
           <div className="friendCover">
             {accounts &&
               !fetchedData &&
-              moveBar == "currentMover move-standard" &&
+              moveBar === "currentMover move-standard" &&
               accounts.map((item, index) => (
                 <div
                   onContextMenu={(event) => handleRightClick(index, event)}
@@ -187,7 +187,7 @@ export default function FriendsListCover() {
                 </div>
               ))}
             {fetchedData &&
-              moveBar == "currentMover move-standard" &&
+              moveBar === "currentMover move-standard" &&
               fetchedData.map((item: any, index: any) => (
                 <div
                   className="friend"
@@ -202,19 +202,19 @@ export default function FriendsListCover() {
                 </div>
               ))}
 
-            {moveBar == "currentMover move-right" && (
+            {moveBar === "currentMover move-right" && (
               <FriendListAdd searchText={searchText} />
             )}
 
-            {moveBar == "currentMover move-middle" && <FriendListInbox />}
+            {moveBar === "currentMover move-middle" && <FriendListInbox />}
           </div>
 
           {/* what would happen if you have text in it and move to add friend etc */}
-          {moveBar == "currentMover move-standard" && (
+          {moveBar === "currentMover move-standard" && (
             <FriendsListSearch updateData={handleDataUpdate} />
           )}
 
-          {moveBar == "currentMover move-right" && (
+          {moveBar === "currentMover move-right" && (
             <FriendListAddSearch setSearchText={setSearchText} />
           )}
 
