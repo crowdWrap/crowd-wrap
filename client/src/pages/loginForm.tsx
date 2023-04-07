@@ -11,7 +11,6 @@ async function fetchData(navigate: any) {
   const response: Response = await fetch("/login", {
     method: "GET",
   });
-  // const receivedData = await response.json();
 
   if (response.ok) {
   } else {
@@ -22,7 +21,6 @@ async function fetchData(navigate: any) {
 export default function LoginForm() {
   const navigate = useNavigate();
   const [usernameOrEmail, setusernameOrEmail] = useState<string>("");
-  // const [loginEmail, setLoginEmail] = useState<string>("");
   const [loginPass, setLoginPassword] = useState<string>("");
 
   useEffect(() => {

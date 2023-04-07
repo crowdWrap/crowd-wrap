@@ -15,12 +15,12 @@ export default function intializePassport(
     done: any
   ) => {
     let user;
-
-    const isInputEmail = username.includes("@");
+    let regex = new RegExp("[a-z0-9]+@[a-z]+.[a-z]{2,3}");
+    const isInputEmail = regex.test(username);
 
     if (!isInputEmail) {
       user = await getProfileByUsername(username);
-    } else if (isInputEmail) {
+    } else {
       user = await getProfileByEmail(username);
     }
 
