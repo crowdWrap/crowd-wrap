@@ -53,6 +53,10 @@ body {
   color: rgb(66, 66, 175);
 }
 
+#topmenu .selected:hover {
+  color: rgb(66, 66, 175);
+}
+
 .currentMover {
   border: 1.5px solid rgb(49, 137, 238);
   height: 0px;
@@ -228,4 +232,39 @@ body {
 
 .friendsList:hover {
   opacity: 0.8;
+}
+
+.context-cover {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  align-items: center;
+  background-color: transparent;
+
+  min-width: 100%;
+  font-weight: 600;
+
+  color: black;
+  transition: 0.25s ease-in-out;
+}
+
+.context-menu {
+  font-family: "Open Sans", sans-serif;
+  font-size: 18px;
+  transition: 0.25s ease-in-out;
+  background-color: transparent;
+  min-width: 0px;
+  margin: 0;
+  padding: 0;
+  color: grey;
+}
+
+.context-menu svg {
+  height: 20px;
+  width: 20px;
+}
+
+.context-menu:hover {
+  background-color: transparent;
+  color: #f74c21;
 }

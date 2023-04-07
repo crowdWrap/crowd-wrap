@@ -1,4 +1,4 @@
-import { faX, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useRef, useState } from "react";
 
@@ -14,7 +14,7 @@ async function fetchData() {
   }
 }
 
-async function removeFriendReceived(item: string, element: HTMLSpanElement) {
+async function removeFriendReceived(item: string, element: HTMLDivElement) {
   const parentElement = element.parentElement;
   if (parentElement && parentElement.contains(element)) {
     const response = await fetch(`/removeFriendReceived?user_name=${item}`, {
@@ -28,7 +28,7 @@ async function removeFriendReceived(item: string, element: HTMLSpanElement) {
   }
 }
 
-async function addToFriend(item: string, element: HTMLSpanElement) {
+async function addToFriend(item: string, element: HTMLDivElement) {
   const parentElement = element.parentElement;
   if (parentElement && parentElement.contains(element)) {
     const response = await fetch(`/addFriend?user_name=${item}`, {
@@ -49,7 +49,8 @@ interface Account {
 
 export default function FriendListInboxReceived() {
   const [accounts, setAccounts] = useState<Account[]>([]);
-  const elements = useRef<(HTMLSpanElement | null)[]>([]);
+  const elements = useRef<(HTMLDivElement | null)[]>([]);
+  const [clickMenu, setClickMenu] = useState({ index: null, x: null, y: null });
 
   const handleButtonClick = async (
     item: string,
@@ -81,6 +82,17 @@ export default function FriendListInboxReceived() {
     }
   };
 
+  const handleRightClick = (index: any, event: any) => {
+    event.preventDefault();
+    setClickMenu({ index: index, x: event.clientX, y: event.clientY });
+  };
+
+  const handleMenuRemoval = (event: any) => {
+    if (clickMenu.x !== null && !event.target.closest(".context-menu")) {
+      setClickMenu({ index: null, x: null, y: null });
+    }
+  };
+
   useEffect(() => {
     let loaded = true;
     (async () => {
@@ -93,26 +105,46 @@ export default function FriendListInboxReceived() {
       setAccounts([]);
     };
   }, []);
+
+  useEffect(() => {
+    document.addEventListener("click", handleMenuRemoval);
+    return () => {
+      document.removeEventListener("click", handleMenuRemoval);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [clickMenu]);
+
   return (
     <>
       {accounts &&
         accounts.map((item, index) => (
           <div
+            onContextMenu={(event) => handleRightClick(index, event)}
             className="friend"
             key={item.username}
             ref={(currentElement) => (elements.current[index] = currentElement)}
           >
+            {clickMenu.x !== null &&
+              clickMenu.y !== null &&
+              clickMenu.index === index && (
+                <div className="context-cover">
+                  <button
+                    className="context-menu"
+                    style={{
+                      top: clickMenu.y as number,
+                      left: clickMenu.x as number,
+                    }}
+                    onClick={(event) =>
+                      handleButtonClick(item.username, index, event)
+                    }
+                  >
+                    Delete {item.username} <FontAwesomeIcon icon={faTrashCan} />
+                  </button>
+                </div>
+              )}
             <img alt="" src={item.profilePic} />
             <p>{item.username}</p>
             <div className="friendAddButtonCover">
-              <button
-                onClick={(event) =>
-                  handleButtonClick(item.username, index, event)
-                }
-                className="friendAddButton"
-              >
-                <FontAwesomeIcon icon={faX} />
-              </button>
               <button
                 className="friendAddButton"
                 onClick={(event) =>
