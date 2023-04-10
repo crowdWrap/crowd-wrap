@@ -1,8 +1,8 @@
-p, div {
+:local p, div {
   font-family: PP Neue Montreal;
 }
 
-.logintitle {
+:local .logintitle {
   font-size: 24px;
   line-height: 60px;
   float: left;
@@ -11,12 +11,12 @@ p, div {
   text-align: center;
 }
 
-body{
+:local body{
   margin:0;
   padding:0;
 }
 
-.linkstyle {
+:local .linkstyle {
   text-decoration: none;
   text-align: center;
   color: black;
@@ -25,7 +25,7 @@ body{
   margin-top: 15px;
 }
 
-.wrapper {
+:local .wrapper {
   height: 100vh;
   width: 100vw;
   display: flex;
@@ -39,7 +39,7 @@ body{
   background-size: cover;
 }
 
-.form-wrapper {
+:local .form-wrapper {
   display: flex;
   flex-direction: column;
   width: 280px;
@@ -52,7 +52,7 @@ body{
   background-color: #fefefe;
 }
 
-.form-wrapper > h2 {
+:local .form-wrapper > h2 {
   display: flex;
   justify-content: center;
   font-family: "Segoe UI", "Neue Montreal", "Ubuntu", "Roboto", "Open Sans", "Helvetica Neue", sans-serif;
@@ -62,32 +62,32 @@ body{
   color: #222;
 }
 
-form {
+:local form {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
 }
 
-label {
+:local label {
   margin-bottom: 0.5em;
   color: #444;
   font-weight: lighter;
 }
 
-input {
+:local input {
   padding: 15px 15px;
   border-radius: 15px;
   outline: none;
   border: 1px solid #d6d1d5;
 }
 
-input::placeholder {
+:local input::placeholder {
   font-size: 1.2em;
   font-weight: lighter;
   color: #bbb;
 }
 
-button {
+:local button {
   min-width: 100%;
   cursor: pointer;
   margin-right: 0.25em;
@@ -97,17 +97,17 @@ button {
   border-radius: 15px;
   color: white;
 }
-.buttonNormal {
+:local .buttonNormal {
   background-color: black;
 }
 
-.buttonColorful {
+:local .buttonColorful {
   background-image: linear-gradient(to right, #64CFFF , #FF59A1)
 }
 
-.username,
-.email,
-.password {
+:local .username,
+:local .email,
+:local .password {
   display: flex;
   border-radius: 5px 20px 5px;
   flex-direction: column;
@@ -115,7 +115,7 @@ button {
   width: 100%;
 }
 
-.submit {
+:local .submit {
   width: 100%;
   border-radius: 500px;
   display: flex;
