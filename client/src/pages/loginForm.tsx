@@ -3,6 +3,8 @@ import styles from "../assets/css_group/form.module.css";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import SignInGoogle from "../api/googleSignin";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 import Header from "../components/Header";
 
 async function fetchData(navigate: any) {
@@ -20,8 +22,8 @@ async function fetchData(navigate: any) {
 
 export default function LoginForm() {
   const navigate = useNavigate();
-  const [loginUsername, setLoginUsername] = useState < string > ("");
-  const [loginPass, setLoginPassword] = useState < string > ("");
+  const [loginUsername, setLoginUsername] = useState<string>("");
+  const [loginPass, setLoginPassword] = useState<string>("");
 
   useEffect(() => {
     fetchData(navigate);
@@ -87,10 +89,16 @@ export default function LoginForm() {
               Don't Have an account yet?{" "}
               <span style={{ color: "pink" }}>Register for free.</span>
             </Link>
+
+            
+          </div>
+          <div className={styles["centerGoogleAuth"]}>
+            <GoogleOAuthProvider clientId="951239670358-q89e1msbgovmepbaq4fplqc20qn62ha9.apps.googleusercontent.com">
+              <SignInGoogle />
+            </GoogleOAuthProvider>
           </div>
         </form>
       </div>
     </div>
   );
 }
-

@@ -15,30 +15,55 @@ export async function getProfileById(id: number) {
 }
 
 export async function getProfileByUsername(username: string) {
-  const userProfile = await prisma.user.findUniqueOrThrow({
-    where: {
-      username,
-    },
-  });
-  if (userProfile) {
-    return userProfile;
-  } else {
-    console.log("Profile not found.");
-    throw new Error(`Profile '${username}' doesn't exist.`);
+  try {
+    const userProfile = await prisma.user.findUnique({
+      where: {
+        username,
+      },
+    });
+    if (userProfile) {
+      return userProfile;
+    }
+  } catch (e) {
+    console.log(e);
   }
 }
 
 export async function getProfileByEmail(email: string) {
-  const userProfile = await prisma.user.findUniqueOrThrow({
-    where: {
-      email,
-    },
-  });
-  if (userProfile) {
-    console.log("IN QUERY PROFILE: ", userProfile);
-    return userProfile;
-  } else {
-    console.log("Profile not found.");
-    throw new Error(`Profile '${email}' doesn't exist.`);
+  try {
+    const userProfile = await prisma.user.findUnique({
+      where: {
+        email,
+      },
+    });
+    if (userProfile) {
+      return userProfile;
+    }
+  } catch (e) {
+    console.log(e);
   }
+}
+
+export async function updateUser(email: string, newPic: string) {
+  const user = await getProfileByEmail(email);
+  console.log(user);
+  const updatedUser = await prisma.user.update({
+    where: { email },
+    data: { pictureUrl: newPic },
+  });
+
+  console.log(updatedUser);
+  return updatedUser;
+}
+
+export async function updateUserName(email: string, newUsername: string) {
+  const user = await getProfileByEmail(email);
+  console.log(user);
+  const updatedUser = await prisma.user.update({
+    where: { email },
+    data: { username: newUsername },
+  });
+
+  console.log(updatedUser);
+  return updatedUser;
 }

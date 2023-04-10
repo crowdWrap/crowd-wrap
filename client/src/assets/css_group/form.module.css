@@ -121,3 +121,9 @@
   display: flex;
   flex-wrap: wrap;
 }
+
+:local .centerGoogleAuth {
+  display: grid;
+  margin-top: 20px;
+  margin-left: 40px;
+}

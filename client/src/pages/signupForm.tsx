@@ -3,6 +3,8 @@ import styles from "../assets/css_group/form.module.css";
 import { useState } from "react";
 // eslint-disable-next-line
 import { Link, Router, useNavigate } from "react-router-dom";
+import SignUpGoogle from "../api/googleSignup";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 import Header from "../components/Header";
 
 export default function SignupForm() {
@@ -16,9 +18,8 @@ export default function SignupForm() {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (registerPass !== registerConfirmPass) {
-      console.log("Passwords do not match.");
-    } else {
+    // eslint-disable-next-line
+    if (registerPass == registerConfirmPass) {
       const data = JSON.stringify({
         username: registerUsername,
         email: registerEmail,
@@ -33,11 +34,12 @@ export default function SignupForm() {
         body: data,
       })
         .then((response) => {
-          response.json();
           if (response.ok) {
             navigate("/login");
           } else {
-            console.log("registration failed");
+            response.json().then((data) => {
+              console.log(data.message);
+            });
           }
         })
         .catch((error) => console.error(error));
@@ -90,6 +92,17 @@ export default function SignupForm() {
             <button type="submit">Sign Up</button>
           </div>
         </form>
+      </div>
+      <GoogleOAuthProvider clientId="951239670358-q89e1msbgovmepbaq4fplqc20qn62ha9.apps.googleusercontent.com">
+        <SignUpGoogle />
+      </GoogleOAuthProvider>
+      <div className="btnWrap">
+        <Link to="/login">
+          <button className="signupBtn"> Already Have an Account?</button>
+        </Link>
+        <Link to="/">
+          <button className="signupBtn"> Home</button>
+        </Link>
       </div>
     </div>
   );
