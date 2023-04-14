@@ -23,13 +23,38 @@ model User {
 
   friendRequests User[] @relation("FriendRequests", map: "UserFriendRequests")
   friendRequestsSent  User[] @relation("FriendRequests")
+
+  events EventToUser[]
+
+  //for events:
+  //can see friends events
+  //privacy setting:public/private?
+  //max members
+
+  ownedEvents Event[] @relation("OwnedEvents")
 }
 
-// model Post {
-//   id        Int     @id @default(autoincrement())
-//   title     String
-//   content   String?
-//   published Boolean @default(false)
-//   author    User    @relation(fields: [authorId], references: [id])
-//   authorId  Int
-// }
+model Event {
+  id Int @id @default(autoincrement())
+  title String
+  description String
+  deadline DateTime?
+  inviteLink String
+  image String?
+  gift String?
+  //more for specific things needed
+  moneyGoal Int
+  published Boolean @default(false)
+  participants EventToUser[]
+  owner User @relation("OwnedEvents", fields: [ownerId], references: [id])
+  ownerId Int
+
+}
+
+model EventToUser {
+id Int @id @default(autoincrement())
+user User @relation(fields: [userId], references: [id])
+userId Int
+event Event @relation(fields: [eventId], references: [id])
+eventId Int
+}
