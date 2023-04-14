@@ -89,7 +89,7 @@ export default function SignupForm() {
           </div>
         </form>
       </div>
-      <GoogleOAuthProvider clientId="951239670358-q89e1msbgovmepbaq4fplqc20qn62ha9.apps.googleusercontent.com">
+      <GoogleOAuthProvider clientId={`${process.env.REACT_APP_CLIENTID}`}>
         <SignUpGoogle />
       </GoogleOAuthProvider>
       <div className="btnWrap">
