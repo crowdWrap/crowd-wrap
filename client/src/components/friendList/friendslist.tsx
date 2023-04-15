@@ -1,8 +1,8 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserGroup } from "@fortawesome/free-solid-svg-icons";
-import FriendslistPop from "./friendslistPop";
 import { useState } from "react";
 import "./friendslist.css";
+import FriendsListCover from "./friendsListCover";
 
 export default function FriendsList() {
   const [clicked, setClicked] = useState<boolean>(false);
@@ -25,10 +25,13 @@ export default function FriendsList() {
   };
   return (
     <div className="friendsListCover">
-      <button onClick={click} className="friendsList">
+      <button
+        onClick={click}
+        className={!clicked ? "friendsList" : "friendsList friendsListClicked"}
+      >
         <FontAwesomeIcon icon={faUserGroup} />
       </button>
-      <div>{clicked && <FriendslistPop />}</div>
+      <div>{clicked && <FriendsListCover />}</div>
     </div>
   );
 }

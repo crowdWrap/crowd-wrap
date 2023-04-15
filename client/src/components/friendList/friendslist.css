@@ -220,14 +220,17 @@ body {
 }
 
 .friendsList {
-  min-width: 55px;
+  min-width: 45px;
   border-radius: 25px;
   height: 35px;
   margin: 0;
   padding: 0;
-  margin-right: 8px;
   transition: 0.25s ease-in-out;
   margin-bottom: 8px;
+}
+
+.friendsListClicked {
+  border: 1px solid #00bdf1;
 }
 
 .friendsList:hover {

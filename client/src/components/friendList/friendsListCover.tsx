@@ -17,7 +17,7 @@ async function fetchData() {
       method: "GET",
     });
     const result = await response.json();
-    console.log(result);
+
     return result;
   } catch (error: any) {
     throw new Error(error);
