@@ -65,6 +65,7 @@
   margin: 0;
   grid-row-start: 1;
   display: flex;
+  gap: 8px;
   justify-content: flex-end;
   align-items: flex-end;
 }
