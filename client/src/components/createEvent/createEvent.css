@@ -5,6 +5,7 @@
   margin: 0;
   padding: 0;
   transition: 0.25s ease-in-out;
+  margin-bottom: 8px;
 }
 
 .createEventClicked {
@@ -26,18 +27,6 @@
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.185);
   transform: translateX(-50%) translateY(-50%);
   padding: 15px;
-}
-
-.createEventForm img {
-  width: 150px;
-  height: 150px;
-  border-radius: 100%;
-  border: 1px solid black;
-  transition: 0.25s ease-in-out;
-}
-
-.createEventForm img:hover {
-  opacity: 0.8;
 }
 
 .createEventForm h1 {
@@ -68,8 +57,18 @@
   cursor: pointer;
 }
 
+.step h1 {
+  /* transition: 0.12s ease-in-out; */
+  /* transition: 0.35s ease-in-out; */
+}
+
+.stepActive {
+  transition: 0.35s ease-in-out;
+  background: linear-gradient(to right, #f14658, #fa7cbb);
+}
+
 .stepLine {
-  width: clamp(55px, 30vw, 300px);
+  width: clamp(200px, 30vw, 300px);
   height: 5px;
   border-radius: 50px;
   position: absolute;
@@ -78,7 +77,7 @@
   color: white;
   cursor: auto;
   pointer-events: none;
-  margin-left: clamp(100px, 25vw, 332.5px);
+  margin-left: clamp(200px, 35vw, 332.5px);
   opacity: 1;
 }
 
@@ -93,6 +92,22 @@
 
 .stepHalf {
   width: 50%;
+}
+
+.stepCheck {
+  position: absolute;
+  color: white;
+  transition: 0.25s ease-in-out;
+  opacity: 0;
+}
+
+.removeStepCounter {
+  transition: none;
+  opacity: 0;
+}
+
+.stepCheckShow {
+  opacity: 1;
 }
 
 .stepFinished {
@@ -119,8 +134,8 @@
   width: 100%;
   position: relative;
   outline: none;
-  color: white;
-
+  color: black;
+  font-family: "Open Sans", sans-serif;
   padding: 0;
   border-radius: 0px;
   transition: all 0.2s ease-in-out;
@@ -149,7 +164,7 @@
 }
 
 .titleCover input:focus ~ label,
-.titleCover input:valid ~ label {
+.titleCover input:not(:placeholder-shown) ~ label {
   top: -10px;
   font-size: 0.75rem;
   color: #0077cc;
@@ -159,15 +174,171 @@
 .titleFormCover {
   margin-top: 20px;
   height: 90%;
+  opacity: 1;
   display: grid;
   grid-template-columns: 1fr 1fr;
+  overflow: hidden;
   grid-template-rows: 1fr 1fr 1fr;
 }
 
-.titleFormCover textarea {
+.descriptionCover {
+  grid-column: 1/-1;
+  grid-row-start: 2;
+  width: 100%;
+  align-self: center;
+  justify-self: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  letter-spacing: 1.5px;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 300;
+  transition: 0.25s ease-in-out;
+}
+
+.descriptionCover textarea {
   resize: none;
+  height: 75px;
+  width: 75%;
   border-radius: 25px;
+  font-family: "Open Sans", sans-serif;
   border: none;
   transition: 0.25s ease-in-out;
   padding: 10px 10px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.308);
+}
+
+.titleImgCover svg {
+  color: white;
+  height: 55px;
+  pointer-events: none;
+  position: absolute;
+  margin-bottom: 15px;
+  opacity: 0;
+  transition: 0.3s ease-in-out;
+}
+
+.titleImgCover {
+  display: flex;
+  width: min-content;
+  border-radius: 50%;
+  justify-content: center;
+  border: 5px double rgb(255, 255, 255);
+  align-items: center;
+  transition: 0.25s ease-in-out;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.308);
+}
+
+.titleImgCover img {
+  width: 100px;
+  height: 100px;
+  border-radius: 100%;
+  transition: 0.25s ease-in-out;
+}
+
+.titleImgCover img:hover {
+  opacity: 0.3;
+  cursor: pointer;
+}
+
+.titleImgCover img:hover + svg {
+  opacity: 1;
+}
+
+.imageAndTitleCover {
+  grid-row-start: 1;
+  grid-column: 1/-1;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.titleFormCover button {
+  justify-self: center;
+  align-self: center;
+  background-color: white;
+  color: black;
+  grid-column: 1/-1;
+  grid-row-start: 3;
+  min-width: fit-content;
+  width: 100px;
+  height: 75px;
+  border-radius: 25px;
+  letter-spacing: 1.5px;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 300;
+  padding: 0;
+  margin: 0;
+  border: 3px solid white;
+  transition: 0.25s ease-in-out;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.308);
+}
+
+.titleFormCover button:hover {
+  border-color: black;
+}
+
+.removeCurrentForm {
+  transition: 0.15s ease-in-out;
+  opacity: 0;
+}
+
+.moneyGoalCover {
+  grid-column: 1/-1;
+  justify-self: center;
+  display: flex;
+  /* gap: 10px; */
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+
+  width: 100%;
+}
+
+.moneyGoalCover button {
+  padding: 10px;
+}
+
+.moneyGoalCover button input {
+  width: 15px;
+}
+
+#moneyGoalActive {
+  transition: 0.25s ease-in-out;
+  border-color: blue;
+}
+
+.deadlineCover {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.giftIdeas {
+  display: flex;
+  gap: 20px;
+  height: 35px;
+  align-items: center;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  flex-wrap: nowrap;
+  padding: 20px;
+}
+
+.giftIdeas button {
+  height: 25px;
+}
+
+.deadlineGiftCover {
+  grid-column: 1/-1;
+  grid-row-start: 2;
+  align-items: start;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  width: 99%;
+  height: 100%;
+}
+
+.eventConfirm {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
