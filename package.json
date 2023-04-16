@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "dotenv": "^16.0.3",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "react-copy-to-clipboard": "^5.1.0"
   }
 }
