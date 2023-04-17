@@ -12,7 +12,7 @@ async function fetchLoginData(navigate: any, setUsername: any) {
   const receivedData = await response.json();
 
   if (response.ok) {
-    navigate("/profile");
+    navigate("/events");
     setUsername(receivedData.user.username);
   } else {
     navigate("/login");
@@ -20,7 +20,7 @@ async function fetchLoginData(navigate: any, setUsername: any) {
   }
 }
 
-export default function LoggedIn() {
+export default function Events() {
   const [username, setUsername] = useState<string>("");
   const navigate = useNavigate();
   useEffect(() => {
@@ -33,7 +33,7 @@ export default function LoggedIn() {
         <FriendsList />
         <LogoutButton />
       </nav>
-      <h1>Welcome {username}</h1>
+      <h1>Welcome {username} to the events page</h1>
       <p>Logged in</p>
     </div>
   );
