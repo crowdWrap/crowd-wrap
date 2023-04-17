@@ -36,14 +36,17 @@ model User {
 
 model Event {
   id Int @id @default(autoincrement())
-  title String
+  title String 
+  // @unique
   description String
   deadline DateTime?
-  inviteLink String
+  inviteLink String @unique
   image String?
-  gift String?
+  gifts String?
+  mode String?
   //more for specific things needed
-  moneyGoal Int
+  Currentfunds Int?
+  moneyGoal String?
   published Boolean @default(false)
   participants EventToUser[]
   owner User @relation("OwnedEvents", fields: [ownerId], references: [id])
