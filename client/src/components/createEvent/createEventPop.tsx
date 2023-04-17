@@ -170,7 +170,16 @@ export default function CreateEventPop() {
         />
       )}
 
-      {showEventComplete && <EventMade />}
+      {showEventComplete && (
+        <EventMade
+          title={title}
+          description={description}
+          moneyGoal={moneyGoal}
+          date={date}
+          time={time}
+          img={img}
+        />
+      )}
     </div>
   );
 }

@@ -63,6 +63,7 @@
 }
 
 .stepActive {
+  cursor: auto;
   transition: 0.35s ease-in-out;
   background: linear-gradient(to right, #f14658, #fa7cbb);
 }
