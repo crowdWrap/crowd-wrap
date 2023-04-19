@@ -343,3 +343,30 @@
   flex-direction: column;
   gap: 20px;
 }
+
+.eventsPage {
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  grid-template-rows: 0.05fr 1fr;
+}
+
+.eventsCover {
+  padding: 10px;
+  grid-row-start: 2;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 300px));
+  grid-template-rows: repeat(auto-fit, 200px);
+  gap: 10px;
+}
+
+.event {
+  display: flex;
+  flex-direction: column;
+  border: 2px solid black;
+  color: white;
+  background-color: black;
+  padding: 15px;
+  border-radius: 15px;
+  overflow-wrap: break-word;
+}

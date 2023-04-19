@@ -31,6 +31,28 @@ export default function CreateEventPop() {
     setShowEventComplete(currentStep === "complete");
   }, [currentStep]);
 
+  useEffect(() => {
+    if (showEventComplete) {
+      const data = JSON.stringify({
+        title,
+        description,
+        img,
+        moneyGoal,
+        time,
+        date,
+      });
+
+      console.log("ran");
+      fetch("/events", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: data,
+      }).catch((error) => console.error(error));
+    }
+  }, [showEventComplete]);
+
   return (
     <div className="createEventForm">
       <div className="steps">
