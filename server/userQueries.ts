@@ -22,6 +22,12 @@ export async function createUser(
         friendRequests: {
           connect: [],
         },
+        ownedEvents: {
+          create: [],
+        },
+        events: {
+          create: [],
+        },
       },
     });
   } catch (error) {
@@ -190,5 +196,72 @@ export async function removeFriend(username: string, id: number) {
     return { updatedCurrentUser, updatedOppositeUser };
   } catch (error) {
     throw error;
+  }
+}
+
+export async function createEvent(
+  id: number,
+  eventInfo: any,
+  inviteLink: string
+) {
+  try {
+    await prisma.event.create({
+      data: {
+        title: eventInfo.title,
+        description: eventInfo.description,
+        inviteLink: inviteLink,
+        ownerId: id,
+        moneyGoal: eventInfo.moneyGoal,
+        Currentfunds: 0,
+        image: eventInfo.img,
+        deadlineDate: eventInfo.date,
+        deadlineTime: eventInfo.time,
+        participants: {
+          create: {
+            userId: id,
+          },
+        },
+      },
+    });
+  } catch (e) {
+    throw e;
+  }
+}
+
+async function addParticipant(id: number, eventId: number) {
+  const participantExists = await prisma.eventToUser.findFirst({
+    where: {
+      id,
+      eventId,
+    },
+  });
+
+  if (participantExists) {
+    throw new Error(`User ${id} is already a participant in event ${eventId}`);
+  }
+
+  await prisma.eventToUser.create({
+    data: {
+      user: {
+        connect: { id },
+      },
+      event: {
+        connect: { id: eventId },
+      },
+    },
+  });
+}
+
+export async function getEventById(id: number) {
+  const event = await prisma.event.findUniqueOrThrow({
+    where: {
+      id,
+    },
+  });
+  if (event) {
+    return event;
+  } else {
+    console.log("event not found.");
+    throw new Error(`event '${id}' doesn't exist.`);
   }
 }

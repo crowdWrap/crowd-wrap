@@ -3,7 +3,9 @@ import morgan from "morgan";
 import { router } from "./routes/engineers";
 import {
   addFriend,
+  createEvent,
   createUser,
+  getEventById,
   removeFriend,
   removeFriendReceived,
   removeFriendSent,
@@ -28,6 +30,8 @@ import session from "express-session";
 import { Session, MemoryStore } from "express-session";
 import dotenv from "dotenv";
 import { OAuth2Client } from "google-auth-library";
+import { SHA256 } from "crypto-js";
+
 const clientid =
   "951239670358-q89e1msbgovmepbaq4fplqc20qn62ha9.apps.googleusercontent.com";
 const client = new OAuth2Client(clientid);
@@ -428,6 +432,39 @@ app.get("/removeFriendReceived", async (req, res) => {
     //removing user from userToRemoves sent
     removeFriendSent(user.username, userToRemove.id);
     return res.status(200).json({ message: "complete" });
+  }
+});
+
+app.post("/events", async (req, res) => {
+  if (req.session.user) {
+    console.log(req.body);
+    const { title, description, img, moneyGoal, time, date } = req.body;
+    const eventString = `${title}${description}${moneyGoal}${date}${time}${img}`;
+    const inviteLink = SHA256(eventString).toString();
+
+    await createEvent(
+      Number(req.session.user),
+      req.body,
+      `http://localhost:3000/events${inviteLink}`
+    );
+    const user = await getProfileById(Number(req.session.user));
+    //need to test participants
+    //then inner event
+    //see if when u create an event on the events page it gets updated
+    //style
+    console.log(user);
+  }
+});
+
+app.get("/events/retrieve", async (req, res) => {
+  if (req.session.user) {
+    const user = await getProfileById(Number(req.session.user));
+    const allEvents = await Promise.all(
+      user.events.map(async (e) => {
+        return await getEventById(e.eventId);
+      })
+    );
+    res.send(allEvents);
   }
 });
 

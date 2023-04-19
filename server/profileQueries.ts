@@ -10,6 +10,8 @@ export async function getProfileById(id: number) {
       friendRequests: true,
       friendRequestsSent: true,
       friendOf: true,
+      events: true,
+      ownedEvents: true,
     },
   });
   if (userProfile) {
@@ -31,6 +33,8 @@ export async function getProfileByUsername(username: string) {
         friendRequests: true,
         friendRequestsSent: true,
         friendOf: true,
+        events: true,
+        ownedEvents: true,
       },
     });
     if (userProfile) {
