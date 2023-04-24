@@ -1,7 +1,6 @@
 import React from "react";
 import styles from "../assets/css_group/form.module.css";
 import { useState } from "react";
-// eslint-disable-next-line
 import { Link, Router, useNavigate } from "react-router-dom";
 import SignUpGoogle from "../api/googleSignup";
 import { GoogleOAuthProvider } from "@react-oauth/google";
@@ -18,7 +17,6 @@ export default function SignupForm() {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // eslint-disable-next-line
     if (registerPass == registerConfirmPass) {
       const data = JSON.stringify({
         username: registerUsername,
@@ -93,7 +91,7 @@ export default function SignupForm() {
           </div>
         </form>
       </div>
-      <GoogleOAuthProvider clientId="951239670358-q89e1msbgovmepbaq4fplqc20qn62ha9.apps.googleusercontent.com">
+      <GoogleOAuthProvider clientId={`${process.env.REACT_APP_CLIENTID}`}>
         <SignUpGoogle />
       </GoogleOAuthProvider>
       <div className="btnWrap">
