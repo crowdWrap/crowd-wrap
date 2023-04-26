@@ -11,6 +11,7 @@ import {
   removeFriendSent,
   updateFriendRequest,
   updateFriendRequestSent,
+  addParticipant,
 } from "./userQueries";
 import {
   getProfileByUsername,
@@ -20,6 +21,7 @@ import {
   updateUserName,
   getProfilesByPartialUsername,
   getFriendsByPartialUsername,
+  getParticipantById,
 } from "./profileQueries";
 import bcrypt from "bcryptjs";
 import cors from "cors";
@@ -437,7 +439,6 @@ app.get("/removeFriendReceived", async (req, res) => {
 
 app.post("/events", async (req, res) => {
   if (req.session.user) {
-    console.log(req.body);
     const { title, description, img, moneyGoal, time, date } = req.body;
     const eventString = `${title}${description}${moneyGoal}${date}${time}${img}`;
     const inviteLink = SHA256(eventString).toString();
@@ -456,6 +457,32 @@ app.post("/events", async (req, res) => {
   }
 });
 
+app.get("/events/participants", async (req, res) => {
+  if (req.session.user) {
+    const participantId: any = req.query.participantId;
+    const participant = await getParticipantById(Number(participantId));
+    const user = await getProfileById(Number(participantId));
+    // console.log(await getParticipantById(Number(participantId)));
+    res.send({ pic: participant.pic, name: user.username });
+  }
+});
+
+app.get("/events/participants/add", async (req, res) => {
+  if (req.session.user) {
+    const username: any = req.query.username;
+    const user: any = await getProfileByUsername(username);
+    const eventId: any = req.query.eventId;
+    // console.log(eventId);
+    // console.log("id: ", , "eventid: ", );
+    addParticipant(Number(user.id), Number(eventId));
+  }
+});
+
+app.get("/events/participants/remove", async (req, res) => {
+  if (req.session.user) {
+  }
+});
+
 app.get("/events/retrieve", async (req, res) => {
   if (req.session.user) {
     const user = await getProfileById(Number(req.session.user));
@@ -467,9 +494,6 @@ app.get("/events/retrieve", async (req, res) => {
     res.send(allEvents);
   }
 });
-
-//a popup letting them know it was sent
-//then ur going to have to setup the received/sent which wouldnt need a route for each
 
 app.listen(8000, () => {
   console.log(`Server is listening on port 8000`);

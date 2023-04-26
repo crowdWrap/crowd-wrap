@@ -228,7 +228,9 @@ export async function createEvent(
   }
 }
 
-async function addParticipant(id: number, eventId: number) {
+export async function removeParticipant(id: number, eventId: number) {}
+
+export async function addParticipant(id: number, eventId: number) {
   const participantExists = await prisma.eventToUser.findFirst({
     where: {
       id,
@@ -256,6 +258,9 @@ export async function getEventById(id: number) {
   const event = await prisma.event.findUniqueOrThrow({
     where: {
       id,
+    },
+    include: {
+      participants: true,
     },
   });
   if (event) {

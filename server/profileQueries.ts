@@ -22,6 +22,28 @@ export async function getProfileById(id: number) {
   }
 }
 
+export async function getParticipantById(id: number) {
+  const userProfile = await prisma.user.findUniqueOrThrow({
+    where: {
+      id,
+    },
+    include: {
+      friends: false,
+      friendRequests: false,
+      friendRequestsSent: false,
+      friendOf: false,
+      events: false,
+      ownedEvents: false,
+    },
+  });
+  if (userProfile) {
+    return { pic: userProfile.picture, id };
+  } else {
+    console.log("Profile not found.");
+    throw new Error(`Profile '${id}' doesn't exist.`);
+  }
+}
+
 export async function getProfileByUsername(username: string) {
   try {
     const userProfile = await prisma.user.findUnique({
