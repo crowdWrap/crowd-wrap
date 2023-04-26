@@ -1,5 +1,6 @@
-@font-face {
+:local .myFont {
+  @font-face {
     font-family: 'MyFont';
     src: url('./fonts/MyFont.ttf') format('truetype');
   }
-  
+}
