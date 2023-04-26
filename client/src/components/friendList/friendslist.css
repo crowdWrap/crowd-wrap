@@ -13,6 +13,7 @@ body {
   width: 290px;
   background: #fff;
   overflow: hidden;
+  z-index: 100;
   border-radius: 25px;
   height: 484px;
   position: absolute;
