@@ -376,7 +376,11 @@ app.get("/friends", async (req, res) => {
 
     if (friends) {
       accounts = friends.map((item) => {
-        return { username: item.username, profilePic: item.picture };
+        return {
+          username: item.username,
+          profilePic: item.picture,
+          userId: item.id,
+        };
       });
     }
   } else {

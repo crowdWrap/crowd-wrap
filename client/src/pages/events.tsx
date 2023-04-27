@@ -63,9 +63,6 @@ export default function Events() {
     );
 
     setDisplayFriends(null);
-    // const data = await response.json();
-
-    // return data;
   };
 
   useEffect(() => {
@@ -183,18 +180,26 @@ export default function Events() {
                 <div className="inviteeCover">
                   {displayFriends === e.id &&
                     accounts &&
-                    accounts.map((item: any, index: any) => (
-                      <div className="invitee" key={item.username}>
-                        <img alt="" src={item.profilePic} />
-                        <p>{item.username}</p>
-                        <FontAwesomeIcon
-                          className="addParticipant"
-                          onClick={() => handleInvite(item, e)}
-                          icon={faPlus}
-                          //filter those that have the same name as the one in the event participant
-                        />
-                      </div>
-                    ))}
+                    accounts
+                      .filter((valu: any) => {
+                        const hasMatchingUser = e.participants.some(
+                          (user: any) => user.userId === valu.userId
+                        );
+                        return !hasMatchingUser ? valu : null;
+                      })
+                      .map((item: any, index: any) => (
+                        <div className="invitee" key={item.username}>
+                          <img alt="" src={item.profilePic} />
+                          <p>{item.username}</p>
+                          <FontAwesomeIcon
+                            className="addParticipant"
+                            onClick={() => handleInvite(item, e)}
+                            icon={faPlus}
+                            //have it refresh when u add a new participant
+                            //cleanup functions and split up into components
+                          />
+                        </div>
+                      ))}
                 </div>
               </div>
 
