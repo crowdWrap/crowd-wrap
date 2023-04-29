@@ -4,6 +4,7 @@ import {
   faUser,
   faRightFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
+// eslint-disable-next-line
 import { Link, useNavigate } from "react-router-dom";
 
 export default function ClickPopup() {

@@ -19,6 +19,7 @@ export default function LogoutButton() {
   const [backgroundImage, setBackgroundImage] = useState("");
   const [clicked, setClicked] = useState<boolean>(false);
   const click = () => {
+    // eslint-disable-next-line
     setClicked(clicked == false);
     document.addEventListener("click", (e: MouseEvent) => {
       const target = e.target as Element;

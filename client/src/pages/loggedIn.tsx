@@ -23,6 +23,7 @@ function LoggedIn() {
   const navigate = useNavigate();
   useEffect(() => {
     fetchLoginData(navigate, setUsername);
+    // eslint-disable-next-line
   }, []);
   return (
     <div>
