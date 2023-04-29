@@ -6,7 +6,7 @@ import SecondStep from "./secondStep";
 import ThirdStep from "./thirdStep";
 import EventMade from "./eventMade";
 
-export default function CreateEventPop() {
+export default function CreateEventPop({ setRefresh }: any) {
   const [currentStep, setCurrentStep] = useState<string>("firstStep");
   const [title, setTitle] = useState<string>("");
   const [img, setImg] = useState<string>("default");
@@ -50,6 +50,8 @@ export default function CreateEventPop() {
         },
         body: data,
       }).catch((error) => console.error(error));
+
+      setRefresh(true);
     }
   }, [showEventComplete]);
 

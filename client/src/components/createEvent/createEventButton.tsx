@@ -4,7 +4,7 @@ import { useState } from "react";
 import "./createEvent.css";
 import CreateEventPop from "./createEventPop";
 
-export default function CreateEventButton() {
+export default function CreateEventButton({ setRefresh }: any) {
   const [clicked, setClicked] = useState<boolean>(false);
 
   const clickHandler = (event: MouseEvent) => {
@@ -31,7 +31,11 @@ export default function CreateEventButton() {
       >
         <FontAwesomeIcon icon={faPlus} />
       </button>
-      <div>{clicked && <CreateEventPop />}</div>
+      <div>
+        {clicked && (
+          <CreateEventPop setRefresh={(val: any) => setRefresh(val)} />
+        )}
+      </div>
     </div>
   );
 }

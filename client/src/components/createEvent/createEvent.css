@@ -370,6 +370,7 @@
   background-color: rgb(223, 144, 144);
   padding: 5px 15px;
   border-radius: 25px;
+  position: relative;
   overflow-wrap: break-word;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -464,6 +465,18 @@
   height: 20px;
   transition: 0.25s ease-in-out;
   cursor: pointer;
+}
+
+.removeParticipant {
+  position: absolute;
+  right: 20px;
+  bottom: 10px;
+  transition: 0.25s ease-in-out;
+  cursor: pointer;
+}
+
+.removeParticipant:hover {
+  color: red;
 }
 
 .addParticipant:hover {
