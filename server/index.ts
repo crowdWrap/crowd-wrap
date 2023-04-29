@@ -12,6 +12,8 @@ import {
   updateFriendRequest,
   updateFriendRequestSent,
   addParticipant,
+  removeEvent,
+  removeParticipant,
 } from "./userQueries";
 import {
   getProfileByUsername,
@@ -71,10 +73,6 @@ declare module "express-session" {
 
 app.use("/crowdWrap/engineers", router);
 
-app.get("/crowdWrap", (req, res) => {
-  res.send("hey guys");
-});
-
 app.post("/", (req, res) => {});
 
 app.post("/register/setUsername", async (req, res) => {
@@ -108,7 +106,7 @@ app.post("/register", async (req, res) => {
           const picture = payload.picture;
           const userData = payload.sub;
 
-          console.log(payload);
+          // console.log(payload);
           //makes sure that the user doesnt exist
           const emailExists = await getProfileByEmail(email);
 
@@ -452,22 +450,7 @@ app.post("/events", async (req, res) => {
       req.body,
       `http://localhost:3000/events${inviteLink}`
     );
-    const user = await getProfileById(Number(req.session.user));
-    //need to test participants
-    //then inner event
-    //see if when u create an event on the events page it gets updated
-    //style
-    console.log(user);
-  }
-});
-
-app.get("/events/participants", async (req, res) => {
-  if (req.session.user) {
-    const participantId: any = req.query.participantId;
-    const participant = await getParticipantById(Number(participantId));
-    const user = await getProfileById(Number(participantId));
-    // console.log(await getParticipantById(Number(participantId)));
-    res.send({ pic: participant.pic, name: user.username });
+    return res.status(200).json({ message: "complete" });
   }
 });
 
@@ -479,6 +462,7 @@ app.get("/events/participants/add", async (req, res) => {
     // console.log(eventId);
     // console.log("id: ", , "eventid: ", );
     addParticipant(Number(user.id), Number(eventId));
+    return res.status(200).json({ message: "complete" });
   }
 });
 
@@ -495,7 +479,24 @@ app.get("/events/retrieve", async (req, res) => {
         return await getEventById(e.eventId);
       })
     );
-    res.send(allEvents);
+    res.status(200).send(allEvents);
+  }
+});
+
+app.get("/events/remove", async (req, res) => {
+  if (req.session.user) {
+    const eventId: any = req.query.eventId;
+    const ownerId: any = req.query.ownerId;
+    console.log(ownerId);
+    //
+    if (ownerId == req.session.user) {
+      console.log("hi");
+      removeEvent(Number(eventId));
+    } else {
+      console.log("bye");
+      removeParticipant(Number(req.session.user), Number(eventId));
+    }
+    return res.status(200).json({ message: "complete" });
   }
 });
 

@@ -205,6 +205,7 @@ export async function createEvent(
   inviteLink: string
 ) {
   try {
+    const user = await getProfileById(id);
     await prisma.event.create({
       data: {
         title: eventInfo.title,
@@ -219,6 +220,8 @@ export async function createEvent(
         participants: {
           create: {
             userId: id,
+            picture: user.picture,
+            username: user.username,
           },
         },
       },
@@ -228,7 +231,34 @@ export async function createEvent(
   }
 }
 
-export async function removeParticipant(id: number, eventId: number) {}
+export async function removeEvent(eventId: number) {
+  try {
+    await prisma.event.deleteMany({
+      where: { id: eventId },
+    });
+  } catch (e) {
+    throw e;
+  }
+}
+
+export async function removeParticipant(id: number, eventId: number) {
+  const participant = await prisma.eventToUser.findFirst({
+    where: {
+      userId: id,
+      eventId,
+    },
+  });
+
+  if (!participant) {
+    throw new Error(`User ${id} is not a participant in event ${eventId}`);
+  }
+
+  await prisma.eventToUser.delete({
+    where: {
+      id: participant.id,
+    },
+  });
+}
 
 export async function addParticipant(id: number, eventId: number) {
   const participantExists = await prisma.eventToUser.findFirst({
@@ -242,6 +272,8 @@ export async function addParticipant(id: number, eventId: number) {
     throw new Error(`User ${id} is already a participant in event ${eventId}`);
   }
 
+  const user = await getProfileById(id);
+
   await prisma.eventToUser.create({
     data: {
       user: {
@@ -250,6 +282,8 @@ export async function addParticipant(id: number, eventId: number) {
       event: {
         connect: { id: eventId },
       },
+      picture: user.picture,
+      username: user.username,
     },
   });
 }
