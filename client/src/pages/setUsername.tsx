@@ -1,4 +1,4 @@
-import "../assets/form.css";
+import "../assets/css_group/form.module.css";
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -24,6 +24,7 @@ export default function SetUsername() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    // eslint-disable-next-line
     fetchData(navigate, setRegisterUsername);
   }, [navigate]);
 
