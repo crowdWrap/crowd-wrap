@@ -3,7 +3,7 @@ import LogoutButton from "../components/logout";
 import FriendsList from "../components/friendList/friendslist";
 import CreateEventButton from "../components/createEvent/createEventButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faX } from "@fortawesome/free-solid-svg-icons";
 
 async function fetchData() {
   try {
@@ -28,23 +28,28 @@ async function fetchEvents(setEvents: any) {
 }
 
 export default function Events() {
-  const [participantData, setParticipantData] = useState<any>([]);
   const [events, setEvents] = useState<any>([]);
   const [displayFriends, setDisplayFriends] = useState(null);
   const [accounts, setAccounts] = useState<any>([]);
+  const [refresh, setRefresh] = useState<boolean>(false);
 
   useEffect(() => {
     let loaded = true;
     (async () => {
       if (loaded) {
+        fetchEvents(setEvents);
         setAccounts(await fetchData());
+      }
+      if (refresh) {
+        fetchEvents(setEvents);
+        setRefresh(false);
       }
     })();
     return () => {
       loaded = false;
       setAccounts([]);
     };
-  }, []);
+  }, [refresh]);
 
   const handleAddParticipant = (e: any) => {
     if (e.id !== displayFriends) {
@@ -62,19 +67,17 @@ export default function Events() {
       }
     );
 
+    setRefresh(true);
     setDisplayFriends(null);
   };
 
-  useEffect(() => {
-    fetchEvents(setEvents);
+  const removeEvent = async (e: any) => {
+    await fetch(`/events/remove?eventId=${e.id}&ownerId=${e.ownerId}`, {
+      method: "GET",
+    });
 
-    // console.log(events[0].participants[0]);
-    // (async () => {
-    //   console.log(await handleParticipants(events[0].participants[0].userId));
-    // })();
-    //pass something up in order to refresh the page?
-    //change someone across? that would beb reakign rules lets see
-  }, []);
+    setRefresh(true);
+  };
 
   const handleMoney = (e: any) => {
     const match = e.moneyGoal.match(/\d+/g);
@@ -90,32 +93,6 @@ export default function Events() {
     return match[0];
   };
 
-  const handleParticipants = async (e: any) => {
-    const existingParticipant = participantData.find(
-      (p: any) => p.id === e.userId
-    );
-    if (existingParticipant) {
-      return existingParticipant.pic;
-    }
-
-    const response: Response = await fetch(
-      `/events/participants?participantId=${await e.userId}`,
-      {
-        method: "GET",
-      }
-    );
-
-    const data = await response.json();
-
-    const newParticipantData = [
-      ...participantData,
-      { pic: data.pic, id: e.userId, name: data.name },
-    ];
-    setParticipantData(newParticipantData);
-
-    return data.pic;
-  };
-
   const handleDate = (e: any) => {
     const dateObj = new Date(e.deadlineDate);
     const options: object = { month: "long", day: "numeric", year: "numeric" };
@@ -125,7 +102,7 @@ export default function Events() {
   return (
     <div className="eventsPage">
       <nav className="loggedInNavbar">
-        <CreateEventButton />
+        <CreateEventButton setRefresh={(val: any) => setRefresh(val)} />
         <FriendsList />
         <LogoutButton />
       </nav>
@@ -157,20 +134,7 @@ export default function Events() {
               <div className="eventParticipants">
                 {events &&
                   e.participants.map((val: any) => {
-                    handleParticipants(val);
-                    // console.log(val);
-
-                    return participantData.map((newVal: any) => {
-                      if (newVal.id === val.userId) {
-                        return (
-                          <img key={newVal.id} src={`${newVal.pic}`} alt="" />
-                        );
-                      }
-                    });
-
-                    //what we are going to do now is to make sure that the participants display actually works, we do this by making the frontend first(bootleg)
-                    //when they press plus bring up a list of their friends that they can invite, have to make sure they arent already in the event
-                    //then make the route of adding them, and once they press invite refresh the component and add their picture
+                    return <img key={val.id} src={`${val.picture}`} alt="" />;
                   })}
                 <FontAwesomeIcon
                   onClick={() => handleAddParticipant(e)}
@@ -195,13 +159,14 @@ export default function Events() {
                             className="addParticipant"
                             onClick={() => handleInvite(item, e)}
                             icon={faPlus}
-                            //have it refresh when u add a new participant
-                            //cleanup functions and split up into components
                           />
                         </div>
                       ))}
                 </div>
               </div>
+
+              {/* only if they are host provide the delete button, otherwise allow them to leave. */}
+              {/* inner page   */}
 
               {/* <div className="eventCurrentFunds">{`CurrentFunds: ${e.Currentfunds}`}</div> */}
               {/* <div>{`InviteLink: ${e.inviteLink}`}</div> */}
@@ -209,6 +174,11 @@ export default function Events() {
               {/* <div className="eventDate">{`deadlineTime: ${
                 e.deadlineTime === null ? "No Time" : e.deadlineTime
               }`}</div> */}
+              <FontAwesomeIcon
+                icon={faX}
+                onClick={() => removeEvent(e)}
+                className="removeParticipant"
+              />
             </div>
           ))}
       </div>
