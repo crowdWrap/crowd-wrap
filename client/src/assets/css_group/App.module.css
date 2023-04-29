@@ -147,24 +147,34 @@
 
 /* Logout button - end */
 
-/* Login button - start */
-
-:local .loginBtn {
-  width: 200px;
-  height: 50px;
-}
-
 /* Login button - end */
 
 :local .btnWrap {
   grid-row-start: 3;
   grid-column-start: 2;
+  display: grid;
+  padding: 20px;
+  place-items: center;
+  /*outline: dashed 1px red; */
+}
+
+/* Login button - start */
+
+:local .loginBtn {
+  width: 250px;
+  height: 50px;
 }
 
 /* signUp button - start */
 
 :local .signupBtn {
-  width: 200px;
+  width: 250px;
+  height: 50px;
+  font: PP Neue Montreal
+}
+
+:local .dashboard_button_example {
+  width: 250px;
   height: 50px;
   font: PP Neue Montreal
 }

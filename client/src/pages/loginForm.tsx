@@ -3,8 +3,9 @@ import styles from "../assets/css_group/form.module.css";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import SignInGoogle from "../api/googleSignin";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import { ChakraProvider, Button, Stack, Input } from '@chakra-ui/react';
+import SignInGoogle from "../api/googleSignin";
 import Header from "../components/Header";
 
 async function fetchData(navigate: any) {
@@ -56,7 +57,7 @@ export default function LoginForm() {
   }
 
   return (
-    
+    <ChakraProvider>
     <div className = {styles["wrapper"]}>
       <Header />
       <div className={styles["form-wrapper"]}>
@@ -84,7 +85,7 @@ export default function LoginForm() {
           </div>
 
           <div className={styles["submit"]}>
-            <button type="submit" className={styles["buttonNormal"]}>Login</button>
+            <Button type="submit" className={styles["buttonNormal"]}>Login</Button>
             <Link to="/register" className={styles["linkstyle"]} style={{ fontSize: 12 }}>
               Don't Have an account yet?{" "}
               <span style={{ color: "pink" }}>Register for free.</span>
@@ -97,5 +98,6 @@ export default function LoginForm() {
         </form>
       </div>
     </div>
+    </ChakraProvider>
   );
 }
