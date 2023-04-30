@@ -1,8 +1,7 @@
-import "../assets/form.css";
 import React, { useEffect } from "react";
+import "../assets/css_group/form.module.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
 async function fetchData(navigate: any, setRegisterUsername: any) {
   //to check if the user is authenticated beforehand
   const response: Response = await fetch("/register/setUsername", {
@@ -24,6 +23,7 @@ export default function SetUsername() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    // eslint-disable-next-line
     fetchData(navigate, setRegisterUsername);
   }, [navigate]);
 

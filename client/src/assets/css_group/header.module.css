@@ -1,0 +1,36 @@
+:local .header {
+  font-family: "Roboto", "Camie Regular", "Comic Sans MS";
+  width: 100%;
+  height: 50px;
+  position: absolute;
+  justify-content: space-between;
+  display: flex;
+  top: 0px;
+  background: #ffffff;
+}
+
+:local .header img {
+  width: 200px;
+  height: 50px;
+}
+
+:local .sign-links {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-right: 30px;
+}
+
+:local .sign-links a {
+  margin-left: 10px;
+  text-decoration: none;
+  color: black;
+}
+
+:local .header a img {
+  transition: 0.25s ease-in-out;
+}
+
+:local .header a img:hover {
+  opacity: 0.7;
+}

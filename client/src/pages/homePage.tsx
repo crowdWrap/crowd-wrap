@@ -1,4 +1,4 @@
-import "../assets/App.css";
+import styles from "../assets/css_group/App.module.css";
 import { useEffect, useState } from "react";
 import Engineers from "../components/Engineers";
 import { Link } from "react-router-dom";
@@ -31,17 +31,17 @@ export default function HomePage() {
   };
 
   return (
-    <div className="App">
-      <h1 className="title">Server Test {counter} </h1>
+    <div className={styles["App"]}>
+      <h1 className={styles["title"]}>Server Test {counter} </h1>
       <button className={className} onClick={handleClick} />
       {showEngineers && <Engineers allEngineers={allEngineers} />}
 
-      <div className="btnWrap">
+      <div className={styles["btnWrap"]}>
         <Link to="/register">
-          <button className="signupBtn"> Sign up</button>
+          <button className={styles["signupBtn"]}> Sign up</button>
         </Link>
         <Link to="/login">
-          <button className="loginBtn"> Login</button>
+          <button className={styles["loginBtn"]}> Login</button>
         </Link>
       </div>
     </div>

@@ -6,6 +6,7 @@
   padding: 0;
   transition: 0.25s ease-in-out;
   margin-bottom: 8px;
+  background-color: black;
 }
 
 .createEventClicked {

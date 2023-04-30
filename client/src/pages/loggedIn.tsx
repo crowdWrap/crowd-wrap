@@ -3,6 +3,7 @@ import LogoutButton from "../components/logout";
 import { useNavigate } from "react-router-dom";
 import FriendsList from "../components/friendList/friendslist";
 import CreateEventButton from "../components/createEvent/createEventButton";
+import styles from "../assets/css_group/App.module.css";
 
 async function fetchLoginData(navigate: any, setUsername: any) {
   const response: Response = await fetch("/profile", {
@@ -27,8 +28,8 @@ export default function LoggedIn() {
     fetchLoginData(navigate, setUsername);
   }, [navigate]);
   return (
-    <div className="loggedIn">
-      <nav className="loggedInNavbar">
+    <div className={styles["loggedIn"]}>
+      <nav className={styles["loggedInNavbar"]}>
         <CreateEventButton />
         <FriendsList />
         <LogoutButton />

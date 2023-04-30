@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import ClickPopup from "./logoutPop";
+import styles from "../assets/css_group/App.module.css";
 
 async function fetchProfilePic(setBackgroundImage: any) {
   const response: Response = await fetch("/profilePicRequest", {
@@ -19,12 +20,14 @@ export default function LogoutButton() {
   const [backgroundImage, setBackgroundImage] = useState("");
   const [clicked, setClicked] = useState<boolean>(false);
 
+  const btnCover: any = useRef();
+
   const clickHandler = (event: MouseEvent) => {
     logoutRemoval(event, setClicked);
   };
   const logoutRemoval = (e: MouseEvent, setClicked: any) => {
     const target = e.target as Element;
-    if (target && !target.closest(".logoutBtnCover")) {
+    if (target && !target.closest(`.${styles.logoutBtnCover}`)) {
       // check if target is not within logoutCover
       setClicked(false);
       document.removeEventListener("click", clickHandler);
@@ -41,12 +44,14 @@ export default function LogoutButton() {
   }, []);
 
   return (
-    <div className="logoutBtnCover">
+    <div ref={btnCover} className={styles["logoutBtnCover"]}>
       <button
         style={{
           backgroundImage: `url(${backgroundImage})`,
         }}
-        className={!clicked ? "logoutBtn" : "logoutBtn logoutBtnClicked"}
+        className={`${styles.logoutBtn} ${
+          clicked ? styles.logoutBtnClicked : ""
+        }`}
         onClick={click}
       ></button>
       <div>{clicked && <ClickPopup />}</div>

@@ -1,9 +1,10 @@
 import React from "react";
-import "../assets/form.css";
+import styles from "../assets/css_group/form.module.css";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import SignUpGoogle from "../api/googleSignup";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import Header from "../components/Header";
 
 export default function SignupForm() {
   const [registerUsername, setRegisterUsername] = useState<string>("");
@@ -46,11 +47,12 @@ export default function SignupForm() {
   };
 
   return (
-    <div className="wrapper signupForm">
-      <div className="form-wrapper">
+    <div className={styles["wrapper"]}>
+      <Header />
+      <div className={styles["form-wrapper"]}>
         <h2>Sign Up</h2>
         <form onSubmit={handleSubmit} noValidate>
-          <div className="username">
+          <div className={styles["username"]}>
             <label htmlFor="username">Username</label>
             <input
               type="text"
@@ -59,7 +61,7 @@ export default function SignupForm() {
               onChange={(e) => setRegisterUsername(e.target.value)}
             />
           </div>
-          <div className="email">
+          <div className={styles["email"]}>
             <label htmlFor="email">Email</label>
             <input
               type="email"
@@ -68,7 +70,7 @@ export default function SignupForm() {
               onChange={(e) => setRegisterEmail(e.target.value)}
             />
           </div>
-          <div className="password">
+          <div className={styles["password"]}>
             <label htmlFor="password">Password</label>
             <input
               type="password"
@@ -77,7 +79,7 @@ export default function SignupForm() {
               onChange={(e) => setRegisterPassword(e.target.value)}
             />
           </div>
-          <div className="confirm password">
+          <div className={styles["confirm password"]}>
             <label htmlFor="confirm password"> Confirm Password</label>
             <input
               type="password"
@@ -86,12 +88,12 @@ export default function SignupForm() {
               onChange={(e) => setRegisterConfirmPassword(e.target.value)}
             />
           </div>
-          <div className="submit">
+          <div className={styles["submit"]}>
             <button type="submit">Sign Up</button>
           </div>
         </form>
       </div>
-      <GoogleOAuthProvider clientId="951239670358-q89e1msbgovmepbaq4fplqc20qn62ha9.apps.googleusercontent.com">
+      <GoogleOAuthProvider clientId={`${process.env.REACT_APP_CLIENTID}`}>
         <SignUpGoogle />
       </GoogleOAuthProvider>
       <div className="btnWrap">

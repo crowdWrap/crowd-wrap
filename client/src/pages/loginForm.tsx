@@ -1,4 +1,5 @@
-import "../assets/form.css";
+import React from "react";
+import styles from "../assets/css_group/form.module.css";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
@@ -10,6 +11,7 @@ async function fetchData(navigate: any) {
   const response: Response = await fetch("/login", {
     method: "GET",
   });
+
   if (response.ok) {
   } else {
     navigate("/profile");
@@ -18,7 +20,7 @@ async function fetchData(navigate: any) {
 
 export default function LoginForm() {
   const navigate = useNavigate();
-  const [loginUsername, setLoginUsername] = useState<string>("");
+  const [usernameOrEmail, setusernameOrEmail] = useState<string>("");
   const [loginPass, setLoginPassword] = useState<string>("");
 
   useEffect(() => {
@@ -28,7 +30,7 @@ export default function LoginForm() {
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const data = JSON.stringify({
-      username: loginUsername,
+      username: usernameOrEmail,
       password: loginPass,
     });
 
@@ -49,23 +51,24 @@ export default function LoginForm() {
       alert(receivedData.message);
     }
   }
+
   return (
-    <div className="wrapper loginForm">
+    <div className={styles["wrapper"]}>
       <Header />
-      <div className="form-wrapper">
-        <div className="logintitle">Login</div>
+      <div className={styles["form-wrapper"]}>
+        <div className={styles["logintitle"]}>Login</div>
         <form onSubmit={handleSubmit} noValidate>
-          <div className="username">
+          <div className={styles["username"]}>
             <label htmlFor="username">Username</label>
             <input
               type="text"
               name="username"
               placeholder="Username"
               required
-              onChange={(e) => setLoginUsername(e.target.value)}
+              onChange={(e) => setusernameOrEmail(e.target.value)}
             />
           </div>
-          <div className="password">
+          <div className={styles["password"]}>
             <label htmlFor="password">Password</label>
             <input
               type="password"
@@ -76,17 +79,29 @@ export default function LoginForm() {
             />
           </div>
 
-          <div className="submit">
-            <button type="submit">Login</button>
-            <Link to="/register" className="linkstyle" style={{ fontSize: 12 }}>
-              Don't Have an account yet?{" "}
+          <div className={styles["submit"]}>
+            <button type="submit" className={styles["buttonNormal"]}>
+              Login
+            </button>
+
+            <div className={styles["googleSignIn"]}>
+              <GoogleOAuthProvider
+                clientId={`${process.env.REACT_APP_CLIENTID}`}
+              >
+                <SignInGoogle />
+              </GoogleOAuthProvider>
+            </div>
+
+            <Link
+              to="/register"
+              className={styles["linkstyle"]}
+              style={{ fontSize: 12 }}
+            >
+              Don't Have an account yet?
+              <br />
               <span style={{ color: "pink" }}>Register for free.</span>
             </Link>
           </div>
-
-          <GoogleOAuthProvider clientId="951239670358-q89e1msbgovmepbaq4fplqc20qn62ha9.apps.googleusercontent.com">
-            <SignInGoogle />
-          </GoogleOAuthProvider>
         </form>
       </div>
     </div>

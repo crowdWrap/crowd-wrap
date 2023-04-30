@@ -5,6 +5,7 @@ import {
   faRightFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
+import styles from "../assets/css_group/App.module.css";
 
 export default function ClickPopup() {
   const navigate = useNavigate();
@@ -20,17 +21,17 @@ export default function ClickPopup() {
   };
 
   return (
-    <div className="logoutPop">
-      <button className="individualBtn">
+    <div className={styles["logoutPop"]}>
+      <button className={styles["individualBtn"]}>
         <FontAwesomeIcon icon={faGear} />
         <p>Settings</p>
       </button>
 
-      <button className="individualBtn">
+      <button className={styles["individualBtn"]}>
         <FontAwesomeIcon icon={faUser} />
         <p>Profile</p>
       </button>
-      <button className="individualBtn" onClick={logoutSession}>
+      <button className={styles["individualBtn"]} onClick={logoutSession}>
         <FontAwesomeIcon icon={faRightFromBracket} />
         <p>Logout</p>
       </button>
