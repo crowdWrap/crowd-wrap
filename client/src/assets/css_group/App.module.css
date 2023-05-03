@@ -147,6 +147,13 @@
 
 /* Logout button - end */
 
+/* Login button - start */
+
+.loginBtn {
+  width: 200px;
+  height: 50px;
+}
+
 /* Login button - end */
 
 :local .btnWrap {

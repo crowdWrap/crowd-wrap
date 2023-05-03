@@ -63,7 +63,7 @@ export default function LoginForm() {
       <div className={styles["form-wrapper"]}>
         <div className={styles["logintitle"]}>Login</div>
         <form onSubmit={handleSubmit} noValidate>
-          <div className={styles["username"]}>
+          <div className="username">
             <label htmlFor="username">Username</label>
             <input
               type="text"
@@ -84,9 +84,9 @@ export default function LoginForm() {
             />
           </div>
 
-          <div className={styles["submit"]}>
-            <Button type="submit" className={styles["buttonNormal"]}>Login</Button>
-            <Link to="/register" className={styles["linkstyle"]} style={{ fontSize: 12 }}>
+          <div className="submit">
+            <button type="submit">Login</button>
+            <Link to="/register" className="linkstyle" style={{ fontSize: 12 }}>
               Don't Have an account yet?{" "}
               <span style={{ color: "pink" }}>Register for free.</span>
             </Link>
