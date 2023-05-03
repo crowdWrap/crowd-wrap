@@ -12,8 +12,6 @@ async function fetchData(navigate: any) {
   const response: Response = await fetch("/login", {
     method: "GET",
   });
-  // eslint-disable-next-line
-  const receivedData = await response.json();
 
   if (response.ok) {
   } else {
@@ -23,18 +21,18 @@ async function fetchData(navigate: any) {
 
 export default function LoginForm() {
   const navigate = useNavigate();
-  const [loginUsername, setLoginUsername] = useState<string>("");
+  const [usernameOrEmail, setusernameOrEmail] = useState<string>("");
   const [loginPass, setLoginPassword] = useState<string>("");
 
   useEffect(() => {
     fetchData(navigate);
-    // eslint-disable-next-line
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const data = JSON.stringify({
-      username: loginUsername,
+      username: usernameOrEmail,
       password: loginPass,
     });
 
@@ -70,7 +68,7 @@ export default function LoginForm() {
               name="username"
               placeholder="Username"
               required
-              onChange={(e) => setLoginUsername(e.target.value)}
+              onChange={(e) => setusernameOrEmail(e.target.value)}
             />
           </div>
           <div className={styles["password"]}>
@@ -96,6 +94,9 @@ export default function LoginForm() {
           </GoogleOAuthProvider>
           </div>
         </form>
+        <GoogleOAuthProvider clientId="951239670358-q89e1msbgovmepbaq4fplqc20qn62ha9.apps.googleusercontent.com">
+          <SignInGoogle />
+        </GoogleOAuthProvider>
       </div>
     </div>
     </ChakraProvider>

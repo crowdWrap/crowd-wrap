@@ -18,8 +18,9 @@ export default function SignupForm() {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // eslint-disable-next-line
-    if (registerPass == registerConfirmPass) {
+    if (registerPass !== registerConfirmPass) {
+      return console.log("Passwords do not match.");
+    } else {
       const data = JSON.stringify({
         username: registerUsername,
         email: registerEmail,
