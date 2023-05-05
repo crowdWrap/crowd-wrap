@@ -4,6 +4,7 @@ import FriendsList from "../components/friendList/friendslist";
 import CreateEventButton from "../components/createEvent/createEventButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faX } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
 
 async function fetchData() {
   try {
@@ -32,6 +33,7 @@ export default function Events() {
   const [displayFriends, setDisplayFriends] = useState(null);
   const [accounts, setAccounts] = useState<any>([]);
   const [refresh, setRefresh] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     let loaded = true;
@@ -88,6 +90,10 @@ export default function Events() {
     }
   };
 
+  const navigateEvent = (e: any) => {
+    navigate(`/events/${e.title}-${e.id}`);
+  };
+
   const handleProgress = (e: any) => {
     const match = e.moneyGoal.match(/\d+/g);
     return match[0];
@@ -111,7 +117,7 @@ export default function Events() {
       <div className="eventsCover">
         {events &&
           events.map((e: any) => (
-            <div className="event" key={e.id}>
+            <div className="event" key={e.id} onClick={() => navigateEvent(e)}>
               <div className="eventDate">{`${
                 e.deadlineDate === null ? "No Deadline" : handleDate(e)
               }`}</div>
@@ -168,7 +174,7 @@ export default function Events() {
               {/* only if they are host provide the delete button, otherwise allow them to leave. */}
               {/* inner page   */}
 
-              {/* <div className="eventCurrentFunds">{`CurrentFunds: ${e.Currentfunds}`}</div> */}
+              <div className="eventCurrentFunds">{`CurrentFunds: ${e.Currentfunds}`}</div>
               {/* <div>{`InviteLink: ${e.inviteLink}`}</div> */}
               {/* <div className="eventMoneyGoal">{`MoneyGoal: ${e.moneyGoal}`}</div> */}
               {/* <div className="eventDate">{`deadlineTime: ${

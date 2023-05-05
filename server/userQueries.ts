@@ -222,6 +222,7 @@ export async function createEvent(
             userId: id,
             picture: user.picture,
             username: user.username,
+            currentMoney: 0,
           },
         },
       },

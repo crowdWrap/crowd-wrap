@@ -19,6 +19,12 @@ export default function CreateEventButton({ setRefresh }: any) {
     }
   };
 
+  const refreshHandler = (val: any) => {
+    if (setRefresh) {
+      setRefresh(val);
+    }
+  };
+
   const click = () => {
     setClicked(clicked === false);
     document.addEventListener("click", clickHandler);
@@ -31,11 +37,7 @@ export default function CreateEventButton({ setRefresh }: any) {
       >
         <FontAwesomeIcon icon={faPlus} />
       </button>
-      <div>
-        {clicked && (
-          <CreateEventPop setRefresh={(val: any) => setRefresh(val)} />
-        )}
-      </div>
+      <div>{clicked && <CreateEventPop setRefresh={refreshHandler} />}</div>
     </div>
   );
 }

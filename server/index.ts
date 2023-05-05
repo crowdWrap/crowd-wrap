@@ -319,7 +319,6 @@ app.get("/friendsListSearch", async (req, res) => {
   let accounts;
   if (friends) {
     accounts = friends.map((item) => {
-      console.log("item: ", item.username, item.picture);
       return { username: item.username, profilePic: item.picture };
     });
   }
@@ -464,8 +463,7 @@ app.get("/events/participants/add", async (req, res) => {
     const username: any = req.query.username;
     const user: any = await getProfileByUsername(username);
     const eventId: any = req.query.eventId;
-    // console.log(eventId);
-    // console.log("id: ", , "eventid: ", );
+
     addParticipant(Number(user.id), Number(eventId));
     return res.status(200).json({ message: "complete" });
   }
@@ -488,17 +486,21 @@ app.get("/events/retrieve", async (req, res) => {
   }
 });
 
+app.get("/events/id", async (req, res) => {
+  if (req.session.user) {
+    const eventId: any = req.query.eventId;
+    const event = await getEventById(Number(eventId));
+    res.send(event);
+  }
+});
+
 app.get("/events/remove", async (req, res) => {
   if (req.session.user) {
     const eventId: any = req.query.eventId;
     const ownerId: any = req.query.ownerId;
-    console.log(ownerId);
-    //
     if (ownerId == req.session.user) {
-      console.log("hi");
       removeEvent(Number(eventId));
     } else {
-      console.log("bye");
       removeParticipant(Number(req.session.user), Number(eventId));
     }
     return res.status(200).json({ message: "complete" });

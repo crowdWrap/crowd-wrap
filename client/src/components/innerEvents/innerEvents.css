@@ -1,0 +1,37 @@
+.theEvent {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.innerTitleWrap {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.innerImgWrap {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.innerImg {
+  width: 35px;
+  height: 35px;
+  background-color: blue;
+  border-radius: 25px;
+  border: 1px solid black;
+}
+
+.innerParticipants {
+  margin-top: 75px;
+  display: flex;
+  flex-direction: column;
+}
+
+.innerParticipants img {
+  width: 75px;
+  border-radius: 100%;
+  aspect-ratio: 1/1;
+}

@@ -17,6 +17,7 @@ import SignupForm from "./pages/signupForm";
 import LoggedIn from "./pages/loggedIn";
 import SetUsername from "./pages/setUsername";
 import Events from "./pages/events";
+import TheEvent from "./components/innerEvents/innerEvent";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -28,6 +29,7 @@ const router = createBrowserRouter(
       <Route path="/logout" element={<RootLayout />}></Route>
       <Route path="/register/setUsername" element={<SetUsername />}></Route>
       <Route path="/events" element={<Events />}></Route>
+      <Route path="/events/:id" element={<TheEvent />}></Route>
     </Route>
   )
 );

@@ -29,7 +29,7 @@ export default function LoggedIn() {
   }, [navigate]);
   return (
     <div className={styles["loggedIn"]}>
-      <nav className={styles["loggedInNavbar"]}>
+      <nav className="loggedInNavbar">
         <CreateEventButton />
         <FriendsList />
         <LogoutButton />

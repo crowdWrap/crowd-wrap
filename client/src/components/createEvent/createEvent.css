@@ -375,7 +375,13 @@
   overflow-wrap: break-word;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
+  transition: 0.25s ease-in-out;
   grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+}
+
+.event:hover {
+  cursor: pointer;
+  opacity: 0.8;
 }
 
 .eventTitle {
