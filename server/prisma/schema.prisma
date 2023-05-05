@@ -63,4 +63,5 @@ event Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
 eventId Int
 picture String?
 username String? 
+currentMoney Int?
 }
