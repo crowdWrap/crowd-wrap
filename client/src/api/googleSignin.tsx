@@ -1,4 +1,5 @@
 import { GoogleLogin } from "@react-oauth/google";
+// eslint-disable-next-line
 import { useNavigate } from "react-router-dom";
 
 export default function SignInGoogle() {
@@ -18,6 +19,7 @@ export default function SignInGoogle() {
         body: credential,
       }).then(async (response) => {
         const newResponse = await response.json();
+        // eslint-disable-next-line
         if (newResponse.message == "Needs username") {
           navigate("/register/setUsername");
         } else if (response.ok) {

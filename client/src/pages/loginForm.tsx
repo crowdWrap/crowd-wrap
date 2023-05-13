@@ -3,8 +3,9 @@ import styles from "../assets/css_group/form.module.css";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import SignInGoogle from "../api/googleSignin";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import { ChakraProvider, Button, Stack, Input } from '@chakra-ui/react';
+import SignInGoogle from "../api/googleSignin";
 import Header from "../components/Header";
 
 async function fetchData(navigate: any) {
@@ -54,13 +55,13 @@ export default function LoginForm() {
   }
 
   return (
-    
+    <ChakraProvider>
     <div className = {styles["wrapper"]}>
       <Header />
       <div className={styles["form-wrapper"]}>
         <div className={styles["logintitle"]}>Login</div>
         <form onSubmit={handleSubmit} noValidate>
-          <div className={styles["username"]}>
+          <div className="username">
             <label htmlFor="username">Username</label>
             <input
               type="text"
@@ -81,9 +82,9 @@ export default function LoginForm() {
             />
           </div>
 
-          <div className={styles["submit"]}>
-            <button type="submit" className={styles["buttonNormal"]}>Login</button>
-            <Link to="/register" className={styles["linkstyle"]} style={{ fontSize: 12 }}>
+          <div className="submit">
+            <button type="submit">Login</button>
+            <Link to="/register" className="linkstyle" style={{ fontSize: 12 }}>
               Don't Have an account yet?{" "}
               <span style={{ color: "pink" }}>Register for free.</span>
             </Link>
@@ -98,5 +99,6 @@ export default function LoginForm() {
         </GoogleOAuthProvider>
       </div>
     </div>
+    </ChakraProvider>
   );
 }
