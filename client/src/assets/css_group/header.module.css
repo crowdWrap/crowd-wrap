@@ -5,8 +5,8 @@
   position: absolute;
   justify-content: space-between;
   display: flex;
-  top: 0px;
-  background: #ffffff; }
+  top: 0;
+  background: #cfcfcf; }
 
 :local .header img {
   width: 200px;

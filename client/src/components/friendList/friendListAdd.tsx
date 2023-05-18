@@ -30,7 +30,7 @@ async function sendFriendRequest(item: string, element: HTMLSpanElement) {
   }
 }
 
-export default function FriendListAdd(props: { searchText: string }) {
+export default function FriendListPanel(props: { searchText: string }) {
   const [accounts, setAccounts] = useState<Account[]>([]);
   const elements = useRef<(HTMLSpanElement | null)[]>([]);
 
@@ -71,7 +71,7 @@ export default function FriendListAdd(props: { searchText: string }) {
             key={item.username}
             ref={(currentElement) => (elements.current[index] = currentElement)}
           >
-            <img alt="" src={item.profilePic} />
+            <img alt="The profile pic of the user" src={item.profilePic} />
             <p>{item.username}</p>
             <button
               onClick={(event) =>

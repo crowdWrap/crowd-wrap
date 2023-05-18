@@ -16,6 +16,7 @@ import LoginForm from "./pages/loginForm";
 import SignupForm from "./pages/signupForm";
 import LoggedIn from "./pages/loggedIn";
 import SetUsername from "./pages/setUsername";
+import Dashboard from "./pages/dashboard";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -26,6 +27,7 @@ const router = createBrowserRouter(
       <Route path="/profile" element={<LoggedIn />}></Route>
       <Route path="/logout" element={<RootLayout />}></Route>
       <Route path="/register/setUsername" element={<SetUsername />}></Route>
+      <Route path="/dashboard" element={<Dashboard/>}></Route>
     </Route>
   )
 );

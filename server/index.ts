@@ -49,7 +49,7 @@ app.use(
     secret: process.env.SECRET as string,
     cookie: { maxAge: 24 * 60 * 60 * 1000 }, //24 hour
     resave: true,
-    saveUninitialized: false,
+    save initialized: false,
   })
 );
 
@@ -89,7 +89,6 @@ app.post("/register", async (req, res) => {
   if (req.body.credential) {
     try {
       const token = req.body.credential;
-      // console.log(req.body.credential);
       let payload: any;
       async function verify() {
         const ticket = await client.verifyIdToken({
@@ -184,7 +183,6 @@ app.post("/login", async (req, res, next) => {
           if (err) {
             return next(err);
           }
-          // updateUser(email, picture);
           req.session.user = user.id.toString();
 
           if (user.username == sub) {
@@ -193,7 +191,7 @@ app.post("/login", async (req, res, next) => {
             return res
               .status(200)
               .json({ message: "Authentication successful" });
-          } //
+          } 
         });
       });
       //google oauth

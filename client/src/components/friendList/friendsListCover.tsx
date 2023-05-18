@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useRef, useState } from "react";
 import "./friendslist.css";
 import FriendsListSearch from "./friendsListSearch";
-import FriendListAdd, { FriendListAddSearch } from "./friendListAdd";
+import FriendListPanel, { FriendListAddSearch } from "./friendListAdd";
 import FriendListInbox from "./friendListInbox";
 
 async function fetchData() {
@@ -203,7 +203,7 @@ export default function FriendsListCover() {
               ))}
 
             {moveBar === "currentMover move-right" && (
-              <FriendListAdd searchText={searchText} />
+              <FriendListPanel searchText={searchText} />
             )}
 
             {moveBar === "currentMover move-middle" && <FriendListInbox />}
