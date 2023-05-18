@@ -3,8 +3,9 @@ import styles from "../assets/css_group/form.module.css";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import SignInGoogle from "../api/googleSignin";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import { ChakraProvider, Button, Stack, Input } from "@chakra-ui/react";
+import SignInGoogle from "../api/googleSignin";
 import Header from "../components/Header";
 
 async function fetchData(navigate: any) {
@@ -53,57 +54,59 @@ export default function LoginForm() {
   }
 
   return (
-    <div className={styles["wrapper"]}>
-      <Header />
-      <div className={styles["form-wrapper"]}>
-        <div className={styles["logintitle"]}>Login</div>
-        <form onSubmit={handleSubmit} noValidate>
-          <div className={styles["username"]}>
-            <label htmlFor="username">Username</label>
-            <input
-              type="text"
-              name="username"
-              placeholder="Username"
-              required
-              onChange={(e) => setusernameOrEmail(e.target.value)}
-            />
-          </div>
-          <div className={styles["password"]}>
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              name="password"
-              placeholder="Password"
-              required
-              onChange={(e) => setLoginPassword(e.target.value)}
-            />
-          </div>
-
-          <div className={styles["submit"]}>
-            <button type="submit" className={styles["buttonNormal"]}>
-              Login
-            </button>
-
-            <div className={styles["googleSignIn"]}>
-              <GoogleOAuthProvider
-                clientId={`${process.env.REACT_APP_CLIENTID}`}
-              >
-                <SignInGoogle />
-              </GoogleOAuthProvider>
+    <ChakraProvider>
+      <div className={styles["wrapper"]}>
+        <Header />
+        <div className={styles["form-wrapper"]}>
+          <div className={styles["logintitle"]}>Login</div>
+          <form onSubmit={handleSubmit} noValidate>
+            <div className="username">
+              <label htmlFor="username">Username</label>
+              <input
+                type="text"
+                name="username"
+                placeholder="Username"
+                required
+                onChange={(e) => setusernameOrEmail(e.target.value)}
+              />
+            </div>
+            <div className={styles["password"]}>
+              <label htmlFor="password">Password</label>
+              <input
+                type="password"
+                name="password"
+                placeholder="Password"
+                required
+                onChange={(e) => setLoginPassword(e.target.value)}
+              />
             </div>
 
-            <Link
-              to="/register"
-              className={styles["linkstyle"]}
-              style={{ fontSize: 12 }}
-            >
-              Don't Have an account yet?
-              <br />
-              <span style={{ color: "pink" }}>Register for free.</span>
-            </Link>
-          </div>
-        </form>
+            <div className={styles["submit"]}>
+              <button type="submit" className={styles["buttonNormal"]}>
+                Login
+              </button>
+
+              <div className={styles["googleSignIn"]}>
+                <GoogleOAuthProvider
+                  clientId={`${process.env.REACT_APP_CLIENTID}`}
+                >
+                  <SignInGoogle />
+                </GoogleOAuthProvider>
+              </div>
+
+              <Link
+                to="/register"
+                className={styles["linkstyle"]}
+                style={{ fontSize: 12 }}
+              >
+                Don't Have an account yet?
+                <br />
+                <span style={{ color: "pink" }}>Register for free.</span>
+              </Link>
+            </div>
+          </form>
+        </div>
       </div>
-    </div>
+    </ChakraProvider>
   );
 }

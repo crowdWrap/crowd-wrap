@@ -18,6 +18,7 @@ import LoggedIn from "./pages/loggedIn";
 import SetUsername from "./pages/setUsername";
 import Events from "./pages/events";
 import TheEvent from "./components/innerEvents/innerEvent";
+import Dashboard from "./pages/dashboard";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -30,6 +31,7 @@ const router = createBrowserRouter(
       <Route path="/register/setUsername" element={<SetUsername />}></Route>
       <Route path="/events" element={<Events />}></Route>
       <Route path="/events/:id" element={<TheEvent />}></Route>
+      <Route path="/dashboard" element={<Dashboard />}></Route>
     </Route>
   )
 );

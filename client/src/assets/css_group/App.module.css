@@ -161,11 +161,35 @@
 :local .btnWrap {
   grid-row-start: 3;
   grid-column-start: 2;
+  display: grid;
+  padding: 20px;
+  place-items: center;
+  /*outline: dashed 1px red; */
+}
+
+/* Login button - start */
+
+:local .loginBtn {
+  width: 250px;
+  height: 50px;
 }
 
 :local .signupBtn:hover,
 :local .loginBtn:hover {
   opacity: 0.8;
+  /* signUp button - start */
+}
+
+:local .signupBtn {
+  width: 250px;
+  height: 50px;
+  font: PP Neue Montreal;
+}
+
+:local .dashboard_button_example {
+  width: 250px;
+  height: 50px;
+  font: PP Neue Montreal;
 }
 
 /* signUp button - end */
