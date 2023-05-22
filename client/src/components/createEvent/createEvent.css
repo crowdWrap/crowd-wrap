@@ -256,7 +256,7 @@
   justify-content: space-evenly;
 }
 
-.titleFormCover button {
+.titleFormCover button:nth-of-type(2) {
   justify-self: center;
   align-self: center;
   background-color: white;
@@ -520,4 +520,9 @@
   font-weight: 700;
   font-size: 15px;
   color: #597a96;
+}
+
+#copyButton {
+  width: 25px;
+  height: 25px;
 }

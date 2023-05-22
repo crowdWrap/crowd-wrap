@@ -262,35 +262,39 @@ export async function removeParticipant(id: number, eventId: number) {
 }
 
 export async function addParticipant(id: number, eventId: number) {
-  const participantExists = await prisma.eventToUser.findFirst({
-    where: {
-      id,
-      eventId,
-    },
-  });
+  try {
+    const participantExists = await prisma.eventToUser.findFirst({
+      where: {
+        userId: id,
+        eventId,
+      },
+    });
 
-  if (participantExists) {
-    throw new Error(`User ${id} is already a participant in event ${eventId}`);
+    if (participantExists) {
+      console.log(`User ${id} is already a participant in event ${eventId}`);
+    }
+
+    const user = await getProfileById(id);
+
+    await prisma.eventToUser.create({
+      data: {
+        user: {
+          connect: { id },
+        },
+        event: {
+          connect: { id: eventId },
+        },
+        picture: user.picture,
+        username: user.username,
+      },
+    });
+  } catch (e) {
+    console.log(e);
   }
-
-  const user = await getProfileById(id);
-
-  await prisma.eventToUser.create({
-    data: {
-      user: {
-        connect: { id },
-      },
-      event: {
-        connect: { id: eventId },
-      },
-      picture: user.picture,
-      username: user.username,
-    },
-  });
 }
 
 export async function getEventById(id: number) {
-  const event = await prisma.event.findUniqueOrThrow({
+  const event = await prisma.event.findUnique({
     where: {
       id,
     },
@@ -305,3 +309,32 @@ export async function getEventById(id: number) {
     throw new Error(`event '${id}' doesn't exist.`);
   }
 }
+
+export async function getEventByLink(link: string) {
+  const event = await prisma.event.findUnique({
+    where: {
+      inviteLink: link,
+    },
+  });
+  if (event) {
+    return event;
+  } else {
+    return null;
+  }
+}
+export async function isParticipantInEvent(id: number, eventId: number) {
+  const participantExists = await prisma.eventToUser.findFirst({
+    where: {
+      userId: id,
+      eventId,
+    },
+  });
+
+  if (participantExists) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+//THis isnt working and is essentially always false I think?

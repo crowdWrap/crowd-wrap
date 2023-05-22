@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ChakraProvider, Button, Stack } from '@chakra-ui/react';
+import { Button, Stack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import Engineers from "../components/Engineers";
 import styles from "../assets/css_group/App.module.css";
@@ -32,26 +32,37 @@ export default function HomePage() {
   };
 
   return (
-    <ChakraProvider>
-      <div className={styles["App"]}>
-        <h1 className={styles["title"]}>Server Test {counter} </h1>
-        {showEngineers && <Engineers allEngineers={allEngineers} />}
-        
-        <div className={styles["btnWrap"]}>
-        <Button colorScheme="red" className={className} onClick={handleClick}>Click Me!!!</Button>
-          <Stack spacing='15px'>
-            <Link to="/register">
-              <Button colorScheme="blackAlpha" className={styles["signupBtn"]}> Sign up</Button>
-            </Link>
-            <Link to="/login">
-              <Button colorScheme="blackAlpha" className={styles["loginBtn"]}> Login</Button>
-            </Link>
-            <Link to ="/dashboard">
-              <Button colorScheme="blackAlpha"  className={styles["dashboard_button_example"]}>Dashboard Button Example</Button>
-            </Link>
-          </Stack>
-        </div>
+    <div className={styles["App"]}>
+      <h1 className={styles["title"]}>Server Test {counter} </h1>
+      {showEngineers && <Engineers allEngineers={allEngineers} />}
+
+      <div className={styles["btnWrap"]}>
+        <Button colorScheme="red" className={className} onClick={handleClick}>
+          Click Me!!!
+        </Button>
+        <Stack spacing="15px">
+          <Link to="/register">
+            <Button colorScheme="blackAlpha" className={styles["signupBtn"]}>
+              {" "}
+              Sign up
+            </Button>
+          </Link>
+          <Link to="/login">
+            <Button colorScheme="blackAlpha" className={styles["loginBtn"]}>
+              {" "}
+              Login
+            </Button>
+          </Link>
+          <Link to="/dashboard">
+            <Button
+              colorScheme="blackAlpha"
+              className={styles["dashboard_button_example"]}
+            >
+              Dashboard Button Example
+            </Button>
+          </Link>
+        </Stack>
       </div>
-    </ChakraProvider>
+    </div>
   );
 }

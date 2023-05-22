@@ -53,7 +53,8 @@ export default function Events() {
     };
   }, [refresh]);
 
-  const handleAddParticipant = (e: any) => {
+  const handleAddParticipant = (e: any, event: any) => {
+    event.stopPropagation();
     if (e.id !== displayFriends) {
       setDisplayFriends(e.id);
     } else {
@@ -73,7 +74,8 @@ export default function Events() {
     setDisplayFriends(null);
   };
 
-  const removeEvent = async (e: any) => {
+  const removeEvent = async (e: any, event: any) => {
+    event.stopPropagation();
     await fetch(`/events/remove?eventId=${e.id}&ownerId=${e.ownerId}`, {
       method: "GET",
     });
@@ -143,7 +145,7 @@ export default function Events() {
                     return <img key={val.id} src={`${val.picture}`} alt="" />;
                   })}
                 <FontAwesomeIcon
-                  onClick={() => handleAddParticipant(e)}
+                  onClick={(event) => handleAddParticipant(e, event)}
                   className="addParticipant"
                   icon={faPlus}
                 />
@@ -182,7 +184,7 @@ export default function Events() {
               }`}</div> */}
               <FontAwesomeIcon
                 icon={faX}
-                onClick={() => removeEvent(e)}
+                onClick={(event) => removeEvent(e, event)}
                 className="removeParticipant"
               />
             </div>

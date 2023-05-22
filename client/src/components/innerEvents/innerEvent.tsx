@@ -27,7 +27,6 @@ export default function TheEvent() {
     })();
   }, [eventId]);
 
-  console.log(events);
   const handleDate = () => {
     const dateObj = new Date(events.deadlineDate);
     const options: object = { month: "long", day: "numeric", year: "numeric" };
@@ -88,7 +87,7 @@ export default function TheEvent() {
                 })}
             </div>
 
-            {/* <div>{`InviteLink: ${events.inviteLink}`}</div> */}
+            <div>{`InviteLink: http://localhost:3000/events/invite/${events.inviteLink}`}</div>
           </>
         )}
       </div>

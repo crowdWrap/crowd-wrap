@@ -4,7 +4,9 @@ import { useNavigate } from "react-router-dom";
 
 export default function SignInGoogle() {
   const navigate = useNavigate();
-
+  // eslint-disable-next-line no-restricted-globals
+  const urlParams = new URLSearchParams(location.search);
+  const redirect = urlParams.get("redirect");
   const succesfulSignIn = async (credentialResponse: any) => {
     try {
       const credential = JSON.stringify({
@@ -23,6 +25,14 @@ export default function SignInGoogle() {
         if (newResponse.message == "Needs username") {
           navigate("/register/setUsername");
         } else if (response.ok) {
+          if (
+            redirect &&
+            !redirect.startsWith("http://") &&
+            !redirect.startsWith("https://")
+          ) {
+            window.location.replace(redirect);
+            return;
+          }
           navigate("/profile");
         } else {
           console.log(newResponse.message);

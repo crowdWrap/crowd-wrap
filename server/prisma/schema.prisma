@@ -64,4 +64,6 @@ eventId Int
 picture String?
 username String? 
 currentMoney Int?
+
+@@unique([userId, eventId])
 }

@@ -14,6 +14,8 @@ import {
   addParticipant,
   removeEvent,
   removeParticipant,
+  getEventByLink,
+  isParticipantInEvent,
 } from "./userQueries";
 import {
   getProfileByUsername,
@@ -34,7 +36,7 @@ import session from "express-session";
 import { Session, MemoryStore } from "express-session";
 import dotenv from "dotenv";
 import { OAuth2Client } from "google-auth-library";
-import { SHA256 } from "crypto-js";
+import crypto from "crypto";
 
 const clientid =
   "951239670358-q89e1msbgovmepbaq4fplqc20qn62ha9.apps.googleusercontent.com";
@@ -446,15 +448,32 @@ app.get("/removeFriendReceived", async (req, res) => {
 app.post("/events", async (req, res) => {
   if (req.session.user) {
     const { title, description, img, moneyGoal, time, date } = req.body;
-    const eventString = `${title}${description}${moneyGoal}${date}${time}${img}`;
-    const inviteLink = SHA256(eventString).toString();
+    const inviteLink = crypto.randomUUID();
 
-    await createEvent(
-      Number(req.session.user),
-      req.body,
-      `http://localhost:3000/events${inviteLink}`
-    );
+    await createEvent(Number(req.session.user), req.body, `${inviteLink}`);
     return res.status(200).json({ message: "complete" });
+  }
+});
+
+app.get("/events/invite/:link", async (req, res) => {
+  if (req.session.user) {
+    const link = req.params.link;
+    const theEvent: any = await getEventByLink(link);
+    if (theEvent) {
+      const eventId = theEvent.id;
+      const userId = Number(req.session.user);
+      const inEvent = await isParticipantInEvent(userId, Number(eventId));
+      if (!inEvent) {
+        addParticipant(userId, Number(eventId));
+        return res.status(200).json({ inEvent: false });
+      } else {
+        return res.status(200).json({ inEvent: true });
+      }
+    } else {
+      return res.status(404).json({ invalidInvite: true });
+    }
+  } else {
+    return res.status(404).json({ notLoggedIn: true });
   }
 });
 

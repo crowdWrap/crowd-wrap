@@ -22,6 +22,8 @@ export default function CreateEventPop({ setRefresh }: any) {
   const [showThirdStep, setShowThirdStep] = useState<boolean>(false);
   const [showEventComplete, setShowEventComplete] = useState<boolean>(false);
 
+  const [loadingEvent, setLoadingEvent] = useState<boolean>(false);
+
   // check before they select a button that the input is valid
 
   useEffect(() => {
@@ -32,27 +34,33 @@ export default function CreateEventPop({ setRefresh }: any) {
   }, [currentStep]);
 
   useEffect(() => {
-    if (showEventComplete) {
-      const data = JSON.stringify({
-        title,
-        description,
-        img,
-        moneyGoal,
-        time,
-        date,
-      });
+    (async () => {
+      try {
+        if (showEventComplete) {
+          const data = JSON.stringify({
+            title,
+            description,
+            img,
+            moneyGoal,
+            time,
+            date,
+          });
 
-      console.log("ran");
-      fetch("/events", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: data,
-      }).catch((error) => console.error(error));
-
-      setRefresh(true);
-    }
+          fetch("/events", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: data,
+          });
+          setRefresh(true);
+          setLoadingEvent(true);
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [showEventComplete]);
 
   return (
@@ -202,6 +210,8 @@ export default function CreateEventPop({ setRefresh }: any) {
           date={date}
           time={time}
           img={img}
+          loading={loadingEvent}
+          setLoading={(val: boolean) => setLoadingEvent(val)}
         />
       )}
     </div>
