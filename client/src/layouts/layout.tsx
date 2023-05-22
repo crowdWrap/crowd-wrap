@@ -1,9 +1,11 @@
 import { Outlet } from "react-router-dom";
+import Header from "../components/header/Header";
 
 export default function RootLayout() {
   return (
-    <div className="root-layout">
+    <>
+      <Header />
       <Outlet />
-    </div>
+    </>
   );
 }

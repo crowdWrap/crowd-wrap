@@ -5,12 +5,6 @@ import {
   RouterProvider,
 } from "react-router-dom";
 
-//layout
-
-import RootLayout from "./layouts/rootLayout";
-
-//pages
-
 import HomePage from "./pages/homePage";
 import LoginForm from "./pages/loginForm";
 import SignupForm from "./pages/signupForm";
@@ -20,20 +14,22 @@ import Events from "./pages/events";
 import TheEvent from "./components/innerEvents/innerEvent";
 import Dashboard from "./pages/dashboard";
 import EventInvite from "./pages/eventInvite";
+import RootLayout from "./layouts/layout";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<RootLayout />}>
-      <Route index element={<HomePage />}></Route>
-      <Route path="/register" element={<SignupForm />}></Route>
-      <Route path="/login" element={<LoginForm />}></Route>
-      <Route path="/profile" element={<LoggedIn />}></Route>
-      <Route path="/logout" element={<RootLayout />}></Route>
-      <Route path="/register/setUsername" element={<SetUsername />}></Route>
-      <Route path="/events" element={<Events />}></Route>
-      <Route path="/events/:id" element={<TheEvent />}></Route>
-      <Route path="/dashboard" element={<Dashboard />}></Route>
-      <Route path="/events/invite/:link" element={<EventInvite />}></Route>
+    <Route element={<RootLayout />}>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/register" element={<SignupForm />} />
+      <Route path="/login" element={<LoginForm />} />
+      <Route path="/profile" element={<LoggedIn />} />
+      {/* <Route path="/logout" element={<HomePage />} /> */}
+      <Route path="/register/setUsername" element={<SetUsername />} />
+      <Route path="/events" element={<Events />}>
+        <Route path=":id" element={<TheEvent />} />
+        <Route path="invite/:link" element={<EventInvite />} />
+      </Route>
+      <Route path="/dashboard" element={<Dashboard />} />
     </Route>
   )
 );
