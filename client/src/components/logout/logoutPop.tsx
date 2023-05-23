@@ -5,20 +5,13 @@ import {
   faRightFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
-import styles from "../assets/css_group/App.module.css";
+import styles from "./logout.module.css";
+import { useAuth } from "../../hooks/authContext";
+import { useEffect } from "react";
 
 export default function ClickPopup() {
   const navigate = useNavigate();
-  const logoutSession = async () => {
-    const response: Response = await fetch("/logout", { method: "get" });
-    const receivedData = await response.json();
-
-    if (response.ok) {
-      navigate("/login");
-    } else {
-      alert(receivedData.message);
-    }
-  };
+  const { logout, authed } = useAuth();
 
   return (
     <div className={styles["logoutPop"]}>
@@ -31,7 +24,7 @@ export default function ClickPopup() {
         <FontAwesomeIcon icon={faUser} />
         <p>Profile</p>
       </button>
-      <button className={styles["individualBtn"]} onClick={logoutSession}>
+      <button className={styles["individualBtn"]} onClick={logout}>
         <FontAwesomeIcon icon={faRightFromBracket} />
         <p>Logout</p>
       </button>

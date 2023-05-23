@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import "../assets/css_group/form.module.css";
+import "./form.module.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 async function fetchData(navigate: any, setRegisterUsername: any) {

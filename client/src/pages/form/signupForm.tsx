@@ -1,10 +1,10 @@
 import React from "react";
-import styles from "../assets/css_group/form.module.css";
+import styles from "./form.module.css";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import SignUpGoogle from "../api/googleSignup";
+import SignUpGoogle from "../../api/googleSignup";
 import { GoogleOAuthProvider } from "@react-oauth/google";
-import Header from "../components/Header";
+import Header from "../../components/header/Header";
 
 export default function SignupForm() {
   const [registerUsername, setRegisterUsername] = useState<string>("");

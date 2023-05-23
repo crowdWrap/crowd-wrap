@@ -1,24 +1,11 @@
 import { useEffect, useState, useRef } from "react";
 import ClickPopup from "./logoutPop";
-import styles from "../assets/css_group/App.module.css";
-
-async function fetchProfilePic(setBackgroundImage: any) {
-  const response: Response = await fetch("/profilePicRequest", {
-    method: "GET",
-  });
-
-  const receivedData = await response.text();
-
-  if (response.ok) {
-    setBackgroundImage(receivedData);
-  } else {
-    console.log("error");
-  }
-}
+import styles from "./logout.module.css";
+import { useAuth } from "../../hooks/authContext";
 
 export default function LogoutButton() {
-  const [backgroundImage, setBackgroundImage] = useState("");
   const [clicked, setClicked] = useState<boolean>(false);
+  const { profilePic, loading } = useAuth();
 
   const btnCover: any = useRef();
 
@@ -39,15 +26,11 @@ export default function LogoutButton() {
     document.addEventListener("click", clickHandler);
   };
 
-  useEffect(() => {
-    fetchProfilePic(setBackgroundImage);
-  }, []);
-
   return (
     <div ref={btnCover} className={styles["logoutBtnCover"]}>
       <button
         style={{
-          backgroundImage: `url(${backgroundImage})`,
+          backgroundImage: `url(${profilePic})`,
         }}
         className={`${styles.logoutBtn} ${
           clicked ? styles.logoutBtnClicked : ""
