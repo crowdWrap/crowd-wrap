@@ -6,10 +6,10 @@ import {
 } from "react-router-dom";
 
 import HomePage from "./pages/homePage";
-import LoginForm from "./pages/loginForm";
-import SignupForm from "./pages/signupForm";
+import LoginForm from "./pages/form/loginForm";
+import SignupForm from "./pages/form/signupForm";
 import LoggedIn from "./pages/loggedIn";
-import SetUsername from "./pages/setUsername";
+import SetUsername from "./pages/form/setUsername";
 import Events from "./pages/events";
 import TheEvent from "./components/innerEvents/innerEvent";
 import Dashboard from "./pages/dashboard";
@@ -23,7 +23,6 @@ const router = createBrowserRouter(
       <Route path="/register" element={<SignupForm />} />
       <Route path="/login" element={<LoginForm />} />
       <Route path="/profile" element={<LoggedIn />} />
-      {/* <Route path="/logout" element={<HomePage />} /> */}
       <Route path="/register/setUsername" element={<SetUsername />} />
       <Route path="/events" element={<Events />}>
         <Route path=":id" element={<TheEvent />} />

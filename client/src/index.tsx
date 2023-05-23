@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import "./assets/css_group/index.module.css";
 import App from "./App";
 import { ChakraProvider } from "@chakra-ui/react";
+import AuthProvider from "./hooks/authContext";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -11,7 +12,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <ChakraProvider>
-      <App />
+      <AuthProvider>
+        <App />
+      </AuthProvider>
     </ChakraProvider>
   </React.StrictMode>
 );
