@@ -1,13 +1,13 @@
-import { ChevronRightIcon } from "@chakra-ui/icons";
 import styles from "./header.module.css";
 import { Link } from "react-router-dom";
 import logoPrint from "../../assets/image_group/crowdwrap-print.svg";
-import { Button } from "@chakra-ui/react";
+import { Button, Icon } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import LogoutButton from "../logout/logout";
 import CreateEventButton from "../createEvent/createEventButton";
 import FriendsList from "../friendList/friendslist";
 import { useAuth } from "../../hooks/authContext";
+import { CgLogIn, CgHeart } from "react-icons/cg";
 
 export default function Header() {
   const { authed } = useAuth();
@@ -26,7 +26,7 @@ export default function Header() {
         <div className={styles["sign-links"]}>
           <Link to="/login" className={styles["sign-links__link"]}>
             <Button
-              rightIcon={<ChevronRightIcon />}
+              rightIcon={<Icon as={CgLogIn} />}
               // colorScheme="linkedin"
               variant="outline"
             >
@@ -35,9 +35,9 @@ export default function Header() {
           </Link>
           <Link to="/register" className={styles["sign-links__link"]}>
             <Button
-              rightIcon={<ChevronRightIcon />}
               colorScheme="pink"
               // variant="outline"
+              rightIcon={<Icon as={CgHeart} />}
             >
               Signup
             </Button>
