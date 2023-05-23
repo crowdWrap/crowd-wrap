@@ -11,7 +11,7 @@ import { useEffect } from "react";
 
 export default function ClickPopup() {
   const navigate = useNavigate();
-  const { logout, authed } = useAuth();
+  const { logout, loading } = useAuth();
 
   return (
     <div className={styles["logoutPop"]}>

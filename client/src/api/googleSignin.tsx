@@ -1,9 +1,11 @@
 import { GoogleLogin } from "@react-oauth/google";
 // eslint-disable-next-line
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../hooks/authContext";
 
 export default function SignInGoogle() {
   const navigate = useNavigate();
+  const { authed, setAuthed } = useAuth();
   // eslint-disable-next-line no-restricted-globals
   const urlParams = new URLSearchParams(location.search);
   const redirect = urlParams.get("redirect");
@@ -23,8 +25,10 @@ export default function SignInGoogle() {
         const newResponse = await response.json();
         // eslint-disable-next-line
         if (newResponse.message == "Needs username") {
+          setAuthed(true);
           navigate("/register/setUsername");
         } else if (response.ok) {
+          setAuthed(true);
           if (
             redirect &&
             !redirect.startsWith("http://") &&

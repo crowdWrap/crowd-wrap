@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import LogoutButton from "../components/logout";
+import LogoutButton from "../components/logout/logout";
 import FriendsList from "../components/friendList/friendslist";
 import CreateEventButton from "../components/createEvent/createEventButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

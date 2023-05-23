@@ -1,0 +1,54 @@
+:local .header {
+  width: 100vw;
+  height: 3.5rem;
+  position: fixed;
+  z-index: 9999;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 20px;
+  padding-right: 20px;
+  display: flex;
+  top: 0;
+  background: #ffffff;
+  border-bottom-left-radius: 20px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.196);
+  border-bottom-right-radius: 20px;
+}
+
+:local .header img {
+  width: fit-content;
+  transition: 0.25s ease-in-out;
+  height: 50px;
+}
+
+:local .sign-links {
+  display: flex;
+  /* justify-content: space-between; */
+  align-items: center;
+  gap: 15px;
+}
+
+:local .sign-links button {
+  text-decoration: none;
+  font-family: "Roboto", "Camie Regular", "Comic Sans MS";
+  font-size: 0.9rem;
+  font-weight: 300;
+  width: 100px;
+  height: 35px;
+
+  padding: 0;
+  margin: 0;
+  /* color: black; */
+}
+
+:local .header img:hover {
+  opacity: 0.6;
+}
+
+:local .navbarCover {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+}

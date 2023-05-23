@@ -1,33 +1,25 @@
 import { Link } from "react-router-dom";
-import { Button, Stack } from "@chakra-ui/react";
-import styles from "../assets/css_group/App.module.css";
+import { Button, Flex, Stack } from "@chakra-ui/react";
 
 export default function HomePage() {
   return (
-    <div className={styles["App"]}>
-      <div className={styles["btnWrap"]}>
-        <Stack spacing="15px">
+    <div>
+      <div>
+        <Flex
+          height={"100vh"}
+          alignItems={"center"}
+          justifyContent={"space-around"}
+        >
           <Link to="/register">
-            <Button colorScheme="blackAlpha" className={styles["signupBtn"]}>
-              {" "}
-              Sign up
-            </Button>
+            <Button colorScheme="blackAlpha"> Sign up</Button>
           </Link>
           <Link to="/login">
-            <Button colorScheme="blackAlpha" className={styles["loginBtn"]}>
-              {" "}
-              Login
-            </Button>
+            <Button colorScheme="blackAlpha"> Login</Button>
           </Link>
           <Link to="/dashboard">
-            <Button
-              colorScheme="blackAlpha"
-              className={styles["dashboard_button_example"]}
-            >
-              Dashboard Button Example
-            </Button>
+            <Button colorScheme="blackAlpha">Dashboard Button Example</Button>
           </Link>
-        </Stack>
+        </Flex>
       </div>
     </div>
   );

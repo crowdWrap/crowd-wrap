@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import CreateEventButton from "../createEvent/createEventButton";
 import FriendsList from "../friendList/friendslist";
-import LogoutButton from "../logout";
+import LogoutButton from "../logout/logout";
 import "./innerEvents.css";
 
 export default function TheEvent() {
