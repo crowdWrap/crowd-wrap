@@ -41,3 +41,8 @@ export default function CreateEventButton({ setRefresh }: any) {
     </div>
   );
 }
+
+// <ButtonGroup size='sm' isAttached variant='outline'>
+//   <Button>Events</Button>
+//   <IconButton aria-label='Add to friends' icon={<AddIcon />} />
+// </ButtonGroup>

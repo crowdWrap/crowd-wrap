@@ -1,15 +1,22 @@
-import {
-  faUserGroup,
-  faClockRotateLeft,
-  faUserPlus,
-  faTrashCan,
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useRef, useState } from "react";
-import "./friendslist.css";
+import styles from "./friendslist.module.css";
 import FriendsListSearch from "./friendsListSearch";
 import FriendListAdd, { FriendListAddSearch } from "./friendListAdd";
 import FriendListInbox from "./friendListInbox";
+import {
+  Icon,
+  Tab,
+  TabIndicator,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
+} from "@chakra-ui/react";
+import {
+  AiOutlineUser,
+  AiOutlineUsergroupAdd,
+  AiOutlinePullRequest,
+} from "react-icons/ai";
 
 async function fetchData() {
   try {
@@ -114,45 +121,56 @@ export default function FriendsListCover() {
     }
   };
 
+  const [tabIndex, setTabIndex] = useState(0);
+
+  const handleTabsChange = (index: number) => {
+    setTabIndex(index);
+  };
+
   return (
-    <div id="chatbox">
-      <div id="friendslist">
-        <div id="topmenu">
-          <FontAwesomeIcon
-            icon={faUserGroup}
-            className={
-              moveBar === "currentMover move-standard"
-                ? "fontAwesome selected"
-                : "fontAwesome"
-            }
-            onClick={() => handleMoveBar("currentMover move-standard")}
+    <>
+      <Tabs
+        index={tabIndex}
+        onChange={handleTabsChange}
+        position="relative"
+        variant="unstyled"
+      >
+        <div style={{ position: "fixed" }}>
+          <TabList width={"103.3px"}>
+            <Tab>
+              <Icon
+                color={tabIndex === 0 ? "teal" : "black"}
+                boxSize={6}
+                as={AiOutlineUser}
+              />
+            </Tab>
+            <Tab>
+              <Icon
+                color={tabIndex === 1 ? "teal" : "black"}
+                boxSize={6}
+                as={AiOutlinePullRequest}
+              />
+            </Tab>
+            <Tab>
+              <Icon
+                color={tabIndex === 2 ? "teal" : "black"}
+                boxSize={6}
+                as={AiOutlineUsergroupAdd}
+              />
+            </Tab>
+          </TabList>
+          <TabIndicator
+            mt="-1.5px"
+            height="2px"
+            bg="blue.500"
+            borderRadius="1px"
           />
-          <FontAwesomeIcon
-            icon={faClockRotateLeft}
-            className={
-              moveBar === "currentMover move-middle"
-                ? "fontAwesome selected"
-                : "fontAwesome"
-            }
-            onClick={() => handleMoveBar("currentMover move-middle")}
-          />
-          <FontAwesomeIcon
-            icon={faUserPlus}
-            className={
-              moveBar === "currentMover move-right"
-                ? "fontAwesome selected"
-                : "fontAwesome"
-            }
-            onClick={() => handleMoveBar("currentMover move-right")}
-          />
-          <div className={moveBar}></div>
         </div>
 
-        <div id="friends">
-          <div className="friendCover">
+        <TabPanels style={{ marginTop: "50px" }}>
+          <TabPanel>
             {accounts &&
               !fetchedData &&
-              moveBar === "currentMover move-standard" &&
               accounts.map((item, index) => (
                 <div
                   onContextMenu={(event) => handleRightClick(index, event)}
@@ -177,7 +195,6 @@ export default function FriendsListCover() {
                           }
                         >
                           Delete {item.username}{" "}
-                          <FontAwesomeIcon icon={faTrashCan} />
                         </button>
                       </div>
                     )}
@@ -186,41 +203,90 @@ export default function FriendsListCover() {
                   <div className="status available"></div>
                 </div>
               ))}
-            {fetchedData &&
-              moveBar === "currentMover move-standard" &&
-              fetchedData.map((item: any, index: any) => (
-                <div
-                  className="friend"
-                  key={item.username}
-                  ref={(currentElement) =>
-                    (elements.current[index] = currentElement)
-                  }
-                >
-                  <img alt="" src={item.profilePic} />
-                  <p>{item.username}</p>
-                  <div className="status available"></div>
-                </div>
-              ))}
+          </TabPanel>
+          <TabPanel>
+            <p>two!</p>
+          </TabPanel>
+          <TabPanel>
+            <p>three!</p>
+          </TabPanel>
+        </TabPanels>
+      </Tabs>
 
-            {moveBar === "currentMover move-right" && (
-              <FriendListAdd searchText={searchText} />
+      {/*
+          <div id="friends">
+            <div className="friendCover">
+              {accounts &&
+                !fetchedData &&
+                moveBar === "currentMover move-standard" &&
+                accounts.map((item, index) => (
+                  <div
+                    onContextMenu={(event) => handleRightClick(index, event)}
+                    className="friend"
+                    key={item.username}
+                    ref={(currentElement) =>
+                      (elements.current[index] = currentElement)
+                    }
+                  >
+                    {clickMenu.x !== null &&
+                      clickMenu.y !== null &&
+                      clickMenu.index === index && (
+                        <div className="context-cover">
+                          <button
+                            className="context-menu"
+                            style={{
+                              top: clickMenu.y as number,
+                              left: clickMenu.x as number,
+                            }}
+                            onClick={(event) =>
+                              handleButtonClick(item.username, index, event)
+                            }
+                          >
+                            Delete {item.username}{" "}
+                            <FontAwesomeIcon icon={faTrashCan} />
+                          </button>
+                        </div>
+                      )}
+                    <img alt="" src={item.profilePic} />
+                    <p>{item.username}</p>
+                    <div className="status available"></div>
+                  </div>
+                ))}
+              {fetchedData &&
+                moveBar === "currentMover move-standard" &&
+                fetchedData.map((item: any, index: any) => (
+                  <div
+                    className="friend"
+                    key={item.username}
+                    ref={(currentElement) =>
+                      (elements.current[index] = currentElement)
+                    }
+                  >
+                    <img alt="" src={item.profilePic} />
+                    <p>{item.username}</p>
+                    <div className="status available"></div>
+                  </div>
+                ))}
+
+              {moveBar === "currentMover move-right" && (
+                <FriendListAdd searchText={searchText} />
+              )}
+
+              {moveBar === "currentMover move-middle" && <FriendListInbox />}
+            </div>
+
+        
+            {moveBar === "currentMover move-standard" && (
+              <FriendsListSearch updateData={handleDataUpdate} />
             )}
 
-            {moveBar === "currentMover move-middle" && <FriendListInbox />}
+            {moveBar === "currentMover move-right" && (
+              <FriendListAddSearch setSearchText={setSearchText} />
+            )}
+
           </div>
-
-          {/* what would happen if you have text in it and move to add friend etc */}
-          {moveBar === "currentMover move-standard" && (
-            <FriendsListSearch updateData={handleDataUpdate} />
-          )}
-
-          {moveBar === "currentMover move-right" && (
-            <FriendListAddSearch setSearchText={setSearchText} />
-          )}
-
-          {/* has to change based on what class it is on. */}
         </div>
-      </div>
-    </div>
+      </div> */}
+    </>
   );
 }

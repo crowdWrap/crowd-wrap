@@ -1,37 +1,42 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUserGroup } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
-import "./friendslist.css";
+import styles from "./friendslist.module.css";
 import FriendsListCover from "./friendsListCover";
-
+import {
+  Icon,
+  IconButton,
+  Popover,
+  PopoverArrow,
+  PopoverContent,
+  PopoverTrigger,
+} from "@chakra-ui/react";
+import { FaUserFriends } from "react-icons/fa";
 export default function FriendsList() {
-  const [clicked, setClicked] = useState<boolean>(false);
-
-  const clickHandler = (event: MouseEvent) => {
-    logoutRemoval(event, setClicked);
-  };
-
-  const logoutRemoval = (e: MouseEvent, setClicked: any) => {
-    const target = e.target as Element;
-    if (target && !target.closest(".friendsListCover")) {
-      setClicked(false);
-      document.removeEventListener("click", clickHandler);
-    }
-  };
-
-  const click = () => {
-    setClicked(clicked === false);
-    document.addEventListener("click", clickHandler);
-  };
   return (
-    <div className="friendsListCover">
-      <button
-        onClick={click}
-        className={!clicked ? "friendsList" : "friendsList friendsListClicked"}
-      >
-        <FontAwesomeIcon icon={faUserGroup} />
-      </button>
-      <div>{clicked && <FriendsListCover />}</div>
-    </div>
+    <>
+      <Popover>
+        <PopoverTrigger>
+          <IconButton
+            margin={"0"}
+            variant="outline"
+            borderRadius="full"
+            colorScheme="blue"
+            aria-label="Friendlist"
+            icon={<Icon as={FaUserFriends} />}
+          />
+        </PopoverTrigger>
+        <PopoverContent
+          height={"200px"}
+          borderRadius={"25px "}
+          style={{
+            marginRight: "10px",
+            overflowY: "scroll",
+            overflowX: "hidden",
+          }}
+        >
+          <PopoverArrow />
+          <FriendsListCover />
+        </PopoverContent>
+      </Popover>
+    </>
   );
 }
