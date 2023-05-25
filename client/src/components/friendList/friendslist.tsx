@@ -1,5 +1,3 @@
-import { useState } from "react";
-import styles from "./friendslist.module.css";
 import FriendsListCover from "./friendsListCover";
 import {
   Icon,
@@ -13,7 +11,7 @@ import { FaUserFriends } from "react-icons/fa";
 export default function FriendsList() {
   return (
     <>
-      <Popover>
+      <Popover isLazy>
         <PopoverTrigger>
           <IconButton
             margin={"0"}
@@ -25,12 +23,10 @@ export default function FriendsList() {
           />
         </PopoverTrigger>
         <PopoverContent
-          height={"200px"}
+          height={"405px"}
           borderRadius={"25px "}
           style={{
-            marginRight: "10px",
-            overflowY: "scroll",
-            overflowX: "hidden",
+            marginRight: "5px",
           }}
         >
           <PopoverArrow />

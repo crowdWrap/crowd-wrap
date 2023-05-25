@@ -7,8 +7,8 @@ import LogoutButton from "../logout/logout";
 import CreateEventButton from "../createEvent/createEventButton";
 import FriendsList from "../friendList/friendslist";
 import { useAuth } from "../../hooks/authContext";
-import { CgLogIn, CgHeart } from "react-icons/cg";
-
+import { CgLogIn } from "react-icons/cg";
+import { BsArrowThroughHeart } from "react-icons/bs";
 export default function Header() {
   const { authed } = useAuth();
 
@@ -37,7 +37,7 @@ export default function Header() {
             <Button
               colorScheme="pink"
               // variant="outline"
-              rightIcon={<Icon as={CgHeart} />}
+              rightIcon={<Icon as={BsArrowThroughHeart} />}
             >
               Signup
             </Button>

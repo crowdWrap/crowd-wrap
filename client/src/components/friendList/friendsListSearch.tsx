@@ -1,4 +1,7 @@
+import { Icon, Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
+
+import { BsSearch } from "react-icons/bs";
 
 async function fetchData(searchText: string) {
   if (searchText.length >= 3) {
@@ -28,13 +31,16 @@ export default function FriendsListSearch({ updateData }: any) {
   }, [searchText]);
 
   return (
-    <div id="search">
-      <input
-        type="text"
-        id="searchfield"
-        placeholder="Search friends"
+    <InputGroup style={{ position: "fixed", bottom: "10px", width: "286px" }}>
+      <InputLeftElement pointerEvents="none">
+        <Icon color="gray.300" as={BsSearch} />
+      </InputLeftElement>
+      <Input
+        fontFamily={"Roboto, sans-serif"}
         onChange={(e) => setSearchText(e.target.value)}
+        type="text"
+        placeholder="Search Friends"
       />
-    </div>
+    </InputGroup>
   );
 }

@@ -1,6 +1,13 @@
-import { useEffect, useRef, useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { useEffect, useState } from "react";
+import {
+  Icon,
+  Input,
+  InputGroup,
+  InputLeftElement,
+  useToast,
+} from "@chakra-ui/react";
+import { BsSearch } from "react-icons/bs";
+import AddFriend from "./friendComponents/addFriend";
 
 interface Account {
   username: string;
@@ -16,88 +23,67 @@ async function fetchData(searchText: string) {
     return result;
   }
 }
-async function sendFriendRequest(item: string, element: HTMLSpanElement) {
-  const parentElement = element.parentElement;
-  if (parentElement && parentElement.contains(element)) {
-    const response = await fetch(`/sendFriendRequest?user_name=${item}`, {
+
+export default function FriendListAdd({
+  searchText,
+  setLastRefresh,
+  lastRefresh,
+}: any) {
+  const [accounts, setAccounts] = useState<Account[]>([]);
+  const toast = useToast();
+
+  const handleButtonClick = async (item: string) => {
+    await fetch(`/sendFriendRequest?user_name=${item}`, {
       method: "GET",
     });
-    const result = await response.json();
-    if (result.success) {
-      parentElement.removeChild(element);
-    }
-    return result;
-  }
-}
-
-export default function FriendListAdd(props: { searchText: string }) {
-  const [accounts, setAccounts] = useState<Account[]>([]);
-  const elements = useRef<(HTMLSpanElement | null)[]>([]);
-
-  const handleButtonClick = async (
-    item: string,
-    index: number,
-    event: React.MouseEvent<HTMLButtonElement>
-  ) => {
-    event.stopPropagation();
-    const element = elements.current[index];
-    if (element) {
-      await sendFriendRequest(item, element);
-      setAccounts((prevAccounts) =>
-        prevAccounts.filter((account) => account.username !== item)
-      );
-    }
+    setLastRefresh(Date.now());
+    //The toast font is very ugly
+    toast({
+      title: "Friend Request Sent.",
+      description: `${item} has received your request.`,
+      status: "success",
+      duration: 4000,
+    });
   };
 
   useEffect(() => {
     let loaded = true;
     (async () => {
       if (loaded) {
-        setAccounts(await fetchData(props.searchText));
+        setAccounts(await fetchData(searchText));
       }
     })();
     return () => {
       loaded = false;
       setAccounts([]);
     };
-  }, [props.searchText]);
+  }, [searchText, lastRefresh]);
 
   return (
     <>
       {accounts &&
-        accounts.map((item, index) => (
-          <div
-            className="friend"
-            key={item.username}
-            ref={(currentElement) => (elements.current[index] = currentElement)}
-          >
-            <img alt="" src={item.profilePic} />
-            <p>{item.username}</p>
-            <button
-              onClick={(event) =>
-                handleButtonClick(item.username, index, event)
-              }
-              className="friendAddButton"
-            >
-              <FontAwesomeIcon icon={faPlus} />
-            </button>
-          </div>
+        accounts.map((item) => (
+          <AddFriend
+            item={item}
+            handleButtonClick={(val: any) => handleButtonClick(val)}
+          />
         ))}
     </>
   );
 }
 
-export function FriendListAddSearch(props: {
-  setSearchText: (text: string) => void;
-}) {
+export function FriendListAddSearch({ setSearchText }: any) {
   return (
-    <div id="search">
-      <input
+    <InputGroup style={{ position: "fixed", bottom: "10px", width: "286px" }}>
+      <InputLeftElement pointerEvents="none">
+        <Icon color="gray.300" as={BsSearch} />
+      </InputLeftElement>
+      <Input
+        fontFamily={"Roboto, sans-serif"}
+        onChange={(e) => setSearchText(e.target.value)}
         type="text"
-        id="searchfield"
-        placeholder="Search friends"
-        onChange={(e) => props.setSearchText(e.target.value)}
+        placeholder="Add Friends"
       />
-    </div>
+    </InputGroup>
   );
 }

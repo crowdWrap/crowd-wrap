@@ -1,6 +1,5 @@
-import { useEffect, useRef, useState } from "react";
-import { faX } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useEffect, useState } from "react";
+import InboxFriend from "./friendComponents/sentFriend";
 
 async function fetchData() {
   try {
@@ -19,37 +18,17 @@ interface Account {
   profilePic: string;
 }
 
-async function removeFriendSent(item: string, element: HTMLSpanElement) {
-  const parentElement = element.parentElement;
-  if (parentElement && parentElement.contains(element)) {
-    const response = await fetch(`/removeFriendSent?user_name=${item}`, {
+export default function FriendListInboxSent({
+  lastRefresh,
+  setLastRefresh,
+}: any) {
+  const [accounts, setAccounts] = useState<Account[]>([]);
+
+  const handleButtonClick = async (item: string) => {
+    await fetch(`/removeFriendSent?user_name=${item}`, {
       method: "GET",
     });
-    const result = await response.json();
-    if (result.success) {
-      parentElement.removeChild(element);
-    }
-    return result;
-  }
-}
-
-export default function FriendListInboxSent() {
-  const [accounts, setAccounts] = useState<Account[]>([]);
-  const elements = useRef<(HTMLSpanElement | null)[]>([]);
-
-  const handleButtonClick = async (
-    item: string,
-    index: number,
-    event: React.MouseEvent<HTMLButtonElement>
-  ) => {
-    event.stopPropagation();
-    const element = elements.current[index];
-    if (element) {
-      await removeFriendSent(item, element);
-      setAccounts((prevAccounts) =>
-        prevAccounts.filter((account) => account.username !== item)
-      );
-    }
+    setLastRefresh(Date.now());
   };
 
   useEffect(() => {
@@ -63,31 +42,25 @@ export default function FriendListInboxSent() {
       loaded = false;
       setAccounts([]);
     };
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lastRefresh]);
 
   return (
-    <>
+    <div
+      style={{
+        marginTop: "-16px",
+        width: "286px",
+        position: "relative",
+        left: "-16px",
+      }}
+    >
       {accounts &&
-        accounts.map((item, index) => (
-          <div
-            className="friend"
-            key={item.username}
-            ref={(currentElement) => (elements.current[index] = currentElement)}
-          >
-            <img alt="" src={item.profilePic} />
-            <p>{item.username}</p>
-            <div className="friendAddButtonCover">
-              <button
-                onClick={(event) =>
-                  handleButtonClick(item.username, index, event)
-                }
-                className="friendAddButton"
-              >
-                <FontAwesomeIcon icon={faX} />
-              </button>
-            </div>
-          </div>
+        accounts.map((item) => (
+          <InboxFriend
+            item={item}
+            handleButtonClick={(val: any) => handleButtonClick(val)}
+          />
         ))}
-    </>
+    </div>
   );
 }
