@@ -1,6 +1,7 @@
 import FriendListInboxReceived from "./friendListInboxReceived";
 import FriendListInboxSent from "./friendListInboxSent";
 import {
+  Flex,
   Tab,
   TabList,
   TabPanel,
@@ -16,22 +17,20 @@ export default function FriendListInbox({ lastRefresh, setLastRefresh }: any) {
         <TabList
           position={"fixed"}
           bottom={"10px"}
-          width="140px"
+          width="318px"
           height="35px"
           marginTop="-10px"
+          left="0"
+          justifyContent="center"
         >
-          <Tab>
-            {/* <Flex alignItems={"center"} gap="5px"> */}
-            <Text fontFamily={"Roboto"}>Received</Text>
-            {/* <Icon boxSize={"4"} as={HiInbox} /> */}
-            {/* </Flex> */}
-          </Tab>
-          <Tab>
-            {/* <Flex alignItems={"center"} gap="5px"> */}
-            <Text fontFamily={"Roboto"}>Sent</Text>
-            {/* <Icon boxSize={"4"} as={FaLocationArrow} /> */}
-            {/* </Flex> */}
-          </Tab>
+          <Flex width="300px" justifyContent="space-around">
+            <Tab flexGrow="1">
+              <Text>Received</Text>
+            </Tab>
+            <Tab flexGrow="1">
+              <Text>Sent</Text>
+            </Tab>
+          </Flex>
         </TabList>
 
         <TabPanels>

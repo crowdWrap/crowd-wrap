@@ -36,7 +36,6 @@ export default function FriendsListSearch({ updateData }: any) {
         <Icon color="gray.300" as={BsSearch} />
       </InputLeftElement>
       <Input
-        fontFamily={"Roboto, sans-serif"}
         onChange={(e) => setSearchText(e.target.value)}
         type="text"
         placeholder="Search Friends"

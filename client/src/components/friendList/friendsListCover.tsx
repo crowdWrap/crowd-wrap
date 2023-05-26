@@ -3,6 +3,7 @@ import FriendsListSearch from "./friendsListSearch";
 import FriendListAdd, { FriendListAddSearch } from "./friendListAdd";
 import FriendListInbox from "./friendListInbox";
 import {
+  Flex,
   Icon,
   Tab,
   TabIndicator,
@@ -88,28 +89,31 @@ export default function FriendsListCover() {
         variant="unstyled"
       >
         <div style={{ position: "fixed" }}>
-          <TabList width={"103px"}>
-            <Tab>
-              <Icon
-                color={tabIndex === 0 ? "darkBlue" : "black"}
-                boxSize={6}
-                as={AiOutlineUser}
-              />
-            </Tab>
-            <Tab>
-              <Icon
-                color={tabIndex === 1 ? "darkBlue" : "black"}
-                boxSize={6}
-                as={AiOutlinePullRequest}
-              />
-            </Tab>
-            <Tab>
-              <Icon
-                color={tabIndex === 2 ? "darkBlue" : "black"}
-                boxSize={6}
-                as={AiOutlineUsergroupAdd}
-              />
-            </Tab>
+          <TabList>
+            {/* chcek their size in dev tools */}
+            <Flex justifyContent="space-around" width="318px">
+              <Tab flexGrow="1">
+                <Icon
+                  color={tabIndex === 0 ? "darkBlue" : "black"}
+                  boxSize={6}
+                  as={AiOutlineUser}
+                />
+              </Tab>
+              <Tab flexGrow="1">
+                <Icon
+                  color={tabIndex === 1 ? "darkBlue" : "black"}
+                  boxSize={6}
+                  as={AiOutlinePullRequest}
+                />
+              </Tab>
+              <Tab flexGrow="1">
+                <Icon
+                  color={tabIndex === 2 ? "darkBlue" : "black"}
+                  boxSize={6}
+                  as={AiOutlineUsergroupAdd}
+                />
+              </Tab>
+            </Flex>
           </TabList>
           <TabIndicator
             mt="-1.5px"

@@ -2,8 +2,61 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./assets/css_group/index.module.css";
 import App from "./App";
-import { ChakraProvider } from "@chakra-ui/react";
 import AuthProvider from "./hooks/authContext";
+import { ChakraProvider, extendTheme } from "@chakra-ui/react";
+import "@fontsource/inter";
+
+const activeLabelStyles = {
+  transform: "scale(0.85) translateY(-24px)",
+};
+export const theme = extendTheme({
+  styles: {
+    global: {
+      body: {
+        fontFamily: "Inter, Roboto, sans-serif",
+      },
+    },
+  },
+  components: {
+    Form: {
+      variants: {
+        floating: {
+          container: {
+            _focusWithin: {
+              label: {
+                ...activeLabelStyles,
+              },
+            },
+            "input:not(:placeholder-shown) + label, .chakra-select__wrapper + label, textarea:not(:placeholder-shown) ~ label":
+              {
+                ...activeLabelStyles,
+              },
+            label: {
+              top: 0,
+              left: 0,
+              zIndex: 2,
+              position: "absolute",
+              backgroundColor: "white",
+              pointerEvents: "none",
+              mx: 3,
+              px: 1,
+              my: 2,
+              transformOrigin: "left top",
+            },
+          },
+        },
+      },
+    },
+    Toast: {
+      baseStyle: {
+        fontFamily: "Roboto, sans-serif",
+        ".chakra-alert__title": {
+          fontWeight: "900",
+        },
+      },
+    },
+  },
+});
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -11,7 +64,7 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <ChakraProvider>
+    <ChakraProvider theme={theme}>
       <AuthProvider>
         <App />
       </AuthProvider>

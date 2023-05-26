@@ -30,7 +30,6 @@
 
 :local .sign-links button {
   text-decoration: none;
-  font-family: "Roboto", "Camie Regular", "Comic Sans MS";
   font-size: 0.9rem;
   font-weight: 300;
   width: 100px;

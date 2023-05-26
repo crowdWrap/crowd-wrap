@@ -37,7 +37,6 @@ export default function FriendListAdd({
       method: "GET",
     });
     setLastRefresh(Date.now());
-    //The toast font is very ugly
     toast({
       title: "Friend Request Sent.",
       description: `${item} has received your request.`,
@@ -79,7 +78,6 @@ export function FriendListAddSearch({ setSearchText }: any) {
         <Icon color="gray.300" as={BsSearch} />
       </InputLeftElement>
       <Input
-        fontFamily={"Roboto, sans-serif"}
         onChange={(e) => setSearchText(e.target.value)}
         type="text"
         placeholder="Add Friends"

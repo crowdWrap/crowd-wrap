@@ -9,6 +9,8 @@ import FriendsList from "../friendList/friendslist";
 import { useAuth } from "../../hooks/authContext";
 import { CgLogIn } from "react-icons/cg";
 import { BsArrowThroughHeart } from "react-icons/bs";
+import "@fontsource/inter";
+
 export default function Header() {
   const { authed } = useAuth();
 
@@ -28,6 +30,7 @@ export default function Header() {
             <Button
               rightIcon={<Icon as={CgLogIn} />}
               // colorScheme="linkedin"
+
               variant="outline"
             >
               Login

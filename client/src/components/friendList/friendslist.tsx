@@ -14,10 +14,13 @@ export default function FriendsList() {
       <Popover isLazy>
         <PopoverTrigger>
           <IconButton
+            size={"sm"}
+            // fontSize={"15px"}
+            padding="0px"
             margin={"0"}
             variant="outline"
             borderRadius="full"
-            colorScheme="blue"
+            colorScheme="facebook"
             aria-label="Friendlist"
             icon={<Icon as={FaUserFriends} />}
           />
