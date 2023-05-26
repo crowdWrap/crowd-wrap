@@ -1,6 +1,5 @@
 import express from "express";
 import morgan from "morgan";
-import { router } from "./routes/engineers";
 import {
   addFriend,
   createEvent,

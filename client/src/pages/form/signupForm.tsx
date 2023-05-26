@@ -1,10 +1,8 @@
 import React from "react";
-import styles from "./form.module.css";
 import { useState } from "react";
 import { Form, useNavigate } from "react-router-dom";
 import SignUpGoogle from "../../api/googleSignup";
 import { GoogleOAuthProvider } from "@react-oauth/google";
-import Header from "../../components/header/Header";
 import { Link as ReactLink } from "react-router-dom";
 import backgroundImage from "../.././assets/image_group/blue-pink-better-theme.png";
 
@@ -12,7 +10,6 @@ import {
   FormControl,
   FormLabel,
   FormErrorMessage,
-  FormHelperText,
   Input,
   Link,
   Box,

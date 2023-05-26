@@ -3,11 +3,10 @@ import { GoogleLogin } from "@react-oauth/google";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/authContext";
 import { Button, useToast } from "@chakra-ui/react";
-import styles from "./google.module.css";
 
 export default function SignInGoogle() {
   const navigate = useNavigate();
-  const { authed, setAuthed } = useAuth();
+  const { setAuthed } = useAuth();
   // eslint-disable-next-line no-restricted-globals
   const urlParams = new URLSearchParams(location.search);
   const redirect = urlParams.get("redirect");

@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import styles from "./form.module.css";
 import { Form, Link as ReactLink } from "react-router-dom";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -32,7 +31,7 @@ export default function LoginForm() {
   const redirect = urlParams.get("redirect");
   const [usernameOrEmail, setusernameOrEmail] = useState<string>("");
   const [loginPass, setLoginPassword] = useState<string>("");
-  const { login, authed, setAuthed } = useAuth();
+  const { authed, setAuthed } = useAuth();
   const [show, setShow] = React.useState(false);
   const handleClick = () => setShow(!show);
   const toast = useToast();
