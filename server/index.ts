@@ -78,10 +78,6 @@ declare module "express-session" {
   }
 }
 
-app.use("/crowdWrap/engineers", router);
-
-app.post("/", (req, res) => {});
-
 app.post("/register/setUsername", async (req, res) => {
   const username = req.body.username;
   const usernameExists = await getProfileByUsername(username);
@@ -118,16 +114,19 @@ app.post("/register", async (req, res) => {
           const emailExists = await getProfileByEmail(email);
 
           if (emailExists) {
-            return res.status(400).json({ message: "user exists" });
+            return res
+              .status(400)
+              .json({ message: "This user exists, please login!" });
           }
 
           createUser(userData, email, "");
           updateUser(email, picture);
-          return res.status(200).json({ message: "Registration succesful" });
+          return res.status(200).json({ message: `${email} has been created` });
         })
         .catch((e) => console.log("firstError:", e));
     } catch (e) {
       console.log("secondError:", e);
+      return res.status(401).json({ message: "Registration Failed" });
     }
   } else {
     //normal
@@ -135,8 +134,16 @@ app.post("/register", async (req, res) => {
       const { username, email, password } = req.body;
 
       //makes sure the fields arent blank and pass is > 8
-      if (!username || !email || !password || password.length < 8) {
-        return res.status(400).json({ message: "invalid fields" });
+      if (!username || !email || !password) {
+        return res.status(400).json({ message: "Missing fields" });
+      } else if (
+        password.length < 8 ||
+        password.length > 20 ||
+        username.length < 3 ||
+        username.length > 20 ||
+        !email.includes("@")
+      ) {
+        return res.status(400).json({ message: "Invalid fields" });
       }
 
       //makes sure that the user doesnt exist
@@ -144,7 +151,9 @@ app.post("/register", async (req, res) => {
       const usernameExists = await getProfileByUsername(username);
 
       if (emailExists || usernameExists) {
-        return res.status(400).json({ message: "user exists" });
+        return res
+          .status(400)
+          .json({ message: "This user exists, please login!" });
       }
 
       //then continues normal process
@@ -152,10 +161,10 @@ app.post("/register", async (req, res) => {
 
       //Create user and send to DB
       createUser(username, email, hashedPass);
-      return res.status(201).json({ message: "Registration succesful" });
+      return res.status(201).json({ message: `${username} has been created` });
     } catch (e) {
       console.log("thirdError:", e);
-      return res.status(401).json({ message: "registration failed" });
+      return res.status(401).json({ message: "Registration Failed" });
     }
   }
 });
@@ -181,7 +190,7 @@ app.post("/login", async (req, res, next) => {
         const emailExists = await getProfileByEmail(email);
 
         if (!emailExists) {
-          return res.status(400).json({ message: "user doesnt exist" });
+          return res.status(400).json({ message: "This user does not exist" });
         }
 
         const user: any = await getProfileByEmail(email);
@@ -196,9 +205,7 @@ app.post("/login", async (req, res, next) => {
           if (user.username == sub) {
             return res.status(200).json({ message: "Needs username" });
           } else {
-            return res
-              .status(200)
-              .json({ message: "Authentication successful" });
+            return res.status(200).json({ message: `${email} has logged in` });
           } //
         });
       });
@@ -213,14 +220,16 @@ app.post("/login", async (req, res, next) => {
         return next(err);
       }
       if (!user) {
-        return res.status(401).json({ message: "Authentication failed" });
+        return res.status(401).json({ message: "This user does not exist!" });
       }
       req.logIn(user, (err) => {
         if (err) {
           return next(err);
         }
         req.session.user = user.id.toString();
-        return res.status(200).json({ message: "Authentication successful" });
+        return res
+          .status(200)
+          .json({ message: `${user.username} has logged in` });
       });
     })(req, res, next);
   }

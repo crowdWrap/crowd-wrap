@@ -2,6 +2,8 @@ import { GoogleLogin } from "@react-oauth/google";
 // eslint-disable-next-line
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/authContext";
+import { Button, useToast } from "@chakra-ui/react";
+import styles from "./google.module.css";
 
 export default function SignInGoogle() {
   const navigate = useNavigate();
@@ -9,6 +11,8 @@ export default function SignInGoogle() {
   // eslint-disable-next-line no-restricted-globals
   const urlParams = new URLSearchParams(location.search);
   const redirect = urlParams.get("redirect");
+  const toast = useToast();
+
   const succesfulSignIn = async (credentialResponse: any) => {
     try {
       const credential = JSON.stringify({
@@ -28,6 +32,12 @@ export default function SignInGoogle() {
           setAuthed(true);
           navigate("/register/setUsername");
         } else if (response.ok) {
+          toast({
+            title: "Login Succesful.",
+            description: `${newResponse.message}`,
+            status: "success",
+            duration: 4000,
+          });
           setAuthed(true);
           if (
             redirect &&
@@ -39,19 +49,49 @@ export default function SignInGoogle() {
           }
           navigate("/profile");
         } else {
-          console.log(newResponse.message);
+          toast({
+            title: "Login failed.",
+            description: `${newResponse.message}.`,
+            status: "error",
+            duration: 4000,
+          });
         }
       });
     } catch (error) {
-      console.error(error);
+      toast({
+        title: "Error.",
+        description: `${error}.`,
+        status: "error",
+        duration: 4000,
+      });
     }
   };
   return (
-    <GoogleLogin
-      onSuccess={succesfulSignIn}
-      onError={() => {
-        console.log("Failed");
+    <Button
+      colorScheme="palevioletred"
+      style={{
+        border: "2px solid palevioletred",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        width: "40px",
+        height: "40px",
+        overflow: "hidden",
+        backgroundColor: "transparent",
       }}
-    />
+    >
+      <GoogleLogin
+        onSuccess={succesfulSignIn}
+        theme="filled_blue"
+        logo_alignment="center"
+        shape="square"
+        size="large"
+        type="icon"
+        text="signin_with"
+        onError={() => {
+          console.log("Failed");
+        }}
+      />
+    </Button>
   );
 }

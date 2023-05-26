@@ -1,23 +1,29 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./form.module.css";
+import { Form, Link as ReactLink } from "react-router-dom";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import SignInGoogle from "../../api/googleSignin";
-import Header from "../../components/header/Header";
 import { useAuth } from "../../hooks/authContext";
+import backgroundImage from "../.././assets/image_group/blue-pink-better-theme.png";
 
-// async function fetchData(navigate: any) {
-//   const response: Response = await fetch("/login", {
-//     method: "GET",
-//   });
+import "@fontsource/inter";
 
-//   if (response.ok) {
-//   } else {
-//     navigate("/profile");
-//   }
-// }
+import {
+  FormControl,
+  FormLabel,
+  Input,
+  Link,
+  Box,
+  Flex,
+  InputGroup,
+  InputRightElement,
+  Button,
+  Heading,
+  Text,
+  useToast,
+} from "@chakra-ui/react";
 
 export default function LoginForm() {
   const navigate = useNavigate();
@@ -27,6 +33,16 @@ export default function LoginForm() {
   const [usernameOrEmail, setusernameOrEmail] = useState<string>("");
   const [loginPass, setLoginPassword] = useState<string>("");
   const { login, authed, setAuthed } = useAuth();
+  const [show, setShow] = React.useState(false);
+  const handleClick = () => setShow(!show);
+  const toast = useToast();
+
+  useEffect(() => {
+    if (authed) {
+      navigate("/profile");
+    }
+  });
+  //Remvoe when protected routes
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -46,6 +62,12 @@ export default function LoginForm() {
     const receivedData = await response.json();
 
     if (response.ok) {
+      toast({
+        title: "Login Succesful.",
+        description: `${receivedData.message}`,
+        status: "success",
+        duration: 4000,
+      });
       setAuthed(true);
       if (
         redirect &&
@@ -57,62 +79,101 @@ export default function LoginForm() {
       }
       navigate("/profile");
     } else {
-      alert(receivedData.message);
+      toast({
+        title: "Login failed.",
+        description: `${receivedData.message}.`,
+        status: "error",
+        duration: 4000,
+      });
     }
   }
 
   return (
-    <div className={styles["wrapper"]}>
-      {/* <Header /> */}
-      <div className={styles["form-wrapper"]}>
-        <div className={styles["logintitle"]}>Login</div>
-        <form onSubmit={handleSubmit} noValidate>
-          <div className="username">
-            <label htmlFor="username">Username</label>
-            <input
-              type="text"
-              name="username"
-              placeholder="Username"
-              required
-              onChange={(e) => setusernameOrEmail(e.target.value)}
-            />
-          </div>
-          <div className={styles["password"]}>
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              name="password"
-              placeholder="Password"
-              required
-              onChange={(e) => setLoginPassword(e.target.value)}
-            />
-          </div>
+    <Flex
+      borderColor={"red"}
+      height="100vh"
+      backgroundPosition="40%"
+      position="absolute"
+      width="100vw"
+      objectFit="cover"
+      justifyContent={"center"}
+      alignItems="center"
+      backgroundImage={backgroundImage}
+    >
+      <Box
+        bgColor="white"
+        borderRadius="25px"
+        p="60px 40px"
+        boxShadow="0px 0px 5px rgba(0, 0, 0, 0.265)"
+      >
+        <Heading fontWeight="900" marginBottom="50px">
+          Login
+        </Heading>
+        <Form onSubmit={handleSubmit}>
+          <Flex gap="30px" flexDir="column">
+            <FormControl variant="floating" id="usernameEmail" isRequired>
+              <Input
+                placeholder=" "
+                onChange={(e) => setusernameOrEmail(e.target.value)}
+              />
+              <FormLabel>Username or Email</FormLabel>
+            </FormControl>
+            <FormControl variant="floating" id="password" isRequired>
+              <InputGroup size="md">
+                <Input
+                  pr="4.5rem"
+                  type={show ? "text" : "password"}
+                  placeholder=" "
+                  onChange={(e) => setLoginPassword(e.target.value)}
+                />
+                <FormLabel>Password</FormLabel>
+                <InputRightElement width="4.5rem">
+                  <Button
+                    marginTop="auto"
+                    marginBottom="auto"
+                    variant="outline"
+                    colorScheme="blue"
+                    h="1.75rem"
+                    size="sm"
+                    onClick={handleClick}
+                  >
+                    {show ? "Hide" : "Show"}
+                  </Button>
+                </InputRightElement>
+              </InputGroup>
+            </FormControl>
 
-          <div className={styles["submit"]}>
-            <button type="submit" className={styles["buttonNormal"]}>
-              Login
-            </button>
-
-            <div className={styles["googleSignIn"]}>
+            <Flex flexDir="row" gap="8px">
+              <Button flexGrow="1" type="submit" colorScheme="pink">
+                Sign in
+              </Button>
+              {/* <Button colorScheme="red" padding="0"> */}
               <GoogleOAuthProvider
                 clientId={`${process.env.REACT_APP_CLIENTID}`}
               >
                 <SignInGoogle />
               </GoogleOAuthProvider>
-            </div>
+              {/* </Button> */}
+            </Flex>
 
-            <Link
-              to="/register"
-              className={styles["linkstyle"]}
-              style={{ fontSize: 12 }}
-            >
-              Don't Have an account yet?
-              <br />
-              <span style={{ color: "pink" }}>Register for free.</span>
-            </Link>
-          </div>
-        </form>
-      </div>
-    </div>
+            <Flex alignItems="center" gap="5px" flexDirection="column">
+              <Text>
+                Dont have an account?{" "}
+                <Link as={ReactLink} to="/register" color="teal.500">
+                  Sign up
+                </Link>
+              </Text>
+
+              {/* <Text >
+              <Link color="teal.500">Forgot Password?</Link>{" "}
+            </Text>
+            <Text >
+              <Link color="teal.500">Need help?</Link>{" "}
+            </Text> */}
+            </Flex>
+          </Flex>
+        </Form>
+      </Box>
+    </Flex>
   );
 }
