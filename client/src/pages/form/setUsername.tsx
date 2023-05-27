@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import "./form.module.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 async function fetchData(navigate: any, setRegisterUsername: any) {
