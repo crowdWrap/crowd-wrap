@@ -1,6 +1,7 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
 :local .myFont {
   @font-face {
-    font-family: 'MyFont';
-    src: url('./fonts/MyFont.ttf') format('truetype');
+    font-family: "MyFont";
+    src: url("./fonts/MyFont.ttf") format("truetype");
   }
 }

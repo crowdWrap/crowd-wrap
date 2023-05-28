@@ -4,8 +4,7 @@ import {
   faUser,
   faRightFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
-// eslint-disable-next-line
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function ClickPopup() {
   const navigate = useNavigate();
@@ -22,23 +21,19 @@ export default function ClickPopup() {
 
   return (
     <div className="logoutPop">
-      <ul>
-        <li>
-          <FontAwesomeIcon icon={faGear} />
-          <button className="individualBtn firstIndiv">Settings</button>
-        </li>
-        <li>
-          <FontAwesomeIcon icon={faUser} />
-          <button className="individualBtn">Profile</button>
-        </li>
-        <li>
-          <FontAwesomeIcon icon={faRightFromBracket} />
-          <button className="individualBtn" onClick={logoutSession}>
-            {" "}
-            Logout
-          </button>
-        </li>
-      </ul>
+      <button className="individualBtn">
+        <FontAwesomeIcon icon={faGear} />
+        <p>Settings</p>
+      </button>
+
+      <button className="individualBtn">
+        <FontAwesomeIcon icon={faUser} />
+        <p>Profile</p>
+      </button>
+      <button className="individualBtn" onClick={logoutSession}>
+        <FontAwesomeIcon icon={faRightFromBracket} />
+        <p>Logout</p>
+      </button>
     </div>
   );
 }

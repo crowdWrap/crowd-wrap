@@ -18,15 +18,22 @@ async function fetchProfilePic(setBackgroundImage: any) {
 export default function LogoutButton() {
   const [backgroundImage, setBackgroundImage] = useState("");
   const [clicked, setClicked] = useState<boolean>(false);
+
+  const clickHandler = (event: MouseEvent) => {
+    logoutRemoval(event, setClicked);
+  };
+  const logoutRemoval = (e: MouseEvent, setClicked: any) => {
+    const target = e.target as Element;
+    if (target && !target.closest(".logoutBtnCover")) {
+      // check if target is not within logoutCover
+      setClicked(false);
+      document.removeEventListener("click", clickHandler);
+    }
+  };
+
   const click = () => {
-    // eslint-disable-next-line
-    setClicked(clicked == false);
-    document.addEventListener("click", (e: MouseEvent) => {
-      const target = e.target as Element;
-      if (target && !target.closest(".logoutBtnCover")) {
-        setClicked(false);
-      }
-    });
+    setClicked(clicked === false);
+    document.addEventListener("click", clickHandler);
   };
 
   useEffect(() => {
@@ -37,7 +44,7 @@ export default function LogoutButton() {
     <div className="logoutBtnCover">
       <button
         style={{
-          backgroundImage: `url(${backgroundImage}?timestamp=${Date.now()})`,
+          backgroundImage: `url(${backgroundImage})`,
         }}
         className={!clicked ? "logoutBtn" : "logoutBtn logoutBtnClicked"}
         onClick={click}

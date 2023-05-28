@@ -51,6 +51,26 @@
   grid-column: 2;
 }
 
+/* LoggedIn page - start */
+
+.loggedIn {
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  grid-template-rows: 0.05fr 1fr;
+}
+
+.loggedInNavbar {
+  padding: 0;
+  margin: 0;
+  grid-row-start: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+/* LoggedIn page  - End */
+
 /* Logout button - start */
 
 :local .logoutBtn {
@@ -58,11 +78,12 @@
   width: 50px;
   height: 50px;
   border-radius: 25px;
+  margin: 0;
   background-image: url("https://cdn.discordapp.com/attachments/463174949310562304/1075952796660146196/IMG_3462.png");
   background-size: cover;
   min-width: 50px;
   transition: 0.25s ease-in-out;
-  font: PP Neue Montreal
+  font: PP Neue Montreal;
 }
 
 :local .logoutBtnClicked {
@@ -103,8 +124,18 @@
   border-radius: 25px;
   display: flex;
   align-items: center;
-  padding: 15px;
-  width: 90px;
+  /* padding: 15px; */
+  /* min-width: 90px; */
+  width: 115px;
+}
+
+:local .logoutPop ul button p {
+  font-family: "Roboto", sans-serif;
+  margin-left: 10px;
+}
+
+:local .logoutPop button:hover {
+  background-color: rgba(8, 8, 8, 0.61);
 }
 
 :local .logoutPop li:hover {
@@ -114,8 +145,6 @@
 :local .logoutBtnCover {
   grid-column-start: 3;
   min-width: 50px;
-  justify-self: end;
-  align-self: center;
   border-radius: 25px;
   width: 50px;
   margin-right: 10px;
@@ -131,10 +160,19 @@
   background-color: transparent;
   color: none;
   border-radius: 25px;
-  padding: 0;
+  /* padding: 0; */
+  display: flex;
+  align-items: center;
+  gap: 20px;
   margin: 0;
-  text-align: center;
+  /* text-align: center; */
+  /* margin-left: 50px; */
   cursor: pointer;
+}
+
+:local .individualBtn svg {
+  height: 15px;
+  width: 15px;
 }
 
 :local .firstIndiv {
@@ -183,7 +221,7 @@
 :local .dashboard_button_example {
   width: 250px;
   height: 50px;
-  font: PP Neue Montreal
+  font: PP Neue Montreal;
 }
 
 /* signUp button - end */

@@ -1,9 +1,7 @@
-import React, { useEffect } from "react";
 import "../assets/css_group/form.module.css";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-// eslint-disable-next-line
-import { Link, Router, useNavigate } from "react-router-dom";
 
 async function fetchData(navigate: any, setRegisterUsername: any) {
   //to check if the user is authenticated beforehand
@@ -28,8 +26,7 @@ export default function SetUsername() {
   useEffect(() => {
     // eslint-disable-next-line
     fetchData(navigate, setRegisterUsername);
-    // eslint-disable-next-line
-  }, []);
+  }, [navigate]);
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();

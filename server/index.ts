@@ -1,13 +1,23 @@
 import express from "express";
 import morgan from "morgan";
 import { router } from "./routes/engineers";
-import { createUser } from "./userQueries";
+import {
+  addFriend,
+  createUser,
+  removeFriend,
+  removeFriendReceived,
+  removeFriendSent,
+  updateFriendRequest,
+  updateFriendRequestSent,
+} from "./userQueries";
 import {
   getProfileByUsername,
   getProfileByEmail,
   getProfileById,
   updateUser,
   updateUserName,
+  getProfilesByPartialUsername,
+  getFriendsByPartialUsername,
 } from "./profileQueries";
 import bcrypt from "bcryptjs";
 import cors from "cors";
@@ -39,7 +49,7 @@ app.use(
     secret: process.env.SECRET as string,
     cookie: { maxAge: 24 * 60 * 60 * 1000 }, //24 hour
     resave: true,
-    saveUninitialized: false,
+    save initialized: false,
   })
 );
 
@@ -108,9 +118,9 @@ app.post("/register", async (req, res) => {
           updateUser(email, picture);
           return res.status(200).json({ message: "Registration succesful" });
         })
-        .catch((e) => console.log(e));
+        .catch((e) => console.log("firstError:", e));
     } catch (e) {
-      console.log(e);
+      console.log("secondError:", e);
     }
   } else {
     //normal
@@ -137,7 +147,7 @@ app.post("/register", async (req, res) => {
       createUser(username, email, hashedPass);
       return res.status(201).json({ message: "Registration succesful" });
     } catch (e) {
-      console.log("the error:", e);
+      console.log("thirdError:", e);
       return res.status(401).json({ message: "registration failed" });
     }
   }
@@ -181,12 +191,12 @@ app.post("/login", async (req, res, next) => {
             return res
               .status(200)
               .json({ message: "Authentication successful" });
-          }
+          } 
         });
       });
       //google oauth
     } catch (e) {
-      console.log(e);
+      console.log("fourthError:", e);
     }
   } else {
     //normal auhtentication and session
@@ -248,7 +258,6 @@ app.get("/register/setUsername", async (req, res) => {
 });
 
 app.post("/setUsername", async (req, res) => {
-  console.log("beginning");
   if (req.session.user) {
     const user = await getProfileById(Number(req.session.user));
     res.setHeader("Content-Type", "application/json");
@@ -274,8 +283,160 @@ app.get("/profilePicRequest", async (req, res) => {
   }
 });
 
+app.get("/friendSearch", async (req, res) => {
+  const userSearch: any = req.query.user_search;
+  const user = await getProfileById(Number(req.session.user));
+  const profiles = await getProfilesByPartialUsername(userSearch);
+  let accounts;
+  if (profiles) {
+    accounts = profiles
+      .filter((item) => item.username != user.username)
+      .filter(
+        (item) =>
+          !user.friendRequestsSent.some((el) => el.username === item.username)
+      )
+      .filter(
+        (item) => !user.friends.some((el) => el.username === item.username)
+      )
+      .map((item) => {
+        return { username: item.username, profilePic: item.picture };
+      });
+  }
+  res.send(accounts);
+});
+
+app.get("/friendsListSearch", async (req, res) => {
+  const userSearch: any = req.query.user_search;
+  const user = await getProfileById(Number(req.session.user));
+  const friends = await getFriendsByPartialUsername(userSearch, user.id);
+
+  let accounts;
+  if (friends) {
+    accounts = friends.map((item) => {
+      console.log("item: ", item.username, item.picture);
+      return { username: item.username, profilePic: item.picture };
+    });
+  }
+  res.send(accounts);
+});
+
+app.get("/sendFriendRequest", async (req, res) => {
+  if (req.session.user) {
+    const userToSendFriendRequest: any = req.query.user_name;
+    const currentUserID: number = Number(req.session.user);
+    if (userToSendFriendRequest) {
+      await updateFriendRequestSent(userToSendFriendRequest, currentUserID);
+      return res.status(200).json({ message: "complete" });
+    }
+  }
+});
+
+app.get("/friendReceived", async (req, res) => {
+  let accounts;
+  if (req.session.user) {
+    const user = await getProfileById(Number(req.session.user));
+    const friendRequests = user.friendRequests;
+
+    if (friendRequests) {
+      accounts = friendRequests.map((item) => {
+        return { username: item.username, profilePic: item.picture };
+      });
+    }
+  } else {
+    return res.status(401).json({ message: "Unauthorized" });
+  }
+  res.send(accounts);
+});
+
+app.get("/friendSent", async (req, res) => {
+  let accounts;
+  if (req.session.user) {
+    const user = await getProfileById(Number(req.session.user));
+    const friendRequestsSent = user.friendRequestsSent;
+
+    if (friendRequestsSent) {
+      accounts = friendRequestsSent.map((item) => {
+        return { username: item.username, profilePic: item.picture };
+      });
+    }
+  } else {
+    return res.status(401).json({ message: "Unauthorized" });
+  }
+  res.send(accounts);
+});
+
+app.get("/friends", async (req, res) => {
+  let accounts;
+  if (req.session.user) {
+    const user = await getProfileById(Number(req.session.user));
+    const friends = user.friends;
+
+    if (friends) {
+      accounts = friends.map((item) => {
+        return { username: item.username, profilePic: item.picture };
+      });
+    }
+  } else {
+    return res.status(401).json({ message: "Unauthorized" });
+  }
+  res.send(accounts);
+});
+
+app.get("/addFriend", async (req, res) => {
+  if (req.session.user) {
+    const usertoRemoveUsername: any = req.query.user_name;
+    const currentUserID: number = Number(req.session.user);
+    //
+    const userToRemove: any = await getProfileByUsername(usertoRemoveUsername);
+    const user = await getProfileById(Number(req.session.user));
+    addFriend(usertoRemoveUsername, currentUserID);
+    //add them adn then remove the sent, and received
+    removeFriendReceived(user.username, userToRemove.id);
+    removeFriendSent(user.username, userToRemove.id);
+    return res.status(200).json({ message: "complete" });
+  }
+});
+
+app.get("/removeFriend", async (req, res) => {
+  if (req.session.user) {
+    const usertoRemoveUsername: any = req.query.user_name;
+    const currentUserID: number = Number(req.session.user);
+    removeFriend(usertoRemoveUsername, currentUserID);
+    return res.status(200).json({ message: "complete" });
+  }
+});
+//when they click the button, just add them as a friend
+
+app.get("/removeFriendSent", async (req, res) => {
+  if (req.session.user) {
+    const usertoRemoveUsername: any = req.query.user_name;
+    const currentUserID: number = Number(req.session.user);
+    const userToRemove: any = await getProfileByUsername(usertoRemoveUsername);
+    const user = await getProfileById(Number(currentUserID));
+    //removing from current users sent
+    removeFriendSent(usertoRemoveUsername, currentUserID);
+    //removing from the received users received
+    removeFriendReceived(usertoRemoveUsername, currentUserID);
+    return res.status(200).json({ message: "complete" });
+  }
+});
+
+app.get("/removeFriendReceived", async (req, res) => {
+  if (req.session.user) {
+    const usertoRemoveUsername: any = req.query.user_name;
+    const userToRemove: any = await getProfileByUsername(usertoRemoveUsername);
+    const user = await getProfileById(Number(req.session.user));
+    //removing the received from current user
+    removeFriendReceived(user.username, userToRemove.id);
+    //removing user from userToRemoves sent
+    removeFriendSent(user.username, userToRemove.id);
+    return res.status(200).json({ message: "complete" });
+  }
+});
+
+//a popup letting them know it was sent
+//then ur going to have to setup the received/sent which wouldnt need a route for each
+
 app.listen(8000, () => {
   console.log(`Server is listening on port 8000`);
 });
-
-//have landing page change once the user is logged in, displaying the logout button etc, removing login button, etc

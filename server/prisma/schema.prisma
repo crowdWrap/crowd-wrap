@@ -17,6 +17,12 @@ model User {
   password String 
   picture String
   // posts Post[]
+  
+  friends User[] @relation("Friend", map:"UserFriends")
+  friendOf User[] @relation("Friend")
+
+  friendRequests User[] @relation("FriendRequests", map: "UserFriendRequests")
+  friendRequestsSent  User[] @relation("FriendRequests")
 }
 
 // model Post {

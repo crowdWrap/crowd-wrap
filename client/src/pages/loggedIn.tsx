@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import LogoutButton from "../components/logout";
 import { useNavigate } from "react-router-dom";
+import FriendsList from "../components/friendList/friendslist";
 
 async function fetchLoginData(navigate: any, setUsername: any) {
   const response: Response = await fetch("/profile", {
@@ -23,11 +24,13 @@ function LoggedIn() {
   const navigate = useNavigate();
   useEffect(() => {
     fetchLoginData(navigate, setUsername);
-    // eslint-disable-next-line
-  }, []);
+  }, [navigate]);
   return (
-    <div>
-      <LogoutButton />
+    <div className="loggedIn">
+      <nav className="loggedInNavbar">
+        <FriendsList />
+        <LogoutButton />
+      </nav>
       <h1>Welcome {username}</h1>
       <p>Logged in</p>
     </div>
