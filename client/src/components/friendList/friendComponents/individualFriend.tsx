@@ -37,7 +37,7 @@ export default function IndividualFriend({ item, handleButtonClick }: any) {
             />
             <MenuList>
               <MenuItem icon={<Icon boxSize={5} as={AiOutlineUserAdd} />}>
-                Invite to event
+                Add to event
               </MenuItem>
               <MenuItem
                 onClick={(event) => handleButtonClick(item.username)}

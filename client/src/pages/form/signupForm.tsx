@@ -154,6 +154,8 @@ export default function SignupForm() {
             >
               <Input
                 placeholder=" "
+                minLength={3}
+                maxLength={20}
                 onChange={handleUsernameChange}
                 onBlur={() => {
                   setUsernameTouched(true);
@@ -198,6 +200,8 @@ export default function SignupForm() {
             >
               <InputGroup size="md">
                 <Input
+                  minLength={8}
+                  maxLength={20}
                   pr="4.5rem"
                   type={show ? "text" : "password"}
                   placeholder=" "

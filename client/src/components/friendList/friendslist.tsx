@@ -20,7 +20,7 @@ export default function FriendsList() {
             margin={"0"}
             variant="outline"
             borderRadius="full"
-            colorScheme="facebook"
+            colorScheme="pink"
             aria-label="Friendlist"
             icon={<Icon as={FaUserFriends} />}
           />
