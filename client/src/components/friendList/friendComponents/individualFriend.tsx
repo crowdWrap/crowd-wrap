@@ -1,5 +1,6 @@
 import {
   Avatar,
+  AvatarBadge,
   Card,
   CardHeader,
   Flex,
@@ -23,7 +24,16 @@ export default function IndividualFriend({ item, handleButtonClick }: any) {
       <CardHeader>
         <Flex>
           <Flex flex="1" gap="4" alignItems="center" flexWrap="wrap">
-            <Avatar name={item.profilePic} src={item.profilePic} />
+            <Avatar
+              src={
+                item.profilePic ===
+                "https://vectorified.com/images/no-profile-picture-icon-28.png"
+                  ? null
+                  : item.profilePic
+              }
+            >
+              <AvatarBadge boxSize="1.25em" bg="green.500" />
+            </Avatar>
             <Heading size="sm">{item.username}</Heading>
           </Flex>
           <Menu>
@@ -36,12 +46,14 @@ export default function IndividualFriend({ item, handleButtonClick }: any) {
               colorScheme="gray"
             />
             <MenuList>
-              <MenuItem icon={<Icon boxSize={5} as={AiOutlineUserAdd} />}>
+              <MenuItem
+                icon={<Icon color="green" boxSize={5} as={AiOutlineUserAdd} />}
+              >
                 Add to event
               </MenuItem>
               <MenuItem
                 onClick={(event) => handleButtonClick(item.username)}
-                icon={<Icon boxSize={5} as={AiOutlineDelete} />}
+                icon={<Icon color="red" boxSize={5} as={AiOutlineDelete} />}
               >
                 Remove Friend
               </MenuItem>

@@ -27,7 +27,14 @@ export default function ReceivedFriend({
       <CardHeader>
         <Flex>
           <Flex flex="1" gap="4" alignItems="center" flexWrap="wrap">
-            <Avatar name={item.profilePic} src={item.profilePic} />
+            <Avatar
+              src={
+                item.profilePic ===
+                "https://vectorified.com/images/no-profile-picture-icon-28.png"
+                  ? null
+                  : item.profilePic
+              }
+            />
             <Heading size="sm">{item.username}</Heading>
           </Flex>
           <Menu>
@@ -42,13 +49,13 @@ export default function ReceivedFriend({
             <MenuList>
               <MenuItem
                 onClick={() => handleButtonClick(item.username)}
-                icon={<Icon boxSize={5} as={AiOutlineDelete} />}
+                icon={<Icon color="red" boxSize={5} as={AiOutlineDelete} />}
               >
                 Remove
               </MenuItem>
               <MenuItem
                 onClick={() => handleButtonAdd(item.username)}
-                icon={<Icon boxSize={5} as={AiOutlineUserAdd} />}
+                icon={<Icon color="green" boxSize={5} as={AiOutlineUserAdd} />}
               >
                 Add
               </MenuItem>

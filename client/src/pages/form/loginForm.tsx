@@ -100,6 +100,7 @@ export default function LoginForm() {
       backgroundImage={backgroundImage}
     >
       <Box
+        marginBottom="100px"
         bgColor="white"
         borderRadius="25px"
         p="60px 40px"

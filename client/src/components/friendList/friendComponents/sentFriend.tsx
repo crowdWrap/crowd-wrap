@@ -19,7 +19,14 @@ export default function InboxFriend({ item, handleButtonClick }: any) {
       <CardHeader>
         <Flex>
           <Flex flex="1" gap="4" alignItems="center" flexWrap="wrap">
-            <Avatar name={item.profilePic} src={item.profilePic} />
+            <Avatar
+              src={
+                item.profilePic ===
+                "https://vectorified.com/images/no-profile-picture-icon-28.png"
+                  ? null
+                  : item.profilePic
+              }
+            />
             <Heading size="sm">{item.username}</Heading>
           </Flex>
           <Menu>
@@ -34,7 +41,7 @@ export default function InboxFriend({ item, handleButtonClick }: any) {
             <MenuList>
               <MenuItem
                 onClick={() => handleButtonClick(item.username)}
-                icon={<Icon boxSize={5} as={AiOutlineDelete} />}
+                icon={<Icon color="red" boxSize={5} as={AiOutlineDelete} />}
               >
                 Remove Request
               </MenuItem>

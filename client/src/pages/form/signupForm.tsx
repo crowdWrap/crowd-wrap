@@ -138,6 +138,7 @@ export default function SignupForm() {
       <Box
         bgColor="white"
         borderRadius="25px"
+        marginBottom="100px"
         p="60px 40px"
         boxShadow="0px 0px 5px rgba(0, 0, 0, 0.265)"
       >

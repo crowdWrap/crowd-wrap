@@ -135,7 +135,7 @@ export default function FriendsListCover() {
           }}
         >
           <TabPanels>
-            <TabPanel>
+            <TabPanel key="1">
               {accounts &&
                 !fetchedData &&
                 accounts.map((item) => (
@@ -155,13 +155,13 @@ export default function FriendsListCover() {
                 ))}
               <FriendsListSearch updateData={handleDataUpdate} />
             </TabPanel>
-            <TabPanel>
+            <TabPanel key="2">
               <FriendListInbox
                 lastRefresh={lastRefresh}
                 setLastRefresh={(val: any) => setLastRefresh(val)}
               />
             </TabPanel>
-            <TabPanel>
+            <TabPanel key="3">
               <FriendListAdd
                 lastRefresh={lastRefresh}
                 setLastRefresh={(val: any) => setLastRefresh(val)}
