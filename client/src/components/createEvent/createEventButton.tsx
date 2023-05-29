@@ -1,48 +1,104 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./createEvent.css";
 import CreateEventPop from "./createEventPop";
+import {
+  Box,
+  Button,
+  ButtonGroup,
+  Icon,
+  IconButton,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalHeader,
+  ModalOverlay,
+  Step,
+  StepDescription,
+  StepIcon,
+  StepIndicator,
+  StepNumber,
+  StepSeparator,
+  StepStatus,
+  StepTitle,
+  Stepper,
+  useDisclosure,
+  useSteps,
+} from "@chakra-ui/react";
+import { AiOutlinePlus } from "react-icons/ai";
 
-export default function CreateEventButton({ setRefresh }: any) {
-  const [clicked, setClicked] = useState<boolean>(false);
+export default function CreateEventButton() {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const navigate = useNavigate();
 
-  const clickHandler = (event: MouseEvent) => {
-    logoutRemoval(event, setClicked);
-  };
+  const steps = [
+    { title: "First", description: "Details" },
+    { title: "Second", description: "Info" },
+    { title: "Third", description: "Demo" },
+  ];
 
-  const logoutRemoval = (e: MouseEvent, setClicked: any) => {
-    const target = e.target as Element;
-    if (target && !target.closest(".createEventCover")) {
-      setClicked(false);
-      document.removeEventListener("click", clickHandler);
-    }
-  };
+  const { setActiveStep, activeStep } = useSteps({
+    index: 0,
+    count: steps.length,
+  });
 
-  const refreshHandler = (val: any) => {
-    if (setRefresh) {
-      setRefresh(val);
-    }
-  };
-
-  const click = () => {
-    setClicked(clicked === false);
-    document.addEventListener("click", clickHandler);
-  };
   return (
-    <div className="createEventCover">
-      <button
-        onClick={click}
-        className={!clicked ? "createEvent" : "createEvent createEventClicked"}
-      >
-        <FontAwesomeIcon icon={faPlus} />
-      </button>
-      <div>{clicked && <CreateEventPop setRefresh={refreshHandler} />}</div>
-    </div>
+    <>
+      <ButtonGroup size="sm" isAttached variant="outline">
+        <Button onClick={() => navigate("/events")}>Events</Button>
+        <IconButton
+          onClick={onOpen}
+          aria-label="Add to friends"
+          icon={<Icon as={AiOutlinePlus} />}
+        />
+      </ButtonGroup>
+      <Modal isOpen={isOpen} size="2xl" isCentered onClose={onClose}>
+        <ModalOverlay
+          bg="blackAlpha.300"
+          backdropFilter="blur(5px) hue-rotate(270deg)"
+        />
+        <ModalContent height="550px">
+          <ModalHeader>
+            <Stepper
+              padding="15px"
+              paddingTop="30px"
+              size="md"
+              colorScheme="red"
+              index={activeStep}
+            >
+              {steps.map((step, index) => (
+                <Step key={index}>
+                  {/* onClick={() => setActiveStep(index)} */}
+                  <StepIndicator
+                  // style={{ cursor: "pointer", transition: "0.25s" }}
+                  >
+                    <StepStatus
+                      complete={<StepIcon />}
+                      incomplete={<StepNumber />}
+                      active={<StepNumber />}
+                    />
+                  </StepIndicator>
+
+                  <Box flexShrink="0">
+                    <StepTitle>{step.title}</StepTitle>
+                    <StepDescription>{step.description}</StepDescription>
+                  </Box>
+
+                  <StepSeparator />
+                </Step>
+              ))}
+            </Stepper>
+          </ModalHeader>
+          <ModalCloseButton onClick={() => setActiveStep(0)} />
+          <ModalBody overflow="hidden">
+            <CreateEventPop
+              activeStep={activeStep}
+              setActiveStep={(val: number) => setActiveStep(val)}
+              onClose={onClose}
+            />
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+    </>
   );
 }
-
-// <ButtonGroup size='sm' isAttached variant='outline'>
-//   <Button>Events</Button>
-//   <IconButton aria-label='Add to friends' icon={<AddIcon />} />
-// </ButtonGroup>

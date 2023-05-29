@@ -1,6 +1,14 @@
 import { useEffect, useState } from "react";
-import { useClipboard, Button } from "@chakra-ui/react";
+import {
+  useClipboard,
+  Button,
+  Flex,
+  IconButton,
+  ButtonGroup,
+  useToast,
+} from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
+import { BiShare } from "react-icons/bi";
 
 export default function EventMade({
   title,
@@ -11,12 +19,14 @@ export default function EventMade({
   img,
   loading,
   setLoading,
+  onClose,
 }: // setTheInviteLink,
 any) {
   const [inviteLink, setInviteLink] = useState<string>("Loading...");
-  const { onCopy, hasCopied } = useClipboard(inviteLink);
+  const { onCopy } = useClipboard(inviteLink);
   const [theId, setTheId] = useState<any>();
   const navigate = useNavigate();
+  const toast = useToast();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,25 +44,42 @@ any) {
       setLoading(false);
     };
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loading]);
 
-  const navigateEvent = () => {
-    navigate(`/events/${title}-${theId}`);
-  };
-
   return (
-    <div className="titleFormCover">
-      <h1>Invite Link:</h1>
-      <p>{inviteLink}</p>
-
-      <Button id="copyButton" onClick={onCopy}>
-        {hasCopied ? "Copied!" : "Copy"}
-      </Button>
-
+    <Flex
+      height="400px"
+      flexDir="column"
+      justifyContent="space-between"
+      alignItems="center"
+    >
       <div>
-        <p>invite any of your friends?</p>
+        <p>add any of your friends?</p>
       </div>
-      <button onClick={() => navigateEvent()}>goto event</button>
-    </div>
+      {/* utilize friendsliat to simply display them here and have a plus to add them */}
+      <ButtonGroup>
+        <Button
+          onClick={() => {
+            navigate(`/events/${title}-${theId}`);
+            onClose();
+          }}
+        >
+          Go to Event
+        </Button>
+        <IconButton
+          aria-label="Share"
+          onClick={() => {
+            onCopy();
+            toast({
+              title: "Invite link copied to clipboard.",
+              status: "success",
+              duration: 2000,
+            });
+          }}
+          icon={<BiShare aria-label="ShareIcon" />}
+        />
+      </ButtonGroup>
+    </Flex>
   );
 }
