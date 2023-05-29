@@ -216,7 +216,6 @@ export async function createEvent(
         Currentfunds: 0,
         image: eventInfo.img,
         deadlineDate: eventInfo.date,
-        deadlineTime: eventInfo.time,
         participants: {
           create: {
             userId: id,
@@ -336,5 +335,3 @@ export async function isParticipantInEvent(id: number, eventId: number) {
     return false;
   }
 }
-
-//THis isnt working and is essentially always false I think?

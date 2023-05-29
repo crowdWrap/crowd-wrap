@@ -246,9 +246,11 @@ app.get("/logout", (req, res) => {
 
 app.get("/login", (req, res) => {
   if (req.session.user) {
-    return res.status(401).json({ message: "Youre already logged in" });
+    return res
+      .status(200)
+      .json({ message: "Good to go!", userId: req.session.user });
   } else {
-    return res.status(200).json({ message: "Okay log in" });
+    return res.status(401).json({ message: "You arent logged in!" });
   }
 });
 
@@ -455,7 +457,7 @@ app.get("/removeFriendReceived", async (req, res) => {
 
 app.post("/events", async (req, res) => {
   if (req.session.user) {
-    const { title, description, img, moneyGoal, time, date } = req.body;
+    const { title, description, img, moneyGoal, date } = req.body;
     const inviteLink = crypto.randomUUID();
 
     await createEvent(Number(req.session.user), req.body, `${inviteLink}`);
@@ -498,6 +500,11 @@ app.get("/events/participants/add", async (req, res) => {
 
 app.get("/events/participants/remove", async (req, res) => {
   if (req.session.user) {
+    const userId = req.query.userId;
+    const eventId = req.query.eventId;
+
+    removeParticipant(Number(userId), Number(eventId));
+    return res.status(200).json({ message: "complete" });
   }
 });
 

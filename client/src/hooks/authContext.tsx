@@ -8,6 +8,8 @@ export default function AuthProvider({ children }: any) {
   const [authed, setAuthed] = useState<boolean>(false);
   const [profilePic, setProfilePic] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(true);
+  const [refreshEvent, setRefreshEvent] = useState<boolean>(false);
+  const [userId, setUserId] = useState<string>("");
 
   useEffect(() => {
     (async () => {
@@ -15,9 +17,12 @@ export default function AuthProvider({ children }: any) {
         method: "GET",
       });
 
-      if (!response.ok) {
+      const receivedData = await response.json();
+
+      if (response.ok) {
         setAuthed(true);
         fetchProfilePic();
+        setUserId(receivedData.userId);
       } else {
         setAuthed(false);
         setLoading(false);
@@ -66,7 +71,17 @@ export default function AuthProvider({ children }: any) {
 
   return (
     <AuthContext.Provider
-      value={{ authed, setAuthed, login, logout, profilePic, loading }}
+      value={{
+        authed,
+        setAuthed,
+        login,
+        logout,
+        profilePic,
+        loading,
+        refreshEvent,
+        setRefreshEvent,
+        userId,
+      }}
     >
       {children}
     </AuthContext.Provider>

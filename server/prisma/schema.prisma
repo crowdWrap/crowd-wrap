@@ -40,7 +40,6 @@ model Event {
   // @unique
   description String?
   deadlineDate String?
-  deadlineTime String?
   inviteLink String @unique
   image String?
   gifts String?
