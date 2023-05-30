@@ -26,10 +26,9 @@ const router = createBrowserRouter(
       <Route element={<RequiresAuth />}>
         <Route path="/profile" element={<LoggedIn />} />
         <Route path="/register/setUsername" element={<SetUsername />} />
-        <Route path="/events" element={<Events />}>
-          <Route path=":id" element={<TheEvent />} />
-          <Route path="invite/:link" element={<EventInvite />} />
-        </Route>
+        <Route path="/events" element={<Events />}></Route>
+        <Route path="/events/invite/:link" element={<EventInvite />} />
+        <Route path="/events/:id" element={<TheEvent />} />
         <Route path="/dashboard" element={<Dashboard />} />
       </Route>
     </Route>

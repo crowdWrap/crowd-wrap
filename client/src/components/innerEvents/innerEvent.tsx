@@ -34,27 +34,22 @@ export default function TheEvent() {
     return formattedDate;
   };
 
-  const handleProgress = () => {
-    const match = events.moneyGoal.match(/\d+/g);
-    return match[0];
-  };
+  // const handleProgress = () => {
+  //   const match = events.moneyGoal.match(/\d+/g);
+  //   return match[0];
+  // };
 
-  const handleMoney = () => {
-    const match = events.moneyGoal.match(/\d+/g);
-    if (match[0] && match[1]) {
-      return `${match[0]}-${match[1]}`;
-    } else {
-      return match[0];
-    }
-  };
+  // const handleMoney = () => {
+  //   const match = events.moneyGoal.match(/\d+/g);
+  //   if (match[0] && match[1]) {
+  //     return `${match[0]}-${match[1]}`;
+  //   } else {
+  //     return match[0];
+  //   }
+  // };
 
   return (
     <div className="innerEvent">
-      <nav className="loggedInNavbar">
-        <CreateEventButton />
-        <FriendsList />
-        <LogoutButton />
-      </nav>
       <div className="theEvent">
         {events && (
           <>
@@ -70,8 +65,8 @@ export default function TheEvent() {
               <div className="innerFunds">{`CurrentFunds: ${events.Currentfunds}`}</div>
               <h4>
                 Goal: $
-                {events.moneyGoal &&
-                  (handleMoney() === "100" ? "100+" : handleMoney())}
+                {/* {events.moneyGoal &&
+                  (handleMoney() === "100" ? "100+" : handleMoney())} */}
               </h4>
             </div>
 
