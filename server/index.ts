@@ -337,14 +337,35 @@ app.get("/friendsListSearch", async (req, res) => {
   res.send(accounts);
 });
 
-app.get("/sendFriendRequest", async (req, res) => {
+app.post("/sendFriendRequest", async (req, res) => {
+  let account;
   if (req.session.user) {
     const userToSendFriendRequest: any = req.query.user_name;
     const currentUserID: number = Number(req.session.user);
+    const user = await getProfileById(Number(req.session.user));
+
     if (userToSendFriendRequest) {
-      await updateFriendRequestSent(userToSendFriendRequest, currentUserID);
-      return res.status(200).json({ message: "complete" });
+      // if you have received a friend request from them then add them and removle received and sent, if not send them one
+      const friendRequests = user.friendRequests;
+
+      if (friendRequests) {
+        account = friendRequests.filter(
+          (item) => item.username == userToSendFriendRequest
+        );
+      }
+      if (account) {
+        const userToRemove: any = await getProfileByUsername(
+          userToSendFriendRequest
+        );
+
+        addFriend(userToSendFriendRequest, currentUserID);
+
+        removeFriendSent(user.username, userToRemove.id);
+      } else {
+        await updateFriendRequestSent(userToSendFriendRequest, currentUserID);
+      }
     }
+    return res.status(200).json({ message: "complete" });
   }
 });
 
