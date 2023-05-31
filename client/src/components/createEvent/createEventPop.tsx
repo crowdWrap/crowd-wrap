@@ -26,6 +26,7 @@ export default function CreateEventPop({
   useEffect(() => {
     (async () => {
       try {
+        setLoadingEvent(true);
         if (showEventComplete) {
           const data = JSON.stringify({
             title,
@@ -43,7 +44,6 @@ export default function CreateEventPop({
             body: data,
           });
           setRefreshEvent(true);
-          setLoadingEvent(true);
         }
       } catch (e) {
         console.log(e);

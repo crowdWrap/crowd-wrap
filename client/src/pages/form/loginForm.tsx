@@ -93,6 +93,7 @@ export default function LoginForm() {
       height="100vh"
       backgroundPosition="40%"
       position="absolute"
+      top="0px"
       width="100vw"
       objectFit="cover"
       justifyContent={"center"}
@@ -100,7 +101,6 @@ export default function LoginForm() {
       backgroundImage={backgroundImage}
     >
       <Box
-        marginBottom="100px"
         bgColor="white"
         borderRadius="25px"
         p="60px 40px"

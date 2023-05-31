@@ -2,6 +2,7 @@ import { Icon, Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 
 import { BsSearch } from "react-icons/bs";
+import { useAuth } from "../../hooks/authContext";
 
 async function fetchData(searchText: string) {
   if (searchText.length >= 3) {
@@ -18,8 +19,10 @@ async function fetchData(searchText: string) {
   }
 }
 
-export default function FriendsListSearch({ updateData }: any) {
+export default function FriendsListSearch({ updateData, eventUse }: any) {
   const [searchText, setSearchText] = useState<string>("");
+
+  const { refreshEvent } = useAuth();
 
   useEffect(() => {
     async function fetchAndUpdate() {
@@ -28,18 +31,45 @@ export default function FriendsListSearch({ updateData }: any) {
     }
     fetchAndUpdate();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchText]);
+  }, [searchText, refreshEvent]);
 
   return (
-    <InputGroup style={{ position: "fixed", bottom: "10px", width: "286px" }}>
-      <InputLeftElement pointerEvents="none">
-        <Icon color="gray.300" as={BsSearch} />
-      </InputLeftElement>
-      <Input
-        onChange={(e) => setSearchText(e.target.value)}
-        type="text"
-        placeholder="Search Friends"
-      />
-    </InputGroup>
+    <>
+      {!eventUse ? (
+        <InputGroup
+          style={{
+            position: "fixed",
+            bottom: "10px",
+            width: "286px",
+          }}
+        >
+          <InputLeftElement pointerEvents="none">
+            <Icon color="gray.300" as={BsSearch} />
+          </InputLeftElement>
+          <Input
+            onChange={(e) => setSearchText(e.target.value)}
+            type="text"
+            placeholder="Search Friends"
+          />
+        </InputGroup>
+      ) : (
+        <InputGroup
+          style={{
+            position: "fixed",
+            marginRight: "105px",
+            width: "286px",
+          }}
+        >
+          <InputLeftElement pointerEvents="none">
+            <Icon color="gray.300" as={BsSearch} />
+          </InputLeftElement>
+          <Input
+            onChange={(e) => setSearchText(e.target.value)}
+            type="text"
+            placeholder="Search Friends"
+          />
+        </InputGroup>
+      )}
+    </>
   );
 }

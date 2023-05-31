@@ -139,7 +139,7 @@ app.post("/register", async (req, res) => {
         password.length < 8 ||
         password.length > 20 ||
         username.length < 3 ||
-        username.length > 20 ||
+        username.length > 15 ||
         !email.includes("@")
       ) {
         return res.status(400).json({ message: "Invalid fields" });
@@ -530,12 +530,10 @@ app.get("/events/id", async (req, res) => {
 
 app.get("/events/remove", async (req, res) => {
   if (req.session.user) {
-    const eventId: any = req.query.eventId;
-    const ownerId: any = req.query.ownerId;
-    if (ownerId == req.session.user) {
-      removeEvent(Number(eventId));
-    } else {
-      removeParticipant(Number(req.session.user), Number(eventId));
+    const eventId: number = Number(req.query.eventId);
+    const ownerId: number = Number(req.query.ownerId);
+    if (ownerId == Number(req.session.user)) {
+      removeEvent(eventId);
     }
     return res.status(200).json({ message: "complete" });
   }

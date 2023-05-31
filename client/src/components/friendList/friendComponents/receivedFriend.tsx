@@ -16,12 +16,15 @@ import {
   AiOutlineUserAdd,
   AiOutlineMore,
 } from "react-icons/ai";
+import { useAuth } from "../../../hooks/authContext";
 
 export default function ReceivedFriend({
   item,
   handleButtonAdd,
   handleButtonClick,
 }: any) {
+  const { setRefreshEvent } = useAuth();
+
   return (
     <Card style={{ marginBottom: "5px" }} key={item.username} maxW="md">
       <CardHeader>
@@ -48,16 +51,19 @@ export default function ReceivedFriend({
             />
             <MenuList>
               <MenuItem
+                onClick={() => {
+                  handleButtonAdd(item.username);
+                  setRefreshEvent(true);
+                }}
+                icon={<Icon color="green" boxSize={5} as={AiOutlineUserAdd} />}
+              >
+                Add
+              </MenuItem>
+              <MenuItem
                 onClick={() => handleButtonClick(item.username)}
                 icon={<Icon color="red" boxSize={5} as={AiOutlineDelete} />}
               >
                 Remove
-              </MenuItem>
-              <MenuItem
-                onClick={() => handleButtonAdd(item.username)}
-                icon={<Icon color="green" boxSize={5} as={AiOutlineUserAdd} />}
-              >
-                Add
               </MenuItem>
             </MenuList>
           </Menu>

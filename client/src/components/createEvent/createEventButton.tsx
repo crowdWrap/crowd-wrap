@@ -26,10 +26,12 @@ import {
   useSteps,
 } from "@chakra-ui/react";
 import { AiOutlinePlus } from "react-icons/ai";
+import React, { useEffect } from "react";
 
 export default function CreateEventButton() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const navigate = useNavigate();
+  const finalRef = React.useRef(null);
 
   const steps = [
     { title: "First", description: "Details" },
@@ -42,6 +44,12 @@ export default function CreateEventButton() {
     count: steps.length,
   });
 
+  useEffect(() => {
+    if (!isOpen) {
+      setActiveStep(0);
+    }
+  }, [isOpen]);
+
   return (
     <>
       <ButtonGroup size="sm" isAttached variant="outline">
@@ -52,7 +60,13 @@ export default function CreateEventButton() {
           icon={<Icon as={AiOutlinePlus} />}
         />
       </ButtonGroup>
-      <Modal isOpen={isOpen} size="2xl" isCentered onClose={onClose}>
+      <Modal
+        finalFocusRef={finalRef}
+        isOpen={isOpen}
+        size="2xl"
+        isCentered
+        onClose={onClose}
+      >
         <ModalOverlay
           bg="blackAlpha.300"
           backdropFilter="blur(5px) hue-rotate(270deg)"
@@ -89,7 +103,7 @@ export default function CreateEventButton() {
               ))}
             </Stepper>
           </ModalHeader>
-          <ModalCloseButton onClick={() => setActiveStep(0)} />
+          <ModalCloseButton />
           <ModalBody overflow="hidden">
             <CreateEventPop
               activeStep={activeStep}

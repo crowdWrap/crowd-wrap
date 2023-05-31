@@ -41,8 +41,8 @@ export default function SignupForm() {
   const toast = useToast();
 
   const validateUsername = (username: string) => {
-    if (username.length < 3 || username.length > 20) {
-      setUsernameError("Username must be between 3 and 20 characters");
+    if (username.length < 3 || username.length > 15) {
+      setUsernameError("Username must be between 3 and 15 characters");
     } else if (username.includes(" ")) {
       setUsernameError("Username must not contain spaces");
     } else {
@@ -127,6 +127,7 @@ export default function SignupForm() {
     <Flex
       borderColor={"red"}
       height="100vh"
+      top="0px"
       backgroundPosition="40%"
       position="absolute"
       width="100vw"
@@ -138,7 +139,6 @@ export default function SignupForm() {
       <Box
         bgColor="white"
         borderRadius="25px"
-        marginBottom="100px"
         p="60px 40px"
         boxShadow="0px 0px 5px rgba(0, 0, 0, 0.265)"
       >
@@ -156,7 +156,7 @@ export default function SignupForm() {
               <Input
                 placeholder=" "
                 minLength={3}
-                maxLength={20}
+                maxLength={15}
                 onChange={handleUsernameChange}
                 onBlur={() => {
                   setUsernameTouched(true);
@@ -202,7 +202,7 @@ export default function SignupForm() {
               <InputGroup size="md">
                 <Input
                   minLength={8}
-                  maxLength={20}
+                  maxLength={15}
                   pr="4.5rem"
                   type={show ? "text" : "password"}
                   placeholder=" "

@@ -3,12 +3,6 @@ import { useNavigate } from "react-router-dom";
 import React from "react";
 
 import {
-  AlertDialog,
-  AlertDialogBody,
-  AlertDialogContent,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogOverlay,
   Avatar,
   AvatarGroup,
   Badge,
@@ -34,8 +28,10 @@ import {
 } from "@chakra-ui/react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { BiShare, BiBomb, BiExit } from "react-icons/bi";
-import { AiOutlineUserAdd } from "react-icons/ai";
+import { AiOutlineEnter, AiOutlineUserAdd } from "react-icons/ai";
 import { useAuth } from "../hooks/authContext";
+import RemoveEventDialog from "../components/events/alertDialog";
+import AddFriendToEvent from "../components/events/addFriend";
 
 async function fetchData() {
   try {
@@ -64,11 +60,8 @@ async function fetchEvents(setEvents: any, setInviteLink: any) {
   );
 }
 
-// add a loading effect
-
 export default function Events() {
   const [events, setEvents] = useState<any>([]);
-  const [displayFriends, setDisplayFriends] = useState(null);
   const [accounts, setAccounts] = useState<any>([]);
   const [inviteLink, setInviteLink] = useState<string>("");
   const navigate = useNavigate();
@@ -76,8 +69,16 @@ export default function Events() {
   const toast = useToast();
   const [selectedEvent, setSelectedEvent] = useState<string>("");
 
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const cancelRef: any = React.useRef();
+  const {
+    isOpen: isOpen1,
+    onOpen: onOpen1,
+    onClose: onClose1,
+  } = useDisclosure();
+  const {
+    isOpen: isOpen2,
+    onOpen: onOpen2,
+    onClose: onClose2,
+  } = useDisclosure();
 
   const { refreshEvent, setRefreshEvent, userId } = useAuth();
 
@@ -90,53 +91,16 @@ export default function Events() {
       }
       if (refreshEvent) {
         fetchEvents(setEvents, setInviteLink);
+        setAccounts(await fetchData());
         setRefreshEvent(false);
       }
     })();
     return () => {
       loaded = false;
-      setAccounts([]);
+      // setAccounts([]);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [refreshEvent]);
-
-  const handleAddParticipant = (e: any, event: any) => {
-    event.stopPropagation();
-    if (e.id !== displayFriends) {
-      setDisplayFriends(e.id);
-    } else {
-      setDisplayFriends(null);
-    }
-  };
-
-  const handleInvite = async (item: any, e: any) => {
-    const response: Response = await fetch(
-      `/events/participants/add?username=${await item.username}&eventId=${await e.id}`,
-      {
-        method: "GET",
-      }
-    );
-
-    setRefreshEvent(true);
-    setDisplayFriends(null);
-  };
-
-  const removeEvent = async (e: any, event: any) => {
-    event.stopPropagation();
-    if (`${userId}` === `${e.ownerId}`) {
-      await fetch(`/events/remove?eventId=${userId}&ownerId=${e.ownerId}`, {
-        method: "GET",
-      });
-    } else {
-      await fetch(
-        `/events/participants/remove?userId=${userId}&eventId=${e.id}`,
-        {
-          method: "GET",
-        }
-      );
-    }
-
-    setRefreshEvent(true);
-  };
 
   // const handleMoney = (e: any) => {
   //   const match = e.moneyGoal.match(/\d+/g);
@@ -147,14 +111,14 @@ export default function Events() {
   //   }
   // };
 
-  const navigateEvent = (e: any) => {
-    navigate(`/events/${e.title}-${e.id}`);
-  };
-
   // const handleProgress = (e: any) => {
   //   const match = e.moneyGoal.match(/\d+/g);
   //   return match[0];
   // };
+
+  const navigateEvent = (e: any) => {
+    navigate(`/events/${e.title}-${e.id}`);
+  };
 
   const handleDate = (e: any) => {
     const dateObj = new Date(e.deadlineDate);
@@ -162,13 +126,13 @@ export default function Events() {
     const formattedDate = dateObj.toLocaleDateString("en-US", options);
     return formattedDate;
   };
-  // I dont think tis being shown cause of overflow also, maybe in the link have ther be dashes in the spaces/ chatgpt
+
   return (
     <Flex padding="5px" paddingTop="50px" gap="15px" flexWrap="wrap">
       {events &&
         events.map((e: any) => (
-          <>
-            <Card key={e.id} marginTop="-10px" height="320px" width="md">
+          <React.Fragment key={e.id}>
+            <Card marginTop="-10px" height="xs" width="md">
               <CardHeader>
                 <Flex>
                   <Flex flex="1" gap="4" alignItems="center" flexWrap="wrap">
@@ -203,6 +167,10 @@ export default function Events() {
                         />
                         <MenuList>
                           <MenuItem
+                            onClick={() => {
+                              setSelectedEvent(e.id);
+                              onOpen2();
+                            }}
                             icon={
                               <Icon
                                 color="green"
@@ -213,11 +181,25 @@ export default function Events() {
                           >
                             Add friends to event
                           </MenuItem>
+                          <MenuItem
+                            onClick={() => {
+                              navigateEvent(e);
+                            }}
+                            icon={
+                              <Icon
+                                color="green"
+                                boxSize={5}
+                                as={AiOutlineEnter}
+                              />
+                            }
+                          >
+                            Go to event
+                          </MenuItem>
                           {`${userId}` === `${e.ownerId}` ? (
                             <MenuItem
                               onClick={() => {
                                 setSelectedEvent(e.id);
-                                onOpen();
+                                onOpen1();
                               }}
                               icon={
                                 <Icon color="red" boxSize={5} as={BiBomb} />
@@ -229,7 +211,7 @@ export default function Events() {
                             <MenuItem
                               onClick={() => {
                                 setSelectedEvent(e.id);
-                                onOpen();
+                                onOpen1();
                               }}
                               icon={
                                 <Icon color="red" boxSize={5} as={BiExit} />
@@ -279,7 +261,7 @@ export default function Events() {
                 <AvatarGroup size="md" max={3}>
                   {events &&
                     e.participants.map((val: any) => (
-                      <Avatar src={val.picture} />
+                      <Avatar key={val.id} src={val.picture} />
                     ))}
                 </AvatarGroup>
                 <Button
@@ -301,70 +283,27 @@ export default function Events() {
               </CardFooter>
             </Card>
 
-            {/* {displayFriends === e.id &&
-                    accounts &&
-                    accounts
-                      .filter((valu: any) => {
-                        const hasMatchingUser = e.participants.some(
-                          (user: any) => user.userId === valu.userId
-                        );
-                        return !hasMatchingUser ? valu : null;
-                      })
-                      .map((item: any, index: any) => (
-                        <div className="invitee" key={item.username}>
-                          <img alt="" src={item.profilePic} />
-                          <p>{item.username}</p>
-                          <FontAwesomeIcon
-                            className="addParticipant"
-                            onClick={() => handleInvite(item, e)}
-                            icon={faPlus}
-                          />
-                        </div>
-                      ))} */}
+            {/* make components */}
+
+            {selectedEvent === e.id && accounts && (
+              <AddFriendToEvent
+                isOpen2={isOpen2}
+                e={e}
+                onClose2={onClose2}
+                accounts={accounts}
+                setSelectedEvent={(val: string) => setSelectedEvent(val)}
+              />
+            )}
 
             {selectedEvent === e.id && (
-              <AlertDialog
-                isOpen={isOpen}
-                leastDestructiveRef={cancelRef}
-                onClose={onClose}
-                isCentered
-              >
-                <AlertDialogOverlay
-                  bg="blackAlpha.300"
-                  backdropFilter="blur(2px) hue-rotate(270deg)"
-                >
-                  <AlertDialogContent>
-                    <AlertDialogHeader fontSize="lg" fontWeight="bold">
-                      {`${userId}` === `${e.ownerId}`
-                        ? `Delete Event "${e.title}"`
-                        : `Leave Event ${e.title}"`}
-                    </AlertDialogHeader>
-
-                    <AlertDialogBody>
-                      Are you sure? You can't undo this action afterwards.
-                    </AlertDialogBody>
-
-                    <AlertDialogFooter>
-                      <Button ref={cancelRef} onClick={onClose}>
-                        Cancel
-                      </Button>
-                      <Button
-                        colorScheme="red"
-                        onClick={(event) => {
-                          removeEvent(e, event);
-                          setSelectedEvent("");
-                          onClose();
-                        }}
-                        ml={3}
-                      >
-                        Delete
-                      </Button>
-                    </AlertDialogFooter>
-                  </AlertDialogContent>
-                </AlertDialogOverlay>
-              </AlertDialog>
+              <RemoveEventDialog
+                e={e}
+                onClose1={onClose1}
+                isOpen1={isOpen1}
+                setSelectedEvent={(val: string) => setSelectedEvent(val)}
+              />
             )}
-          </>
+          </React.Fragment>
         ))}
     </Flex>
   );

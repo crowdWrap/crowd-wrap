@@ -19,6 +19,7 @@ import {
   AiOutlinePullRequest,
 } from "react-icons/ai";
 import IndividualFriend from "./friendComponents/individualFriend";
+import { useAuth } from "../../hooks/authContext";
 
 interface Account {
   username: string;
@@ -32,6 +33,7 @@ export default function FriendsListCover() {
   const [lastRefresh, setLastRefresh] = useState(Date.now());
   const [tabIndex, setTabIndex] = useState(0);
   const toast = useToast();
+  const { setRefreshEvent, refreshEvent } = useAuth();
 
   const handleTabsChange = (index: number) => {
     setTabIndex(index);
@@ -59,6 +61,7 @@ export default function FriendsListCover() {
       method: "GET",
     });
     setLastRefresh(Date.now());
+    setRefreshEvent(true);
     toast({
       title: "Friend Removed.",
       status: "error",
@@ -68,17 +71,11 @@ export default function FriendsListCover() {
   };
 
   useEffect(() => {
-    let loaded = true;
     (async () => {
-      if (loaded) {
-        setAccounts(await fetchData());
-      }
+      setAccounts(await fetchData());
+      setRefreshEvent(false);
     })();
-    return () => {
-      loaded = false;
-      setAccounts([]);
-    };
-  }, [lastRefresh]);
+  }, [lastRefresh, refreshEvent]);
 
   return (
     <>
@@ -90,7 +87,6 @@ export default function FriendsListCover() {
       >
         <div style={{ position: "fixed" }}>
           <TabList>
-            {/* chcek their size in dev tools */}
             <Flex justifyContent="space-around" width="318px">
               <Tab flexGrow="1">
                 <Icon

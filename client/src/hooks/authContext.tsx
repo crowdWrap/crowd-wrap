@@ -78,6 +78,7 @@ export default function AuthProvider({ children }: any) {
         logout,
         profilePic,
         loading,
+        setLoading,
         refreshEvent,
         setRefreshEvent,
         userId,
