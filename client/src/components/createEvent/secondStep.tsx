@@ -2,17 +2,30 @@ import {
   Box,
   Button,
   ButtonGroup,
+  Editable,
+  EditableInput,
+  EditablePreview,
   Flex,
   FormControl,
   FormLabel,
   HStack,
   Input,
+  Text,
   useRadio,
   useRadioGroup,
 } from "@chakra-ui/react";
 import { Form } from "react-router-dom";
 
-function RadioCard(props: any) {
+function NumericInput({ setMoneyVal, ...props }: any) {
+  const handleInputChange = (event: any) => {
+    event.target.value = `$${event.target.value.replace(/[^0-9]/g, "")}`;
+    setMoneyVal(event.target.value);
+  };
+
+  return <EditableInput {...props} onInput={handleInputChange} />;
+}
+
+function RadioCard({ setMoneyVal, ...props }: any) {
   const { getInputProps, getRadioProps } = useRadio(props);
 
   const input = getInputProps();
@@ -22,13 +35,14 @@ function RadioCard(props: any) {
     <Box as="label">
       <input {...input} />
       <Box
+        height="75px"
         {...checkbox}
         cursor="pointer"
         borderWidth="1px"
         borderRadius="md"
         boxShadow="md"
         _checked={{
-          bg: "teal.600",
+          bg: "blue.600",
           color: "white",
           borderColor: "teal.600",
         }}
@@ -39,6 +53,18 @@ function RadioCard(props: any) {
         py={3}
       >
         {props.children}
+        {props.subtext !== "" ? (
+          <Text color="blackAlpha.500">{props.subtext}</Text>
+        ) : (
+          <Editable color="blackAlpha.500" defaultValue="Enter value">
+            <EditablePreview />
+            <NumericInput
+              setMoneyVal={setMoneyVal}
+              maxLength={5}
+              width="82.5px"
+            />
+          </Editable>
+        )}
       </Box>
     </Box>
   );
@@ -50,16 +76,33 @@ export default function SecondStep({
   setDate,
   date,
   setActiveStep,
+  moneyVal,
+  setMoneyVal,
 }: any) {
-  const options = ["Budget-friendly", "Mid-Range", "Top-Tier", "Custom"];
+  const options = [
+    { title: "Budget-friendly", option: "$5-$20" },
+    { title: "Mid-Range", option: "$21-$50" },
+    { title: "Top-Tier", option: "$51+" },
+    { title: "Custom", option: "" },
+  ];
+
+  const handleChange = (val: string) => {
+    const value = options.filter((e) => {
+      return val === e.title ? e.option : null;
+    });
+    if (value[0]) {
+      setMoneyVal(value[0].option);
+    } else {
+    }
+  };
 
   const { getRootProps, getRadioProps } = useRadioGroup({
-    name: "budget",
     defaultValue: `${moneyGoal}`,
-    onChange: setMoneyGoal,
+    onChange(nextValue) {
+      setMoneyGoal(nextValue);
+      handleChange(nextValue);
+    },
   });
-
-  const group = getRootProps();
 
   const handleButtonClick = (event: any) => {
     event.preventDefault();
@@ -73,15 +116,19 @@ export default function SecondStep({
         height="400px"
         justifyContent="space-between"
       >
-        <FormControl>
+        <FormControl isRequired>
           <Flex flexDir="column" alignItems="center">
             <FormLabel>Budget:</FormLabel>
-            <HStack {...group}>
+            <HStack {...getRootProps()}>
               {options.map((value) => {
-                const radio = getRadioProps({ value });
                 return (
-                  <RadioCard key={value} {...radio}>
-                    {value}
+                  <RadioCard
+                    key={value.title}
+                    setMoneyVal={setMoneyVal}
+                    {...getRadioProps({ value: value.title })}
+                    subtext={value.option}
+                  >
+                    {value.title}
                   </RadioCard>
                 );
               })}
@@ -90,10 +137,11 @@ export default function SecondStep({
         </FormControl>
 
         <Box>
-          <FormControl>
+          <FormControl isRequired>
             <Flex flexDir="column" alignItems="center">
               <FormLabel>Deadline:</FormLabel>
               <Input
+                isRequired
                 onChange={(e) => setDate(e.target.value)}
                 type="date"
                 name=""

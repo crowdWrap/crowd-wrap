@@ -15,6 +15,7 @@ export default function CreateEventPop({
   const [description, setDescriptionValue] = useState<string>("");
 
   const [moneyGoal, setMoneyGoal] = useState<string>("Budget-friendly");
+  const [moneyVal, setMoneyVal] = useState<string>("$5-$20");
   const [date, setDate] = useState();
 
   const [showEventComplete, setShowEventComplete] = useState<boolean>(false);
@@ -32,7 +33,7 @@ export default function CreateEventPop({
             title,
             description,
             img,
-            moneyGoal,
+            moneyGoal: moneyVal,
             date,
           });
 
@@ -56,21 +57,23 @@ export default function CreateEventPop({
     <div>
       {activeStep === 0 && (
         <FirstStep
-          currentValue={(value: any) => setTitle(value)}
+          currentValue={setTitle}
           theValue={title}
           descriptionValue={description}
-          setDescriptionValue={(value: any) => setDescriptionValue(value)}
-          setActiveStep={(val: number) => setActiveStep(val)}
+          setDescriptionValue={setDescriptionValue}
+          setActiveStep={setActiveStep}
         />
       )}
 
       {activeStep === 1 && (
         <SecondStep
-          setMoneyGoal={(value: any) => setMoneyGoal(value)}
+          setMoneyGoal={setMoneyGoal}
           moneyGoal={moneyGoal}
-          setDate={(value: any) => setDate(value)}
+          setDate={setDate}
           date={date}
-          setActiveStep={(val: number) => setActiveStep(val)}
+          setActiveStep={setActiveStep}
+          moneyVal={moneyVal}
+          setMoneyVal={setMoneyVal}
         />
       )}
 
@@ -80,9 +83,10 @@ export default function CreateEventPop({
           description={description}
           moneyGoal={moneyGoal}
           date={date}
-          setActiveStep={(val: number) => setActiveStep(val)}
-          setShowEventComplete={(val: boolean) => setShowEventComplete(val)}
+          setActiveStep={setActiveStep}
+          setShowEventComplete={setShowEventComplete}
           img={img}
+          moneyVal={moneyVal}
         />
       )}
 
@@ -94,7 +98,7 @@ export default function CreateEventPop({
           date={date}
           img={img}
           loading={loadingEvent}
-          setLoading={(val: boolean) => setLoadingEvent(val)}
+          setLoading={setLoadingEvent}
           onClose={onClose}
         />
       )}

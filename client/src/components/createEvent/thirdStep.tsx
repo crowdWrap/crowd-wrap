@@ -16,7 +16,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import { BiShare, BiAddToQueue, BiBomb, BiExit } from "react-icons/bi";
+import { BiShare } from "react-icons/bi";
 
 export default function ThirdStep({
   title,
@@ -27,6 +27,7 @@ export default function ThirdStep({
   setCurrentStep,
   setActiveStep,
   setShowEventComplete,
+  moneyVal,
 }: any) {
   const dateObj = new Date(date);
   const options: object = { month: "long", day: "numeric", year: "numeric" };
@@ -87,6 +88,7 @@ export default function ThirdStep({
         <CardBody marginTop="-10px">
           <Text>Progress:</Text>
           <Progress value={20} size="xs" colorScheme="pink" />
+          <Text textAlign="right">{moneyVal}</Text>
         </CardBody>
 
         <CardFooter

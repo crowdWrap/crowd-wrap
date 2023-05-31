@@ -102,19 +102,19 @@ export default function Events() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [refreshEvent]);
 
-  // const handleMoney = (e: any) => {
-  //   const match = e.moneyGoal.match(/\d+/g);
-  //   if (match[0] && match[1]) {
-  //     return `${match[0]}-${match[1]}`;
-  //   } else {
-  //     return match[0];
-  //   }
-  // };
+  const handleMoney = (e: any) => {
+    const match = e.moneyGoal.match(/\d+/g);
+    if (match[0] && match[1]) {
+      return `${match[0]}-${match[1]}`;
+    } else {
+      return match[0];
+    }
+  };
 
-  // const handleProgress = (e: any) => {
-  //   const match = e.moneyGoal.match(/\d+/g);
-  //   return match[0];
-  // };
+  const handleProgress = (e: any) => {
+    const match = e.moneyGoal.match(/\d+/g);
+    return match[0];
+  };
 
   const navigateEvent = (e: any) => {
     navigate(`/events/${e.title}-${e.id}`);
@@ -246,10 +246,18 @@ export default function Events() {
               </CardHeader>
               <CardBody marginTop="-10px">
                 <Text>Progress:</Text>
-                <Progress value={20} size="xs" colorScheme="pink" />
+                <Progress
+                  value={Number(
+                    `${(e.Currentfunds / handleProgress(e)) * 100}`
+                  )}
+                  size="xs"
+                  colorScheme="pink"
+                />
+                <Text textAlign="right">{e.moneyGoal}</Text>
               </CardBody>
 
               <CardFooter
+                marginTop="-10px"
                 justify="space-between"
                 flexWrap="wrap"
                 sx={{
