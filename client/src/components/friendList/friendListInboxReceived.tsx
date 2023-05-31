@@ -25,15 +25,29 @@ export default function FriendListInboxReceived({
   const [accounts, setAccounts] = useState<Account[]>([]);
 
   const handleButtonClick = async (item: string) => {
-    await fetch(`/removeFriendReceived?user_name=${item}`, {
-      method: "GET",
+    const data = JSON.stringify({
+      username: item,
+    });
+    await fetch(`/removeFriendReceived`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: data,
     });
     setLastRefresh(Date.now());
   };
 
   const handleButtonAdd = async (item: string) => {
-    await fetch(`/addFriend?user_name=${item}`, {
-      method: "GET",
+    const data = JSON.stringify({
+      username: item,
+    });
+    await fetch(`/addFriend`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: data,
     });
     setLastRefresh(Date.now());
   };

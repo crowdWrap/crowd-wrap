@@ -57,8 +57,15 @@ export default function FriendsListCover() {
   }
 
   const handleButtonClick = async (item: string) => {
-    await fetch(`/removeFriend?user_name=${item}`, {
-      method: "GET",
+    const data = JSON.stringify({
+      username: item,
+    });
+    await fetch(`/removeFriend`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: data,
     });
     setLastRefresh(Date.now());
     setRefreshEvent(true);

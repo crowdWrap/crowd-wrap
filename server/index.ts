@@ -340,20 +340,20 @@ app.get("/friendsListSearch", async (req, res) => {
 app.post("/sendFriendRequest", async (req, res) => {
   let account;
   if (req.session.user) {
-    const userToSendFriendRequest: any = req.query.user_name;
+    const userToSendFriendRequest: any = req.body.username;
+    console.log(userToSendFriendRequest);
     const currentUserID: number = Number(req.session.user);
     const user = await getProfileById(Number(req.session.user));
 
     if (userToSendFriendRequest) {
       // if you have received a friend request from them then add them and removle received and sent, if not send them one
       const friendRequests = user.friendRequests;
-
-      if (friendRequests) {
+      if (friendRequests && friendRequests.length > 0) {
         account = friendRequests.filter(
           (item) => item.username == userToSendFriendRequest
         );
       }
-      if (account) {
+      if (account && account.length > 0) {
         const userToRemove: any = await getProfileByUsername(
           userToSendFriendRequest
         );
@@ -424,9 +424,9 @@ app.get("/friends", async (req, res) => {
   res.send(accounts);
 });
 
-app.get("/addFriend", async (req, res) => {
+app.post("/addFriend", async (req, res) => {
   if (req.session.user) {
-    const usertoRemoveUsername: any = req.query.user_name;
+    const usertoRemoveUsername: any = req.body.username;
     const currentUserID: number = Number(req.session.user);
     //
     const userToRemove: any = await getProfileByUsername(usertoRemoveUsername);
@@ -439,9 +439,9 @@ app.get("/addFriend", async (req, res) => {
   }
 });
 
-app.get("/removeFriend", async (req, res) => {
+app.delete("/removeFriend", async (req, res) => {
   if (req.session.user) {
-    const usertoRemoveUsername: any = req.query.user_name;
+    const usertoRemoveUsername: any = req.body.username;
     const currentUserID: number = Number(req.session.user);
     removeFriend(usertoRemoveUsername, currentUserID);
     return res.status(200).json({ message: "complete" });
@@ -449,9 +449,9 @@ app.get("/removeFriend", async (req, res) => {
 });
 //when they click the button, just add them as a friend
 
-app.get("/removeFriendSent", async (req, res) => {
+app.delete("/removeFriendSent", async (req, res) => {
   if (req.session.user) {
-    const usertoRemoveUsername: any = req.query.user_name;
+    const usertoRemoveUsername: any = req.body.username;
     const currentUserID: number = Number(req.session.user);
     const userToRemove: any = await getProfileByUsername(usertoRemoveUsername);
     const user = await getProfileById(Number(currentUserID));
@@ -463,9 +463,9 @@ app.get("/removeFriendSent", async (req, res) => {
   }
 });
 
-app.get("/removeFriendReceived", async (req, res) => {
+app.delete("/removeFriendReceived", async (req, res) => {
   if (req.session.user) {
-    const usertoRemoveUsername: any = req.query.user_name;
+    const usertoRemoveUsername: any = req.body.username;
     const userToRemove: any = await getProfileByUsername(usertoRemoveUsername);
     const user = await getProfileById(Number(req.session.user));
     //removing the received from current user
@@ -508,21 +508,21 @@ app.get("/events/invite/:link", async (req, res) => {
   }
 });
 
-app.get("/events/participants/add", async (req, res) => {
+app.post("/events/participants/add", async (req, res) => {
   if (req.session.user) {
-    const username: any = req.query.username;
+    const username: string = req.body.username;
     const user: any = await getProfileByUsername(username);
-    const eventId: any = req.query.eventId;
+    const eventId: number = req.body.eventId;
 
     addParticipant(Number(user.id), Number(eventId));
     return res.status(200).json({ message: "complete" });
   }
 });
 
-app.get("/events/participants/remove", async (req, res) => {
+app.delete("/events/participants/remove", async (req, res) => {
   if (req.session.user) {
-    const userId = req.query.userId;
-    const eventId = req.query.eventId;
+    const userId = req.body.userId;
+    const eventId = req.body.eventId;
 
     removeParticipant(Number(userId), Number(eventId));
     return res.status(200).json({ message: "complete" });
@@ -549,10 +549,10 @@ app.get("/events/id", async (req, res) => {
   }
 });
 
-app.get("/events/remove", async (req, res) => {
+app.delete("/events/remove", async (req, res) => {
   if (req.session.user) {
-    const eventId: number = Number(req.query.eventId);
-    const ownerId: number = Number(req.query.ownerId);
+    const eventId: number = Number(req.body.eventId);
+    const ownerId: number = Number(req.body.ownerId);
     if (ownerId == Number(req.session.user)) {
       removeEvent(eventId);
     }

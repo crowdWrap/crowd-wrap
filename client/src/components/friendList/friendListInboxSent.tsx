@@ -25,8 +25,15 @@ export default function FriendListInboxSent({
   const [accounts, setAccounts] = useState<Account[]>([]);
 
   const handleButtonClick = async (item: string) => {
-    await fetch(`/removeFriendSent?user_name=${item}`, {
-      method: "GET",
+    const data = JSON.stringify({
+      username: item,
+    });
+    await fetch(`/removeFriendSent`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: data,
     });
     setLastRefresh(Date.now());
   };

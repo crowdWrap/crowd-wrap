@@ -33,8 +33,16 @@ export default function FriendListAdd({
   const toast = useToast();
 
   const handleButtonClick = async (item: string) => {
-    await fetch(`/sendFriendRequest?user_name=${item}`, {
-      method: "GET",
+    const data = JSON.stringify({
+      username: item,
+    });
+
+    await fetch(`/sendFriendRequest`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: data,
     });
     setLastRefresh(Date.now());
     toast({

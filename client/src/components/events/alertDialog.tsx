@@ -23,17 +23,30 @@ export default function RemoveEventDialog({
   const toast = useToast();
 
   const removeEvent = async (e: any) => {
+    const deleteData = JSON.stringify({
+      ownerId: e.ownerId,
+      eventId: e.id,
+    });
     if (`${userId}` === `${e.ownerId}`) {
-      await fetch(`/events/remove?eventId=${e.id}&ownerId=${e.ownerId}`, {
-        method: "GET",
+      await fetch(`/events/remove`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: deleteData,
       });
     } else {
-      await fetch(
-        `/events/participants/remove?userId=${userId}&eventId=${e.id}`,
-        {
-          method: "GET",
-        }
-      );
+      const leaveData = JSON.stringify({
+        userId: userId,
+        eventId: e.id,
+      });
+      await fetch(`/events/participants/remove`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: leaveData,
+      });
     }
 
     setRefreshEvent(true);

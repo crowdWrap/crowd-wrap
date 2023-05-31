@@ -51,12 +51,17 @@ export default function AddFriendToEvent({
 
   const handleInvite = async (item: any, e: any) => {
     setInviteLoading(item.username);
-    await fetch(
-      `/events/participants/add?username=${await item.username}&eventId=${await e.id}`,
-      {
-        method: "GET",
-      }
-    );
+    const data = JSON.stringify({
+      username: item.username,
+      eventId: e.id,
+    });
+    await fetch(`/events/participants/add`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: data,
+    });
 
     await setRefreshEvent(true);
     setTimeout(() => {
