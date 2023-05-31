@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Form, Link as ReactLink } from "react-router-dom";
+import { Form, Link as ReactLink, useLocation } from "react-router-dom";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { GoogleOAuthProvider } from "@react-oauth/google";
@@ -22,26 +22,27 @@ import {
   Heading,
   Text,
   useToast,
+  Highlight,
 } from "@chakra-ui/react";
 
 export default function LoginForm() {
   const navigate = useNavigate();
-  // eslint-disable-next-line no-restricted-globals
-  const urlParams = new URLSearchParams(location.search);
-  const redirect = urlParams.get("redirect");
+  let location = useLocation();
+  let { from } = location.state || { from: { pathname: "/profile" } };
   const [usernameOrEmail, setusernameOrEmail] = useState<string>("");
   const [loginPass, setLoginPassword] = useState<string>("");
-  const { authed, setAuthed } = useAuth();
+  const { authed, setAuthed, needsUsername } = useAuth();
   const [show, setShow] = React.useState(false);
   const handleClick = () => setShow(!show);
   const toast = useToast();
 
   useEffect(() => {
-    if (authed) {
-      navigate("/profile");
+    if (authed && !needsUsername) {
+      navigate(from);
+    } else if (needsUsername) {
+      navigate("/register/setUsername");
     }
-  });
-  //Remvoe when protected routes
+  }, [authed, from, navigate]);
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -68,15 +69,6 @@ export default function LoginForm() {
         duration: 4000,
       });
       setAuthed(true);
-      if (
-        redirect &&
-        !redirect.startsWith("http://") &&
-        !redirect.startsWith("https://")
-      ) {
-        window.location.replace(redirect);
-        return;
-      }
-      navigate("/profile");
     } else {
       toast({
         title: "Login failed.",
@@ -106,9 +98,17 @@ export default function LoginForm() {
         p="60px 40px"
         boxShadow="0px 0px 5px rgba(0, 0, 0, 0.265)"
       >
-        <Heading fontWeight="900" marginBottom="50px">
+        <Heading fontWeight="400" marginBottom="10px">
           Login
         </Heading>
+        <Text fontWeight="200" marginBottom="25px">
+          <Highlight
+            styles={{ px: "1", py: "1", rounded: "full", bg: "red.100" }}
+            query={"social"}
+          >
+            Gifting, but make it social
+          </Highlight>
+        </Text>
         <Form onSubmit={handleSubmit}>
           <Flex gap="30px" flexDir="column">
             <FormControl variant="floating" id="usernameEmail" isRequired>

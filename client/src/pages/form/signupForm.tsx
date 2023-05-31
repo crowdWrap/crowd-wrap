@@ -20,6 +20,7 @@ import {
   Heading,
   Text,
   useToast,
+  Highlight,
 } from "@chakra-ui/react";
 
 export default function SignupForm() {
@@ -142,9 +143,17 @@ export default function SignupForm() {
         p="60px 40px"
         boxShadow="0px 0px 5px rgba(0, 0, 0, 0.265)"
       >
-        <Heading fontWeight="900" marginBottom="50px">
+        <Heading fontWeight="400" marginBottom="10px">
           Signup
         </Heading>
+        <Text fontWeight="200" marginBottom="25px">
+          <Highlight
+            styles={{ px: "1", py: "1", rounded: "full", bg: "red.100" }}
+            query={"social"}
+          >
+            Gifting, but make it social
+          </Highlight>
+        </Text>
         <Form onSubmit={handleSubmit}>
           <Flex gap="30px" flexDir="column">
             <FormControl

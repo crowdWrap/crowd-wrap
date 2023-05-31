@@ -17,7 +17,7 @@ export default function EventInvite() {
           console.log("invalid invite");
         } else {
           if (responded.notLoggedIn) {
-            navigate(`/login?redirect=events/invite/${link}`);
+            console.log("not logged in");
           } else {
             if (responded.inEvent) {
               console.log("in event");

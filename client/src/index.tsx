@@ -49,10 +49,20 @@ export const theme = extendTheme({
     },
     Toast: {
       baseStyle: {
-        fontFamily: "Roboto, sans-serif",
+        fontFamily: "Inter, sans-serif",
         ".chakra-alert__title": {
           fontWeight: "900",
         },
+      },
+    },
+    Heading: {
+      baseStyle: {
+        fontFamily: "Inter, sans-serif",
+      },
+    },
+    Text: {
+      baseStyle: {
+        fontFamily: "Inter, sans-serif",
       },
     },
   },

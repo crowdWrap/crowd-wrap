@@ -1,15 +1,12 @@
 import { GoogleLogin } from "@react-oauth/google";
 // eslint-disable-next-line
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/authContext";
 import { Button, useToast } from "@chakra-ui/react";
 
 export default function SignInGoogle() {
   const navigate = useNavigate();
   const { setAuthed } = useAuth();
-  // eslint-disable-next-line no-restricted-globals
-  const urlParams = new URLSearchParams(location.search);
-  const redirect = urlParams.get("redirect");
   const toast = useToast();
 
   const succesfulSignIn = async (credentialResponse: any) => {
@@ -26,9 +23,13 @@ export default function SignInGoogle() {
         body: credential,
       }).then(async (response) => {
         const newResponse = await response.json();
-        // eslint-disable-next-line
-        if (newResponse.message == "Needs username") {
+        if (newResponse.message === "Needs username") {
           setAuthed(true);
+          toast({
+            title: "Please set username.",
+            status: "warning",
+            duration: 4000,
+          });
           navigate("/register/setUsername");
         } else if (response.ok) {
           toast({
@@ -38,15 +39,6 @@ export default function SignInGoogle() {
             duration: 4000,
           });
           setAuthed(true);
-          if (
-            redirect &&
-            !redirect.startsWith("http://") &&
-            !redirect.startsWith("https://")
-          ) {
-            window.location.replace(redirect);
-            return;
-          }
-          navigate("/profile");
         } else {
           toast({
             title: "Login failed.",
