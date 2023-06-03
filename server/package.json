@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "@prisma/client": "^4.10.1",
+    "@quixo3/prisma-session-store": "^3.1.11",
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
@@ -35,6 +36,7 @@
     "google-auth-library": "^8.7.0",
     "passport": "^0.6.0",
     "passport-local": "^1.0.0",
-    "prisma": "^4.10.1"
+    "prisma": "^4.10.1",
+    "socket.io": "^4.6.2"
   }
 }
