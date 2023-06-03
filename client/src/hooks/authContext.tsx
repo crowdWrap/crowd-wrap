@@ -1,4 +1,5 @@
 import { useContext, createContext, useState, useEffect } from "react";
+import { socket } from "../api/socket";
 
 const AuthContext = createContext<any>(null);
 
@@ -20,6 +21,7 @@ export default function AuthProvider({ children }: any) {
       const receivedData = await response.json();
 
       if (response.ok) {
+        socket.connect();
         setAuthed(true);
         fetchProfilePic();
         setUserId(receivedData.userId);
@@ -63,6 +65,7 @@ export default function AuthProvider({ children }: any) {
     const receivedData = await response.json();
 
     if (response.ok) {
+      socket.disconnect();
       setAuthed(false);
     } else {
       console.log(receivedData.message);

@@ -1,5 +1,13 @@
+import dotenv from "dotenv";
+dotenv.config();
 import express from "express";
 import morgan from "morgan";
+declare module "express-session" {
+  interface Session {
+    user: string;
+    id: string;
+  }
+}
 import {
   addFriend,
   createEvent,
@@ -8,7 +16,6 @@ import {
   removeFriend,
   removeFriendReceived,
   removeFriendSent,
-  updateFriendRequest,
   updateFriendRequestSent,
   addParticipant,
   removeEvent,
@@ -30,20 +37,41 @@ import bcrypt from "bcryptjs";
 import cors from "cors";
 import { User } from "@prisma/client";
 import passport from "passport";
-import cookieParser from "cookie-parser";
 import session from "express-session";
-import { Session, MemoryStore } from "express-session";
-import dotenv from "dotenv";
+import http from "http";
 import { OAuth2Client } from "google-auth-library";
 import crypto from "crypto";
-
-const clientid =
-  "951239670358-q89e1msbgovmepbaq4fplqc20qn62ha9.apps.googleusercontent.com";
-const client = new OAuth2Client(clientid);
+import { Server } from "socket.io";
+import intializePassport from "./passport";
+import { PrismaSessionStore } from "@quixo3/prisma-session-store";
+import { PrismaClient } from "@prisma/client";
+import expressSession from "express-session";
 
 export const app = express();
+export const prisma = new PrismaClient();
 
-import intializePassport from "./passport";
+const sessionMiddleware = expressSession({
+  cookie: { maxAge: 24 * 60 * 60 * 1000 }, //24 hour
+  secret: process.env.SECRET as string,
+  resave: true,
+  saveUninitialized: false,
+  store: new PrismaSessionStore(prisma, {
+    checkPeriod: 2 * 60 * 1000, //ms
+    dbRecordIdIsSessionId: true,
+    dbRecordIdFunction: undefined,
+  }),
+});
+
+app.use(sessionMiddleware);
+
+app.use(express.json());
+app.use(cors({ origin: true }));
+app.use(express.urlencoded({ extended: false }));
+
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(morgan("combined"));
+
 intializePassport(
   passport,
   getProfileByUsername,
@@ -51,31 +79,38 @@ intializePassport(
   getProfileByEmail
 );
 
-dotenv.config();
+const client = new OAuth2Client(process.env.CLIENTID);
 
-app.use(
-  session({
-    secret: process.env.SECRET as string,
-    cookie: { maxAge: 24 * 60 * 60 * 1000 }, //24 hour
-    resave: true,
-    saveUninitialized: false,
-  })
-);
+const server = http.createServer(app);
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+const io = new Server(server, {
+  cors: {
+    origin: "http://localhost:3000",
+    credentials: true,
+  },
+});
 
-app.use(passport.initialize());
-app.use(passport.session());
-app.use(morgan("combined"));
+io.use((socket: any, next: any) => {
+  sessionMiddleware(socket.request, socket.request.res || {}, next);
+});
+
+io.on("connection", async (socket: any) => {
+  console.log("User Connected", socket.id);
+  try {
+    let session = socket.request.session;
+    session.userId = session.user;
+    session.socketId = socket.id;
+    await session.save();
+  } catch (e) {
+    throw e;
+  }
+
+  socket.on("disconnect", () => {
+    console.log("User Disconnected", socket.id);
+  });
+});
 
 //Used in order to let typescript know that req.session.user is a strings
-declare module "express-session" {
-  interface Session {
-    user: string;
-    id: string;
-  }
-}
 
 app.post("/register/setUsername", async (req, res) => {
   const username = req.body.username;
@@ -95,7 +130,7 @@ app.post("/register", async (req, res) => {
       async function verify() {
         const ticket = await client.verifyIdToken({
           idToken: token,
-          audience: clientid,
+          audience: process.env.CLIENTID,
         });
         payload = ticket.getPayload();
         const userid = payload["sub"];
@@ -176,7 +211,7 @@ app.post("/login", async (req, res, next) => {
       async function verify() {
         const ticket = await client.verifyIdToken({
           idToken: token,
-          audience: clientid,
+          audience: process.env.CLIENTID,
         });
         payload = ticket.getPayload();
         const userid = payload["sub"];
@@ -341,7 +376,6 @@ app.post("/sendFriendRequest", async (req, res) => {
   let account;
   if (req.session.user) {
     const userToSendFriendRequest: any = req.body.username;
-    console.log(userToSendFriendRequest);
     const currentUserID: number = Number(req.session.user);
     const user = await getProfileById(Number(req.session.user));
 
@@ -361,8 +395,64 @@ app.post("/sendFriendRequest", async (req, res) => {
         addFriend(userToSendFriendRequest, currentUserID);
 
         removeFriendSent(user.username, userToRemove.id);
+
+        const profileOfSend = await getProfileByUsername(
+          userToSendFriendRequest
+        );
+
+        if (profileOfSend) {
+          const allSessions: any = await prisma.session.findMany();
+
+          let userSessions = allSessions
+            .filter((session: any) => {
+              let sessionData = JSON.parse(session.data);
+              return Number(sessionData.userId) == Number(profileOfSend.id);
+            })
+            .map((session: any) => {
+              let sessionData = JSON.parse(session.data);
+              return {
+                userId: sessionData.userId,
+                socketId: sessionData.socketId,
+              };
+            });
+
+          if (userSessions && userSessions.socketId) {
+            console.log("omg inner so close 2");
+            io.to(userSessions.socketId).emit("friendRequestReceived", {
+              from: user.username,
+              message: `${user.username} has accepted your friend request.`,
+            });
+          }
+        }
       } else {
         await updateFriendRequestSent(userToSendFriendRequest, currentUserID);
+
+        const profileOfSend = await getProfileByUsername(
+          userToSendFriendRequest
+        );
+        if (profileOfSend) {
+          const allSessions: any = await prisma.session.findMany();
+
+          let userSessions = allSessions
+            .filter((session: any) => {
+              let sessionData = JSON.parse(session.data);
+              return Number(sessionData.userId) == Number(profileOfSend.id);
+            })
+            .map((session: any) => {
+              let sessionData = JSON.parse(session.data);
+              return {
+                userId: sessionData.userId,
+                socketId: sessionData.socketId,
+              };
+            });
+
+          if (userSessions[0] && userSessions[0].socketId) {
+            io.to(userSessions[0].socketId).emit("friendRequestReceived", {
+              from: user.username,
+              message: `${user.username} has sent you a friend request.`,
+            });
+          }
+        }
       }
     }
     return res.status(200).json({ message: "complete" });
@@ -435,6 +525,31 @@ app.post("/addFriend", async (req, res) => {
     //add them adn then remove the sent, and received
     removeFriendReceived(user.username, userToRemove.id);
     removeFriendSent(user.username, userToRemove.id);
+
+    if (usertoRemoveUsername) {
+      const allSessions: any = await prisma.session.findMany();
+
+      let userSessions = allSessions
+        .filter((session: any) => {
+          let sessionData = JSON.parse(session.data);
+          return Number(sessionData.userId) == Number(userToRemove.id);
+        })
+        .map((session: any) => {
+          let sessionData = JSON.parse(session.data);
+          return {
+            userId: sessionData.userId,
+            socketId: sessionData.socketId,
+          };
+        });
+
+      if (userSessions[0] && userSessions[0].socketId) {
+        io.to(userSessions[0].socketId).emit("friendRequestReceived", {
+          from: user.username,
+          message: `${user.username} has accepted your friend request.`,
+        });
+      }
+    }
+
     return res.status(200).json({ message: "complete" });
   }
 });
@@ -560,6 +675,6 @@ app.delete("/events/remove", async (req, res) => {
   }
 });
 
-app.listen(8000, () => {
+server.listen(8000, () => {
   console.log(`Server is listening on port 8000`);
 });
