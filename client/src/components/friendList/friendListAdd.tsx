@@ -16,7 +16,7 @@ interface Account {
 
 async function fetchData(searchText: string) {
   if (searchText.length >= 3) {
-    const response = await fetch(`/friendSearch?user_search=${searchText}`, {
+    const response = await fetch(`/friends/search?user_search=${searchText}`, {
       method: "GET",
     });
     const result = await response.json();
@@ -37,7 +37,7 @@ export default function FriendListAdd({
       username: item,
     });
 
-    await fetch(`/sendFriendRequest`, {
+    await fetch(`/friends/send-request`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

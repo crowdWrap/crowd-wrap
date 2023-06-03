@@ -15,7 +15,7 @@ export default function SignInGoogle() {
         credential: credentialResponse.credential,
       });
 
-      fetch("/login", {
+      fetch("/login/googleOauth", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

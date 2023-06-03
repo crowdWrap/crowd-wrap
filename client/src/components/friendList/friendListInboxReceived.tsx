@@ -3,7 +3,7 @@ import ReceivedFriend from "./friendComponents/receivedFriend";
 
 async function fetchData() {
   try {
-    const response = await fetch(`/friendReceived`, {
+    const response = await fetch(`/friends/received`, {
       method: "GET",
     });
     const result = await response.json();
@@ -28,7 +28,7 @@ export default function FriendListInboxReceived({
     const data = JSON.stringify({
       username: item,
     });
-    await fetch(`/removeFriendReceived`, {
+    await fetch(`/friends/received/remove`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -42,7 +42,7 @@ export default function FriendListInboxReceived({
     const data = JSON.stringify({
       username: item,
     });
-    await fetch(`/addFriend`, {
+    await fetch(`/friends/add`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

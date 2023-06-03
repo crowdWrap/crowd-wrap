@@ -7,7 +7,7 @@ import { useAuth } from "../../hooks/authContext";
 async function fetchData(searchText: string) {
   if (searchText.length >= 3) {
     const response = await fetch(
-      `/friendsListSearch?user_search=${searchText}`,
+      `/friends/list-search?user_search=${searchText}`,
       {
         method: "GET",
       }

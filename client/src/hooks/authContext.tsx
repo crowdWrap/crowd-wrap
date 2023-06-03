@@ -33,7 +33,7 @@ export default function AuthProvider({ children }: any) {
   });
 
   const fetchProfilePic = async () => {
-    const response: Response = await fetch("/profilePicRequest", {
+    const response: Response = await fetch("/profile/pic-request", {
       method: "GET",
     });
 

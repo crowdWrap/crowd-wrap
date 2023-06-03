@@ -3,7 +3,7 @@ import InboxFriend from "./friendComponents/sentFriend";
 
 async function fetchData() {
   try {
-    const response = await fetch(`/friendSent`, {
+    const response = await fetch(`/friends/sent`, {
       method: "GET",
     });
     const result = await response.json();
@@ -28,7 +28,7 @@ export default function FriendListInboxSent({
     const data = JSON.stringify({
       username: item,
     });
-    await fetch(`/removeFriendSent`, {
+    await fetch(`/friends/sent/remove`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

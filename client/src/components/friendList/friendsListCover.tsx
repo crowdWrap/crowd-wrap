@@ -61,7 +61,7 @@ export default function FriendsListCover() {
     const data = JSON.stringify({
       username: item,
     });
-    await fetch(`/removeFriend`, {
+    await fetch(`/friends/remove`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -86,18 +86,20 @@ export default function FriendsListCover() {
   }, [lastRefresh, refreshEvent, setRefreshEvent]);
 
   useEffect(() => {
-    socket.on("friendRequestReceived", (data) => {
+    socket.on("friendListUpdate", (data) => {
       setLastRefresh(Date.now());
-      toast({
-        title: "Friend List Notification.",
-        description: `${data.message}.`,
-        status: "success",
-        duration: 4000,
-      });
+      if (data.message !== "") {
+        toast({
+          title: "Friend List Notification.",
+          description: `${data.message}.`,
+          status: "success",
+          duration: 4000,
+        });
+      }
     });
 
     return () => {
-      socket.off("friendRequestReceived");
+      socket.off("friendListUpdate");
     };
   }, [toast]);
 

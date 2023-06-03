@@ -12,7 +12,7 @@ export default function SignUpGoogle() {
         credential: credentialResponse.credential,
       });
 
-      fetch("/register", {
+      fetch("/register/googleOauth", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

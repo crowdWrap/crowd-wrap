@@ -33,7 +33,7 @@ export default function SetUsername() {
       username: registerUsername,
     });
 
-    const response: Response = await fetch("/setUsername", {
+    const response: Response = await fetch("register/setUsername", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
