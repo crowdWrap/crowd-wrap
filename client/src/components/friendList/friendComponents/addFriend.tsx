@@ -43,7 +43,7 @@ export default function AddFriend({ item, handleButtonClick }: any) {
                 onClick={() => handleButtonClick(item.username)}
                 icon={<Icon color="green" boxSize={5} as={AiOutlineUserAdd} />}
               >
-                Send Request
+                Send Friend Request
               </MenuItem>
             </MenuList>
           </Menu>

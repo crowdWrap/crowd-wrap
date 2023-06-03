@@ -20,6 +20,7 @@ import {
 } from "react-icons/ai";
 import IndividualFriend from "./friendComponents/individualFriend";
 import { useAuth } from "../../hooks/authContext";
+import { socket } from "../../api/socket";
 
 interface Account {
   username: string;
@@ -82,7 +83,23 @@ export default function FriendsListCover() {
       setAccounts(await fetchData());
       setRefreshEvent(false);
     })();
-  }, [lastRefresh, refreshEvent]);
+  }, [lastRefresh, refreshEvent, setRefreshEvent]);
+
+  useEffect(() => {
+    socket.on("friendRequestReceived", (data) => {
+      setLastRefresh(Date.now());
+      toast({
+        title: "Friend List Notification.",
+        description: `${data.message}.`,
+        status: "success",
+        duration: 4000,
+      });
+    });
+
+    return () => {
+      socket.off("friendRequestReceived");
+    };
+  }, [toast]);
 
   return (
     <>
