@@ -6,8 +6,10 @@ import {
   PopoverArrow,
   PopoverContent,
   PopoverTrigger,
+  useToast,
 } from "@chakra-ui/react";
 import { FaUserFriends } from "react-icons/fa";
+
 export default function FriendsList() {
   return (
     <>

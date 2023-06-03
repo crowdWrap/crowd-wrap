@@ -1,4 +1,4 @@
-import { prisma } from "./userQueries";
+import { prisma } from "./index";
 
 export async function getProfileById(id: number) {
   const userProfile = await prisma.user.findUniqueOrThrow({

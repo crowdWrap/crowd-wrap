@@ -1,7 +1,5 @@
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "./index";
 import { getProfileById, getProfileByUsername } from "./profileQueries";
-
-export const prisma = new PrismaClient();
 
 export async function createUser(
   username: string,
