@@ -4,13 +4,14 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/authContext";
 import { Button, useToast } from "@chakra-ui/react";
 
-export default function SignInGoogle() {
+export default function SignInGoogle({ loading, setLoading }: any) {
   const navigate = useNavigate();
   const { setAuthed } = useAuth();
   const toast = useToast();
 
   const succesfulSignIn = async (credentialResponse: any) => {
     try {
+      setLoading(true);
       const credential = JSON.stringify({
         credential: credentialResponse.credential,
       });
@@ -23,6 +24,7 @@ export default function SignInGoogle() {
         body: credential,
       }).then(async (response) => {
         const newResponse = await response.json();
+        setLoading(false);
         if (newResponse.message === "Needs username") {
           setAuthed(true);
           toast({
@@ -58,31 +60,63 @@ export default function SignInGoogle() {
     }
   };
   return (
-    <Button
-      colorScheme="palevioletred"
-      style={{
-        border: "2px solid palevioletred",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        width: "40px",
-        height: "40px",
-        overflow: "hidden",
-        backgroundColor: "transparent",
-      }}
-    >
-      <GoogleLogin
-        onSuccess={succesfulSignIn}
-        theme="filled_blue"
-        logo_alignment="center"
-        shape="square"
-        size="large"
-        type="icon"
-        text="signin_with"
-        onError={() => {
-          console.log("Failed");
-        }}
-      />
-    </Button>
+    <>
+      {loading ? (
+        <Button
+          isDisabled
+          colorScheme="palevioletred"
+          style={{
+            border: "2px solid palevioletred",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            width: "40px",
+            height: "40px",
+            overflow: "hidden",
+            backgroundColor: "transparent",
+          }}
+        >
+          <GoogleLogin
+            onSuccess={succesfulSignIn}
+            theme="filled_blue"
+            logo_alignment="center"
+            shape="square"
+            size="large"
+            type="icon"
+            text="signin_with"
+            onError={() => {
+              console.log("Failed");
+            }}
+          />
+        </Button>
+      ) : (
+        <Button
+          colorScheme="palevioletred"
+          style={{
+            border: "2px solid palevioletred",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            width: "40px",
+            height: "40px",
+            overflow: "hidden",
+            backgroundColor: "transparent",
+          }}
+        >
+          <GoogleLogin
+            onSuccess={succesfulSignIn}
+            theme="filled_blue"
+            logo_alignment="center"
+            shape="square"
+            size="large"
+            type="icon"
+            text="signin_with"
+            onError={() => {
+              console.log("Failed");
+            }}
+          />
+        </Button>
+      )}
+    </>
   );
 }

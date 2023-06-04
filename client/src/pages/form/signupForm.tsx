@@ -4,7 +4,7 @@ import { Form, useNavigate } from "react-router-dom";
 import SignUpGoogle from "../../api/googleSignup";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { Link as ReactLink } from "react-router-dom";
-import backgroundImage from "../.././assets/image_group/blue-pink-better-theme.png";
+import backgroundImage from "../.././assets/image_group/Signup D.jpg";
 
 import {
   FormControl,
@@ -24,6 +24,7 @@ import {
 } from "@chakra-ui/react";
 
 export default function SignupForm() {
+  const [loading, setLoading] = useState(false);
   const [registerUsername, setRegisterUsername] = useState<string>("");
   const [registerEmail, setRegisterEmail] = useState<string>("");
   const [registerPass, setRegisterPassword] = useState<string>("");
@@ -89,6 +90,7 @@ export default function SignupForm() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
+    setLoading(true);
     const data = JSON.stringify({
       username: registerUsername,
       email: registerEmail,
@@ -104,6 +106,7 @@ export default function SignupForm() {
     })
       .then(async (response) => {
         const receivedData = await response.json();
+        setLoading(false);
         if (response.ok) {
           toast({
             title: "Registration Succesful.",
@@ -129,8 +132,9 @@ export default function SignupForm() {
       borderColor={"red"}
       height="100vh"
       top="0px"
-      backgroundPosition="40%"
       position="absolute"
+      backgroundRepeat="no-repeat"
+      backgroundSize="cover"
       width="100vw"
       objectFit="cover"
       justifyContent={"center"}
@@ -242,13 +246,19 @@ export default function SignupForm() {
             </FormControl>
 
             <Flex flexDir="row" gap="8px">
-              <Button flexGrow="1" type="submit" colorScheme="pink">
-                Sign up
-              </Button>
+              {loading ? (
+                <Button isLoading flexGrow="1" type="submit" colorScheme="pink">
+                  Sign up
+                </Button>
+              ) : (
+                <Button flexGrow="1" type="submit" colorScheme="pink">
+                  Sign up
+                </Button>
+              )}
               <GoogleOAuthProvider
                 clientId={`${process.env.REACT_APP_CLIENTID}`}
               >
-                <SignUpGoogle />
+                <SignUpGoogle loading={loading} setLoading={setLoading} />
               </GoogleOAuthProvider>
             </Flex>
 

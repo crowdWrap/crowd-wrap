@@ -33,6 +33,7 @@ export default function LoginForm() {
   const [loginPass, setLoginPassword] = useState<string>("");
   const { authed, setAuthed, needsUsername } = useAuth();
   const [show, setShow] = React.useState(false);
+  const [loading, setLoading] = useState(false);
   const handleClick = () => setShow(!show);
   const toast = useToast();
 
@@ -46,6 +47,7 @@ export default function LoginForm() {
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    setLoading(true);
     const data = JSON.stringify({
       username: usernameOrEmail,
       password: loginPass,
@@ -69,6 +71,7 @@ export default function LoginForm() {
         duration: 4000,
       });
       setAuthed(true);
+      setLoading(false);
     } else {
       toast({
         title: "Login failed.",
@@ -144,14 +147,20 @@ export default function LoginForm() {
             </FormControl>
 
             <Flex flexDir="row" gap="8px">
-              <Button flexGrow="1" type="submit" colorScheme="pink">
-                Sign in
-              </Button>
+              {loading ? (
+                <Button flexGrow="1" isLoading type="submit" colorScheme="pink">
+                  Sign in
+                </Button>
+              ) : (
+                <Button flexGrow="1" type="submit" colorScheme="pink">
+                  Sign in
+                </Button>
+              )}
               {/* <Button colorScheme="red" padding="0"> */}
               <GoogleOAuthProvider
                 clientId={`${process.env.REACT_APP_CLIENTID}`}
               >
-                <SignInGoogle />
+                <SignInGoogle loading={loading} setLoading={setLoading} />
               </GoogleOAuthProvider>
               {/* </Button> */}
             </Flex>
