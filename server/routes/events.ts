@@ -9,7 +9,47 @@ import {
   removeEvent,
   removeParticipant,
 } from "../userQueries";
+
+import { io } from "../index";
+import crypto from "crypto";
+import { onlineUsers } from "../index";
 const router = Router();
+
+// Same problem as friendList
+async function eventsNotification(userIds: any, message: any, stats: any) {
+  if (userIds) {
+    userIds
+      .filter((user: any) => {
+        return (
+          onlineUsers[user.userId] && onlineUsers[user.userId][1] == "online"
+        );
+      })
+      .map((filteredUsers: any) => {
+        console.log(filteredUsers);
+        io.to(onlineUsers[filteredUsers.userId][0]).emit("eventUpdate", {
+          message,
+          stats,
+        });
+      });
+    // else send an email
+  }
+}
+
+async function individalPersonEventNotification(userToSend: any, message: any) {
+  if (userToSend) {
+    if (
+      onlineUsers[userToSend.id] &&
+      onlineUsers[userToSend.id][1] == "online"
+    ) {
+      io.to(onlineUsers[userToSend.id][0]).emit("eventUpdate", {
+        message,
+      });
+    } else {
+      console.log("theyre offline");
+    }
+    // else send an email
+  }
+}
 
 router.post("/", async (req, res) => {
   if (req.session.user) {
@@ -47,8 +87,18 @@ router.post("/participants/add", async (req, res) => {
     const username: string = req.body.username;
     const user: any = await getProfileByUsername(username);
     const eventId: number = req.body.eventId;
+    const theEvent = await getEventById(eventId);
 
     addParticipant(Number(user.id), Number(eventId));
+    eventsNotification(
+      theEvent.participants,
+      `${username} has been added to "${theEvent.title}"`,
+      "success"
+    );
+    individalPersonEventNotification(
+      user,
+      `You have been added to "${theEvent.title}"`
+    );
     return res.status(200).json({ message: "complete" });
   }
 });
@@ -56,9 +106,16 @@ router.post("/participants/add", async (req, res) => {
 router.delete("/participants/remove", async (req, res) => {
   if (req.session.user) {
     const userId = req.body.userId;
+    const user = await getProfileById(Number(userId));
     const eventId = req.body.eventId;
+    const theEvent = await getEventById(eventId);
 
     removeParticipant(Number(userId), Number(eventId));
+    eventsNotification(
+      theEvent.participants,
+      `${user.username} has been left from "${theEvent.title}"`,
+      "error"
+    );
     return res.status(200).json({ message: "complete" });
   }
 });
@@ -87,8 +144,16 @@ router.delete("/remove", async (req, res) => {
   if (req.session.user) {
     const eventId: number = Number(req.body.eventId);
     const ownerId: number = Number(req.body.ownerId);
+    const theEvent = await getEventById(eventId);
+
     if (ownerId == Number(req.session.user)) {
       removeEvent(eventId);
+
+      eventsNotification(
+        theEvent.participants,
+        `"${theEvent}" has been deleted`,
+        "error"
+      );
     }
     return res.status(200).json({ message: "complete" });
   }

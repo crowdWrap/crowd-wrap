@@ -63,6 +63,7 @@ intializePassport(
 const server = http.createServer(app);
 
 export const io = new Server(server, {
+  pingTimeout: 60000,
   cors: {
     origin: "http://localhost:3000",
     credentials: true,
@@ -73,19 +74,30 @@ io.use((socket: any, next: any) => {
   sessionMiddleware(socket.request, socket.request.res || {}, next);
 });
 
+export let onlineUsers: any = {};
+
 io.on("connection", async (socket: any) => {
   console.log("User Connected", socket.id);
   try {
     let session = socket.request.session;
+
     session.userId = session.user;
     session.socketId = socket.id;
+    session.status = "online";
+
+    onlineUsers[session.user] = [socket.id, session.status];
+    console.log(onlineUsers);
     await session.save();
   } catch (e) {
     throw e;
   }
 
-  socket.on("disconnect", () => {
+  socket.on("disconnect", async () => {
     console.log("User Disconnected", socket.id);
+    let session = socket.request.session;
+    session.status = "offline";
+    onlineUsers[session.user] = [socket.id, session.status];
+    console.log(onlineUsers);
   });
 });
 

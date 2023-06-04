@@ -14,29 +14,25 @@ import {
 } from "../userQueries";
 import { prisma } from "../index";
 import { io } from "../index";
+import { onlineUsers } from "../index";
 const router = Router();
+
+// A lot of scalablity problems with the friendlist, for example the notificatins. There would be a problem if there were too many active users (Redis could solve)
+// Another problem would be how friends are displayed, they are all. So if someone has 100s of friends their browser would likely crash trying to display
+// all of those. This can easily be fixed though by capping the shown amount, and having it lazy load.
+//Same problem when adding a friend, itll show every single user that that has letters that they are searching for, should probably cap it too
 
 async function friendListNotification(userToSend: any, message: any) {
   if (userToSend) {
-    const allSessions: any = await prisma.session.findMany();
-
-    let userSessions = allSessions
-      .filter((session: any) => {
-        let sessionData = JSON.parse(session.data);
-        return Number(sessionData.userId) == Number(userToSend.id);
-      })
-      .map((session: any) => {
-        let sessionData = JSON.parse(session.data);
-        return {
-          userId: sessionData.userId,
-          socketId: sessionData.socketId,
-        };
-      });
-
-    if (userSessions[0] && userSessions[0].socketId) {
-      io.to(userSessions[0].socketId).emit("friendListUpdate", {
+    if (
+      onlineUsers[userToSend.id] &&
+      onlineUsers[userToSend.id][1] == "online"
+    ) {
+      io.to(onlineUsers[userToSend.id][0]).emit("friendListUpdate", {
         message,
       });
+    } else {
+      console.log("theyre offline");
     }
     // else send an email
   }
@@ -49,11 +45,20 @@ router.get("/", async (req, res) => {
     const friends = user.friends;
 
     if (friends) {
+      const allSessions = await prisma.session.findMany();
+
+      // console.log(allSessions);
       accounts = friends.map((item) => {
+        let isOnline = "offline";
+        if (onlineUsers[item.id] && onlineUsers[item.id][1] == "online") {
+          isOnline = "online";
+        }
+
         return {
           username: item.username,
           profilePic: item.picture,
           userId: item.id,
+          status: isOnline,
         };
       });
     }

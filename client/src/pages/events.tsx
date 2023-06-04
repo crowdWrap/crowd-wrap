@@ -32,6 +32,7 @@ import { AiOutlineEnter, AiOutlineUserAdd } from "react-icons/ai";
 import { useAuth } from "../hooks/authContext";
 import RemoveEventDialog from "../components/events/alertDialog";
 import AddFriendToEvent from "../components/events/addFriend";
+import { socket } from "../../src/api/socket";
 
 async function fetchData() {
   try {
@@ -99,8 +100,30 @@ export default function Events() {
       loaded = false;
       // setAccounts([]);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [refreshEvent]);
+  }, [refreshEvent, setRefreshEvent]);
+
+  useEffect(() => {
+    socket.on("eventUpdate", (data) => {
+      setRefreshEvent(true);
+      if (data.message !== "") {
+        toast({
+          title: "Event Notification.",
+          description: `${data.message}.`,
+          status: data.stats as
+            | "info"
+            | "warning"
+            | "success"
+            | "error"
+            | "loading",
+          duration: 4000,
+        });
+      }
+    });
+
+    return () => {
+      socket.off("eventUpdate");
+    };
+  }, [setRefreshEvent, toast]);
 
   const handleMoney = (e: any) => {
     const match = e.moneyGoal.match(/\d+/g);
