@@ -6,7 +6,6 @@ import {
   AlertDialogBody,
   AlertDialogFooter,
   Button,
-  useToast,
 } from "@chakra-ui/react";
 import { useAuth } from "../../hooks/authContext";
 import React from "react";
@@ -19,8 +18,6 @@ export default function RemoveEventDialog({
 }: any) {
   const { setRefreshEvent, userId } = useAuth();
   const cancelRef: any = React.useRef();
-
-  const toast = useToast();
 
   const removeEvent = async (e: any) => {
     const deleteData = JSON.stringify({
@@ -50,11 +47,6 @@ export default function RemoveEventDialog({
     }
 
     setRefreshEvent(true);
-    toast({
-      title: `${e.title} has been deleted!`,
-      status: "error",
-      duration: 2000,
-    });
   };
 
   return (

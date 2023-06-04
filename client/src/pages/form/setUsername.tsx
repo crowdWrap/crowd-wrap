@@ -43,12 +43,9 @@ export default function SetUsername() {
 
     const receivedData = await response.json();
 
-    console.log(receivedData);
     if (response.ok) {
-      console.log(receivedData.message);
       navigate("/profile");
     } else {
-      console.log(receivedData.message);
     }
   }
 

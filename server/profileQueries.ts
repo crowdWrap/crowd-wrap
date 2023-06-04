@@ -122,24 +122,22 @@ export async function getProfileByEmail(email: string) {
 
 export async function updateUser(email: string, newPic: string) {
   const user = await getProfileByEmail(email);
-  console.log(user);
+
   const updatedUser = await prisma.user.update({
     where: { email },
     data: { picture: newPic },
   });
 
-  console.log(updatedUser);
   return updatedUser;
 }
 
 export async function updateUserName(email: string, newUsername: string) {
   const user = await getProfileByEmail(email);
-  console.log(user);
+
   const updatedUser = await prisma.user.update({
     where: { email },
     data: { username: newUsername },
   });
 
-  console.log(updatedUser);
   return updatedUser;
 }

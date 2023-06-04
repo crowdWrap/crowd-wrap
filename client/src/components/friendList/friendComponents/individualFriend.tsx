@@ -32,7 +32,10 @@ export default function IndividualFriend({ item, handleButtonClick }: any) {
                   : item.profilePic
               }
             >
-              <AvatarBadge boxSize="1.25em" bg="green.500" />
+              <AvatarBadge
+                boxSize="1.25em"
+                bg={item.status === "online" ? "green.500" : "red.400"}
+              />
             </Avatar>
             <Heading size="sm">{item.username}</Heading>
           </Flex>

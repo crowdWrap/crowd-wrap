@@ -15,7 +15,6 @@ import {
   IconButton,
   Icon,
   Box,
-  useToast,
 } from "@chakra-ui/react";
 import { useAuth } from "../../hooks/authContext";
 import { AiOutlinePlus } from "react-icons/ai";
@@ -32,8 +31,6 @@ export default function AddFriendToEvent({
   const { setRefreshEvent } = useAuth();
   const [fetchedData, setFetchedData] = useState<any>(null);
   const [inviteLoading, setInviteLoading] = useState<any>(null);
-
-  const toast = useToast();
 
   const handleDataUpdate = async (newData: any) => {
     if (newData) {
@@ -68,11 +65,6 @@ export default function AddFriendToEvent({
       setInviteLoading(null);
     }, 1000);
     // Timeout because for some reason the loading symbol is going away before it refreshes
-    toast({
-      title: `${item.username} has been invited to ${e.title}`,
-      status: "success",
-      duration: 2000,
-    });
   };
 
   return (

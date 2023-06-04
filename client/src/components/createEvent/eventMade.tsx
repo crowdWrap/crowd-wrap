@@ -12,7 +12,6 @@ import {
   Card,
   CardHeader,
   Heading,
-  ModalBody,
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { BiShare } from "react-icons/bi";
@@ -61,12 +60,17 @@ any) {
 
   const handleInvite = async (item: any, e: any) => {
     setInviteLoading(item.username);
-    await fetch(
-      `/events/participants/add?username=${await item.username}&eventId=${await e.id}`,
-      {
-        method: "GET",
-      }
-    );
+    const data = JSON.stringify({
+      username: item.username,
+      eventId: e.id,
+    });
+    await fetch(`/events/participants/add`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: data,
+    });
 
     setRefreshEvent(true);
     setTimeout(() => {
@@ -74,12 +78,6 @@ any) {
     }, 2000);
     // Timeout because for some reason the loading symbol is going away before it refreshes
     // Why does it take so long??
-
-    toast({
-      title: `${item.username} has been invited to ${e.title}`,
-      status: "success",
-      duration: 2000,
-    });
   };
 
   useEffect(() => {

@@ -17,6 +17,7 @@ import {
 } from "@chakra-ui/react";
 import LoadingFriend from "../friendList/friendComponents/loadingFriend";
 import {
+  AiFillMoneyCollect,
   AiOutlineMessage,
   AiOutlineSetting,
   AiOutlineUser,
@@ -29,7 +30,7 @@ export default function TheEvent() {
   const eventId = id?.substring(dashIndex + 1);
   const title = id?.substring(0, dashIndex);
   const [events, setEvents] = useState<any>([]);
-  const { refreshEvent } = useAuth();
+  const { refreshEvent, setRefreshEvent } = useAuth();
 
   useEffect(() => {
     const fetchEvent = async () => {
@@ -43,8 +44,9 @@ export default function TheEvent() {
 
     (async () => {
       setEvents(await fetchEvent());
+      setRefreshEvent(false);
     })();
-  }, [eventId, refreshEvent]);
+  }, [eventId, refreshEvent, setRefreshEvent]);
 
   const handleDate = () => {
     const dateObj = new Date(events.deadlineDate);
@@ -114,6 +116,13 @@ export default function TheEvent() {
                 boxSize="100px"
                 fontSize={"50px"}
                 icon={<AiOutlineSetting />}
+                aria-label="setting"
+              ></IconButton>
+              <IconButton
+                // pay with venmo
+                boxSize="100px"
+                fontSize={"50px"}
+                icon={<AiFillMoneyCollect />}
                 aria-label="setting"
               ></IconButton>
             </Flex>
