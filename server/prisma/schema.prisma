@@ -11,64 +11,76 @@ datasource db {
 }
 
 model User {
-  id    Int     @id @default(autoincrement())
-  username String @unique
-  email String  @unique
-  password String 
-  picture String
-  session Session?
+  id       Int      @id @default(autoincrement())
+  username String   @unique
+  email    String   @unique
+  password String
+  picture  String
+  session  Session?
   // posts Post[]
-  
-  friends User[] @relation("Friend", map:"UserFriends")
+
+  friends  User[] @relation("Friend", map: "UserFriends")
   friendOf User[] @relation("Friend")
 
-  friendRequests User[] @relation("FriendRequests", map: "UserFriendRequests")
-  friendRequestsSent  User[] @relation("FriendRequests")
+  friendRequests     User[] @relation("FriendRequests", map: "UserFriendRequests")
+  friendRequestsSent User[] @relation("FriendRequests")
 
   events EventToUser[]
 
-  ownedEvents Event[] @relation("OwnedEvents")
+  ownedEvents Event[]   @relation("OwnedEvents")
+  Message     Message[]
 }
 
 model Event {
-  id Int @id @default(autoincrement())
-  title String 
+  id           Int           @id @default(autoincrement())
+  title        String
   // @unique
-  description String?
+  description  String?
   deadlineDate String?
-  inviteLink String @unique
-  image String?
-  gifts String?
-  mode String?
+  inviteLink   String        @unique
+  image        String?
+  gifts        String?
+  mode         String?
   //more for specific things needed
   Currentfunds Int?
-  moneyGoal String
-  published Boolean @default(false)
+  moneyGoal    String
+  published    Boolean       @default(false)
   participants EventToUser[]
-  owner User @relation("OwnedEvents", fields: [ownerId], references: [id])
-  ownerId Int
+  owner        User          @relation("OwnedEvents", fields: [ownerId], references: [id])
+  ownerId      Int
 
+  Message Message[]
 }
 
 model EventToUser {
-id Int @id @default(autoincrement())
-user User @relation(fields: [userId], references: [id])
-userId Int
-event Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
-eventId Int
-picture String?
-username String? 
-currentMoney Int?
+  id           Int     @id @default(autoincrement())
+  user         User    @relation(fields: [userId], references: [id])
+  userId       Int
+  event        Event   @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  eventId      Int
+  picture      String?
+  username     String?
+  currentMoney Int?
 
-@@unique([userId, eventId])
+  @@unique([userId, eventId])
 }
 
 model Session {
   id        String   @id
   sid       String   @unique
   data      String
-  userId    Int?      @unique
-  user      User?     @relation(fields: [userId], references: [id])
-  socketId String? @unique
-  expiresAt   DateTime
+  userId    Int?     @unique
+  user      User?    @relation(fields: [userId], references: [id])
+  socketId  String?  @unique
+  expiresAt DateTime
+}
+
+model Message {
+  id        Int      @id @default(autoincrement())
+  content   String
+  createdAt DateTime @default(now())
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+  eventId   Int
+  event     Event    @relation(fields: [eventId], references: [id])
 }
