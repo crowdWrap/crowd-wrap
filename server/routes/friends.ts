@@ -1,20 +1,20 @@
 import { Router } from "express";
-import {
-  getFriendsByPartialUsername,
-  getProfileById,
-  getProfileByUsername,
-  getProfilesByPartialUsername,
-} from "../profileQueries";
-import {
-  addFriend,
-  removeFriend,
-  removeFriendReceived,
-  removeFriendSent,
-  updateFriendRequestSent,
-} from "../userQueries";
 import { prisma } from "../index";
 import { io } from "../index";
 import { onlineUsers } from "../index";
+import {
+  getFriendsByPartialUsername,
+  addFriend,
+  removeFriendSent,
+  updateFriendRequestSent,
+  removeFriendReceived,
+  removeFriend,
+} from "../queries/friendQueries";
+import {
+  getProfileById,
+  getProfilesByPartialUsername,
+  getProfileByUsername,
+} from "../queries/profileQueries";
 const router = Router();
 
 // A lot of scalablity problems with the friendlist, for example the notificatins. There would be a problem if there were too many active users (Redis could solve)

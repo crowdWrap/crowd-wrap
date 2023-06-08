@@ -12,7 +12,7 @@ import {
   getProfileByUsername,
   getProfileByEmail,
   getProfileById,
-} from "./profileQueries";
+} from "./queries/profileQueries";
 import cors from "cors";
 import passport from "passport";
 import http from "http";

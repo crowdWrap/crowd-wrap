@@ -1,18 +1,21 @@
 import { Router } from "express";
-import { getProfileById, getProfileByUsername } from "../profileQueries";
 import {
-  addParticipant,
-  createEvent,
-  getEventById,
-  getEventByLink,
-  isParticipantInEvent,
-  removeEvent,
-  removeParticipant,
-} from "../userQueries";
+  getProfileById,
+  getProfileByUsername,
+} from "../queries/profileQueries";
 
 import { io } from "../index";
 import crypto from "crypto";
 import { onlineUsers } from "../index";
+import {
+  createEvent,
+  getEventByLink,
+  isParticipantInEvent,
+  addParticipant,
+  getEventById,
+  removeParticipant,
+  removeEvent,
+} from "../queries/eventQueries";
 const router = Router();
 
 // Same problem as friendList
@@ -25,7 +28,6 @@ async function eventsNotification(userIds: any, message: any, stats: any) {
         );
       })
       .map((filteredUsers: any) => {
-        console.log(filteredUsers);
         io.to(onlineUsers[filteredUsers.userId][0]).emit("eventUpdate", {
           message,
           stats,
@@ -113,7 +115,7 @@ router.delete("/participants/remove", async (req, res) => {
     removeParticipant(Number(userId), Number(eventId));
     eventsNotification(
       theEvent.participants,
-      `${user.username} has been left from "${theEvent.title}"`,
+      `${user.username} has left "${theEvent.title}"`,
       "error"
     );
     return res.status(200).json({ message: "complete" });
@@ -151,12 +153,14 @@ router.delete("/remove", async (req, res) => {
 
       eventsNotification(
         theEvent.participants,
-        `"${theEvent}" has been deleted`,
+        `"${theEvent.title}" has been deleted`,
         "error"
       );
     }
     return res.status(200).json({ message: "complete" });
   }
 });
+
+router.get("/:");
 
 export default router;

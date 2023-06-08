@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getProfileById } from "../profileQueries";
+import { getProfileById } from "../queries/profileQueries";
 const router = Router();
 
 router.get("/", async (req, res) => {
