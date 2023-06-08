@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import CreateEventButton from "../createEvent/createEventButton";
 import FriendsList from "../friendList/friendslist";
 import LogoutButton from "../logout/logout";
-import "./innerEvents.css";
+
 import FriendAvatar from "./friendAvatar";
 import { useAuth } from "../../hooks/authContext";
 import {
@@ -12,17 +12,24 @@ import {
   ButtonGroup,
   Flex,
   Heading,
+  Icon,
   IconButton,
   Text,
+  Textarea,
+  useClipboard,
+  useToast,
 } from "@chakra-ui/react";
 import LoadingFriend from "../friendList/friendComponents/loadingFriend";
 import {
   AiFillMoneyCollect,
   AiOutlineMessage,
+  AiOutlineSend,
   AiOutlineSetting,
   AiOutlineUser,
   AiOutlineUserSwitch,
 } from "react-icons/ai";
+import Message from "./messenge";
+import { BiShare } from "react-icons/bi";
 
 export default function TheEvent() {
   const { id } = useParams();
@@ -31,6 +38,9 @@ export default function TheEvent() {
   const title = id?.substring(0, dashIndex);
   const [events, setEvents] = useState<any>([]);
   const { refreshEvent, setRefreshEvent } = useAuth();
+  const toast = useToast();
+  const [inviteLink, setInviteLink] = useState<string>("Loading...");
+  const { onCopy } = useClipboard(inviteLink);
 
   useEffect(() => {
     const fetchEvent = async () => {
@@ -39,6 +49,7 @@ export default function TheEvent() {
       });
 
       const data = await response.json();
+      setInviteLink(`http://localhost:3000/events/invite/${data.inviteLink}`);
       return data;
     };
 
@@ -72,7 +83,133 @@ export default function TheEvent() {
   return (
     <>
       {events && (
-        <>
+        <Flex overflow="hidden" h="calc(100vh - 57px)">
+          <Box>
+            <Flex padding="10px" alignItems="center" height="100%">
+              <ButtonGroup>
+                <Flex gap="25px" flexDir="column">
+                  <IconButton
+                    // messaging feature
+                    boxSize="100px"
+                    fontSize={"50px"}
+                    icon={<AiOutlineMessage />}
+                    aria-label="message"
+                  ></IconButton>
+                  <IconButton
+                    // Will display the add screen and remove screen
+                    boxSize="100px"
+                    fontSize={"50px"}
+                    icon={<AiOutlineUserSwitch />}
+                    aria-label="users"
+                  ></IconButton>
+                  <IconButton
+                    // will provide the option to change the name of the event, budget, etc
+                    boxSize="100px"
+                    fontSize={"50px"}
+                    icon={<AiOutlineSetting />}
+                    aria-label="setting"
+                  ></IconButton>
+                  <IconButton
+                    // pay with venmo
+                    boxSize="100px"
+                    fontSize={"50px"}
+                    icon={<AiFillMoneyCollect />}
+                    aria-label="setting"
+                  ></IconButton>
+                  <IconButton
+                    aria-label="Share"
+                    boxSize="100px"
+                    fontSize={"50px"}
+                    onClick={() => {
+                      onCopy();
+                      toast({
+                        title: "Invite link copied to clipboard.",
+                        status: "success",
+                        duration: 2000,
+                      });
+                    }}
+                    icon={<BiShare aria-label="ShareIcon" />}
+                  />
+                </Flex>
+              </ButtonGroup>
+            </Flex>
+          </Box>
+          <Box flexGrow="6.5">
+            <Flex
+              flexDirection="column"
+              gap="20px"
+              padding="10px"
+              paddingRight="10px"
+              height="100%"
+            >
+              <Box
+                width="100%"
+                height="100%"
+                overflowY="scroll"
+                padding="10px"
+                paddingRight="20px"
+                paddingLeft="20px"
+                overflowX="hidden"
+              >
+                <Message />
+                <Message own={true} />
+                <Message />
+                <Message />
+                <Message own={true} />
+                <Message own={true} />
+                <Message />
+                <Message />
+                <Message own={true} />
+                <Message />
+                <Message />
+                <Message />
+                <Message />
+                {/* if ther are multiplem essage from one user in a row then put date at bottom,
+                same with the tail */}
+              </Box>
+              <Box>
+                <Flex
+                  justifyContent="space-between"
+                  gap="20px"
+                  alignItems="center"
+                >
+                  <Textarea resize="none" placeholder="Send Message"></Textarea>
+                  <IconButton
+                    colorScheme="pink"
+                    icon={<Icon as={AiOutlineSend} />}
+                    aria-label="send"
+                  ></IconButton>
+                </Flex>
+              </Box>
+            </Flex>
+          </Box>
+          <Box>
+            <Flex padding="10px" height="100%">
+              <AvatarGroup
+                max={10}
+                flexDir={"column-reverse"}
+                alignItems="center"
+                // padding="15px"
+              >
+                {events.participants &&
+                  events.participants.map((val: any) => {
+                    return (
+                      <>
+                        <FriendAvatar events={events} item={val} />
+                        {/* Display these peoples statuses */}
+                      </>
+                    );
+                  })}
+                <LoadingFriend />
+                <LoadingFriend />
+                <LoadingFriend />
+                <LoadingFriend />
+                <LoadingFriend />
+                <LoadingFriend />
+                <LoadingFriend />
+              </AvatarGroup>
+            </Flex>
+          </Box>
           {/* <div className="innerTitleWrap">
               <div className="innerData">{`${
                 events.deadlineDate === null ? "No Deadline" : handleDate()
@@ -86,7 +223,7 @@ export default function TheEvent() {
               <h4>Goal: {events.moneyGoal}</h4>
             </div> */}
 
-          <Box flexDir="column" width="80%">
+          {/* <Box flexDir="column" width="80%">
             <Heading padding="25px" fontWeight={"200"} textAlign="center">
               {events.title}
             </Heading>
@@ -95,40 +232,9 @@ export default function TheEvent() {
             </Box>
           </Box>
 
-          <ButtonGroup alignItems="center" height="80%" position="absolute">
-            <Flex gap="25px" flexDir="column">
-              <IconButton
-                // messaging feature
-                boxSize="100px"
-                fontSize={"50px"}
-                icon={<AiOutlineMessage />}
-                aria-label="message"
-              ></IconButton>
-              <IconButton
-                // Will display the add screen and remove screen
-                boxSize="100px"
-                fontSize={"50px"}
-                icon={<AiOutlineUserSwitch />}
-                aria-label="users"
-              ></IconButton>
-              <IconButton
-                // will provide the option to change the name of the event, budget, etc
-                boxSize="100px"
-                fontSize={"50px"}
-                icon={<AiOutlineSetting />}
-                aria-label="setting"
-              ></IconButton>
-              <IconButton
-                // pay with venmo
-                boxSize="100px"
-                fontSize={"50px"}
-                icon={<AiFillMoneyCollect />}
-                aria-label="setting"
-              ></IconButton>
-            </Flex>
-          </ButtonGroup>
+          
 
-          <Flex alignItems={"center"} justifyContent={"flex-end"}>
+          {/* <Flex alignItems={"center"} justifyContent={"flex-end"}>
             <AvatarGroup
               max={8}
               flexDir={"column-reverse"}
@@ -153,10 +259,10 @@ export default function TheEvent() {
               <LoadingFriend />
               <LoadingFriend />
             </AvatarGroup>
-          </Flex>
+          </Flex> */}
 
           {/* <div>{`InviteLink: http://localhost:3000/events/invite/${events.inviteLink}`}</div> */}
-        </>
+        </Flex>
       )}
     </>
   );
