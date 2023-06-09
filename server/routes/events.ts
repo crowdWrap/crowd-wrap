@@ -92,7 +92,7 @@ router.post("/participants/add", async (req, res) => {
     const eventId: number = req.body.eventId;
     const theEvent = await getEventById(eventId);
 
-    if (theEvent.participants.length < 11) {
+    if (theEvent.participants.length < 10) {
       addParticipant(Number(user.id), Number(eventId));
       eventsNotification(
         theEvent.participants,

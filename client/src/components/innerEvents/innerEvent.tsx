@@ -293,9 +293,9 @@ export default function TheEvent() {
             </Flex>
           </Box>
           <Box>
-            <Flex padding="10px" height="100%">
+            <Flex padding="10px" height="100%" overflowY="scroll">
               <AvatarGroup
-                max={10}
+                max={11}
                 flexDir={"column-reverse"}
                 alignItems="center"
               >
