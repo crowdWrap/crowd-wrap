@@ -1,6 +1,16 @@
-import { Box, Flex, Image, Text } from "@chakra-ui/react";
+import { Avatar, Box, Flex, Image, Link, Text } from "@chakra-ui/react";
+import { format } from "timeago.js";
 
-export default function Message({ own }: any) {
+export default function Message({
+  own,
+  content,
+  picture,
+  color,
+  createdAt,
+}: any) {
+  const urlRegex = /(https?:\/\/[^\s]+)/g;
+  const segments = content.split(urlRegex);
+
   return (
     <Flex flexDir="column" alignItems={own ? "flex-end" : "flex-start"}>
       <Box
@@ -10,12 +20,16 @@ export default function Message({ own }: any) {
         alignItems="center"
         gap="15px"
       >
-        <Image
-          width="32px"
-          borderRadius="full"
-          height="32px"
-          src="https://yt3.ggpht.com/yti/AHyvSCBBYqwAK-WrD_CCKOk4375QKr6yBk7PHBpa6P3BOg=s108-c-k-c0x00ffffff-no-rj"
-        ></Image>
+        {picture ? (
+          <Avatar
+            width="32px"
+            borderRadius="full"
+            height="32px"
+            src={picture}
+          ></Avatar>
+        ) : (
+          <Avatar width="32px" borderRadius="full" height="32px"></Avatar>
+        )}
         {own ? (
           <Text
             position="relative"
@@ -24,17 +38,32 @@ export default function Message({ own }: any) {
               position: "absolute",
               bottom: "15px",
               right: "-10px",
-              borderBottom: "15px solid pink",
+              borderBottom: `15px solid ${color}`,
               borderRight: "15px solid transparent",
             }}
             padding="10px"
-            color={own ? "black" : "white"}
+            color={"white"}
             borderRadius="20px"
-            bgColor={own ? "pink" : "blueviolet"}
+            bgColor={color}
             maxWidth="300px"
           >
-            {/* Have it pick a color for each user */}
-            Hello
+            {segments.map((segment: any, index: number) => {
+              if (urlRegex.test(segment)) {
+                return (
+                  <Link
+                    key={index}
+                    href={segment}
+                    target="_blank"
+                    rel="noreferrer"
+                    color="cadetblue"
+                  >
+                    {segment}
+                  </Link>
+                );
+              } else {
+                return <Text key={index}>{segment}</Text>;
+              }
+            })}
           </Text>
         ) : (
           <Text
@@ -44,22 +73,21 @@ export default function Message({ own }: any) {
               position: "absolute",
               top: "15px",
               left: "-10px",
-              borderTop: "15px solid blueViolet",
+              borderTop: `15px solid ${color}`,
               borderLeft: "15px solid transparent",
             }}
             padding="10px"
-            color={own ? "black" : "white"}
+            color={"white"}
             borderRadius="20px"
-            bgColor={own ? "pink" : "blueviolet"}
+            bgColor={color}
             maxWidth="300px"
           >
-            {/* Have it pick a color for each user, and display that color on the sidebar*/}
-            Hello
+            {content}
           </Text>
         )}
       </Box>
       <Text marginTop="8px" fontSize="12px">
-        1 hour ago
+        {format(createdAt)}
       </Text>
     </Flex>
   );

@@ -16,6 +16,7 @@ import {
   removeParticipant,
   removeEvent,
 } from "../queries/eventQueries";
+import { createMessage, getMessagesById } from "../queries/messageQueries";
 const router = Router();
 
 // Same problem as friendList
@@ -91,16 +92,24 @@ router.post("/participants/add", async (req, res) => {
     const eventId: number = req.body.eventId;
     const theEvent = await getEventById(eventId);
 
-    addParticipant(Number(user.id), Number(eventId));
-    eventsNotification(
-      theEvent.participants,
-      `${username} has been added to "${theEvent.title}"`,
-      "success"
-    );
-    individalPersonEventNotification(
-      user,
-      `You have been added to "${theEvent.title}"`
-    );
+    if (theEvent.participants.length < 11) {
+      addParticipant(Number(user.id), Number(eventId));
+      eventsNotification(
+        theEvent.participants,
+        `${username} has been added to "${theEvent.title}"`,
+        "success"
+      );
+      individalPersonEventNotification(
+        user,
+        `You have been added to "${theEvent.title}"`
+      );
+    } else {
+      eventsNotification(
+        theEvent.participants,
+        `Maximum number of participants reached"`,
+        "error"
+      );
+    }
     return res.status(200).json({ message: "complete" });
   }
 });
@@ -161,6 +170,35 @@ router.delete("/remove", async (req, res) => {
   }
 });
 
-router.get("/:");
+router.get("/:eventId/messages", async (req, res) => {
+  const eventId = Number(req.params.eventId);
+  const messages = await getMessagesById(eventId);
+  return res.status(200).json({ messages });
+});
+
+router.post("/:eventId/messages", async (req, res) => {
+  const eventId = Number(req.params.eventId);
+  const userId = Number(req.session.user);
+  const content = req.body.content;
+  const user = await getProfileById(userId);
+  const theEvent = await getEventById(eventId);
+  const newMessage = await createMessage(userId, eventId, content);
+  const messageWithPicture = {
+    ...newMessage,
+    picture: user.picture,
+  };
+  if (theEvent.participants) {
+    theEvent.participants
+      .filter((user: any) => {
+        return (
+          onlineUsers[user.userId] && onlineUsers[user.userId][1] == "online"
+        );
+      })
+      .map((filteredUsers: any) => {
+        io.to(onlineUsers[filteredUsers.userId][0]).emit("sendMsg");
+      });
+  }
+  return res.status(200).json({ messageWithPicture });
+});
 
 export default router;

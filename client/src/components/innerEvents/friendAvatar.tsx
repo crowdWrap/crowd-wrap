@@ -16,9 +16,7 @@ import {
 import { AiOutlineDelete, AiOutlineMore } from "react-icons/ai";
 import { useAuth } from "../../hooks/authContext";
 
-// remove the person from event basically put their userid into it for leaveData
-
-export default function FriendAvatar({ item, events }: any) {
+export default function FriendAvatar({ item, events, color }: any) {
   const { userId, setRefreshEvent } = useAuth();
 
   const removeFromEvent = async (e: any) => {
@@ -48,7 +46,9 @@ export default function FriendAvatar({ item, events }: any) {
                   ? null
                   : item.picture
               }
-            ></Avatar>
+            >
+              <AvatarBadge boxSize="1.25em" bg={color} />
+            </Avatar>
             <Heading size="sm">{item.username}</Heading>
 
             {`${item.userId}` === `${events.ownerId}` && (

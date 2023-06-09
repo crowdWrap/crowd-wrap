@@ -36,13 +36,13 @@ model Event {
   title        String
   // @unique
   description  String?
-  deadlineDate String?
+  deadlineDate String
   inviteLink   String        @unique
   image        String?
   gifts        String?
   mode         String?
   //more for specific things needed
-  Currentfunds Int?
+  Currentfunds Int
   moneyGoal    String
   published    Boolean       @default(false)
   participants EventToUser[]
@@ -60,7 +60,7 @@ model EventToUser {
   eventId      Int
   picture      String?
   username     String?
-  currentMoney Int?
+  currentMoney Int
 
   @@unique([userId, eventId])
 }
@@ -77,7 +77,7 @@ model Session {
 
 model Message {
   id        Int      @id @default(autoincrement())
-  content   String
+  content   String   
   createdAt DateTime @default(now())
   userId    Int
   user      User     @relation(fields: [userId], references: [id])

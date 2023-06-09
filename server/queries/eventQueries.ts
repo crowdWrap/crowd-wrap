@@ -87,6 +87,7 @@ export async function addParticipant(id: number, eventId: number) {
         },
         picture: user.picture,
         username: user.username,
+        currentMoney: 0,
       },
     });
   } catch (e) {
