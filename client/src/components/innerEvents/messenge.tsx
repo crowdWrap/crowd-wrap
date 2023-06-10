@@ -79,7 +79,7 @@ export default function Message({
             padding="10px"
             color={"white"}
             borderRadius="20px"
-            bgColor={color}
+            bgColor={color ? color : "blackAlpha.500"}
             maxWidth="300px"
           >
             {content}

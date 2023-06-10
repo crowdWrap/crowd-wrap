@@ -1,8 +1,5 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
-import CreateEventButton from "../createEvent/createEventButton";
-import FriendsList from "../friendList/friendslist";
-import LogoutButton from "../logout/logout";
 
 import FriendAvatar from "./friendAvatar";
 import { useAuth } from "../../hooks/authContext";
@@ -11,26 +8,36 @@ import {
   Box,
   ButtonGroup,
   Flex,
-  Heading,
   Icon,
   IconButton,
-  Text,
   Textarea,
   useClipboard,
+  useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import LoadingFriend from "../friendList/friendComponents/loadingFriend";
 import {
   AiFillMoneyCollect,
   AiOutlineMessage,
   AiOutlineSend,
   AiOutlineSetting,
-  AiOutlineUser,
-  AiOutlineUserSwitch,
 } from "react-icons/ai";
 import Message from "./messenge";
-import { BiShare } from "react-icons/bi";
+import { BiPlus, BiShare } from "react-icons/bi";
 import { socket } from "../../api/socket";
+import AddFriendToEvent from "../events/addFriend";
+
+async function fetchData() {
+  try {
+    const response = await fetch(`/friends`, {
+      method: "GET",
+    });
+    const result = await response.json();
+
+    return result;
+  } catch (error: any) {
+    throw new Error(error);
+  }
+}
 
 export default function TheEvent() {
   const { id } = useParams();
@@ -48,7 +55,9 @@ export default function TheEvent() {
   const messagesEndRef = useRef<any>(null);
   const { userId } = useAuth();
   const [loading, setLoading] = useState(false);
-  let eventParticipants: any = [];
+  const [accounts, setAccounts] = useState<any>([]);
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   useEffect(() => {
     const fetchEvent = async () => {
@@ -63,6 +72,7 @@ export default function TheEvent() {
 
     (async () => {
       setEvents(await fetchEvent());
+      setAccounts(await fetchData());
       setRefreshEvent(false);
     })();
   }, [eventId, refreshEvent, setRefreshEvent]);
@@ -85,7 +95,6 @@ export default function TheEvent() {
   }, [eventId, refreshMessages]);
 
   useEffect(() => {
-    // console.log(messages);
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
@@ -153,10 +162,13 @@ export default function TheEvent() {
     "cyan",
   ];
 
-  events.participants &&
-    events.participants.map((el: any, index: number) => {
-      eventParticipants[index] = el.userId;
+  const participantColors = useMemo(() => {
+    const colorMap = new Map();
+    events.participants?.forEach((participant: any, index: number) => {
+      colorMap.set(participant.userId, colors[index]);
     });
+    return colorMap;
+  }, [events.participants]);
 
   return (
     <>
@@ -167,20 +179,6 @@ export default function TheEvent() {
             <Flex padding="10px" alignItems="center" height="100%">
               <ButtonGroup>
                 <Flex gap="25px" flexDir="column">
-                  <IconButton
-                    // messaging feature
-                    boxSize="100px"
-                    fontSize={"50px"}
-                    icon={<AiOutlineMessage />}
-                    aria-label="message"
-                  ></IconButton>
-                  <IconButton
-                    // Will display the add screen and remove screen
-                    boxSize="100px"
-                    fontSize={"50px"}
-                    icon={<AiOutlineUserSwitch />}
-                    aria-label="users"
-                  ></IconButton>
                   <IconButton
                     // will provide the option to change the name of the event, budget, etc
                     boxSize="100px"
@@ -232,11 +230,7 @@ export default function TheEvent() {
               >
                 {!loading &&
                   messages.map((msg: any) => {
-                    const currentColor = eventParticipants.findIndex(
-                      (element: number) => {
-                        return element === Number(msg.userId);
-                      }
-                    );
+                    const currentColor = participantColors.get(msg.userId);
                     return (
                       <Message
                         content={msg.content}
@@ -245,7 +239,7 @@ export default function TheEvent() {
                         own={
                           Number(userId) === Number(msg.userId) ? true : false
                         }
-                        color={colors[currentColor]}
+                        color={currentColor}
                       />
                     );
                   })}
@@ -309,6 +303,14 @@ export default function TheEvent() {
                       />
                     </>
                   ))}
+                {events.participants && events.participants.length < 10 && (
+                  <IconButton
+                    marginTop={"10px"}
+                    aria-label="add"
+                    onClick={onOpen}
+                    icon={<Icon as={BiPlus} />}
+                  />
+                )}
               </AvatarGroup>
             </Flex>
           </Box>
@@ -327,6 +329,12 @@ export default function TheEvent() {
             </div> */}
         </Flex>
       )}
+      <AddFriendToEvent
+        isOpen2={isOpen}
+        e={events}
+        onClose2={onClose}
+        accounts={accounts}
+      />
     </>
   );
 }
