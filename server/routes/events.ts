@@ -16,7 +16,11 @@ import {
   removeParticipant,
   removeEvent,
 } from "../queries/eventQueries";
-import { createMessage, getMessagesById } from "../queries/messageQueries";
+import {
+  createMessage,
+  getMessagesById,
+  removeMessages,
+} from "../queries/messageQueries";
 const router = Router();
 
 // Same problem as friendList
@@ -158,6 +162,7 @@ router.delete("/remove", async (req, res) => {
     const theEvent = await getEventById(eventId);
 
     if (ownerId == Number(req.session.user)) {
+      removeMessages(eventId);
       removeEvent(eventId);
 
       eventsNotification(

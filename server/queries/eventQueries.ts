@@ -35,7 +35,7 @@ export async function createEvent(
 
 export async function removeEvent(eventId: number) {
   try {
-    await prisma.event.deleteMany({
+    await prisma.event.delete({
       where: { id: eventId },
     });
   } catch (e) {

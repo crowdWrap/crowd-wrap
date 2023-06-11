@@ -19,6 +19,16 @@ export async function createMessage(
   }
 }
 
+export async function removeMessages(eventId: number) {
+  try {
+    await prisma.message.deleteMany({
+      where: { eventId: eventId },
+    });
+  } catch (e) {
+    throw e;
+  }
+}
+
 export async function getMessagesById(eventId: number) {
   try {
     const message = await prisma.message.findMany({
