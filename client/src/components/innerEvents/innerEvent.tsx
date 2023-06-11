@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import FriendAvatar from "./friendAvatar";
 import { useAuth } from "../../hooks/authContext";
@@ -56,6 +56,7 @@ export default function TheEvent() {
   const { userId } = useAuth();
   const [loading, setLoading] = useState(false);
   const [accounts, setAccounts] = useState<any>([]);
+  const navigate = useNavigate();
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -66,8 +67,15 @@ export default function TheEvent() {
       });
 
       const data = await response.json();
-      setInviteLink(`http://localhost:3000/events/invite/${data.inviteLink}`);
-      return data;
+      const isInside = data.participants.filter(
+        (participant: any) => Number(participant.userId) === Number(userId)
+      );
+      if (isInside.length === 0) {
+        navigate("/events");
+      } else {
+        setInviteLink(`http://localhost:3000/events/invite/${data.inviteLink}`);
+        return data;
+      }
     };
 
     (async () => {

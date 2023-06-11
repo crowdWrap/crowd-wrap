@@ -67,6 +67,7 @@ export default function AuthProvider({ children }: any) {
     if (response.ok) {
       socket.disconnect();
       setAuthed(false);
+      setUserId("");
     } else {
       console.log(receivedData.message);
     }
