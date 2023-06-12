@@ -17,6 +17,7 @@ model User {
   password String
   picture  String
   session  Session?
+  stripeAccountId String?
   // posts Post[]
 
   friends  User[] @relation("Friend", map: "UserFriends")
@@ -60,7 +61,7 @@ model EventToUser {
   eventId      Int
   picture      String?
   username     String?
-  currentMoney Int
+  currentMoney Int?
 
   @@unique([userId, eventId])
 }
