@@ -80,9 +80,9 @@ export default function SecondStep({
   setMoneyVal,
 }: any) {
   const options = [
-    { title: "Budget-friendly", option: "$5-$20" },
-    { title: "Mid-Range", option: "$21-$50" },
-    { title: "Top-Tier", option: "$51+" },
+    { title: "Budget-friendly", option: "$10" },
+    { title: "Mid-Range", option: "$25" },
+    { title: "Top-Tier", option: "$55" },
     { title: "Custom", option: "" },
   ];
 

@@ -69,6 +69,21 @@ router.post("/", async (req, res) => {
   }
 });
 
+router.post("/stripe", async (req, res) => {
+  const account = await stripe.accounts.create({
+    type: "express",
+  });
+
+  updateStripeId(Number(req.session.user), account.id);
+
+  const accountLink = await stripe.accountLinks.create({
+    account: account.id,
+    refresh_url: "https://example.com/reauth",
+    return_url: "https://example.com/return",
+    type: "account_onboarding",
+  });
+});
+
 router.get("/invite/:link", async (req, res) => {
   if (req.session.user) {
     const link = req.params.link;

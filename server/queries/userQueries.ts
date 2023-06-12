@@ -1,5 +1,5 @@
 import { prisma } from "../index";
-import { getProfileByEmail } from "./profileQueries";
+import { getProfileByEmail, getProfileById } from "./profileQueries";
 
 export async function createUser(
   username: string,
@@ -53,6 +53,15 @@ export async function updateUserName(email: string, newUsername: string) {
   const updatedUser = await prisma.user.update({
     where: { email },
     data: { username: newUsername },
+  });
+
+  return updatedUser;
+}
+
+export async function updateStripeId(userId: number, stripeAccountId: string) {
+  const updatedUser = await prisma.user.update({
+    where: { id: userId },
+    data: { stripeAccountId },
   });
 
   return updatedUser;
