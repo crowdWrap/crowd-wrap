@@ -67,14 +67,20 @@ export default function TheEvent() {
       });
 
       const data = await response.json();
-      const isInside = data.participants.filter(
+
+      if (!data.event) {
+        navigate("/events");
+        return;
+      }
+
+      const isInside = data.event.participants.filter(
         (participant: any) => Number(participant.userId) === Number(userId)
       );
       if (isInside.length === 0) {
         navigate("/events");
       } else {
         setInviteLink(`http://localhost:3000/events/invite/${data.inviteLink}`);
-        return data;
+        return data.event;
       }
     };
 

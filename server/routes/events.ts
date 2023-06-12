@@ -6,6 +6,7 @@ import {
 
 import { io } from "../index";
 import crypto from "crypto";
+import { stripe } from "../index";
 import { onlineUsers } from "../index";
 import {
   createEvent,
@@ -21,6 +22,7 @@ import {
   getMessagesById,
   removeMessages,
 } from "../queries/messageQueries";
+import { updateStripeId } from "../queries/userQueries";
 const router = Router();
 
 // Same problem as friendList
@@ -94,7 +96,7 @@ router.post("/participants/add", async (req, res) => {
     const username: string = req.body.username;
     const user: any = await getProfileByUsername(username);
     const eventId: number = req.body.eventId;
-    const theEvent = await getEventById(eventId);
+    const theEvent: any = await getEventById(eventId);
 
     if (theEvent.participants.length < 10) {
       addParticipant(Number(user.id), Number(eventId));
@@ -123,7 +125,7 @@ router.delete("/participants/remove", async (req, res) => {
     const userId = req.body.userId;
     const user = await getProfileById(Number(userId));
     const eventId = req.body.eventId;
-    const theEvent = await getEventById(eventId);
+    const theEvent: any = await getEventById(eventId);
 
     removeParticipant(Number(userId), Number(eventId));
     eventsNotification(
@@ -143,7 +145,7 @@ router.get("/retrieve", async (req, res) => {
         return await getEventById(e.eventId);
       })
     );
-    res.status(200).send(allEvents);
+    return res.status(200).send(allEvents);
   }
 });
 
@@ -151,7 +153,13 @@ router.get("/id", async (req, res) => {
   if (req.session.user) {
     const eventId: any = req.query.eventId;
     const event = await getEventById(Number(eventId));
-    res.send(event);
+    if (event) {
+      console.log("hi");
+      return res.status(200).json({ event });
+    } else {
+      console.log("bye");
+      return res.status(404).json({ event: null });
+    }
   }
 });
 
@@ -159,7 +167,7 @@ router.delete("/remove", async (req, res) => {
   if (req.session.user) {
     const eventId: number = Number(req.body.eventId);
     const ownerId: number = Number(req.body.ownerId);
-    const theEvent = await getEventById(eventId);
+    const theEvent: any = await getEventById(eventId);
 
     if (ownerId == Number(req.session.user)) {
       removeMessages(eventId);
@@ -186,7 +194,7 @@ router.post("/:eventId/messages", async (req, res) => {
   const userId = Number(req.session.user);
   const content = req.body.content;
   const user = await getProfileById(userId);
-  const theEvent = await getEventById(eventId);
+  const theEvent: any = await getEventById(eventId);
   const newMessage = await createMessage(userId, eventId, content);
   const messageWithPicture = {
     ...newMessage,

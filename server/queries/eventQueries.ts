@@ -107,8 +107,7 @@ export async function getEventById(id: number) {
   if (event) {
     return event;
   } else {
-    console.log("event not found.");
-    throw new Error(`event '${id}' doesn't exist.`);
+    return null;
   }
 }
 
