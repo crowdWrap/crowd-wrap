@@ -58,6 +58,7 @@ event Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
 eventId Int
 picture String?
 username String? 
+// Test with and without
 currentMoney Int?
 
 @@unique([userId, eventId])

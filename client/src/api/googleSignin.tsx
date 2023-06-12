@@ -3,6 +3,7 @@ import { GoogleLogin } from "@react-oauth/google";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/authContext";
 import { Button, useToast } from "@chakra-ui/react";
+import { constants } from "../constants";
 
 export default function SignInGoogle({ loading, setLoading }: any) {
   const navigate = useNavigate();
@@ -30,7 +31,7 @@ export default function SignInGoogle({ loading, setLoading }: any) {
           toast({
             title: "Please set username.",
             status: "warning",
-            duration: 4000,
+            duration: constants.toastDuration,
           });
           navigate("/register/setUsername");
         } else if (response.ok) {
@@ -38,7 +39,7 @@ export default function SignInGoogle({ loading, setLoading }: any) {
             title: "Login Succesful.",
             description: `${newResponse.message}`,
             status: "success",
-            duration: 4000,
+            duration: constants.toastDuration,
           });
           setAuthed(true);
         } else {
@@ -46,7 +47,7 @@ export default function SignInGoogle({ loading, setLoading }: any) {
             title: "Login failed.",
             description: `${newResponse.message}.`,
             status: "error",
-            duration: 4000,
+            duration: constants.toastDuration,
           });
         }
       });
@@ -55,68 +56,39 @@ export default function SignInGoogle({ loading, setLoading }: any) {
         title: "Error.",
         description: `${error}.`,
         status: "error",
-        duration: 4000,
+        duration: constants.toastDuration,
       });
     }
   };
   return (
     <>
-      {loading ? (
-        <Button
-          isDisabled
-          colorScheme="palevioletred"
-          style={{
-            border: "2px solid palevioletred",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            width: "40px",
-            height: "40px",
-            overflow: "hidden",
-            backgroundColor: "transparent",
+      <Button
+        isDisabled={loading ? true : false}
+        colorScheme="palevioletred"
+        style={{
+          border: "2px solid palevioletred",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          width: "40px",
+          height: "40px",
+          overflow: "hidden",
+          backgroundColor: "transparent",
+        }}
+      >
+        <GoogleLogin
+          onSuccess={succesfulSignIn}
+          theme="filled_blue"
+          logo_alignment="center"
+          shape="square"
+          size="large"
+          type="icon"
+          text="signin_with"
+          onError={() => {
+            console.log("Failed");
           }}
-        >
-          <GoogleLogin
-            onSuccess={succesfulSignIn}
-            theme="filled_blue"
-            logo_alignment="center"
-            shape="square"
-            size="large"
-            type="icon"
-            text="signin_with"
-            onError={() => {
-              console.log("Failed");
-            }}
-          />
-        </Button>
-      ) : (
-        <Button
-          colorScheme="palevioletred"
-          style={{
-            border: "2px solid palevioletred",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            width: "40px",
-            height: "40px",
-            overflow: "hidden",
-            backgroundColor: "transparent",
-          }}
-        >
-          <GoogleLogin
-            onSuccess={succesfulSignIn}
-            theme="filled_blue"
-            logo_alignment="center"
-            shape="square"
-            size="large"
-            type="icon"
-            text="signin_with"
-            onError={() => {
-              console.log("Failed");
-            }}
-          />
-        </Button>
-      )}
+        />
+      </Button>
     </>
   );
 }

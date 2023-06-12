@@ -127,6 +127,8 @@ export default function SignupForm() {
       .catch((error) => console.error(error));
   };
 
+  // Implement Formik validation
+
   return (
     <Flex
       borderColor={"red"}
@@ -269,13 +271,6 @@ export default function SignupForm() {
                   Sign in
                 </Link>
               </Text>
-
-              {/* <Text >
-              <Link color="teal.500">Forgot Password?</Link>{" "}
-            </Text>
-            <Text >
-              <Link color="teal.500">Need help?</Link>{" "}
-            </Text> */}
             </Flex>
           </Flex>
         </Form>

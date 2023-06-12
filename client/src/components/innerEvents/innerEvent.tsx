@@ -55,37 +55,10 @@ export default function TheEvent() {
     return formattedDate;
   };
 
-  // const handleProgress = () => {
-  //   const match = events.moneyGoal.match(/\d+/g);
-  //   return match[0];
-  // };
-
-  // const handleMoney = () => {
-  //   const match = events.moneyGoal.match(/\d+/g);
-  //   if (match[0] && match[1]) {
-  //     return `${match[0]}-${match[1]}`;
-  //   } else {
-  //     return match[0];
-  //   }
-  // };
-
   return (
     <>
       {events && (
         <>
-          {/* <div className="innerTitleWrap">
-              <div className="innerData">{`${
-                events.deadlineDate === null ? "No Deadline" : handleDate()
-              }`}</div>
-              <p className="innerDesc">{events.description}</p>
-              <div className="innerImgWrap">
-                <h1 className="innerTitle">{events.title}</h1>
-                <div className="innerImg">{`${events.image}`}</div>
-              </div>
-              <div className="innerFunds">{`CurrentFunds: ${events.Currentfunds}`}</div>
-              <h4>Goal: {events.moneyGoal}</h4>
-            </div> */}
-
           <Box flexDir="column" width="80%">
             <Heading padding="25px" fontWeight={"200"} textAlign="center">
               {events.title}
@@ -146,12 +119,6 @@ export default function TheEvent() {
                     </>
                   );
                 })}
-              <LoadingFriend />
-              <LoadingFriend />
-              <LoadingFriend />
-              <LoadingFriend />
-              <LoadingFriend />
-              <LoadingFriend />
             </AvatarGroup>
           </Flex>
 
