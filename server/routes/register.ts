@@ -5,7 +5,6 @@ import bcrypt from "bcryptjs";
 import {
   getProfileByEmail,
   getProfileByUsername,
-  getProfileById,
 } from "../queries/profileQueries";
 
 const client = new OAuth2Client(process.env.CLIENTID);
@@ -41,7 +40,7 @@ router.post("/", async (req, res) => {
     const hashedPass = await bcrypt.hash(password, 10);
 
     //Create user and send to DB
-    createUser(username, email, hashedPass);
+    createUser(username, email, hashedPass, "local", true);
     return res.status(201).json({ message: `${username} has been created` });
   } catch (e) {
     console.log("Registration Error:", e);
@@ -75,8 +74,10 @@ router.post("/googleOauth", async (req, res) => {
               .json({ message: "This user exists, please login!" });
           }
 
-          createUser(userData, email, "");
-          updateUser(email, picture);
+          createUser(userData, email, "", "google", false);
+          if (picture) {
+            updateUser(email, picture);
+          }
           return res.status(200).json({ message: `${email} has been created` });
         })
         .catch((e) => console.log("GoogleOauth error:", e));
@@ -86,34 +87,6 @@ router.post("/googleOauth", async (req, res) => {
     }
   } else {
     return res.status(401).json({ message: "Google Oauth Failed" });
-  }
-});
-
-router.get("/setUsername", async (req, res) => {
-  const username = req.body.username;
-  const usernameExists = await getProfileByUsername(username);
-
-  if (usernameExists) {
-    return res.status(400).json({ message: "user exists" });
-  }
-});
-
-router.post("/setUsername", async (req, res) => {
-  if (req.session.user) {
-    const user = await getProfileById(Number(req.session.user));
-    res.setHeader("Content-Type", "application/json");
-
-    const usernameExists = await getProfileByUsername(req.body.username);
-    if (usernameExists) {
-      return res.status(400).json({ message: "user exists" });
-    }
-
-    updateUserName(user.email, req.body.username);
-
-    return res.status(200).json({ message: "complete" });
-  } else {
-    console.log("not");
-    return res.status(401).json({ message: "not authorized" });
   }
 });
 

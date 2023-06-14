@@ -4,7 +4,9 @@ import { getProfileByEmail, getProfileById } from "./profileQueries";
 export async function createUser(
   username: string,
   email: string,
-  password: string
+  password: string,
+  registeredWith: string,
+  usernameSet: boolean
 ) {
   try {
     await prisma.user.create({
@@ -12,6 +14,8 @@ export async function createUser(
         username,
         email,
         password,
+        registeredWith,
+        usernameSet,
         picture:
           "https://vectorified.com/images/no-profile-picture-icon-28.png",
         friends: {
@@ -37,10 +41,10 @@ export async function createUser(
 }
 
 export async function updateUser(email: string, newPic: string) {
-  const user = await getProfileByEmail(email);
+  const user: any = await getProfileByEmail(email);
 
   const updatedUser = await prisma.user.update({
-    where: { email },
+    where: { id: user.id },
     data: { picture: newPic },
   });
 
@@ -48,10 +52,10 @@ export async function updateUser(email: string, newPic: string) {
 }
 
 export async function updateUserName(email: string, newUsername: string) {
-  const user = await getProfileByEmail(email);
+  const user: any = await getProfileByEmail(email);
 
   const updatedUser = await prisma.user.update({
-    where: { email },
+    where: { id: user.id },
     data: { username: newUsername },
   });
 
