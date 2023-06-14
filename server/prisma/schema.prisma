@@ -17,8 +17,9 @@ model User {
   password String
   picture  String
   session  Session?
+  registeredWith String?
+  usernameSet Boolean @default(false)
   stripeAccountId String?
-  // posts Post[]
 
   friends  User[] @relation("Friend", map: "UserFriends")
   friendOf User[] @relation("Friend")
@@ -35,7 +36,6 @@ model User {
 model Event {
   id           Int           @id @default(autoincrement())
   title        String
-  // @unique
   description  String?
   deadlineDate String
   inviteLink   String        @unique
