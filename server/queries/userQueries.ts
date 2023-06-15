@@ -70,3 +70,15 @@ export async function updateStripeId(userId: number, stripeAccountId: string) {
 
   return updatedUser;
 }
+
+export async function updateUserUsernameSet(
+  userId: number,
+  usernameSet: boolean
+) {
+  const updatedUser = await prisma.user.update({
+    where: { id: userId },
+    data: { usernameSet },
+  });
+
+  return updatedUser;
+}

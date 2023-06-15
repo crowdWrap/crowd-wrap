@@ -3,7 +3,7 @@ import {
   getProfileById,
   getProfileByUsername,
 } from "../queries/profileQueries";
-import { updateUserName } from "../queries/userQueries";
+import { updateUserName, updateUserUsernameSet } from "../queries/userQueries";
 const router = Router();
 
 router.get("/", async (req, res) => {
@@ -17,11 +17,13 @@ router.get("/", async (req, res) => {
 });
 
 router.get("/setUsername", async (req, res) => {
-  const username = req.body.username;
+  const username: any = req.query.username;
   const usernameExists = await getProfileByUsername(username);
 
   if (usernameExists) {
-    return res.status(400).json({ message: "user exists" });
+    return res.status(400).json({ isValid: false });
+  } else {
+    return res.status(200).json({ isValid: true });
   }
 });
 
@@ -32,15 +34,18 @@ router.post("/setUsername", async (req, res) => {
 
     const usernameExists = await getProfileByUsername(req.body.username);
     if (usernameExists) {
-      return res.status(400).json({ message: "user exists" });
+      return res.status(400).json({ message: "This username is taken!" });
     }
 
-    updateUserName(user.email, req.body.username);
-
-    return res.status(200).json({ message: "complete" });
+    const newUser = await updateUserName(user.email, req.body.username);
+    const newestUser = await updateUserUsernameSet(newUser.id, true);
+    return res.status(200).json({
+      message: `Your username has been set to ${req.body.username}!`,
+      user: newestUser,
+    });
   } else {
     console.log("not");
-    return res.status(401).json({ message: "not authorized" });
+    return res.status(401).json({ message: "Not authorized" });
   }
 });
 
