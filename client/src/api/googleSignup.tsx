@@ -21,7 +21,7 @@ export default function SignUpGoogle({ loading, setLoading }: any) {
         body: credential,
       }).then(async (response) => {
         const newResponse = await response.json();
-        setLoading(false);
+
         if (response.ok) {
           toast({
             title: "Registration Succesful.",
@@ -30,6 +30,7 @@ export default function SignUpGoogle({ loading, setLoading }: any) {
             duration: 4000,
           });
           navigate("/login");
+          setLoading(false);
         } else {
           toast({
             title: "Registration failed.",

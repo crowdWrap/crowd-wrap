@@ -16,13 +16,6 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/pic-request", async (req, res) => {
-  if (req.session.user) {
-    const user = await getProfileById(Number(req.session.user));
-    res.send(user.picture);
-  }
-});
-
 router.get("/setUsername", async (req, res) => {
   const username = req.body.username;
   const usernameExists = await getProfileByUsername(username);

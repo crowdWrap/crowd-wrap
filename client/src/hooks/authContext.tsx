@@ -12,6 +12,7 @@ export default function AuthProvider({ children }: any) {
   const [refreshEvent, setRefreshEvent] = useState<boolean>(false);
 
   useEffect(() => {
+    setLoading(true);
     (async () => {
       const response: Response = await fetch("/login", {
         method: "GET",
@@ -23,17 +24,19 @@ export default function AuthProvider({ children }: any) {
         socket.connect();
         setUser(receivedData.user);
         setAuthed(true);
+        // setTimeout(() => {
         setLoading(false);
+        // }, 250);
       } else {
         setAuthed(false);
-        setLoading(false);
         setUser({});
+        setLoading(false);
       }
     })();
   }, []);
 
   const logout = async () => {
-    const response: Response = await fetch("/logout", { method: "get" });
+    const response: Response = await fetch("/logout", { method: "GET" });
     const receivedData = await response.json();
 
     if (response.ok) {
@@ -56,6 +59,7 @@ export default function AuthProvider({ children }: any) {
         refreshEvent,
         setRefreshEvent,
         user,
+        setUser,
       }}
     >
       {children}

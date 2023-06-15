@@ -5,8 +5,7 @@ import { useAuth } from "../hooks/authContext";
 import { Button, useToast } from "@chakra-ui/react";
 
 export default function SignInGoogle({ loading, setLoading }: any) {
-  const navigate = useNavigate();
-  const { setAuthed } = useAuth();
+  const { setAuthed, setUser } = useAuth();
   const toast = useToast();
 
   const succesfulSignIn = async (credentialResponse: any) => {
@@ -24,23 +23,16 @@ export default function SignInGoogle({ loading, setLoading }: any) {
         body: credential,
       }).then(async (response) => {
         const newResponse = await response.json();
-        setLoading(false);
-        if (newResponse.message === "Needs username") {
-          setAuthed(true);
-          toast({
-            title: "Please set username.",
-            status: "warning",
-            duration: 4000,
-          });
-          navigate("/register/setUsername");
-        } else if (response.ok) {
+        if (response.ok) {
           toast({
             title: "Login Succesful.",
             description: `${newResponse.message}`,
             status: "success",
             duration: 4000,
           });
+          setUser(newResponse.user);
           setAuthed(true);
+          setLoading(false);
         } else {
           toast({
             title: "Login failed.",

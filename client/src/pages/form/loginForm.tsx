@@ -31,7 +31,7 @@ export default function LoginForm() {
   let { from } = location.state || { from: { pathname: "/profile" } };
   const [usernameOrEmail, setusernameOrEmail] = useState<string>("");
   const [loginPass, setLoginPassword] = useState<string>("");
-  const { authed, setAuthed } = useAuth();
+  const { authed, setAuthed, setUser } = useAuth();
   const [show, setShow] = React.useState(false);
   const [loading, setLoading] = useState(false);
   const handleClick = () => setShow(!show);
@@ -60,7 +60,7 @@ export default function LoginForm() {
     });
 
     const receivedData = await response.json();
-    setLoading(false);
+
     if (response.ok) {
       toast({
         title: "Login Succesful.",
@@ -68,7 +68,9 @@ export default function LoginForm() {
         status: "success",
         duration: 4000,
       });
+      setUser(receivedData.user);
       setAuthed(true);
+      setLoading(false);
     } else {
       toast({
         title: "Login failed.",
@@ -116,7 +118,7 @@ export default function LoginForm() {
                 placeholder=" "
                 onChange={(e) => setusernameOrEmail(e.target.value)}
               />
-              <FormLabel>Username or Email</FormLabel>
+              <FormLabel bg="white">Username or Email</FormLabel>
             </FormControl>
             <FormControl variant="floating" id="password" isRequired>
               <InputGroup size="md">
@@ -126,7 +128,7 @@ export default function LoginForm() {
                   placeholder=" "
                   onChange={(e) => setLoginPassword(e.target.value)}
                 />
-                <FormLabel>Password</FormLabel>
+                <FormLabel bg="white">Password</FormLabel>
                 <InputRightElement width="4.5rem">
                   <Button
                     marginTop="auto"

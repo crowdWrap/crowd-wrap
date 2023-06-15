@@ -106,7 +106,7 @@ export default function SignupForm() {
     })
       .then(async (response) => {
         const receivedData = await response.json();
-        setLoading(false);
+
         if (response.ok) {
           toast({
             title: "Registration Succesful.",
@@ -115,6 +115,7 @@ export default function SignupForm() {
             duration: 4000,
           });
           navigate("/login");
+          setLoading(false);
         } else {
           toast({
             title: "Registration failed.",
@@ -176,7 +177,7 @@ export default function SignupForm() {
                   validateUsername(registerUsername);
                 }}
               />
-              <FormLabel>Username</FormLabel>
+              <FormLabel bg="white">Username</FormLabel>
 
               {usernameTouched && (
                 <>
@@ -199,7 +200,7 @@ export default function SignupForm() {
                 }}
                 onChange={handleEmailChange}
               />
-              <FormLabel>Email</FormLabel>
+              <FormLabel bg="white">Email</FormLabel>
               {emailTouched && (
                 <>
                   <FormErrorMessage>{emailError}</FormErrorMessage>
@@ -225,7 +226,7 @@ export default function SignupForm() {
                     validatePassword(registerPass);
                   }}
                 />
-                <FormLabel>Password</FormLabel>
+                <FormLabel bg="white">Password</FormLabel>
                 <InputRightElement width="4.5rem">
                   <Button
                     marginTop="auto"

@@ -26,14 +26,15 @@ router.post("/", async (req, res, next) => {
     if (!user) {
       return res.status(401).json({ message: "This user does not exist!" });
     }
-    req.logIn(user, (err) => {
+    req.logIn(user, async (err) => {
       if (err) {
         return next(err);
       }
       req.session.user = user.id.toString();
+      const userAccount = await getProfileById(Number(req.session.user));
       return res
         .status(200)
-        .json({ message: `${user.username} has logged in` });
+        .json({ message: `${user.username} has logged in`, user: userAccount });
     });
   })(req, res, next);
 });
@@ -64,14 +65,16 @@ router.post("/googleOauth", async (req, res, next) => {
 
         const user: any = await getProfileByEmail(email);
 
-        req.logIn(user, (err) => {
+        req.logIn(user, async (err) => {
           if (err) {
             return next(err);
           }
 
           req.session.user = user.id.toString();
-
-          return res.status(200).json({ message: `${email} has logged in` });
+          const userAccount = await getProfileById(Number(req.session.user));
+          return res
+            .status(200)
+            .json({ message: `${email} has logged in`, user: userAccount });
         });
       });
     } catch (e) {
