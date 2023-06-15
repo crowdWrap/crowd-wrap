@@ -3,16 +3,16 @@ import { createUser } from "../queries/userQueries";
 import { OAuth2Client } from "google-auth-library";
 import bcrypt from "bcryptjs";
 import passport from "passport";
-import { getProfileByEmail } from "../queries/profileQueries";
+import { getProfileByEmail, getProfileById } from "../queries/profileQueries";
 
 const client = new OAuth2Client(process.env.CLIENTID);
 const router = Router();
 
-router.get("/", (req, res) => {
+router.get("/", async (req, res) => {
   if (req.session.user) {
-    return res
-      .status(200)
-      .json({ message: "Good to go!", userId: req.session.user });
+    const user = await getProfileById(Number(req.session.user));
+
+    return res.status(200).json({ message: "Good to go!", user });
   } else {
     return res.status(401).json({ message: "You arent logged in!" });
   }
@@ -71,11 +71,7 @@ router.post("/googleOauth", async (req, res, next) => {
 
           req.session.user = user.id.toString();
 
-          if (user.username == sub) {
-            return res.status(200).json({ message: "Needs username" });
-          } else {
-            return res.status(200).json({ message: `${email} has logged in` });
-          } //
+          return res.status(200).json({ message: `${email} has logged in` });
         });
       });
     } catch (e) {

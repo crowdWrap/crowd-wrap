@@ -53,7 +53,7 @@ export default function TheEvent() {
   const [refreshMessages, setRefreshMessages] = useState(false);
   const messageToSendRef = useRef<any>("");
   const messagesEndRef = useRef<any>(null);
-  const { userId } = useAuth();
+  const { user } = useAuth();
   const [loading, setLoading] = useState(false);
   const [accounts, setAccounts] = useState<any>([]);
   const navigate = useNavigate();
@@ -74,7 +74,7 @@ export default function TheEvent() {
       }
 
       const isInside = data.event.participants.filter(
-        (participant: any) => Number(participant.userId) === Number(userId)
+        (participant: any) => Number(participant.userId) === Number(user.userId)
       );
       if (isInside.length === 0) {
         navigate("/events");
@@ -251,7 +251,9 @@ export default function TheEvent() {
                         picture={msg.user ? msg.user.picture : msg.picture}
                         createdAt={msg.createdAt}
                         own={
-                          Number(userId) === Number(msg.userId) ? true : false
+                          Number(user.userId) === Number(msg.userId)
+                            ? true
+                            : false
                         }
                         color={currentColor}
                       />

@@ -31,17 +31,15 @@ export default function LoginForm() {
   let { from } = location.state || { from: { pathname: "/profile" } };
   const [usernameOrEmail, setusernameOrEmail] = useState<string>("");
   const [loginPass, setLoginPassword] = useState<string>("");
-  const { authed, setAuthed, needsUsername } = useAuth();
+  const { authed, setAuthed } = useAuth();
   const [show, setShow] = React.useState(false);
   const [loading, setLoading] = useState(false);
   const handleClick = () => setShow(!show);
   const toast = useToast();
 
   useEffect(() => {
-    if (authed && !needsUsername) {
+    if (authed) {
       navigate(from);
-    } else if (needsUsername) {
-      navigate("/register/setUsername");
     }
   }, [authed, from, navigate]);
 

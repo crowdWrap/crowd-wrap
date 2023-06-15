@@ -17,7 +17,7 @@ import { AiOutlineDelete, AiOutlineMore } from "react-icons/ai";
 import { useAuth } from "../../hooks/authContext";
 
 export default function FriendAvatar({ item, events, color }: any) {
-  const { userId, setRefreshEvent } = useAuth();
+  const { user, setRefreshEvent } = useAuth();
 
   const removeFromEvent = async (e: any) => {
     const leaveData = JSON.stringify({
@@ -58,9 +58,9 @@ export default function FriendAvatar({ item, events, color }: any) {
             )}
           </Flex>
 
-          {userId &&
+          {user.userId &&
             `${item.userId}` !== `${events.ownerId}` &&
-            `${userId}` === `${events.ownerId}` && (
+            `${user.userId}` === `${events.ownerId}` && (
               <Menu>
                 <MenuButton
                   as={IconButton}
