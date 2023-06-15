@@ -70,7 +70,6 @@ export default function LoginForm() {
       });
       setUser(receivedData.user);
       setAuthed(true);
-      setLoading(false);
     } else {
       toast({
         title: "Login failed.",
@@ -79,6 +78,7 @@ export default function LoginForm() {
         duration: 4000,
       });
     }
+    setLoading(false);
   }
 
   return (
@@ -92,6 +92,7 @@ export default function LoginForm() {
       objectFit="cover"
       justifyContent={"center"}
       alignItems="center"
+      filter="hue-rotate(50deg)"
       backgroundImage={backgroundImage}
     >
       <Box
@@ -99,6 +100,7 @@ export default function LoginForm() {
         borderRadius="25px"
         p="60px 40px"
         boxShadow="0px 0px 5px rgba(0, 0, 0, 0.265)"
+        filter="hue-rotate(-50deg)"
       >
         <Heading fontWeight="400" marginBottom="10px">
           Login

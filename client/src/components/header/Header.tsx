@@ -9,9 +9,12 @@ import { useAuth } from "../../hooks/authContext";
 import { CgLogIn } from "react-icons/cg";
 import { BsArrowThroughHeart } from "react-icons/bs";
 import "@fontsource/inter";
+import { useEffect } from "react";
 
 export default function Header() {
   const { authed, loading, user } = useAuth();
+
+  useEffect(() => {}, [user, user.usernameSet]);
 
   return (
     <div className={styles["header"]}>

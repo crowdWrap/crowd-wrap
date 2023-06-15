@@ -12,7 +12,6 @@ export default function AuthProvider({ children }: any) {
   const [refreshEvent, setRefreshEvent] = useState<boolean>(false);
 
   useEffect(() => {
-    setLoading(true);
     (async () => {
       const response: Response = await fetch("/login", {
         method: "GET",
@@ -24,9 +23,7 @@ export default function AuthProvider({ children }: any) {
         socket.connect();
         setUser(receivedData.user);
         setAuthed(true);
-        // setTimeout(() => {
         setLoading(false);
-        // }, 250);
       } else {
         setAuthed(false);
         setUser({});

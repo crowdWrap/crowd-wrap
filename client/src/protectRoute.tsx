@@ -8,7 +8,7 @@ export default function RequiresAuth() {
     return <Navigate to="/login" state={{ from: location }} />;
   }
 
-  if (user && !user.usernameSet) {
+  if (!loading && authed && user && !user.usernameSet) {
     return <Navigate to="/profile/setUsername" />;
   }
 

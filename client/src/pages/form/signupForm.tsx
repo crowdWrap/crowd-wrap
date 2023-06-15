@@ -90,6 +90,16 @@ export default function SignupForm() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
+    if (usernameError || passwordError || emailError) {
+      toast({
+        title: "Registration failed.",
+        description: "Please fix the errors before submitting.",
+        status: "error",
+        duration: 4000,
+      });
+      return;
+    }
+
     setLoading(true);
     const data = JSON.stringify({
       username: registerUsername,
@@ -115,7 +125,6 @@ export default function SignupForm() {
             duration: 4000,
           });
           navigate("/login");
-          setLoading(false);
         } else {
           toast({
             title: "Registration failed.",
@@ -124,6 +133,7 @@ export default function SignupForm() {
             duration: 4000,
           });
         }
+        setLoading(false);
       })
       .catch((error) => console.error(error));
   };
@@ -140,6 +150,7 @@ export default function SignupForm() {
       objectFit="cover"
       justifyContent={"center"}
       alignItems="center"
+      filter="hue-rotate(70deg)"
       backgroundImage={backgroundImage}
     >
       <Box
@@ -147,6 +158,7 @@ export default function SignupForm() {
         borderRadius="25px"
         p="60px 40px"
         boxShadow="0px 0px 5px rgba(0, 0, 0, 0.265)"
+        filter="hue-rotate(-70deg)"
       >
         <Heading fontWeight="400" marginBottom="10px">
           Signup
