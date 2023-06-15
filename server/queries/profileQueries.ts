@@ -6,10 +6,34 @@ export async function getProfileById(id: number) {
       id,
     },
     include: {
-      friends: true,
-      friendRequests: true,
-      friendRequestsSent: true,
-      friendOf: true,
+      friends: {
+        select: {
+          id: true,
+          username: true,
+          picture: true,
+        },
+      },
+      friendRequests: {
+        select: {
+          id: true,
+          username: true,
+          picture: true,
+        },
+      },
+      friendRequestsSent: {
+        select: {
+          id: true,
+          username: true,
+          picture: true,
+        },
+      },
+      friendOf: {
+        select: {
+          id: true,
+          username: true,
+          picture: true,
+        },
+      },
       events: true,
       ownedEvents: true,
     },
@@ -29,10 +53,34 @@ export async function getProfileByUsername(username: string) {
         username,
       },
       include: {
-        friends: true,
-        friendRequests: true,
-        friendRequestsSent: true,
-        friendOf: true,
+        friends: {
+          select: {
+            id: true,
+            username: true,
+            picture: true,
+          },
+        },
+        friendRequests: {
+          select: {
+            id: true,
+            username: true,
+            picture: true,
+          },
+        },
+        friendRequestsSent: {
+          select: {
+            id: true,
+            username: true,
+            picture: true,
+          },
+        },
+        friendOf: {
+          select: {
+            id: true,
+            username: true,
+            picture: true,
+          },
+        },
         events: true,
         ownedEvents: true,
       },
