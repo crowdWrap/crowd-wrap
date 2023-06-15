@@ -74,8 +74,9 @@ export default function TheEvent() {
       }
 
       const isInside = data.event.participants.filter(
-        (participant: any) => Number(participant.userId) === Number(user.userId)
+        (participant: any) => Number(participant.userId) === Number(user.id)
       );
+
       if (isInside.length === 0) {
         navigate("/events");
       } else {
@@ -251,9 +252,7 @@ export default function TheEvent() {
                         picture={msg.user ? msg.user.picture : msg.picture}
                         createdAt={msg.createdAt}
                         own={
-                          Number(user.userId) === Number(msg.userId)
-                            ? true
-                            : false
+                          Number(user.id) === Number(msg.userId) ? true : false
                         }
                         color={currentColor}
                       />

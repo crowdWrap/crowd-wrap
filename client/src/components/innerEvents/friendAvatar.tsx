@@ -58,9 +58,9 @@ export default function FriendAvatar({ item, events, color }: any) {
             )}
           </Flex>
 
-          {user.userId &&
+          {user &&
             `${item.userId}` !== `${events.ownerId}` &&
-            `${user.userId}` === `${events.ownerId}` && (
+            `${user.id}` === `${events.ownerId}` && (
               <Menu>
                 <MenuButton
                   as={IconButton}
