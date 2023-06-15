@@ -30,7 +30,6 @@ export default function SignUpGoogle({ loading, setLoading }: any) {
             duration: 4000,
           });
           navigate("/login");
-          setLoading(false);
         } else {
           toast({
             title: "Registration failed.",
@@ -39,6 +38,7 @@ export default function SignUpGoogle({ loading, setLoading }: any) {
             duration: 4000,
           });
         }
+        setLoading(false);
       });
     } catch (error) {
       console.error(error);
