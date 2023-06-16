@@ -16,7 +16,7 @@ export default function RemoveEventDialog({
   isOpen1,
   setSelectedEvent,
 }: any) {
-  const { setRefreshEvent, userId } = useAuth();
+  const { setRefreshEvent, user } = useAuth();
   const cancelRef: any = React.useRef();
 
   const removeEvent = async (e: any) => {
@@ -24,7 +24,7 @@ export default function RemoveEventDialog({
       ownerId: e.ownerId,
       eventId: e.id,
     });
-    if (`${userId}` === `${e.ownerId}`) {
+    if (`${user.id}` === `${e.ownerId}`) {
       await fetch(`/events/remove`, {
         method: "DELETE",
         headers: {
@@ -34,7 +34,7 @@ export default function RemoveEventDialog({
       });
     } else {
       const leaveData = JSON.stringify({
-        userId: userId,
+        userId: user.id,
         eventId: e.id,
       });
       await fetch(`/events/participants/remove`, {
@@ -62,7 +62,7 @@ export default function RemoveEventDialog({
       >
         <AlertDialogContent>
           <AlertDialogHeader fontSize="lg" fontWeight="bold">
-            {`${userId}` === `${e.ownerId}`
+            {`${user.id}` === `${e.ownerId}`
               ? `Delete Event "${e.title}"`
               : `Leave Event "${e.title}"`}
           </AlertDialogHeader>
@@ -84,7 +84,7 @@ export default function RemoveEventDialog({
               }}
               ml={3}
             >
-              {`${userId}` === `${e.ownerId}` ? `Delete` : `Leave`}
+              {`${user.id}` === `${e.ownerId}` ? `Delete` : `Leave`}
             </Button>
           </AlertDialogFooter>
         </AlertDialogContent>
