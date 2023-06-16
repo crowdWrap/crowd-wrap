@@ -56,6 +56,7 @@ export default function TheEvent() {
   const { user } = useAuth();
   const [loading, setLoading] = useState(false);
   const [accounts, setAccounts] = useState<any>([]);
+  const [refreshInner, setRefreshInner] = useState(false);
   const navigate = useNavigate();
 
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -89,8 +90,32 @@ export default function TheEvent() {
       setEvents(await fetchEvent());
       setAccounts(await fetchData());
       setRefreshEvent(false);
+      setRefreshInner(false);
     })();
-  }, [eventId, refreshEvent, setRefreshEvent]);
+  }, [eventId, navigate, refreshEvent, setRefreshEvent, user.id, refreshInner]);
+
+  useEffect(() => {
+    socket.on("eventUpdate", (data) => {
+      setRefreshInner(true);
+      if (data.message !== "") {
+        toast({
+          title: "Event Notification.",
+          description: `${data.message}.`,
+          status: data.stats as
+            | "info"
+            | "warning"
+            | "success"
+            | "error"
+            | "loading",
+          duration: 4000,
+        });
+      }
+    });
+
+    return () => {
+      socket.off("eventUpdate");
+    };
+  }, [setRefreshEvent, toast]);
 
   useEffect(() => {
     // setLoading(true);
