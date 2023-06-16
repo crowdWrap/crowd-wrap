@@ -101,8 +101,6 @@ io.on("connection", async (socket: any) => {
   });
 });
 
-export const stripe = require("stripe")(process.env.STRIPE_API);
-
 app.use("/register", registerRouter);
 
 app.use("/login", loginRouter);

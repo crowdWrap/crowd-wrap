@@ -6,7 +6,6 @@ import {
 
 import { io } from "../index";
 import crypto from "crypto";
-import { stripe } from "../index";
 import { onlineUsers } from "../index";
 import {
   createEvent,
@@ -23,7 +22,6 @@ import {
   getMessagesById,
   removeMessages,
 } from "../queries/messageQueries";
-import { getStripeId, updateStripeId } from "../queries/userQueries";
 const router = Router();
 
 // Same problem as friendList
@@ -258,33 +256,4 @@ router.post("/:eventId/messages", async (req, res) => {
   return res.status(200).json({ messageWithPicture });
 });
 
-router.post("/stripe", async (req, res) => {
-  const account = await stripe.accounts.create({
-    type: "express",
-  });
-
-  console.log(account.id);
-  updateStripeId(Number(req.session.user), account.id);
-
-  const accountLink = await stripe.accountLinks.create({
-    account: account.id,
-    refresh_url: "http://localhost:3000/events",
-    return_url: "http://localhost:3000/events",
-    type: "account_onboarding",
-  });
-
-  return res.status(200).json({ accountLink });
-});
-
-router.get("/stripe", async (req, res) => {
-  const stripeId = await getStripeId(Number(req.query.userId));
-  if (stripeId) {
-    const account = await stripe.accounts.retrieve(stripeId);
-    console.log(account);
-    if (!account.charges_enabled) {
-      return res.status(200).json({ stripeId: "" });
-    }
-  }
-  return res.status(200).json({ stripeId });
-});
 export default router;

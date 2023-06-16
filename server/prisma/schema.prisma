@@ -11,15 +11,15 @@ datasource db {
 }
 
 model User {
-  id       Int      @id @default(autoincrement())
-  username String   @unique
-  email    String   @unique
-  password String
-  picture  String
-  session  Session?
+  id             Int      @id @default(autoincrement())
+  username       String   @unique
+  email          String   @unique
+  password       String
+  picture        String
+  session        Session?
   registeredWith String?
-  usernameSet Boolean @default(false)
-  stripeAccountId String?
+  usernameSet    Boolean  @default(false)
+  paymentType    String   @default("")
 
   friends  User[] @relation("Friend", map: "UserFriends")
   friendOf User[] @relation("Friend")
@@ -79,7 +79,7 @@ model Session {
 
 model Message {
   id        Int      @id @default(autoincrement())
-  content   String   
+  content   String
   createdAt DateTime @default(now())
   userId    Int
   user      User     @relation(fields: [userId], references: [id])

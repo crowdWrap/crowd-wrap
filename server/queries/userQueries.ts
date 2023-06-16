@@ -62,20 +62,11 @@ export async function updateUserName(email: string, newUsername: string) {
   return updatedUser;
 }
 
-export async function updateStripeId(userId: number, stripeAccountId: string) {
-  const updatedUser = await prisma.user.update({
-    where: { id: userId },
-    data: { stripeAccountId },
-  });
-
-  return updatedUser;
-}
-
-export async function getStripeId(id: number) {
+export async function getPaymentTypeById(id: number) {
   const user = await prisma.user.findUnique({
     where: { id },
   });
-  return user?.stripeAccountId;
+  return user?.paymentType;
 }
 
 export async function updateUserUsernameSet(

@@ -33,7 +33,6 @@ import { useAuth } from "../../hooks/authContext";
 
 export default function CreateEventButton() {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [stripeAccountId, setStripeAccountId] = useState("");
   const { user } = useAuth();
   const navigate = useNavigate();
   const finalRef = React.useRef(null);
@@ -51,36 +50,11 @@ export default function CreateEventButton() {
   });
 
   useEffect(() => {
-    (async () => {
-      const response: Response = await fetch(
-        `/events/stripe?userId=${user.id}`,
-        {
-          method: "GET",
-        }
-      );
-
-      const receivedData = await response.json();
-      setStripeAccountId(receivedData.stripeId);
-      if (receivedData.stripeId) {
-        setActiveStep(0);
-      }
-    })();
     if (!isOpen) {
       setActiveStep(-1);
       setLoading(false);
     }
   }, [isOpen]);
-
-  console.log(stripeAccountId);
-  const handleStripe = async () => {
-    const response: Response = await fetch("/events/stripe", {
-      method: "POST",
-    });
-
-    const receivedData = await response.json();
-    console.log(receivedData.accountLink);
-    window.location.replace(receivedData.accountLink.url);
-  };
 
   return (
     <>
@@ -104,7 +78,7 @@ export default function CreateEventButton() {
           backdropFilter="blur(5px) hue-rotate(270deg)"
         />
         <ModalContent height="550px">
-          {stripeAccountId && (
+          {user.paymentType !== "" && (
             <ModalHeader>
               <Stepper
                 padding="15px"
@@ -139,7 +113,7 @@ export default function CreateEventButton() {
           )}
           <ModalCloseButton />
           <ModalBody overflow="hidden">
-            {stripeAccountId ? (
+            {user.paymentType !== "" ? (
               <CreateEventPop
                 activeStep={activeStep}
                 setActiveStep={(val: number) => setActiveStep(val)}
@@ -153,7 +127,7 @@ export default function CreateEventButton() {
                 alignItems="center"
               >
                 <Flex flexDir="column" align="center" gap="15px">
-                  <Heading>Create event with Stripe?</Heading>
+                  <Heading>Create event with Paypal?</Heading>
                   <Text maxW={"85%"} textAlign="center">
                     In order to be able to receive funds from your events
                     participants, you would need to create a stripe account. We
@@ -166,7 +140,7 @@ export default function CreateEventButton() {
                   <Button
                     onClick={() => {
                       setLoading(true);
-                      setStripeAccountId("temporary");
+                      // set payment type
                       setActiveStep(0);
                     }}
                     isLoading={loading}
@@ -176,7 +150,6 @@ export default function CreateEventButton() {
                   <Button
                     onClick={() => {
                       setLoading(true);
-                      handleStripe();
                     }}
                     colorScheme="green"
                     isLoading={loading}
