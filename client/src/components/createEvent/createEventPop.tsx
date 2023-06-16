@@ -15,7 +15,7 @@ export default function CreateEventPop({
   const [description, setDescriptionValue] = useState<string>("");
 
   const [moneyGoal, setMoneyGoal] = useState<string>("Budget-friendly");
-  const [moneyVal, setMoneyVal] = useState<string>("$5-$20");
+  const [moneyVal, setMoneyVal] = useState<string>("$10");
   const [date, setDate] = useState();
 
   const [showEventComplete, setShowEventComplete] = useState<boolean>(false);
