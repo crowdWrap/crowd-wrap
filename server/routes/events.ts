@@ -16,6 +16,7 @@ import {
   getEventById,
   removeParticipant,
   removeEvent,
+  getAllEventsByid,
 } from "../queries/eventQueries";
 import {
   createMessage,
@@ -203,12 +204,7 @@ router.delete("/participants/remove", async (req, res) => {
 
 router.get("/retrieve", async (req, res) => {
   if (req.session.user) {
-    const user = await getProfileById(Number(req.session.user));
-    const allEvents = await Promise.all(
-      user.events.map(async (e) => {
-        return await getEventById(e.eventId);
-      })
-    );
+    const allEvents = await getAllEventsByid(Number(req.session.user));
     return res.status(200).send(allEvents);
   }
 });

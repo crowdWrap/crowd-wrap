@@ -111,6 +111,28 @@ export async function getEventById(id: number) {
   }
 }
 
+export async function getAllEventsByid(id: number) {
+  const events = await prisma.eventToUser.findMany({
+    where: {
+      userId: id,
+    },
+    include: {
+      event: {
+        include: {
+          participants: true,
+        },
+      },
+    },
+    orderBy: {
+      event: {
+        createdAt: "desc",
+      },
+    },
+  });
+
+  return events.map((e) => e.event);
+}
+
 export async function getEventByLink(link: string) {
   const event = await prisma.event.findUnique({
     where: {

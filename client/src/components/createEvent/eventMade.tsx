@@ -88,9 +88,7 @@ any) {
 
       const receivedData = await response.json();
       setInviteLink(
-        `http://localhost:3000/events/invite/${
-          receivedData[receivedData.length - 1].inviteLink
-        }`
+        `http://localhost:3000/events/invite/${receivedData[0].inviteLink}`
       );
 
       const friendResponse = await fetch(`/friends`, {
@@ -99,7 +97,7 @@ any) {
       const result = await friendResponse.json();
       setAccounts(result);
 
-      setEvent(receivedData[receivedData.length - 1]);
+      setEvent(receivedData[0]);
       setLoading(false);
       setRefreshEvent(false);
     };

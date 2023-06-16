@@ -200,6 +200,7 @@ export default function SingularEvent({
           variant="ghost"
           leftIcon={<BiShare />}
           onClick={() => {
+            setSelectedEvent(e.id);
             onCopy();
             toast({
               title: "Invite link copied to clipboard.",
