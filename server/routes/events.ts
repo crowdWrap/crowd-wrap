@@ -23,7 +23,7 @@ import {
   getMessagesById,
   removeMessages,
 } from "../queries/messageQueries";
-import { updateStripeId } from "../queries/userQueries";
+import { getStripeId, updateStripeId } from "../queries/userQueries";
 const router = Router();
 
 // Same problem as friendList
@@ -73,21 +73,6 @@ router.post("/", async (req, res) => {
     await createEvent(Number(req.session.user), req.body, `${inviteLink}`);
     return res.status(200).json({ message: "complete" });
   }
-});
-
-router.post("/stripe", async (req, res) => {
-  const account = await stripe.accounts.create({
-    type: "express",
-  });
-
-  updateStripeId(Number(req.session.user), account.id);
-
-  const accountLink = await stripe.accountLinks.create({
-    account: account.id,
-    refresh_url: "https://example.com/reauth",
-    return_url: "https://example.com/return",
-    type: "account_onboarding",
-  });
 });
 
 router.get("/invite/:link", async (req, res) => {
@@ -273,4 +258,33 @@ router.post("/:eventId/messages", async (req, res) => {
   return res.status(200).json({ messageWithPicture });
 });
 
+router.post("/stripe", async (req, res) => {
+  const account = await stripe.accounts.create({
+    type: "express",
+  });
+
+  console.log(account.id);
+  updateStripeId(Number(req.session.user), account.id);
+
+  const accountLink = await stripe.accountLinks.create({
+    account: account.id,
+    refresh_url: "http://localhost:3000/events",
+    return_url: "http://localhost:3000/events",
+    type: "account_onboarding",
+  });
+
+  return res.status(200).json({ accountLink });
+});
+
+router.get("/stripe", async (req, res) => {
+  const stripeId = await getStripeId(Number(req.query.userId));
+  if (stripeId) {
+    const account = await stripe.accounts.retrieve(stripeId);
+    console.log(account);
+    if (!account.charges_enabled) {
+      return res.status(200).json({ stripeId: "" });
+    }
+  }
+  return res.status(200).json({ stripeId });
+});
 export default router;

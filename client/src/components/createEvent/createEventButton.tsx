@@ -4,6 +4,8 @@ import {
   Box,
   Button,
   ButtonGroup,
+  Flex,
+  Heading,
   Icon,
   IconButton,
   Modal,
@@ -21,16 +23,21 @@ import {
   StepStatus,
   StepTitle,
   Stepper,
+  Text,
   useDisclosure,
   useSteps,
 } from "@chakra-ui/react";
 import { AiOutlinePlus } from "react-icons/ai";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { useAuth } from "../../hooks/authContext";
 
 export default function CreateEventButton() {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [stripeAccountId, setStripeAccountId] = useState("");
+  const { user } = useAuth();
   const navigate = useNavigate();
   const finalRef = React.useRef(null);
+  const [loading, setLoading] = useState(false);
 
   const steps = [
     { title: "First", description: "Details" },
@@ -44,10 +51,36 @@ export default function CreateEventButton() {
   });
 
   useEffect(() => {
+    (async () => {
+      const response: Response = await fetch(
+        `/events/stripe?userId=${user.id}`,
+        {
+          method: "GET",
+        }
+      );
+
+      const receivedData = await response.json();
+      setStripeAccountId(receivedData.stripeId);
+      if (receivedData.stripeId) {
+        setActiveStep(0);
+      }
+    })();
     if (!isOpen) {
-      setActiveStep(0);
+      setActiveStep(-1);
+      setLoading(false);
     }
   }, [isOpen]);
+
+  console.log(stripeAccountId);
+  const handleStripe = async () => {
+    const response: Response = await fetch("/events/stripe", {
+      method: "POST",
+    });
+
+    const receivedData = await response.json();
+    console.log(receivedData.accountLink);
+    window.location.replace(receivedData.accountLink.url);
+  };
 
   return (
     <>
@@ -71,44 +104,88 @@ export default function CreateEventButton() {
           backdropFilter="blur(5px) hue-rotate(270deg)"
         />
         <ModalContent height="550px">
-          <ModalHeader>
-            <Stepper
-              padding="15px"
-              paddingTop="30px"
-              size="md"
-              colorScheme="red"
-              index={activeStep}
-            >
-              {steps.map((step, index) => (
-                <Step key={index}>
-                  {/* onClick={() => setActiveStep(index)} */}
-                  <StepIndicator
-                  // style={{ cursor: "pointer", transition: "0.25s" }}
-                  >
-                    <StepStatus
-                      complete={<StepIcon />}
-                      incomplete={<StepNumber />}
-                      active={<StepNumber />}
-                    />
-                  </StepIndicator>
+          {stripeAccountId && (
+            <ModalHeader>
+              <Stepper
+                padding="15px"
+                paddingTop="30px"
+                size="md"
+                colorScheme="red"
+                index={activeStep}
+              >
+                {steps.map((step, index) => (
+                  <Step key={index}>
+                    {/* onClick={() => setActiveStep(index)} */}
+                    <StepIndicator
+                    // style={{ cursor: "pointer", transition: "0.25s" }}
+                    >
+                      <StepStatus
+                        complete={<StepIcon />}
+                        incomplete={<StepNumber />}
+                        active={<StepNumber />}
+                      />
+                    </StepIndicator>
 
-                  <Box flexShrink="0">
-                    <StepTitle>{step.title}</StepTitle>
-                    <StepDescription>{step.description}</StepDescription>
-                  </Box>
+                    <Box flexShrink="0">
+                      <StepTitle>{step.title}</StepTitle>
+                      <StepDescription>{step.description}</StepDescription>
+                    </Box>
 
-                  <StepSeparator />
-                </Step>
-              ))}
-            </Stepper>
-          </ModalHeader>
+                    <StepSeparator />
+                  </Step>
+                ))}
+              </Stepper>
+            </ModalHeader>
+          )}
           <ModalCloseButton />
           <ModalBody overflow="hidden">
-            <CreateEventPop
-              activeStep={activeStep}
-              setActiveStep={(val: number) => setActiveStep(val)}
-              onClose={onClose}
-            />
+            {stripeAccountId ? (
+              <CreateEventPop
+                activeStep={activeStep}
+                setActiveStep={(val: number) => setActiveStep(val)}
+                onClose={onClose}
+              />
+            ) : (
+              <Flex
+                flexDir="column"
+                height="100%"
+                justifyContent="space-evenly"
+                alignItems="center"
+              >
+                <Flex flexDir="column" align="center" gap="15px">
+                  <Heading>Create event with Stripe?</Heading>
+                  <Text maxW={"85%"} textAlign="center">
+                    In order to be able to receive funds from your events
+                    participants, you would need to create a stripe account. We
+                    use Stripe to get you paid quickly and keep your personal
+                    and payment information secure. Please choose an option
+                    below.
+                  </Text>
+                </Flex>
+                <ButtonGroup>
+                  <Button
+                    onClick={() => {
+                      setLoading(true);
+                      setStripeAccountId("temporary");
+                      setActiveStep(0);
+                    }}
+                    isLoading={loading}
+                  >
+                    No Payment
+                  </Button>
+                  <Button
+                    onClick={() => {
+                      setLoading(true);
+                      handleStripe();
+                    }}
+                    colorScheme="green"
+                    isLoading={loading}
+                  >
+                    Continue with Stripe
+                  </Button>
+                </ButtonGroup>
+              </Flex>
+            )}
           </ModalBody>
         </ModalContent>
       </Modal>
