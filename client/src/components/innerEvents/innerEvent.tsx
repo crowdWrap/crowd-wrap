@@ -42,7 +42,7 @@ async function fetchData() {
 export default function TheEvent() {
   const { id } = useParams();
   const dashIndex: any = id?.lastIndexOf("-");
-  const eventId = id?.substring(dashIndex + 1);
+  const eventId: any = id?.substring(dashIndex + 1);
   const title = id?.substring(0, dashIndex);
   const [events, setEvents] = useState<any>([]);
   const { refreshEvent, setRefreshEvent } = useAuth();
@@ -57,6 +57,7 @@ export default function TheEvent() {
   const [loading, setLoading] = useState(false);
   const [accounts, setAccounts] = useState<any>([]);
   const [refreshInner, setRefreshInner] = useState(false);
+  const [stripeAccountId, setStripeAccountId] = useState("");
   const navigate = useNavigate();
 
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -93,6 +94,20 @@ export default function TheEvent() {
       setRefreshInner(false);
     })();
   }, [eventId, navigate, refreshEvent, setRefreshEvent, user.id, refreshInner]);
+
+  useEffect(() => {
+    (async () => {
+      const response: Response = await fetch(
+        `/events/stripe?userId=${events.ownerId}`,
+        {
+          method: "GET",
+        }
+      );
+
+      const receivedData = await response.json();
+      setStripeAccountId(receivedData.stripeId);
+    })();
+  }, []);
 
   useEffect(() => {
     socket.on("eventUpdate", (data) => {
@@ -226,13 +241,15 @@ export default function TheEvent() {
                     icon={<AiOutlineSetting />}
                     aria-label="setting"
                   ></IconButton>
-                  <IconButton
-                    // pay with venmo
-                    boxSize="100px"
-                    fontSize={"50px"}
-                    icon={<AiFillMoneyCollect />}
-                    aria-label="setting"
-                  ></IconButton>
+                  {stripeAccountId && (
+                    <IconButton
+                      // pay with venmo
+                      boxSize="100px"
+                      fontSize={"50px"}
+                      icon={<AiFillMoneyCollect />}
+                      aria-label="setting"
+                    ></IconButton>
+                  )}
                   <IconButton
                     aria-label="Share"
                     boxSize="100px"
