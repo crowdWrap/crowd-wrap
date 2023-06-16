@@ -116,6 +116,9 @@ export async function getEventByLink(link: string) {
     where: {
       inviteLink: link,
     },
+    include: {
+      participants: true,
+    },
   });
   if (event) {
     return event;
