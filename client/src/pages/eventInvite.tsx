@@ -1,15 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import backgroundImage from ".././assets/image_group/blue-pink-better-theme.png";
-import {
-  Box,
-  Button,
-  Flex,
-  Heading,
-  Skeleton,
-  Text,
-  useToast,
-} from "@chakra-ui/react";
+import { Button, Flex, Heading, useToast } from "@chakra-ui/react";
 import SingularEvent from "../components/events/singularEvent";
 import { socket } from "../api/socket";
 
