@@ -27,6 +27,7 @@ import logoutRouter from "./routes/logout";
 import profileRouter from "./routes/profile";
 import friendsRouter from "./routes/friends";
 import eventsRouter from "./routes/events";
+import paymentRouter from "./routes/payment";
 
 export const app = express();
 export const prisma = new PrismaClient();
@@ -112,6 +113,8 @@ app.use("/profile", profileRouter);
 app.use("/friends", friendsRouter);
 
 app.use("/events", eventsRouter);
+
+app.use("/payment", paymentRouter);
 
 server.listen(8000, () => {
   console.log(`Server is listening on port 8000`);

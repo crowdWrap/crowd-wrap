@@ -62,13 +62,6 @@ export async function updateUserName(email: string, newUsername: string) {
   return updatedUser;
 }
 
-export async function getPaymentTypeById(id: number) {
-  const user = await prisma.user.findUnique({
-    where: { id },
-  });
-  return user?.paymentType;
-}
-
 export async function updateUserUsernameSet(
   userId: number,
   usernameSet: boolean
