@@ -1,12 +1,11 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Form, useNavigate, useParams } from "react-router-dom";
 
 import FriendAvatar from "./friendAvatar";
 import { useAuth } from "../../hooks/authContext";
 import {
   AvatarGroup,
   Box,
-  ButtonGroup,
   Flex,
   Icon,
   IconButton,
@@ -15,16 +14,12 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import {
-  AiFillMoneyCollect,
-  AiOutlineMessage,
-  AiOutlineSend,
-  AiOutlineSetting,
-} from "react-icons/ai";
 import Message from "./messenge";
-import { BiPlus, BiShare } from "react-icons/bi";
+import { BiPlus } from "react-icons/bi";
 import { socket } from "../../api/socket";
 import AddFriendToEvent from "../events/addFriend";
+import InnerOptions from "./innerOptions";
+import { AiOutlineSend } from "react-icons/ai";
 
 async function fetchData() {
   try {
@@ -43,7 +38,6 @@ export default function TheEvent() {
   const { id } = useParams();
   const dashIndex: any = id?.lastIndexOf("-");
   const eventId: any = id?.substring(dashIndex + 1);
-  const title = id?.substring(0, dashIndex);
   const [events, setEvents] = useState<any>([]);
   const { refreshEvent, setRefreshEvent } = useAuth();
   const toast = useToast();
@@ -87,10 +81,12 @@ export default function TheEvent() {
     };
 
     (async () => {
+      setLoading(true);
       setEvents(await fetchEvent());
       setAccounts(await fetchData());
       setRefreshEvent(false);
       setRefreshInner(false);
+      setLoading(false);
     })();
   }, [eventId, navigate, refreshEvent, setRefreshEvent, user.id, refreshInner]);
 
@@ -127,9 +123,11 @@ export default function TheEvent() {
     };
 
     (async () => {
+      // setLoading(true);
       setMessages(await fetchMessages());
 
       setRefreshMessages(false);
+      // setLoading(false);
     })();
   }, [eventId, refreshMessages]);
 
@@ -213,42 +211,11 @@ export default function TheEvent() {
   return (
     <>
       {/* need to title the event */}
-      {events && (
+      {!loading && events && (
         <Flex overflow="hidden" h="calc(100vh - 57px)">
           <Box>
             <Flex padding="10px" alignItems="center" height="100%">
-              <ButtonGroup>
-                <Flex gap="25px" flexDir="column">
-                  <IconButton
-                    // will provide the option to change the name of the event, budget, etc
-                    boxSize="100px"
-                    fontSize={"50px"}
-                    icon={<AiOutlineSetting />}
-                    aria-label="setting"
-                  ></IconButton>
-                  <IconButton
-                    // pay with venmo
-                    boxSize="100px"
-                    fontSize={"50px"}
-                    icon={<AiFillMoneyCollect />}
-                    aria-label="setting"
-                  ></IconButton>
-                  <IconButton
-                    aria-label="Share"
-                    boxSize="100px"
-                    fontSize={"50px"}
-                    onClick={() => {
-                      onCopy();
-                      toast({
-                        title: "Invite link copied to clipboard.",
-                        status: "success",
-                        duration: 2000,
-                      });
-                    }}
-                    icon={<BiShare aria-label="ShareIcon" />}
-                  />
-                </Flex>
-              </ButtonGroup>
+              <InnerOptions onCopy={onCopy} events={events} />
             </Flex>
           </Box>
           <Box flexGrow="7.5">
@@ -268,61 +235,43 @@ export default function TheEvent() {
                 paddingLeft="20px"
                 overflowX="hidden"
               >
-                {!loading &&
-                  messages.map((msg: any) => {
-                    const currentColor = participantColors.get(msg.userId);
-                    return (
-                      <Message
-                        content={msg.content}
-                        picture={msg.user ? msg.user.picture : msg.picture}
-                        createdAt={msg.createdAt}
-                        own={
-                          Number(user.id) === Number(msg.userId) ? true : false
-                        }
-                        color={currentColor}
-                      />
-                    );
-                  })}
+                {messages.map((msg: any) => {
+                  const currentColor = participantColors.get(msg.userId);
+                  return (
+                    <Message
+                      content={msg.content}
+                      picture={msg.user ? msg.user.picture : msg.picture}
+                      createdAt={msg.createdAt}
+                      own={
+                        Number(user.id) === Number(msg.userId) ? true : false
+                      }
+                      color={currentColor}
+                    />
+                  );
+                })}
                 <div ref={messagesEndRef} />
               </Box>
               <Box>
-                <Flex
-                  justifyContent="space-between"
-                  gap="20px"
-                  alignItems="center"
-                >
-                  {!loading ? (
-                    <>
-                      <Textarea
-                        ref={messageToSendRef}
-                        resize="none"
-                        placeholder="Send Message"
-                      />
-                      <IconButton
-                        colorScheme="pink"
-                        icon={<Icon as={AiOutlineSend} />}
-                        aria-label="send"
-                        onClick={() => handleSubmit()}
-                      />
-                    </>
-                  ) : (
-                    <>
-                      <Textarea
-                        isDisabled
-                        ref={messageToSendRef}
-                        resize="none"
-                        placeholder="Send Message"
-                      />
-                      <IconButton
-                        isLoading
-                        colorScheme="pink"
-                        icon={<Icon as={AiOutlineSend} />}
-                        aria-label="send"
-                        onClick={handleSubmit}
-                      />
-                    </>
-                  )}
-                </Flex>
+                <Form onSubmit={handleSubmit}>
+                  <Flex
+                    justifyContent="space-between"
+                    gap="20px"
+                    alignItems="center"
+                  >
+                    <Textarea
+                      ref={messageToSendRef}
+                      resize="none"
+                      placeholder="Send Message"
+                      isRequired
+                    />
+                    <IconButton
+                      colorScheme="pink"
+                      icon={<Icon as={AiOutlineSend} />}
+                      aria-label="send"
+                      type="submit"
+                    />
+                  </Flex>
+                </Form>
               </Box>
             </Flex>
           </Box>
@@ -370,12 +319,14 @@ export default function TheEvent() {
             </div> */}
         </Flex>
       )}
-      <AddFriendToEvent
-        isOpen2={isOpen}
-        e={events}
-        onClose2={onClose}
-        accounts={accounts}
-      />
+      {!loading && (
+        <AddFriendToEvent
+          isOpen2={isOpen}
+          e={events}
+          onClose2={onClose}
+          accounts={accounts}
+        />
+      )}
     </>
   );
 }
