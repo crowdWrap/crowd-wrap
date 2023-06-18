@@ -30,13 +30,15 @@ import {
 import { AiOutlinePlus } from "react-icons/ai";
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../../hooks/authContext";
+import FlexWithText from "./flexWithText";
 
 export default function CreateEventButton() {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { user } = useAuth();
+  const { user, setUser } = useAuth();
   const navigate = useNavigate();
   const finalRef = React.useRef(null);
   const [loading, setLoading] = useState(false);
+  const [status, setStatus] = useState<any>(null);
 
   const steps = [
     { title: "First", description: "Details" },
@@ -51,10 +53,30 @@ export default function CreateEventButton() {
 
   useEffect(() => {
     if (!isOpen) {
-      setActiveStep(-1);
+      if (user.paymentType !== "") {
+        setActiveStep(0);
+      } else {
+        setActiveStep(-1);
+      }
       setLoading(false);
+      setStatus(null);
     }
-  }, [isOpen]);
+  }, [isOpen, setActiveStep, user.paymentType]);
+
+  const handlePaymentUpdate = async (paymentType: string) => {
+    const response: Response = await fetch("/payment/update", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        paymentType,
+      }),
+    });
+
+    const receivedData = await response.json();
+    setUser(receivedData.user);
+  };
 
   return (
     <>
@@ -120,44 +142,36 @@ export default function CreateEventButton() {
                 onClose={onClose}
               />
             ) : (
-              <Flex
-                flexDir="column"
-                height="100%"
-                justifyContent="space-evenly"
-                alignItems="center"
-              >
-                <Flex flexDir="column" align="center" gap="15px">
-                  <Heading>Create event with Paypal?</Heading>
-                  <Text maxW={"85%"} textAlign="center">
-                    In order to be able to receive funds from your events
-                    participants, you would need to create a stripe account. We
-                    use Stripe to get you paid quickly and keep your personal
-                    and payment information secure. Please choose an option
-                    below.
-                  </Text>
-                </Flex>
-                <ButtonGroup>
-                  <Button
-                    onClick={() => {
-                      setLoading(true);
-                      // set payment type
-                      setActiveStep(0);
-                    }}
-                    isLoading={loading}
-                  >
-                    No Payment
-                  </Button>
-                  <Button
-                    onClick={() => {
-                      setLoading(true);
-                    }}
-                    colorScheme="green"
-                    isLoading={loading}
-                  >
-                    Continue with Stripe
-                  </Button>
-                </ButtonGroup>
-              </Flex>
+              <>
+                {!status && (
+                  <FlexWithText
+                    setLoading={setLoading}
+                    handlePaymentUpdate={handlePaymentUpdate}
+                    setActiveStep={setActiveStep}
+                    loading={loading}
+                    headingText={"Create event with Paypal?"}
+                    paragraphText={
+                      "In order to be able to receive funds from your events participants, you would need to sign in to Paypal."
+                    }
+                    secondButton={true}
+                    BtnText={"Continue with Paypal"}
+                    setStatus={setStatus}
+                  />
+                )}
+                {status && (
+                  <FlexWithText
+                    setLoading={setLoading}
+                    handlePaymentUpdate={handlePaymentUpdate}
+                    setActiveStep={setActiveStep}
+                    loading={loading}
+                    headingText={"Enter your Paypal Email!"}
+                    paragraphText={
+                      "Ensure that this is the correct email, the paypal connected to this email will receive your participants funds."
+                    }
+                    BtnText={"Confirm"}
+                  />
+                )}
+              </>
             )}
           </ModalBody>
         </ModalContent>
