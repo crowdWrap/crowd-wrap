@@ -197,10 +197,8 @@ router.get("/id", async (req, res) => {
     const eventId: any = req.query.eventId;
     const event = await getEventById(Number(eventId));
     if (event) {
-      console.log("hi");
       return res.status(200).json({ event });
     } else {
-      console.log("bye");
       return res.status(404).json({ event: null });
     }
   }
