@@ -4,14 +4,11 @@ import {
   ModalContent,
   ModalHeader,
   ModalCloseButton,
-  ModalBody,
   ModalFooter,
   Button,
   Box,
-  Flex,
   Text,
 } from "@chakra-ui/react";
-import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import ButtonWrapper from "./paypalPay";
 import { useEffect, useState } from "react";
 

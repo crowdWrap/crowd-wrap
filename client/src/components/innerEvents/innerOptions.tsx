@@ -31,7 +31,7 @@ export default function InnerOptions({ onCopy, events }: any) {
         setLoading(false);
       }
     })();
-  }, []);
+  }, [events.ownerId]);
   return (
     <>
       <ButtonGroup>
