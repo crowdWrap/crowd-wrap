@@ -20,6 +20,7 @@ import { socket } from "../../api/socket";
 import AddFriendToEvent from "../events/addFriend";
 import InnerOptions from "./innerOptions";
 import { AiOutlineSend } from "react-icons/ai";
+import Confetti from "react-dom-confetti";
 
 async function fetchData() {
   try {
@@ -51,7 +52,21 @@ export default function TheEvent() {
   const [loading, setLoading] = useState(false);
   const [accounts, setAccounts] = useState<any>([]);
   const [refreshInner, setRefreshInner] = useState(false);
+  const [confetti, setConfetti] = useState(false);
   const navigate = useNavigate();
+
+  const confettiConfig = {
+    angle: 90,
+    spread: 460,
+    startVelocity: 20,
+    elementCount: 200,
+    dragFriction: 0.12,
+    duration: 3000,
+    stagger: 3,
+    width: "10px",
+    height: "10px",
+    colors: ["#a864fd", "#29cdff", "#78ff44", "#ff718d", "#fdff6a"],
+  };
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -94,6 +109,9 @@ export default function TheEvent() {
     socket.on("eventUpdate", (data) => {
       setRefreshInner(true);
       if (data.message !== "") {
+        if (data.message.includes("paid")) {
+          setConfetti(true);
+        }
         toast({
           title: "Event Notification.",
           description: `${data.message}.`,
@@ -105,11 +123,15 @@ export default function TheEvent() {
             | "loading",
           duration: 4000,
         });
+        setTimeout(() => {
+          setConfetti(false);
+        }, 3000);
       }
     });
 
     return () => {
       socket.off("eventUpdate");
+      setConfetti(false);
     };
   }, [setRefreshEvent, toast]);
 
@@ -211,121 +233,126 @@ export default function TheEvent() {
   return (
     <>
       {/* need to title the event */}
-      {!loading && events && (
-        <Flex overflow="hidden" h="calc(100vh - 57px)">
-          <Box>
-            <Flex padding="10px" alignItems="center" height="100%">
-              <InnerOptions onCopy={onCopy} events={events} />
-            </Flex>
-          </Box>
-          <Box flexGrow="11.5">
-            <Flex
-              flexDirection="column"
-              gap="20px"
-              padding="10px"
-              paddingRight="10px"
+      {/* {!loading && events && ( */}
+
+      <Flex overflow="hidden" h="calc(100vh - 57px)">
+        <Box>
+          <Flex padding="10px" alignItems="center" height="100%">
+            <InnerOptions onCopy={onCopy} events={events} />
+          </Flex>
+        </Box>
+
+        <Box flexGrow="11.5">
+          <Flex
+            flexDirection="column"
+            gap="20px"
+            padding="10px"
+            paddingRight="10px"
+            height="100%"
+          >
+            <Box
+              width="100%"
               height="100%"
+              overflowY="scroll"
+              padding="10px"
+              paddingRight="20px"
+              paddingLeft="20px"
+              overflowX="hidden"
             >
-              <Box
-                width="100%"
-                height="100%"
-                overflowY="scroll"
-                padding="10px"
-                paddingRight="20px"
-                paddingLeft="20px"
-                overflowX="hidden"
-              >
-                {messages.map((msg: any) => {
-                  const currentColor = participantColors.get(msg.userId);
-                  return (
-                    <Message
-                      content={msg.content}
-                      picture={msg.user ? msg.user.picture : msg.picture}
-                      createdAt={msg.createdAt}
-                      own={
-                        Number(user.id) === Number(msg.userId) ? true : false
-                      }
-                      color={currentColor}
-                    />
-                  );
-                })}
-                <div ref={messagesEndRef} />
-              </Box>
-              <Box>
-                <Form onSubmit={handleSubmit}>
-                  <Flex
-                    justifyContent="space-between"
-                    gap="20px"
-                    alignItems="center"
-                  >
-                    <Textarea
-                      ref={messageToSendRef}
-                      resize="none"
-                      placeholder="Send Message"
-                      isRequired
-                    />
-                    <IconButton
-                      colorScheme="pink"
-                      icon={<Icon as={AiOutlineSend} />}
-                      aria-label="send"
-                      type="submit"
-                    />
-                  </Flex>
-                </Form>
-              </Box>
-            </Flex>
-          </Box>
-          <Box flexGrow="1">
-            <Flex padding="10px" height="100%" width="100%" overflowY="scroll">
-              <AvatarGroup
-                max={11}
-                flexDir={"column-reverse"}
-                alignItems="center"
-                width="100%"
-              >
-                {events.participants &&
-                  events.participants.map((val: any, index: number) => (
-                    <>
-                      <FriendAvatar
-                        events={events}
-                        color={colors[index]}
-                        item={val}
-                      />
-                    </>
-                  ))}
-                {events.participants && events.participants.length < 10 && (
-                  <IconButton
-                    marginTop={"10px"}
-                    aria-label="add"
-                    onClick={onOpen}
-                    icon={<Icon as={BiPlus} />}
+              {messages.map((msg: any) => {
+                const currentColor = participantColors.get(msg.userId);
+                return (
+                  <Message
+                    content={msg.content}
+                    picture={msg.user ? msg.user.picture : msg.picture}
+                    createdAt={msg.createdAt}
+                    own={Number(user.id) === Number(msg.userId) ? true : false}
+                    color={currentColor}
                   />
-                )}
-              </AvatarGroup>
-            </Flex>
-          </Box>
-          <div className="innerTitleWrap">
-            <div className="innerData">{`${
-              events.deadlineDate === null ? "No Deadline" : handleDate()
-            }`}</div>
-            <p className="innerDesc">{events.description}</p>
-            <div className="innerImgWrap">
-              <h1 className="innerTitle">{events.title}</h1>
-              <div className="innerImg">{`${events.image}`}</div>
-            </div>
-            <div className="innerFunds">{`CurrentFunds: ${events.Currentfunds}`}</div>
-            <h4>Goal: {events.moneyGoal}</h4>
+                );
+              })}
+              <div ref={messagesEndRef} />
+            </Box>
+            <Box>
+              <Form onSubmit={handleSubmit}>
+                <Flex
+                  justifyContent="space-between"
+                  gap="20px"
+                  alignItems="center"
+                >
+                  <Textarea
+                    ref={messageToSendRef}
+                    resize="none"
+                    placeholder="Send Message"
+                    isRequired
+                  />
+                  <IconButton
+                    colorScheme="pink"
+                    icon={<Icon as={AiOutlineSend} />}
+                    aria-label="send"
+                    type="submit"
+                  />
+                </Flex>
+              </Form>
+            </Box>
+          </Flex>
+        </Box>
+        <Box flexGrow="1">
+          <Flex padding="10px" height="100%" width="100%" overflowY="scroll">
+            <AvatarGroup
+              max={11}
+              flexDir={"column-reverse"}
+              alignItems="center"
+              width="100%"
+            >
+              {events.participants &&
+                events.participants.map((val: any, index: number) => (
+                  <>
+                    <FriendAvatar
+                      events={events}
+                      color={colors[index]}
+                      item={val}
+                    />
+                  </>
+                ))}
+              {events.participants && events.participants.length < 10 && (
+                <IconButton
+                  marginTop={"10px"}
+                  aria-label="add"
+                  onClick={onOpen}
+                  icon={<Icon as={BiPlus} />}
+                />
+              )}
+            </AvatarGroup>
+          </Flex>
+        </Box>
+        <div className="innerTitleWrap">
+          <div className="innerData">{`${
+            events.deadlineDate === null ? "No Deadline" : handleDate()
+          }`}</div>
+          <p className="innerDesc">{events.description}</p>
+          <div className="innerImgWrap">
+            <h1 className="innerTitle">{events.title}</h1>
+            <div className="innerImg">{`${events.image}`}</div>
           </div>
-        </Flex>
-      )}
-      {!loading && (
-        <AddFriendToEvent
-          isOpen2={isOpen}
-          e={events}
-          onClose2={onClose}
-          accounts={accounts}
-        />
-      )}
+          <div className="innerFunds">{`CurrentFunds: ${
+            Math.round(events.Currentfunds * 100) / 100
+          }`}</div>
+          <h4>Goal: {events.moneyGoal}</h4>
+        </div>
+      </Flex>
+      {/* )} */}
+      {/* {!loading && ( */}
+      <AddFriendToEvent
+        isOpen2={isOpen}
+        e={events}
+        onClose2={onClose}
+        accounts={accounts}
+      />
+      {/* )} */}
+      <Box position="absolute" top={"40%"} left={"50%"}>
+        <Confetti active={confetti} config={confettiConfig} />
+      </Box>
     </>
   );
 }
