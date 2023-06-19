@@ -218,7 +218,7 @@ export default function TheEvent() {
               <InnerOptions onCopy={onCopy} events={events} />
             </Flex>
           </Box>
-          <Box flexGrow="7.5">
+          <Box flexGrow="11.5">
             <Flex
               flexDirection="column"
               gap="20px"
@@ -304,19 +304,18 @@ export default function TheEvent() {
               </AvatarGroup>
             </Flex>
           </Box>
-          {/* <div className="innerTitleWrap">
-              <div className="innerData">{`${
-                events.deadlineDate === null ? "No Deadline" : handleDate()
-              }`}</div>
-              {events.title}
-              <p className="innerDesc">{events.description}</p>
-              <div className="innerImgWrap">
-                <h1 className="innerTitle">{events.title}</h1>
-                <div className="innerImg">{`${events.image}`}</div>
-              </div>
-              <div className="innerFunds">{`CurrentFunds: ${events.Currentfunds}`}</div>
-              <h4>Goal: {events.moneyGoal}</h4>
-            </div> */}
+          <div className="innerTitleWrap">
+            <div className="innerData">{`${
+              events.deadlineDate === null ? "No Deadline" : handleDate()
+            }`}</div>
+            <p className="innerDesc">{events.description}</p>
+            <div className="innerImgWrap">
+              <h1 className="innerTitle">{events.title}</h1>
+              <div className="innerImg">{`${events.image}`}</div>
+            </div>
+            <div className="innerFunds">{`CurrentFunds: ${events.Currentfunds}`}</div>
+            <h4>Goal: {events.moneyGoal}</h4>
+          </div>
         </Flex>
       )}
       {!loading && (

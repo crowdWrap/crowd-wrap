@@ -13,7 +13,7 @@ import {
   MenuItem,
   MenuList,
 } from "@chakra-ui/react";
-import { AiOutlineDelete, AiOutlineMore } from "react-icons/ai";
+import { AiOutlineCrown, AiOutlineDelete, AiOutlineMore } from "react-icons/ai";
 import { useAuth } from "../../hooks/authContext";
 
 export default function FriendAvatar({ item, events, color }: any) {
@@ -37,7 +37,7 @@ export default function FriendAvatar({ item, events, color }: any) {
   return (
     <Card style={{ marginBottom: "5px" }} key={item.userId} width="100%">
       <CardHeader>
-        <Flex>
+        <Flex alignItems="center">
           <Flex flex="1" gap="4" alignItems="center" flexWrap="wrap">
             <Avatar
               src={
@@ -51,9 +51,27 @@ export default function FriendAvatar({ item, events, color }: any) {
             </Avatar>
             <Heading size="sm">{item.username}</Heading>
 
-            {`${item.userId}` === `${events.ownerId}` && (
-              <Badge marginRight="-50%" colorScheme="green">
+            {`${item.userId}` === `${events.ownerId}` ? (
+              <Badge
+                fontSize="0.8rem"
+                colorScheme="green"
+                fontWeight="hairline"
+                marginLeft="auto"
+                marginRight={
+                  `${user.id}` === `${events.ownerId}` ? "18px" : "10px"
+                }
+              >
                 Owner
+              </Badge>
+            ) : (
+              <Badge
+                marginLeft="auto"
+                marginRight="10px"
+                fontSize="0.8rem"
+                colorScheme="blue"
+                fontWeight="hairline"
+              >
+                Paid: ${item.currentMoney}
               </Badge>
             )}
           </Flex>
@@ -86,6 +104,16 @@ export default function FriendAvatar({ item, events, color }: any) {
                      </MenuItem> */}
                 </MenuList>
               </Menu>
+            )}
+          {user &&
+            `${item.userId}` === `${events.ownerId}` &&
+            `${user.id}` === `${events.ownerId}` && (
+              <Icon
+                marginRight="10px"
+                boxSize={5}
+                // color="yellow.300"
+                as={AiOutlineCrown}
+              />
             )}
         </Flex>
       </CardHeader>

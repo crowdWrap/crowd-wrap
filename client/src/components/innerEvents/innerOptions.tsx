@@ -9,12 +9,14 @@ import { useEffect, useState } from "react";
 import { AiOutlineSetting, AiFillMoneyCollect } from "react-icons/ai";
 import { BiShare } from "react-icons/bi";
 import PayPrompt from "./payPrompt";
+import { useAuth } from "../../hooks/authContext";
 
 export default function InnerOptions({ onCopy, events }: any) {
   const toast = useToast();
   const [ownerPaymentType, setOwnerPaymentType] = useState("none");
   const [loading, setLoading] = useState(false);
   const { onOpen, isOpen, onClose } = useDisclosure();
+  const { user } = useAuth();
 
   useEffect(() => {
     (async () => {
@@ -36,16 +38,18 @@ export default function InnerOptions({ onCopy, events }: any) {
     <>
       <ButtonGroup>
         <Flex gap="25px" flexDir="column">
-          {!loading && ownerPaymentType !== "none" && (
-            <IconButton
-              // pay with venmo
-              boxSize="100px"
-              fontSize={"50px"}
-              icon={<AiFillMoneyCollect />}
-              aria-label="setting"
-              onClick={onOpen}
-            />
-          )}
+          {!loading &&
+            ownerPaymentType !== "none" &&
+            user.id !== events.ownerId && (
+              <IconButton
+                // pay with venmo
+                boxSize="100px"
+                fontSize={"50px"}
+                icon={<AiFillMoneyCollect />}
+                aria-label="setting"
+                onClick={onOpen}
+              />
+            )}
           <IconButton
             // will provide the option to change the name of the event, budget, etc
             boxSize="100px"
