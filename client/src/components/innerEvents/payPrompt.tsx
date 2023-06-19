@@ -10,6 +10,8 @@ import {
   Avatar,
   Flex,
   useToast,
+  Heading,
+  Tooltip,
 } from "@chakra-ui/react";
 import ButtonWrapper from "./paypalPay";
 import { useEffect, useState } from "react";
@@ -31,7 +33,7 @@ export default function PayPrompt({ isOpen, onClose, email, events }: any) {
     >
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Pay the host</ModalHeader>
+        <ModalHeader>Pay </ModalHeader>
         <Box
           style={{ maxWidth: "750px", minHeight: "200px" }}
           alignItems="center"
@@ -44,6 +46,7 @@ export default function PayPrompt({ isOpen, onClose, email, events }: any) {
               height="100px"
               alignItems={"center"}
               flexDir="column"
+              padding="5px"
             >
               <Flex
                 borderRadius="full"
@@ -53,9 +56,10 @@ export default function PayPrompt({ isOpen, onClose, email, events }: any) {
                 alignItems="center"
                 backgroundColor="blue.500"
                 padding="25px"
+                marginBottom="25px"
               >
-                <Text color="white" fontWeight="bold">
-                  {events.moneyGoal}
+                <Text userSelect="none" color="white" fontWeight="bold">
+                  <Tooltip label="Goal">{events.moneyGoal}</Tooltip>
                 </Text>
               </Flex>
               <AmountPrompt events={events} setAmount={setAmount} />
@@ -67,11 +71,10 @@ export default function PayPrompt({ isOpen, onClose, email, events }: any) {
               showSpinner={false}
               amount={amount}
               email={email}
-              setStatus={setStatus}
+              onClose={onClose}
               events={events}
             />
           )}
-          {status === "paid" && <Text>Congrats you have paid!</Text>}
         </Box>
 
         <ModalFooter justifyContent="center">

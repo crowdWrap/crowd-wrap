@@ -9,7 +9,7 @@ export default function ButtonWrapper({
   showSpinner,
   amount,
   email,
-  setStatus,
+  onClose,
   events,
 }: any) {
   const [{ options, isPending }, dispatch] = usePayPalScriptReducer();
@@ -73,7 +73,7 @@ export default function ButtonWrapper({
         }}
         onApprove={function (data: any, actions: any) {
           return actions.order.capture().then(function () {
-            setStatus("paid");
+            onClose();
             handleFundUpdate();
           });
         }}
