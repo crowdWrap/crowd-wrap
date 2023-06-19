@@ -11,6 +11,7 @@ export default function ButtonWrapper({
   email,
   onClose,
   events,
+  setStatus,
 }: any) {
   const [{ options, isPending }, dispatch] = usePayPalScriptReducer();
   const { user } = useAuth();
@@ -74,6 +75,7 @@ export default function ButtonWrapper({
         onApprove={function (data: any, actions: any) {
           return actions.order.capture().then(function () {
             onClose();
+            setStatus("amount");
             handleFundUpdate();
           });
         }}

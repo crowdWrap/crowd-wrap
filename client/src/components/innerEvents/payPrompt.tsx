@@ -73,6 +73,7 @@ export default function PayPrompt({ isOpen, onClose, email, events }: any) {
               email={email}
               onClose={onClose}
               events={events}
+              setStatus={setStatus}
             />
           )}
         </Box>

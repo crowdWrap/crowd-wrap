@@ -71,7 +71,7 @@ export default function FriendAvatar({ item, events, color }: any) {
                 colorScheme="blue"
                 fontWeight="hairline"
               >
-                Paid: ${item.currentMoney}
+                Paid: ${Math.round(item.currentMoney * 100) / 100}
               </Badge>
             )}
           </Flex>
