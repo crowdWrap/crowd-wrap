@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "EventToUser" ALTER COLUMN "currentMoney" SET DATA TYPE DOUBLE PRECISION;
