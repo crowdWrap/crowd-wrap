@@ -197,7 +197,7 @@ export async function updateEventCurrentFunds(
         id: eventId,
       },
       data: {
-        Currentfunds: event?.Currentfunds - currentMoney,
+        Currentfunds: event?.Currentfunds + currentMoney,
       },
     });
     return updatedEvent;

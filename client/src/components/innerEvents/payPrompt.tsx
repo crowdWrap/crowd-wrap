@@ -68,6 +68,7 @@ export default function PayPrompt({ isOpen, onClose, email, events }: any) {
               amount={amount}
               email={email}
               setStatus={setStatus}
+              events={events}
             />
           )}
           {status === "paid" && <Text>Congrats you have paid!</Text>}
