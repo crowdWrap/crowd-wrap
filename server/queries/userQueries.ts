@@ -79,22 +79,22 @@ export async function updateUserCurrentFunds(
   userId: number,
   currentMoney: number
 ) {
-  const user = await prisma.eventToUser.findFirst({
+  const user: any = await prisma.eventToUser.findFirst({
     where: {
       userId,
       eventId,
     },
   });
 
-  if (!user) {
+  if (user) {
+    const updateFunds = prisma.eventToUser.update({
+      where: { id: user?.id },
+      data: {
+        currentMoney: user?.currentMoney + currentMoney,
+      },
+    });
+    return updateFunds;
+  } else {
     throw new Error(`User ${userId} is not a participant in event ${eventId}`);
   }
-
-  const updateFunds = prisma.eventToUser.update({
-    where: { id: user?.id },
-    data: {
-      currentMoney,
-    },
-  });
-  return updateFunds;
 }

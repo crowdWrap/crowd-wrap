@@ -55,7 +55,7 @@ router.post("/complete", async (req, res) => {
     updateEventCurrentFunds(Number(eventId), Number(amountPaid));
     eventsNotification(
       theEvent.participants,
-      `${user.username} has paid ${amountPaid}!!"`,
+      `${user.username} has paid $${amountPaid}!!"`,
       "success"
     );
     // could add confetti
