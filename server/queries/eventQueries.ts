@@ -184,3 +184,24 @@ export async function getParticipantById(id: number) {
     throw new Error(`Profile '${id}' doesn't exist.`);
   }
 }
+
+export async function updateEventCurrentFunds(
+  eventId: number,
+  currentMoney: number
+) {
+  const event = await getEventById(eventId);
+
+  if (event) {
+    const updatedEvent = await prisma.event.update({
+      where: {
+        id: eventId,
+      },
+      data: {
+        Currentfunds: event?.Currentfunds - currentMoney,
+      },
+    });
+    return updatedEvent;
+  } else {
+    throw new Error(`${eventId} doesnt exist`);
+  }
+}
