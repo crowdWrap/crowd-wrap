@@ -74,6 +74,7 @@ export default function InnerOptions({ onCopy, events }: any) {
         isOpen={isOpen}
         onClose={onClose}
         email={ownerPaymentType.substring(7)}
+        events={events}
       />
     </>
   );
