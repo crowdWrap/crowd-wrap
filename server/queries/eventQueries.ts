@@ -101,7 +101,11 @@ export async function getEventById(id: number) {
       id,
     },
     include: {
-      participants: true,
+      participants: {
+        orderBy: {
+          joinedAt: "asc",
+        },
+      },
     },
   });
   if (event) {
@@ -119,7 +123,11 @@ export async function getAllEventsByid(id: number) {
     include: {
       event: {
         include: {
-          participants: true,
+          participants: {
+            orderBy: {
+              joinedAt: "asc",
+            },
+          },
         },
       },
     },

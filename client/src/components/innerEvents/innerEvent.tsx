@@ -133,7 +133,7 @@ export default function TheEvent() {
       socket.off("eventUpdate");
       setConfetti(false);
     };
-  }, [setRefreshEvent, toast]);
+  }, [setRefreshInner, toast]);
 
   useEffect(() => {
     const fetchMessages = async () => {
