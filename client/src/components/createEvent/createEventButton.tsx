@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import "./createEvent.css";
 import CreateEventPop from "./createEventPop";
 import {
   Box,

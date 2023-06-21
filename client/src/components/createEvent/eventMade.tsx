@@ -214,7 +214,7 @@ any) {
                             <IconButton
                               isLoading
                               fontSize={"20px"}
-                              aria-label="Add"
+                              aria-label="Invite"
                               icon={<Icon as={AiOutlinePlus} />}
                             />
                           ) : (
@@ -224,7 +224,7 @@ any) {
                                 // setSelectedEvent("");
                               }}
                               fontSize={"20px"}
-                              aria-label="Add"
+                              aria-label="Invite"
                               icon={<Icon as={AiOutlinePlus} />}
                             />
                           )}

@@ -1,14 +1,12 @@
 import { Router } from "express";
-import {
-  getProfileByEmail,
-  getProfileById,
-  getProfileByUsername,
-  updateUser,
-  updateUserName,
-} from "../profileQueries";
-import { createUser } from "../userQueries";
+import { createUser, updateUser, updateUserName } from "../queries/userQueries";
 import { OAuth2Client } from "google-auth-library";
 import bcrypt from "bcryptjs";
+import {
+  getProfileByEmail,
+  getProfileByUsername,
+  getProfileById,
+} from "../queries/profileQueries";
 
 const client = new OAuth2Client(process.env.CLIENTID);
 const router = Router();

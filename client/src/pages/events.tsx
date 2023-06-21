@@ -289,7 +289,7 @@ export default function Events() {
                   },
                 }}
               >
-                <AvatarGroup size="md" max={3}>
+                <AvatarGroup size="md" max={5}>
                   {events &&
                     e.participants.map((val: any) => (
                       <Avatar key={val.id} src={val.picture} />

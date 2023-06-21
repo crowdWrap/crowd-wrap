@@ -12,7 +12,7 @@ import {
   getProfileByUsername,
   getProfileByEmail,
   getProfileById,
-} from "./profileQueries";
+} from "./queries/profileQueries";
 import cors from "cors";
 import passport from "passport";
 import http from "http";
@@ -100,6 +100,8 @@ io.on("connection", async (socket: any) => {
     console.log(onlineUsers);
   });
 });
+
+export const stripe = require("stripe")(process.env.STRIPE_ID);
 
 app.use("/register", registerRouter);
 
