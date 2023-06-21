@@ -43,15 +43,6 @@ export default function SingularEvent({
     `http://localhost:3000/events/invite/${e.inviteLink}`
   );
 
-  const handleMoney = (e: any) => {
-    const match = e.moneyGoal.match(/\d+/g);
-    if (match[0] && match[1]) {
-      return `${match[0]}-${match[1]}`;
-    } else {
-      return match[0];
-    }
-  };
-
   const handleProgress = (e: any) => {
     const match = e.moneyGoal.match(/\d+/g);
     return match[0];

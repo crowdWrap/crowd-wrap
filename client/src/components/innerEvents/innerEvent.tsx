@@ -6,7 +6,10 @@ import { useAuth } from "../../hooks/authContext";
 import {
   AvatarGroup,
   Box,
+  CircularProgress,
+  CircularProgressLabel,
   Flex,
+  Heading,
   Icon,
   IconButton,
   Textarea,
@@ -194,19 +197,10 @@ export default function TheEvent() {
     return formattedDate;
   };
 
-  // const handleProgress = () => {
-  //   const match = events.moneyGoal.match(/\d+/g);
-  //   return match[0];
-  // };
-
-  // const handleMoney = () => {
-  //   const match = events.moneyGoal.match(/\d+/g);
-  //   if (match[0] && match[1]) {
-  //     return `${match[0]}-${match[1]}`;
-  //   } else {
-  //     return match[0];
-  //   }
-  // };
+  const handleProgress = (e: any) => {
+    const match = e.moneyGoal.match(/\d+/g);
+    return match[0];
+  };
 
   const colors = [
     "pink",
@@ -234,11 +228,42 @@ export default function TheEvent() {
     <>
       {/* need to title the event */}
       {/* {!loading && events && ( */}
-
+      <Heading padding="10px" position="absolute">
+        {events.title}
+      </Heading>
       <Flex overflow="hidden" h="calc(100vh - 57px)">
         <Box>
-          <Flex padding="10px" alignItems="center" height="100%">
-            <InnerOptions onCopy={onCopy} events={events} />
+          <Flex
+            padding="10px"
+            justifyContent="space-between "
+            alignItems="center"
+            flexDir="column"
+            height="70%"
+          >
+            {events && events.Currentfunds ? (
+              <>
+                <CircularProgress
+                  marginTop="50px"
+                  value={Number(
+                    `${(events.Currentfunds / handleProgress(events)) * 100}`
+                  )}
+                  size="100px"
+                  color="green.400"
+                >
+                  <CircularProgressLabel>
+                    ${events.Currentfunds}
+                  </CircularProgressLabel>
+                </CircularProgress>
+                <InnerOptions onCopy={onCopy} events={events} />
+              </>
+            ) : (
+              <>
+                <CircularProgress value={0} size="100px" color="green.400">
+                  <CircularProgressLabel>$0</CircularProgressLabel>
+                </CircularProgress>
+                <InnerOptions onCopy={onCopy} events={events} />
+              </>
+            )}
           </Flex>
         </Box>
 
@@ -326,20 +351,6 @@ export default function TheEvent() {
             </AvatarGroup>
           </Flex>
         </Box>
-        <div className="innerTitleWrap">
-          <div className="innerData">{`${
-            events.deadlineDate === null ? "No Deadline" : handleDate()
-          }`}</div>
-          <p className="innerDesc">{events.description}</p>
-          <div className="innerImgWrap">
-            <h1 className="innerTitle">{events.title}</h1>
-            <div className="innerImg">{`${events.image}`}</div>
-          </div>
-          <div className="innerFunds">{`CurrentFunds: ${
-            Math.round(events.Currentfunds * 100) / 100
-          }`}</div>
-          <h4>Goal: {events.moneyGoal}</h4>
-        </div>
       </Flex>
       {/* )} */}
       {/* {!loading && ( */}
