@@ -6,30 +6,34 @@ import {
   PopoverArrow,
   PopoverContent,
   PopoverTrigger,
-  useToast,
 } from "@chakra-ui/react";
 import { FaUserFriends } from "react-icons/fa";
 
-export default function FriendsList({ children }: any) {
+export default function FriendsList() {
   return (
     <>
-      <Popover isLazy placement={"top"}>
+      <Popover isLazy>
         <PopoverTrigger>
-          {/* <IconButton
+          <IconButton
             size={"sm"}
             // fontSize={"15px"}
             padding="0px"
             margin={"0"}
             variant="outline"
             borderRadius="full"
-            colorScheme="pink"
+            colorScheme="black"
             aria-label="Friendlist"
             icon={<Icon as={FaUserFriends} />}
-          /> */}
-          {children}
+          />
         </PopoverTrigger>
-        <PopoverArrow />
-        <PopoverContent height={"405px"} borderRadius={"25px "}>
+        <PopoverContent
+          height={"405px"}
+          borderRadius={"25px "}
+          style={{
+            marginRight: "5px",
+          }}
+        >
+          <PopoverArrow />
           <FriendsListCover />
         </PopoverContent>
       </Popover>

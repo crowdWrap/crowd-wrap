@@ -62,7 +62,7 @@ export default function Header() {
               {user && user.usernameSet && (
                 <>
                   <CreateEventButton />
-                  {/* <FriendsList /> */}
+                  <FriendsList />
                 </>
               )}
               <LogoutButton />

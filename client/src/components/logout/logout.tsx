@@ -2,7 +2,6 @@ import styles from "./logout.module.css";
 import { useAuth } from "../../hooks/authContext";
 import {
   Avatar,
-  Box,
   Button,
   Divider,
   Drawer,
@@ -19,14 +18,13 @@ import {
 } from "@chakra-ui/react";
 import {
   AiOutlineSetting,
-  AiOutlineFolder,
   AiOutlineLogout,
   AiOutlineSchedule,
-  AiOutlineUser,
+  AiOutlineFolderView,
+  AiOutlineUserSwitch,
 } from "react-icons/ai";
-import React, { useState } from "react";
+import React from "react";
 import Buttoninfo from "./buttonInfo";
-import FriendsList from "../friendList/friendslist";
 
 export default function LogoutButton() {
   const { user, logout, loading } = useAuth();
@@ -84,16 +82,12 @@ export default function LogoutButton() {
 
               <DrawerBody>
                 <Flex direction="column" width="100%" gap={4}>
-                  <FriendsList>
-                    <Buttoninfo text="Friends" icon={AiOutlineUser} />
-                  </FriendsList>
-
-                  <Buttoninfo text="Feed" icon={AiOutlineFolder} />
-
-                  <Buttoninfo text="Upcoming" icon={AiOutlineSchedule} />
-
-                  <Buttoninfo text="Settings" icon={AiOutlineSetting} />
+                  <Buttoninfo text="Friend Feed" icon={AiOutlineUserSwitch} />
                   <Divider />
+                  <Buttoninfo text="Upcoming" icon={AiOutlineSchedule} />
+                  <Divider />
+                  <Buttoninfo text="Settings" icon={AiOutlineSetting} />
+                  {/* <Divider /> */}
                 </Flex>
               </DrawerBody>
 

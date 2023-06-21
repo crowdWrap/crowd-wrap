@@ -3,7 +3,7 @@ import { Flex, Box, Button, Divider } from "@chakra-ui/react";
 export default function Buttoninfo({ text, icon, flexContent, ...props }: any) {
   return (
     <>
-      {!flexContent && <Divider />}
+      {/* {!flexContent && <Divider />} */}
       <Button backgroundColor="transparent" width="full" {...props}>
         <Flex
           alignItems="center"
