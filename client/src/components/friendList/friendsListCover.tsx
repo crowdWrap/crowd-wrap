@@ -3,6 +3,7 @@ import FriendsListSearch from "./friendsListSearch";
 import FriendListAdd, { FriendListAddSearch } from "./friendListAdd";
 import FriendListInbox from "./friendListInbox";
 import {
+  Box,
   Flex,
   Icon,
   Tab,
@@ -111,7 +112,7 @@ export default function FriendsListCover() {
         position="relative"
         variant="unstyled"
       >
-        <div style={{ position: "fixed" }}>
+        <Box style={{ position: "fixed" }}>
           <TabList>
             <Flex justifyContent="space-around" width="318px">
               <Tab flexGrow="1">
@@ -144,9 +145,9 @@ export default function FriendsListCover() {
             borderRadius="1px"
             backgroundColor="darkBlue"
           />
-        </div>
+        </Box>
 
-        <div
+        <Box
           style={{
             position: "relative",
             top: "50px",
@@ -194,7 +195,7 @@ export default function FriendsListCover() {
               />
             </TabPanel>
           </TabPanels>
-        </div>
+        </Box>
       </Tabs>
     </>
   );

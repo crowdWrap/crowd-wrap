@@ -97,7 +97,7 @@ export default function CreateEventButton() {
       >
         <ModalOverlay
           bg="blackAlpha.300"
-          backdropFilter="blur(5px) hue-rotate(270deg)"
+          backdropFilter=" hue-rotate(270deg)"
         />
         <ModalContent height="550px">
           {user.paymentType !== "" && (
