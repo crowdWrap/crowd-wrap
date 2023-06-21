@@ -1,29 +1,46 @@
 import styles from "./logout.module.css";
 import { useAuth } from "../../hooks/authContext";
 import {
+  Avatar,
+  Box,
   Button,
-  Icon,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
+  Divider,
+  Drawer,
+  DrawerBody,
+  DrawerCloseButton,
+  DrawerContent,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerOverlay,
+  Flex,
+  Heading,
   SkeletonCircle,
+  useDisclosure,
 } from "@chakra-ui/react";
 import {
-  AiOutlineUser,
   AiOutlineSetting,
-  AiOutlinePoweroff,
+  AiOutlineFolder,
+  AiOutlineLogout,
+  AiOutlineSchedule,
+  AiOutlineUser,
 } from "react-icons/ai";
+import React, { useState } from "react";
+import Buttoninfo from "./buttonInfo";
+import FriendsList from "../friendList/friendslist";
 
 export default function LogoutButton() {
   const { user, logout, loading } = useAuth();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const btnRef = React.useRef<any>();
 
+  // console.log(user);
   return (
     <>
-      <Menu>
-        {!loading && (
-          // <Tooltip label="Account" bg="blackAlpha" color="black">
-          <MenuButton
+      {!loading ? (
+        <>
+          <Button
+            ref={btnRef}
+            onClick={isOpen ? onClose : onOpen}
             style={{
               backgroundImage: `url(${user.picture})`,
               backgroundSize: "cover",
@@ -32,27 +49,77 @@ export default function LogoutButton() {
             }}
             as={Button}
             className={styles["logoutBtn"]}
-          ></MenuButton>
-          // </Tooltip>
-        )}
-
-        {loading && <SkeletonCircle size="10" />}
-
-        <MenuList minWidth="120px">
-          <MenuItem icon={<Icon boxSize={4} as={AiOutlineUser} />}>
-            Profile
-          </MenuItem>
-          <MenuItem icon={<Icon boxSize={4} as={AiOutlineSetting} />}>
-            Settings
-          </MenuItem>
-          <MenuItem
-            onClick={logout}
-            icon={<Icon boxSize={4} as={AiOutlinePoweroff} />}
+          />
+          <Drawer
+            isOpen={isOpen}
+            placement="right"
+            onClose={onClose}
+            finalFocusRef={btnRef}
           >
-            Logout
-          </MenuItem>
-        </MenuList>
-      </Menu>
+            <DrawerOverlay />
+            <DrawerContent borderStartRadius="15px">
+              <DrawerCloseButton padding="20px" marginRight="12px" />
+              <DrawerHeader padding="40px">
+                <Flex flexDir="column" gap="35px">
+                  <Flex
+                    gap="10px"
+                    // flexDir="column"
+                    alignItems="center"
+                    justifyContent="center"
+                  >
+                    <Avatar
+                      // outline="2px solid pink"
+                      src={user.picture}
+                      boxSize="16"
+                    />
+                    <Flex flexDir="column">
+                      <Heading fontSize={"1.8rem"}>{user.username}</Heading>
+                      <Heading fontSize="1rem" color="gray.500">
+                        {user.email}
+                      </Heading>
+                    </Flex>
+                  </Flex>
+                </Flex>
+              </DrawerHeader>
+
+              <DrawerBody>
+                <Flex direction="column" width="100%" gap={4}>
+                  <FriendsList>
+                    <Buttoninfo text="Friends" icon={AiOutlineUser} />
+                  </FriendsList>
+
+                  <Buttoninfo text="Feed" icon={AiOutlineFolder} />
+
+                  <Buttoninfo text="Upcoming" icon={AiOutlineSchedule} />
+
+                  <Buttoninfo text="Settings" icon={AiOutlineSetting} />
+                  <Divider />
+                </Flex>
+              </DrawerBody>
+
+              {/* <Flex marginTop="10px" justifyContent="space-evenly">
+                <InfoBox
+                  text={user.events.length - user.ownedEvents.length}
+                  heading={"Events"}
+                />
+                <InfoBox text={user.ownedEvents.length} heading={"Owned"} />
+              </Flex> */}
+              <Divider />
+              <DrawerFooter>
+                <Buttoninfo
+                  text="Log out"
+                  icon={AiOutlineLogout}
+                  flexContent={true}
+                  _hover={{ color: "red" }}
+                  onClick={logout}
+                />
+              </DrawerFooter>
+            </DrawerContent>
+          </Drawer>
+        </>
+      ) : (
+        <SkeletonCircle size="10" />
+      )}
     </>
   );
 }
