@@ -16,15 +16,11 @@ import {
   SkeletonCircle,
   useDisclosure,
 } from "@chakra-ui/react";
-import {
-  AiOutlineSetting,
-  AiOutlineLogout,
-  AiOutlineSchedule,
-  AiOutlineFolderView,
-  AiOutlineUserSwitch,
-} from "react-icons/ai";
+import { AiOutlineLogout, AiOutlineFieldTime } from "react-icons/ai";
+import { RiListSettingsLine } from "react-icons/ri";
 import React from "react";
 import Buttoninfo from "./buttonInfo";
+import { BiGroup } from "react-icons/bi";
 
 export default function LogoutButton() {
   const { user, logout, loading } = useAuth();
@@ -82,11 +78,11 @@ export default function LogoutButton() {
 
               <DrawerBody>
                 <Flex direction="column" width="100%" gap={4}>
-                  <Buttoninfo text="Friend Feed" icon={AiOutlineUserSwitch} />
+                  <Buttoninfo text="Friend Feed" icon={BiGroup} />
                   <Divider />
-                  <Buttoninfo text="Upcoming" icon={AiOutlineSchedule} />
+                  <Buttoninfo text="Upcoming" icon={AiOutlineFieldTime} />
                   <Divider />
-                  <Buttoninfo text="Settings" icon={AiOutlineSetting} />
+                  <Buttoninfo text="Settings" icon={RiListSettingsLine} />
                   {/* <Divider /> */}
                 </Flex>
               </DrawerBody>
