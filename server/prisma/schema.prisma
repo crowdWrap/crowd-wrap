@@ -55,12 +55,13 @@ model Event {
 }
 
 model EventToUser {
-  id           Int     @id @default(autoincrement())
-  user         User    @relation(fields: [userId], references: [id])
+  id           Int      @id @default(autoincrement())
+  user         User     @relation(fields: [userId], references: [id])
   userId       Int
-  event        Event   @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  event        Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
   eventId      Int
   picture      String?
+  joinedAt     DateTime @default(now())
   username     String?
   currentMoney Float?
 
