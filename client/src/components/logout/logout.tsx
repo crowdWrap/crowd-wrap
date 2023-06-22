@@ -21,11 +21,14 @@ import { RiListSettingsLine } from "react-icons/ri";
 import React from "react";
 import Buttoninfo from "./buttonInfo";
 import { BiGroup } from "react-icons/bi";
+import { useNavigate } from "react-router-dom";
+import { RiFoldersLine } from "react-icons/ri";
 
 export default function LogoutButton() {
   const { user, logout, loading } = useAuth();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef<any>();
+  const navigate = useNavigate();
 
   // console.log(user);
   return (
@@ -78,11 +81,21 @@ export default function LogoutButton() {
 
               <DrawerBody>
                 <Flex direction="column" width="100%" gap={4}>
+                  <Buttoninfo
+                    text="Events"
+                    icon={RiFoldersLine}
+                    onClick={() => navigate("/events")}
+                  />
+                  <Divider />
                   <Buttoninfo text="Friend Feed" icon={BiGroup} />
                   <Divider />
                   <Buttoninfo text="Upcoming" icon={AiOutlineFieldTime} />
                   <Divider />
-                  <Buttoninfo text="Settings" icon={RiListSettingsLine} />
+                  <Buttoninfo
+                    text="Settings"
+                    icon={RiListSettingsLine}
+                    onClick={() => navigate("/settings")}
+                  />
                   {/* <Divider /> */}
                 </Flex>
               </DrawerBody>
