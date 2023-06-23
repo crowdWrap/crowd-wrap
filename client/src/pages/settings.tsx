@@ -16,7 +16,9 @@ export default function Settings() {
   useEffect(() => {
     if (!loading) {
       setUsername(user.username);
-      setPaymentToggle(user.paymentType === "none" ? false : true);
+      setPaymentToggle(
+        user.paymentType === "none" || user.paymentType === "" ? false : true
+      );
       setPaypalEmail(user.paymentType.substring(7));
     }
   }, [loading, user.paymentType, user.username]);
