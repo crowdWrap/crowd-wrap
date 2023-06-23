@@ -18,10 +18,10 @@ import {
 } from "@chakra-ui/react";
 import { AiOutlineLogout, AiOutlineFieldTime } from "react-icons/ai";
 import { RiListSettingsLine } from "react-icons/ri";
-import React from "react";
+import React, { useEffect } from "react";
 import Buttoninfo from "./buttonInfo";
 import { BiGroup } from "react-icons/bi";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { RiFoldersLine } from "react-icons/ri";
 
 export default function LogoutButton() {
@@ -29,8 +29,8 @@ export default function LogoutButton() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef<any>();
   const navigate = useNavigate();
+  const location = useLocation();
 
-  // console.log(user);
   return (
     <>
       {!loading ? (
@@ -84,7 +84,18 @@ export default function LogoutButton() {
                   <Buttoninfo
                     text="Events"
                     icon={RiFoldersLine}
-                    onClick={() => navigate("/events")}
+                    onClick={() => {
+                      if (location.pathname !== "/events") {
+                        onClose();
+                        navigate("/events");
+                      }
+                    }}
+                    colorScheme={
+                      location.pathname === "/events" ? "pink" : "gray"
+                    }
+                    backgroundColor={
+                      location.pathname === "/events" ? "none" : "transparent"
+                    }
                   />
                   <Divider />
                   <Buttoninfo text="Friend Feed" icon={BiGroup} />
@@ -94,7 +105,18 @@ export default function LogoutButton() {
                   <Buttoninfo
                     text="Settings"
                     icon={RiListSettingsLine}
-                    onClick={() => navigate("/settings")}
+                    onClick={() => {
+                      if (location.pathname !== "/settings") {
+                        onClose();
+                        navigate("/settings");
+                      }
+                    }}
+                    colorScheme={
+                      location.pathname === "/settings" ? "pink" : "gray"
+                    }
+                    backgroundColor={
+                      location.pathname === "/settings" ? "none" : "transparent"
+                    }
                   />
                   {/* <Divider /> */}
                 </Flex>
@@ -114,7 +136,10 @@ export default function LogoutButton() {
                   icon={AiOutlineLogout}
                   flexContent={true}
                   _hover={{ color: "red" }}
-                  onClick={logout}
+                  onClick={() => {
+                    logout();
+                    onClose();
+                  }}
                 />
               </DrawerFooter>
             </DrawerContent>
