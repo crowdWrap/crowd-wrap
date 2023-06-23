@@ -4,7 +4,12 @@ export default function Buttoninfo({ text, icon, flexContent, ...props }: any) {
   return (
     <>
       {/* {!flexContent && <Divider />} */}
-      <Button backgroundColor="transparent" width="full" {...props}>
+      <Button
+        colorScheme="gray"
+        backgroundColor="transparent"
+        width="full"
+        {...props}
+      >
         <Flex
           alignItems="center"
           width="100%"

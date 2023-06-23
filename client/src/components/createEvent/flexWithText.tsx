@@ -8,6 +8,7 @@ import {
   FormControl,
   FormErrorMessage,
   FormLabel,
+  useToast,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { Form } from "react-router-dom";
@@ -28,6 +29,7 @@ export default function FlexWithText({
   const [confirmEmail, setConfirmEmail] = useState<string>("");
   const { setUser } = useAuth();
   const [invalid, setInvalid] = useState(false);
+  const toast = useToast();
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
@@ -51,6 +53,13 @@ export default function FlexWithText({
         const receivedData = await response.json();
         setUser(receivedData.user);
         setActiveStep(0);
+        toast({
+          title: "Success",
+          description:
+            "Payment type set! You can change it in settings at any time",
+          status: "success",
+          duration: 4000,
+        });
       })();
     }
   };
