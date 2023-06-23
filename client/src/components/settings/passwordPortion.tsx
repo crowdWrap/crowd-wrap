@@ -109,7 +109,6 @@ export default function PasswordPortion({ user, username, setUsername }: any) {
     }
 
     if (oldPassword !== "" && newPassword !== "") {
-      console.log(oldPassword, newPassword);
       const data = JSON.stringify({
         oldPassword,
         newPassword,

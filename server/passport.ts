@@ -31,10 +31,8 @@ export default function intializePassport(
     }
     try {
       if (await bcrypt.compare(password, user.password)) {
-        console.log("correct! User loggedin:", user.username);
         return done(null, user);
       } else {
-        console.log("incorrect! try again");
         return done(null, false, {
           message: "Account or Password is incorrect, please try again",
         });
