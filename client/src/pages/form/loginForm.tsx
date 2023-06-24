@@ -23,7 +23,10 @@ import {
   Text,
   useToast,
   Highlight,
+  Image,
+  Divider,
 } from "@chakra-ui/react";
+import LoginAndSignupPage from "../../components/loginAndSignup/LoginAndSignupPage";
 
 export default function LoginForm() {
   const navigate = useNavigate();
@@ -82,39 +85,10 @@ export default function LoginForm() {
   }
 
   return (
-    <Flex
-      borderColor={"red"}
-      height="100vh"
-      backgroundPosition="40%"
-      position="absolute"
-      top="0px"
-      width="100vw"
-      objectFit="cover"
-      justifyContent={"center"}
-      alignItems="center"
-      filter="hue-rotate(50deg)"
-      backgroundImage={backgroundImage}
-    >
-      <Box
-        bgColor="white"
-        borderRadius="25px"
-        p="60px 40px"
-        boxShadow="0px 0px 5px rgba(0, 0, 0, 0.265)"
-        filter="hue-rotate(-50deg)"
-      >
-        <Heading fontWeight="400" marginBottom="10px">
-          Login
-        </Heading>
-        <Text fontWeight="200" marginBottom="25px">
-          <Highlight
-            styles={{ px: "1", py: "1", rounded: "full", bg: "red.100" }}
-            query={"social"}
-          >
-            Gifting, but make it social
-          </Highlight>
-        </Text>
+    <LoginAndSignupPage signup={false}>
+      <Box width="100%">
         <Form onSubmit={handleSubmit}>
-          <Flex gap="30px" flexDir="column">
+          <Flex position="relative" width="100%" gap="32px" flexDir="column">
             <FormControl variant="floating" id="usernameEmail" isRequired>
               <Input
                 placeholder=" "
@@ -137,7 +111,8 @@ export default function LoginForm() {
                     marginBottom="auto"
                     variant="outline"
                     colorScheme="blue"
-                    h="1.75rem"
+                    h="1.5rem"
+                    marginRight="0.2rem"
                     size="sm"
                     onClick={handleClick}
                   >
@@ -147,43 +122,49 @@ export default function LoginForm() {
               </InputGroup>
             </FormControl>
 
-            <Flex flexDir="row" gap="8px">
-              {loading ? (
-                <Button flexGrow="1" isLoading type="submit" colorScheme="pink">
-                  Sign in
-                </Button>
-              ) : (
-                <Button flexGrow="1" type="submit" colorScheme="pink">
-                  Sign in
-                </Button>
-              )}
-              {/* <Button colorScheme="red" padding="0"> */}
+            <Link
+              as={ReactLink}
+              fontSize="0.8rem"
+              position="absolute"
+              right="0"
+              to="/login/forgot"
+              color="teal.500"
+              bottom="110"
+            >
+              Forgot Password?
+            </Link>
+            <Flex marginTop="15px" gap="5px" alignItems="center">
+              <Button
+                isLoading={loading}
+                flexGrow="1"
+                type="submit"
+                colorScheme="pink"
+              >
+                Sign in
+              </Button>
               <GoogleOAuthProvider
                 clientId={`${process.env.REACT_APP_CLIENTID}`}
               >
                 <SignInGoogle loading={loading} setLoading={setLoading} />
               </GoogleOAuthProvider>
-              {/* </Button> */}
             </Flex>
 
-            <Flex alignItems="center" gap="5px" flexDirection="column">
-              <Text>
-                Dont have an account?{" "}
+            <Flex
+              marginTop="-10px"
+              alignItems="center"
+              gap="5px"
+              flexDirection="column"
+            >
+              <Text fontSize="0.9rem">
+                Don't have an account?{" "}
                 <Link as={ReactLink} to="/register" color="teal.500">
                   Sign up
                 </Link>
               </Text>
-
-              {/* <Text >
-              <Link color="teal.500">Forgot Password?</Link>{" "}
-            </Text>
-            <Text >
-              <Link color="teal.500">Need help?</Link>{" "}
-            </Text> */}
             </Flex>
           </Flex>
         </Form>
       </Box>
-    </Flex>
+    </LoginAndSignupPage>
   );
 }

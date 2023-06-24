@@ -21,7 +21,9 @@ import {
   Text,
   useToast,
   Highlight,
+  Image,
 } from "@chakra-ui/react";
+import LoginAndSignupPage from "../../components/loginAndSignup/LoginAndSignupPage";
 
 export default function SignupForm() {
   const [loading, setLoading] = useState(false);
@@ -139,40 +141,10 @@ export default function SignupForm() {
   };
 
   return (
-    <Flex
-      borderColor={"red"}
-      height="100vh"
-      top="0px"
-      position="absolute"
-      backgroundRepeat="no-repeat"
-      backgroundSize="cover"
-      width="100vw"
-      objectFit="cover"
-      justifyContent={"center"}
-      alignItems="center"
-      filter="hue-rotate(70deg)"
-      backgroundImage={backgroundImage}
-    >
-      <Box
-        bgColor="white"
-        borderRadius="25px"
-        p="60px 40px"
-        boxShadow="0px 0px 5px rgba(0, 0, 0, 0.265)"
-        filter="hue-rotate(-70deg)"
-      >
-        <Heading fontWeight="400" marginBottom="10px">
-          Signup
-        </Heading>
-        <Text fontWeight="200" marginBottom="25px">
-          <Highlight
-            styles={{ px: "1", py: "1", rounded: "full", bg: "red.100" }}
-            query={"social"}
-          >
-            Gifting, but make it social
-          </Highlight>
-        </Text>
+    <LoginAndSignupPage signup={true}>
+      <Box width="100%">
         <Form onSubmit={handleSubmit}>
-          <Flex gap="30px" flexDir="column">
+          <Flex position="relative" width="100%" gap="32px" flexDir="column">
             <FormControl
               isInvalid={usernameError === "" ? false : true}
               variant="floating"
@@ -258,16 +230,15 @@ export default function SignupForm() {
               )}
             </FormControl>
 
-            <Flex flexDir="row" gap="8px">
-              {loading ? (
-                <Button isLoading flexGrow="1" type="submit" colorScheme="pink">
-                  Sign up
-                </Button>
-              ) : (
-                <Button flexGrow="1" type="submit" colorScheme="pink">
-                  Sign up
-                </Button>
-              )}
+            <Flex marginTop="15px" gap="5px" alignItems="center">
+              <Button
+                isLoading={loading}
+                flexGrow="1"
+                type="submit"
+                colorScheme="pink"
+              >
+                Sign up
+              </Button>
               <GoogleOAuthProvider
                 clientId={`${process.env.REACT_APP_CLIENTID}`}
               >
@@ -275,24 +246,22 @@ export default function SignupForm() {
               </GoogleOAuthProvider>
             </Flex>
 
-            <Flex alignItems="center" gap="5px" flexDirection="column">
-              <Text>
+            <Flex
+              marginTop="-10px"
+              alignItems="center"
+              gap="5px"
+              flexDirection="column"
+            >
+              <Text fontSize="0.9rem">
                 Already have an account?{" "}
                 <Link as={ReactLink} to="/login" color="teal.500">
                   Sign in
                 </Link>
               </Text>
-
-              {/* <Text >
-              <Link color="teal.500">Forgot Password?</Link>{" "}
-            </Text>
-            <Text >
-              <Link color="teal.500">Need help?</Link>{" "}
-            </Text> */}
             </Flex>
           </Flex>
         </Form>
       </Box>
-    </Flex>
+    </LoginAndSignupPage>
   );
 }
