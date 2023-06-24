@@ -53,62 +53,33 @@ export default function SignInGoogle({ loading, setLoading }: any) {
   };
   return (
     <>
-      {loading ? (
-        <Button
-          isDisabled
-          colorScheme="palevioletred"
-          style={{
-            border: "2px solid palevioletred",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            width: "40px",
-            height: "40px",
-            overflow: "hidden",
-            backgroundColor: "transparent",
+      <Button
+        isDisabled={loading}
+        colorScheme="palevioletred"
+        style={{
+          border: "2px solid palevioletred",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          width: "40px",
+          height: "40px",
+          overflow: "hidden",
+          backgroundColor: "transparent",
+        }}
+      >
+        <GoogleLogin
+          onSuccess={succesfulSignIn}
+          theme="filled_blue"
+          logo_alignment="center"
+          shape="square"
+          size="large"
+          type="icon"
+          text="signin_with"
+          onError={() => {
+            console.log("Failed");
           }}
-        >
-          <GoogleLogin
-            onSuccess={succesfulSignIn}
-            theme="filled_blue"
-            logo_alignment="center"
-            shape="square"
-            size="large"
-            type="icon"
-            text="signin_with"
-            onError={() => {
-              console.log("Failed");
-            }}
-          />
-        </Button>
-      ) : (
-        <Button
-          colorScheme="palevioletred"
-          style={{
-            border: "2px solid palevioletred",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            width: "40px",
-            height: "40px",
-            overflow: "hidden",
-            backgroundColor: "transparent",
-          }}
-        >
-          <GoogleLogin
-            onSuccess={succesfulSignIn}
-            theme="filled_blue"
-            logo_alignment="center"
-            shape="square"
-            size="large"
-            type="icon"
-            text="signin_with"
-            onError={() => {
-              console.log("Failed");
-            }}
-          />
-        </Button>
-      )}
+        />
+      </Button>
     </>
   );
 }
