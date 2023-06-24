@@ -10,7 +10,12 @@ export default function LoginAndSignupPage({
   return (
     <Flex position="absolute" width="100%" height="100vh">
       <Flex flexShrink="0" flexGrow="1" justifyContent="center" minWidth="35%">
-        <Flex width="70%" marginTop="40%" alignItems="center" flexDir="column">
+        <Flex
+          width="70%"
+          justifyContent={"center"}
+          alignItems="center"
+          flexDir="column"
+        >
           <Flex
             width="100%"
             marginBottom="40px"
