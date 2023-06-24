@@ -1,10 +1,9 @@
 import React from "react";
 import { useState } from "react";
-import { Form, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import SignUpGoogle from "../../api/googleSignup";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { Link as ReactLink } from "react-router-dom";
-import backgroundImage from "../.././assets/image_group/Signup D.jpg";
 
 import {
   FormControl,
@@ -12,18 +11,22 @@ import {
   FormErrorMessage,
   Input,
   Link,
-  Box,
   Flex,
   InputGroup,
   InputRightElement,
   Button,
-  Heading,
   Text,
   useToast,
-  Highlight,
-  Image,
+  InputRightAddon,
+  Icon,
+  IconButton,
 } from "@chakra-ui/react";
 import LoginAndSignupPage from "../../components/loginAndSignup/LoginAndSignupPage";
+import {
+  AiOutlineEye,
+  AiOutlineEyeInvisible,
+  AiOutlineUser,
+} from "react-icons/ai";
 
 export default function SignupForm() {
   const [loading, setLoading] = useState(false);
@@ -141,127 +144,130 @@ export default function SignupForm() {
   };
 
   return (
-    <LoginAndSignupPage signup={true}>
-      <Box width="100%">
-        <Form onSubmit={handleSubmit}>
-          <Flex position="relative" width="100%" gap="32px" flexDir="column">
-            <FormControl
-              isInvalid={usernameError === "" ? false : true}
-              variant="floating"
-              id="username"
-              isRequired
-            >
-              <Input
-                placeholder=" "
-                minLength={3}
-                maxLength={15}
-                onChange={handleUsernameChange}
-                onBlur={() => {
-                  setUsernameTouched(true);
-                  validateUsername(registerUsername);
-                }}
-              />
-              <FormLabel bg="white">Username</FormLabel>
+    <LoginAndSignupPage handleSubmit={handleSubmit} signup={true}>
+      <FormControl
+        isInvalid={usernameError === "" ? false : true}
+        variant="floating"
+        id="username"
+        isRequired
+      >
+        <InputGroup>
+          <Input
+            placeholder=" "
+            minLength={3}
+            maxLength={15}
+            onChange={handleUsernameChange}
+            onBlur={() => {
+              setUsernameTouched(true);
+              validateUsername(registerUsername);
+            }}
+          />
+          <FormLabel bg="white">Username</FormLabel>
+          <InputRightAddon userSelect="none">
+            <Icon as={AiOutlineUser} />
+          </InputRightAddon>
+        </InputGroup>
 
-              {usernameTouched && (
-                <>
-                  <FormErrorMessage>{usernameError}</FormErrorMessage>
-                </>
-              )}
-            </FormControl>
-            <FormControl
-              isInvalid={emailError === "" ? false : true}
-              variant="floating"
-              id="email"
-              isRequired
-            >
-              <Input
-                placeholder=" "
-                type="email"
-                onBlur={() => {
-                  setEmailTouched(true);
-                  validateEmail(registerEmail);
-                }}
-                onChange={handleEmailChange}
-              />
-              <FormLabel bg="white">Email</FormLabel>
-              {emailTouched && (
-                <>
-                  <FormErrorMessage>{emailError}</FormErrorMessage>
-                </>
-              )}
-            </FormControl>
-            <FormControl
-              isInvalid={passwordError === "" ? false : true}
-              variant="floating"
-              id="password"
-              isRequired
-            >
-              <InputGroup size="md">
-                <Input
-                  minLength={8}
-                  maxLength={15}
-                  pr="4.5rem"
-                  type={show ? "text" : "password"}
-                  placeholder=" "
-                  onChange={handlePasswordChange}
-                  onBlur={() => {
-                    setPasswordTouched(true);
-                    validatePassword(registerPass);
-                  }}
-                />
-                <FormLabel bg="white">Password</FormLabel>
-                <InputRightElement width="4.5rem">
-                  <Button
-                    marginTop="auto"
-                    marginBottom="auto"
-                    variant="outline"
-                    colorScheme="blue"
-                    h="1.75rem"
-                    size="sm"
-                    onClick={handleClick}
-                  >
-                    {show ? "Hide" : "Show"}
-                  </Button>
-                </InputRightElement>
-              </InputGroup>
-              {passwordTouched && (
-                <FormErrorMessage>{passwordError}</FormErrorMessage>
-              )}
-            </FormControl>
+        {usernameTouched && (
+          <>
+            <FormErrorMessage position="absolute">
+              {usernameError}
+            </FormErrorMessage>
+          </>
+        )}
+      </FormControl>
+      <FormControl
+        isInvalid={emailError === "" ? false : true}
+        variant="floating"
+        id="email"
+        isRequired
+      >
+        <InputGroup>
+          <Input
+            placeholder=" "
+            type="email"
+            onBlur={() => {
+              setEmailTouched(true);
+              validateEmail(registerEmail);
+            }}
+            onChange={handleEmailChange}
+          />
+          <FormLabel bg="white">Email</FormLabel>
+          <InputRightAddon userSelect="none">@</InputRightAddon>
+        </InputGroup>
+        {emailTouched && (
+          <>
+            <FormErrorMessage position="absolute">
+              {emailError}
+            </FormErrorMessage>
+          </>
+        )}
+      </FormControl>
+      <FormControl
+        isInvalid={passwordError === "" ? false : true}
+        variant="floating"
+        id="password"
+        isRequired
+      >
+        <InputGroup>
+          <Input
+            minLength={8}
+            maxLength={15}
+            type={show ? "text" : "password"}
+            placeholder=" "
+            onChange={handlePasswordChange}
+            onBlur={() => {
+              setPasswordTouched(true);
+              validatePassword(registerPass);
+            }}
+          />
+          <FormLabel bg="white">Password</FormLabel>
+          <InputRightElement>
+            <IconButton
+              mr="10px"
+              aria-label="Show"
+              onClick={handleClick}
+              variant="unstyled"
+              _hover={{ color: "pink.500" }}
+              boxSize="6"
+              as={show ? AiOutlineEye : AiOutlineEyeInvisible}
+            />
+          </InputRightElement>
+        </InputGroup>
+        {passwordTouched && (
+          <FormErrorMessage position="absolute">
+            {passwordError}
+          </FormErrorMessage>
+        )}
+      </FormControl>
 
-            <Flex marginTop="15px" gap="5px" alignItems="center">
-              <Button
-                isLoading={loading}
-                flexGrow="1"
-                type="submit"
-                colorScheme="pink"
-              >
-                Sign up
-              </Button>
-              <GoogleOAuthProvider
-                clientId={`${process.env.REACT_APP_CLIENTID}`}
-              >
-                <SignUpGoogle loading={loading} setLoading={setLoading} />
-              </GoogleOAuthProvider>
-            </Flex>
+      <Flex marginTop="15px" gap="5px" alignItems="center">
+        <Button
+          isLoading={loading}
+          flexGrow="1"
+          type="submit"
+          colorScheme="pink"
+        >
+          Sign up
+        </Button>
+        <GoogleOAuthProvider clientId={`${process.env.REACT_APP_CLIENTID}`}>
+          <SignUpGoogle loading={loading} setLoading={setLoading} />
+        </GoogleOAuthProvider>
+      </Flex>
 
-            <Flex
-              marginTop="-10px"
-              alignItems="center"
-              gap="5px"
-              flexDirection="column"
-            >
-              <Text fontSize="0.9rem">
-                Already have an account?{" "}
-                <Link as={ReactLink} to="/login" color="teal.500">
-                  Sign in
-                </Link>
-              </Text>
-            </Flex>
-          </Flex>
-        </Form>
-      </Box>
+      <Flex
+        marginTop="-10px"
+        alignItems="center"
+        gap="5px"
+        flexDirection="column"
+      >
+        <Text fontSize="0.9rem">
+          Already have an account?{" "}
+          <Link as={ReactLink} to="/login" color="teal.500">
+            Sign in
+          </Link>
+        </Text>
+      </Flex>
     </LoginAndSignupPage>
   );
 }

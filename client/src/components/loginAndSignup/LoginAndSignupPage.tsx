@@ -1,7 +1,11 @@
 import { Flex, Heading, Highlight, Box, Text, Image } from "@chakra-ui/react";
 import { Form, useNavigate } from "react-router-dom";
 
-export default function LoginAndSignupPage({ signup, children }: any) {
+export default function LoginAndSignupPage({
+  signup,
+  handleSubmit,
+  children,
+}: any) {
   const navigate = useNavigate();
   return (
     <Flex position="absolute" width="100%" height="100vh">
@@ -48,7 +52,7 @@ export default function LoginAndSignupPage({ signup, children }: any) {
                   marginBottom="4px"
                   fontWeight="700"
                 >
-                  Welcome
+                  Welcome Back
                 </Heading>
                 <Text
                   marginLeft="0.5"
@@ -56,19 +60,30 @@ export default function LoginAndSignupPage({ signup, children }: any) {
                   color="gray.600"
                   fontWeight="200"
                 >
-                  Please enter your details to log in!
+                  Please enter your details
                 </Text>
               </>
             )}
           </Flex>
-          {children}
+          <Box width="100%">
+            <Form onSubmit={handleSubmit}>
+              <Flex
+                position="relative"
+                width="100%"
+                gap="32px"
+                flexDir="column"
+              >
+                {children}
+              </Flex>
+            </Form>
+          </Box>
         </Flex>
       </Flex>
       <Image
         borderStartRadius="5px"
         maxWidth="70%"
         objectFit="cover"
-        onClick={() => navigate("/")}
+        // onClick={() => navigate("/")}
         cursor={"pointer"}
         src="https://images.unsplash.com/photo-1520763185298-1b434c919102?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1332&q=80"
       />
