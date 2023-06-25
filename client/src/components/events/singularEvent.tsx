@@ -54,10 +54,21 @@ export default function SingularEvent({
   };
 
   const handleDate = (e: any) => {
-    const dateObj = new Date(e.deadlineDate);
-    const options: object = { month: "long", day: "numeric", year: "numeric" };
+    const dateObj: any = new Date(e.deadlineDate);
+    const options: object = { month: "long", day: "numeric", weekday: "short" };
     const formattedDate = dateObj.toLocaleDateString("en-US", options);
+
     return formattedDate;
+  };
+
+  const handleDateColor = (e: any) => {
+    const dateObj: any = new Date(e.deadlineDate);
+    const dateTime = Date.parse(dateObj);
+    if (Date.now() > dateTime) {
+      return "red.600";
+    } else {
+      return "green.600";
+    }
   };
 
   return (
@@ -77,7 +88,7 @@ export default function SingularEvent({
               width="100%"
               alignItems="center"
             >
-              <Heading marginTop="5px" size="sm" color="grey">
+              <Heading marginTop="5px" size="sm" color={handleDateColor(e)}>
                 {`${e.deadlineDate === null ? "No Deadline" : handleDate(e)}`}
               </Heading>
 
