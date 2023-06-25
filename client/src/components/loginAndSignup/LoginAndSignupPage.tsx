@@ -2,9 +2,10 @@ import { Flex, Heading, Highlight, Box, Text, Image } from "@chakra-ui/react";
 import { Form, useNavigate } from "react-router-dom";
 
 export default function LoginAndSignupPage({
-  signup,
   handleSubmit,
   children,
+  headingText,
+  regText,
 }: any) {
   const navigate = useNavigate();
   return (
@@ -18,57 +19,31 @@ export default function LoginAndSignupPage({
         >
           <Flex
             width="100%"
-            marginBottom="40px"
+            marginBottom="30px"
             flexDir="column"
             // alignItems="center"
           >
-            {signup ? (
-              <>
-                <Heading
-                  letterSpacing="-1px"
-                  marginBottom="4px"
-                  fontWeight="700"
-                >
-                  Create an account
-                </Heading>
-                <Text
-                  marginLeft="0.5"
-                  letterSpacing="-0.5px"
-                  color="gray.600"
-                  fontWeight="200"
-                >
-                  <Highlight
-                    styles={{
-                      px: "1",
-                      py: "1",
-                      rounded: "full",
-                      bg: "red.100",
-                    }}
-                    query={"social"}
-                  >
-                    Gifting, but make it social
-                  </Highlight>
-                </Text>
-              </>
-            ) : (
-              <>
-                <Heading
-                  letterSpacing="-1px"
-                  marginBottom="4px"
-                  fontWeight="700"
-                >
-                  Welcome Back
-                </Heading>
-                <Text
-                  marginLeft="0.5"
-                  letterSpacing="-0.5px"
-                  color="gray.600"
-                  fontWeight="200"
-                >
-                  Please enter your details
-                </Text>
-              </>
-            )}
+            <Heading letterSpacing="-1px" marginBottom="4px" fontWeight="700">
+              {headingText}
+            </Heading>
+            <Text
+              marginLeft="0.5"
+              letterSpacing="-0.5px"
+              color="gray.600"
+              fontWeight="200"
+            >
+              <Highlight
+                styles={{
+                  px: "1",
+                  py: "1",
+                  rounded: "full",
+                  bg: "red.100",
+                }}
+                query={"social"}
+              >
+                {regText}
+              </Highlight>
+            </Text>
           </Flex>
           <Box width="100%">
             <Form onSubmit={handleSubmit}>
