@@ -6,127 +6,155 @@ import {
   FormLabel,
   HStack,
   Heading,
-  Highlight,
+  Icon,
   Input,
   InputGroup,
-  InputRightElement,
+  InputRightAddon,
   Link,
   PinInput,
   PinInputField,
+  Step,
+  StepDescription,
+  StepIcon,
+  StepIndicator,
+  StepNumber,
+  StepSeparator,
+  StepStatus,
+  StepTitle,
+  Stepper,
   Text,
+  useSteps,
 } from "@chakra-ui/react";
-import { GoogleOAuthProvider } from "@react-oauth/google";
 import { Form, Link as ReactLink } from "react-router-dom";
-import SignInGoogle from "../api/googleSignin";
 import backgroundImage from ".././assets/image_group/blue-pink-better-theme.png";
 import { useState } from "react";
+import LoginAndSignupPage from "../components/loginAndSignup/LoginAndSignupPage";
+import { AiOutlineUser } from "react-icons/ai";
 
 export default function ForgotPassword() {
   const [loading, setLoading] = useState(false);
   const [codePage, setCodePage] = useState(false);
   const [enterPass, setEnterPass] = useState(false);
   const [complete, setComplete] = useState(false);
+  const [currentText, setCurrentText] = useState(
+    "No worries, we'll send you reset instructions"
+  );
   const handleSubmit = () => {
     if (enterPass) {
+      // make surre the pass is valid
+      // then redirect back to login
+      // with a toast
     } else if (codePage && complete) {
+      // if(checkifitsvalid)
       setEnterPass(true);
+      setCurrentText("Enter your new password");
+      setActiveStep(2);
     } else {
       setCodePage(true);
+      setCurrentText("Enter the code sent to the associated email");
+      setActiveStep(1);
     }
   };
-  return (
-    <Flex
-      borderColor={"red"}
-      height="100vh"
-      backgroundPosition="40%"
-      position="absolute"
-      top="0px"
-      width="100vw"
-      objectFit="cover"
-      justifyContent={"center"}
-      alignItems="center"
-      filter="hue-rotate(0deg)"
-      backgroundImage={backgroundImage}
-    >
-      <Box
-        bgColor="white"
-        borderRadius="25px"
-        p="60px 40px"
-        boxShadow="0px 0px 5px rgba(0, 0, 0, 0.265)"
-        filter="hue-rotate(0deg)"
-      >
-        <Heading letterSpacing="-1px" fontWeight="700" marginBottom="10px">
-          Forgot Password?
-        </Heading>
-        <Text
-          color="gray.800"
-          marginLeft="2px"
-          fontWeight="200"
-          marginBottom="25px"
-        >
-          {!codePage
-            ? "No worries, we'll send you reset instructions"
-            : !enterPass
-            ? "Enter the code sent to the associated email"
-            : "Enter your new password"}
-        </Text>
 
-        <Form onSubmit={handleSubmit}>
-          <Flex alignItems="center" gap="30px" flexDir="column">
-            {!codePage ? (
-              <FormControl variant="floating" id="usernameEmail" isRequired>
+  const steps = [{ title: "First" }, { title: "Second" }, { title: "Third" }];
+
+  const { activeStep, setActiveStep } = useSteps({
+    index: 0,
+    count: steps.length,
+  });
+
+  return (
+    <>
+      <LoginAndSignupPage
+        handleSubmit={handleSubmit}
+        headingText={"Forgot Password?"}
+        regText={currentText}
+      >
+        <Flex alignItems="center" gap="30px" flexDir="column">
+          {!codePage ? (
+            <FormControl variant="floating" id="usernameEmail" isRequired>
+              <InputGroup>
                 <Input placeholder=" " />
                 <FormLabel bg="white">Username or Email</FormLabel>
-              </FormControl>
-            ) : !enterPass ? (
-              <HStack>
-                <PinInput
-                  autoFocus
-                  onComplete={() => setComplete(true)}
-                  type="alphanumeric"
-                >
-                  <PinInputField />
-                  <PinInputField />
-                  <PinInputField />
-                  <PinInputField />
-                  <PinInputField />
-                  <PinInputField />
-                </PinInput>
-              </HStack>
-            ) : (
-              <Input />
-            )}
+                <InputRightAddon userSelect="none">
+                  <Icon as={AiOutlineUser} />@
+                </InputRightAddon>
+              </InputGroup>
+            </FormControl>
+          ) : !enterPass ? (
+            <HStack width="100%">
+              <PinInput
+                size={"lg"}
+                autoFocus
+                onComplete={() => setComplete(true)}
+                type="number"
+              >
+                <PinInputField />
+                <PinInputField />
+                <PinInputField />
+                <PinInputField />
+                <PinInputField />
+                <PinInputField />
+                <PinInputField />
+                <PinInputField />
+                <PinInputField />
+              </PinInput>
+            </HStack>
+          ) : (
+            <Input />
+          )}
 
-            <Flex width="100%" flexDir="row" gap="8px">
-              {codePage && !enterPass && (
-                <Button
-                  isLoading={loading}
-                  flexGrow="1"
-                  // width="100%"
-                  onClick={() => setCodePage(false)}
-                  colorScheme="gray"
-                >
-                  Back
-                </Button>
-              )}
+          <Flex width="100%" flexDir="row" gap="8px">
+            {codePage && !enterPass && (
               <Button
                 isLoading={loading}
                 flexGrow="1"
-                type="submit"
-                colorScheme="pink"
+                // width="100%"
+                onClick={() => setCodePage(false)}
+                colorScheme="gray"
               >
-                {!enterPass ? "Next" : "Submit"}
+                Back
               </Button>
-            </Flex>
-
-            <Flex alignItems="center" gap="5px" flexDirection="column">
-              <Link as={ReactLink} to="/login" color="teal.500">
-                {"<- "} Sign in
-              </Link>
-            </Flex>
+            )}
+            <Button
+              isLoading={loading}
+              flexGrow="1"
+              type="submit"
+              colorScheme="pink"
+            >
+              {!enterPass ? "Next" : "Submit"}
+            </Button>
           </Flex>
-        </Form>
-      </Box>
-    </Flex>
+
+          <Flex alignItems="center" gap="5px" flexDirection="column">
+            <Link as={ReactLink} to="/login" color="teal.500">
+              {"<- "} Back to sign in
+            </Link>
+          </Flex>
+        </Flex>
+      </LoginAndSignupPage>
+      <Flex
+        justifyContent="center"
+        height="100vh"
+        alignItems="flex-end"
+        width={"35%"}
+        paddingBottom="25px"
+      >
+        <Stepper colorScheme="pink" size="sm" width="80%" index={activeStep}>
+          {steps.map((step, index) => (
+            <Step key={index}>
+              <StepIndicator>
+                <StepStatus
+                  complete={<StepIcon />}
+                  incomplete={<StepNumber />}
+                  active={<StepNumber />}
+                />
+              </StepIndicator>
+              <StepSeparator />
+            </Step>
+          ))}
+        </Stepper>
+      </Flex>
+    </>
   );
 }
