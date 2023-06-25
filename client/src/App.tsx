@@ -19,6 +19,7 @@ import RequiresAuth from "./protectRoute";
 import InnerProtection from "./components/innerEvents/protectInnerEvent";
 import Settings from "./pages/settings";
 import ForgotPassword from "./pages/forgotPassword";
+import Feed from "./pages/feed";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -41,6 +42,7 @@ const router = createBrowserRouter(
             </InnerProtection>
           }
         />
+        <Route path="/feed" element={<Feed />}></Route>
         <Route path="/dashboard" element={<Dashboard />} />
       </Route>
     </Route>
