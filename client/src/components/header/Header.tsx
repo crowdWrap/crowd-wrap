@@ -32,7 +32,10 @@ export default function Header() {
         />
       )}
       {!loading && authed && (
-        <div className={styles["header"]}>
+        <Box
+          shadow="0px 0px 5px rgba(0, 0, 0, 0.164)"
+          className={styles["header"]}
+        >
           <Link to="/">
             <Image
               src={logoPrint}
@@ -48,7 +51,7 @@ export default function Header() {
               <LogoutButton />
             </Box>
           </>
-        </div>
+        </Box>
       )}
     </>
   );

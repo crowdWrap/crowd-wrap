@@ -1,18 +1,16 @@
 :local .header {
   width: 100vw;
-  height: 3.5rem;
+  height: 4rem;
   position: sticky;
   z-index: 99;
   justify-content: space-between;
   align-items: center;
   padding-left: 20px;
   padding-right: 20px;
+
   display: flex;
   top: 0;
   background: #ffffff;
-  border-bottom-left-radius: 15px;
-  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.196);
-  border-bottom-right-radius: 15px;
 }
 
 :local .header img {
