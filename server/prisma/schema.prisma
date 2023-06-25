@@ -32,7 +32,7 @@ model User {
   ownedEvents Event[]   @relation("OwnedEvents")
   Message     Message[]
 
-  resetToken           String?   @unique
+  resetToken           String?   
   resetTokenExpiration DateTime?
 }
 
