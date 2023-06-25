@@ -144,7 +144,11 @@ export default function SignupForm() {
   };
 
   return (
-    <LoginAndSignupPage handleSubmit={handleSubmit} signup={true}>
+    <LoginAndSignupPage
+      handleSubmit={handleSubmit}
+      headingText={"Create an account"}
+      regText={"Gifting, but make it social"}
+    >
       <FormControl
         isInvalid={usernameError === "" ? false : true}
         variant="floating"

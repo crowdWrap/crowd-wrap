@@ -86,7 +86,11 @@ export default function LoginForm() {
   }
 
   return (
-    <LoginAndSignupPage handleSubmit={handleSubmit} signup={false}>
+    <LoginAndSignupPage
+      handleSubmit={handleSubmit}
+      headingText={"Welcome Back"}
+      regText={"Please enter your details"}
+    >
       <FormControl variant="floating" id="usernameEmail" isRequired>
         <InputGroup>
           <Input
