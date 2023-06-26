@@ -147,6 +147,7 @@ export default function CreateEventButton() {
                   <FlexWithText
                     setLoading={setLoading}
                     setActiveStep={setActiveStep}
+                    handlePaymentUpdate={handlePaymentUpdate}
                     loading={loading}
                     headingText={"Create event with Paypal?"}
                     paragraphText={
