@@ -93,7 +93,13 @@ export default function Events() {
   }, [setRefreshEvent, toast]);
 
   return (
-    <Flex padding="9px" paddingTop="50px" gap="15px" flexWrap="wrap">
+    <Flex
+      padding="9px"
+      // justifyContent="center"
+      paddingTop="70px"
+      gap="15px"
+      flexWrap="wrap"
+    >
       {events &&
         events.map((e: any) => (
           <React.Fragment key={e.id}>

@@ -81,7 +81,7 @@ export default function SingularEvent({
     >
       <CardHeader>
         <Flex>
-          <Flex flex="1" gap="4" alignItems="center" flexWrap="wrap">
+          <Flex flex="1" gap={["4"]} alignItems="center" flexWrap="wrap">
             <Flex
               marginTop="-10px"
               justifyContent="space-between"
@@ -93,7 +93,7 @@ export default function SingularEvent({
               </Heading>
 
               {`${user.id}` === `${e.ownerId}` && (
-                <Badge marginRight="-50%" colorScheme="green">
+                <Badge marginRight={["-30%", "-50%"]} colorScheme="green">
                   Owner
                 </Badge>
               )}
