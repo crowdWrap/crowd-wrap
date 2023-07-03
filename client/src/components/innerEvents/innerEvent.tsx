@@ -167,6 +167,37 @@ export default function TheEvent() {
     messageToSendRef.current.value = "";
   };
 
+  useEffect(() => {
+    // setLoading(true);
+    const fetchMessages = async () => {
+      const response = await fetch(`/events/${eventId}/messages`, {
+        method: "GET",
+      });
+      const data = await response.json();
+      return data.messages;
+    };
+
+    (async () => {
+      setMessages(await fetchMessages());
+      // setLoading(false);
+      setRefreshMessages(false);
+    })();
+  }, [eventId, refreshMessages]);
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
+  useEffect(() => {
+    socket.on("sendMsg", () => {
+      setRefreshMessages(true);
+    });
+
+    return () => {
+      socket.off("sendMsg");
+    };
+  }, []);
+
   const handleDate = () => {
     const dateObj = new Date(events.deadlineDate);
     const options: object = { month: "long", day: "numeric", year: "numeric" };
