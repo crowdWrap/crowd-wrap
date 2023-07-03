@@ -3,16 +3,16 @@ import { createUser } from "../queries/userQueries";
 import { OAuth2Client } from "google-auth-library";
 import bcrypt from "bcryptjs";
 import passport from "passport";
-import { getProfileByEmail } from "../queries/profileQueries";
+import { getProfileByEmail, getProfileById } from "../queries/profileQueries";
 
 const client = new OAuth2Client(process.env.CLIENTID);
 const router = Router();
 
-router.get("/", (req, res) => {
+router.get("/", async (req, res) => {
   if (req.session.user) {
-    return res
-      .status(200)
-      .json({ message: "Good to go!", userId: req.session.user });
+    const user = await getProfileById(Number(req.session.user));
+
+    return res.status(200).json({ message: "Good to go!", user });
   } else {
     return res.status(401).json({ message: "You arent logged in!" });
   }
@@ -26,14 +26,15 @@ router.post("/", async (req, res, next) => {
     if (!user) {
       return res.status(401).json({ message: "This user does not exist!" });
     }
-    req.logIn(user, (err) => {
+    req.logIn(user, async (err) => {
       if (err) {
         return next(err);
       }
       req.session.user = user.id.toString();
+      const userAccount = await getProfileById(Number(req.session.user));
       return res
         .status(200)
-        .json({ message: `${user.username} has logged in` });
+        .json({ message: `${user.username} has logged in`, user: userAccount });
     });
   })(req, res, next);
 });
@@ -64,18 +65,16 @@ router.post("/googleOauth", async (req, res, next) => {
 
         const user: any = await getProfileByEmail(email);
 
-        req.logIn(user, (err) => {
+        req.logIn(user, async (err) => {
           if (err) {
             return next(err);
           }
 
           req.session.user = user.id.toString();
-
-          if (user.username == sub) {
-            return res.status(200).json({ message: "Needs username" });
-          } else {
-            return res.status(200).json({ message: `${email} has logged in` });
-          } //
+          const userAccount = await getProfileById(Number(req.session.user));
+          return res
+            .status(200)
+            .json({ message: `${email} has logged in`, user: userAccount });
         });
       });
     } catch (e) {

@@ -2,7 +2,6 @@ import styles from "./header.module.css";
 import { Link } from "react-router-dom";
 import logoPrint from "../../assets/image_group/crowdwrap-print.svg";
 import { Box, Button, Icon, Image, Progress } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
 import LogoutButton from "../logout/logout";
 import CreateEventButton from "../createEvent/createEventButton";
 import FriendsList from "../friendList/friendslist";
@@ -10,9 +9,12 @@ import { useAuth } from "../../hooks/authContext";
 import { CgLogIn } from "react-icons/cg";
 import { BsArrowThroughHeart } from "react-icons/bs";
 import "@fontsource/inter";
+import { useEffect } from "react";
 
 export default function Header() {
-  const { authed, loading } = useAuth();
+  const { authed, loading, user } = useAuth();
+
+  useEffect(() => {}, [user, user.usernameSet]);
 
   return (
     <div className={styles["header"]}>
@@ -41,19 +43,13 @@ export default function Header() {
           {!authed && (
             <Box className={styles["sign-links"]}>
               <Link to="/login" className={styles["sign-links__link"]}>
-                <Button
-                  rightIcon={<Icon as={CgLogIn} />}
-                  // colorScheme="linkedin"
-
-                  variant="outline"
-                >
+                <Button rightIcon={<Icon as={CgLogIn} />} variant="outline">
                   Login
                 </Button>
               </Link>
               <Link to="/register" className={styles["sign-links__link"]}>
                 <Button
                   colorScheme="pink"
-                  // variant="outline"
                   rightIcon={<Icon as={BsArrowThroughHeart} />}
                 >
                   Signup
@@ -63,8 +59,12 @@ export default function Header() {
           )}
           {authed && (
             <Box className={styles["navbarCover"]}>
-              <CreateEventButton />
-              <FriendsList />
+              {user && user.usernameSet && (
+                <>
+                  <CreateEventButton />
+                  <FriendsList />
+                </>
+              )}
               <LogoutButton />
             </Box>
           )}

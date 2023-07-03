@@ -167,7 +167,15 @@ export async function getFriendsByPartialUsername(
   try {
     const user = await prisma.user.findUnique({
       where: { id: userId },
-      include: { friends: true },
+      include: {
+        friends: {
+          select: {
+            id: true,
+            username: true,
+            picture: true,
+          },
+        },
+      },
     });
 
     const matchingFriends = user?.friends.filter((friend) =>

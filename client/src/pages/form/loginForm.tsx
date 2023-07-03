@@ -31,17 +31,15 @@ export default function LoginForm() {
   let { from } = location.state || { from: { pathname: "/profile" } };
   const [usernameOrEmail, setusernameOrEmail] = useState<string>("");
   const [loginPass, setLoginPassword] = useState<string>("");
-  const { authed, setAuthed, needsUsername } = useAuth();
+  const { authed, setAuthed, setUser } = useAuth();
   const [show, setShow] = React.useState(false);
   const [loading, setLoading] = useState(false);
   const handleClick = () => setShow(!show);
   const toast = useToast();
 
   useEffect(() => {
-    if (authed && !needsUsername) {
+    if (authed) {
       navigate(from);
-    } else if (needsUsername) {
-      navigate("/register/setUsername");
     }
   }, [authed, from, navigate]);
 
@@ -70,6 +68,7 @@ export default function LoginForm() {
         status: "success",
         duration: 4000,
       });
+      setUser(receivedData.user);
       setAuthed(true);
     } else {
       toast({
@@ -79,6 +78,7 @@ export default function LoginForm() {
         duration: 4000,
       });
     }
+    setLoading(false);
   }
 
   return (
@@ -92,6 +92,7 @@ export default function LoginForm() {
       objectFit="cover"
       justifyContent={"center"}
       alignItems="center"
+      filter="hue-rotate(50deg)"
       backgroundImage={backgroundImage}
     >
       <Box
@@ -99,6 +100,7 @@ export default function LoginForm() {
         borderRadius="25px"
         p="60px 40px"
         boxShadow="0px 0px 5px rgba(0, 0, 0, 0.265)"
+        filter="hue-rotate(-50deg)"
       >
         <Heading fontWeight="400" marginBottom="10px">
           Login
@@ -118,7 +120,7 @@ export default function LoginForm() {
                 placeholder=" "
                 onChange={(e) => setusernameOrEmail(e.target.value)}
               />
-              <FormLabel>Username or Email</FormLabel>
+              <FormLabel bg="white">Username or Email</FormLabel>
             </FormControl>
             <FormControl variant="floating" id="password" isRequired>
               <InputGroup size="md">
@@ -128,7 +130,7 @@ export default function LoginForm() {
                   placeholder=" "
                   onChange={(e) => setLoginPassword(e.target.value)}
                 />
-                <FormLabel>Password</FormLabel>
+                <FormLabel bg="white">Password</FormLabel>
                 <InputRightElement width="4.5rem">
                   <Button
                     marginTop="auto"

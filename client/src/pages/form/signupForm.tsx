@@ -90,6 +90,16 @@ export default function SignupForm() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
+    if (usernameError || passwordError || emailError) {
+      toast({
+        title: "Registration failed.",
+        description: "Please fix the errors before submitting.",
+        status: "error",
+        duration: 4000,
+      });
+      return;
+    }
+
     setLoading(true);
     const data = JSON.stringify({
       username: registerUsername,
@@ -106,7 +116,7 @@ export default function SignupForm() {
     })
       .then(async (response) => {
         const receivedData = await response.json();
-        setLoading(false);
+
         if (response.ok) {
           toast({
             title: "Registration Succesful.",
@@ -123,6 +133,7 @@ export default function SignupForm() {
             duration: 4000,
           });
         }
+        setLoading(false);
       })
       .catch((error) => console.error(error));
   };
@@ -141,6 +152,7 @@ export default function SignupForm() {
       objectFit="cover"
       justifyContent={"center"}
       alignItems="center"
+      filter="hue-rotate(70deg)"
       backgroundImage={backgroundImage}
     >
       <Box
@@ -148,6 +160,7 @@ export default function SignupForm() {
         borderRadius="25px"
         p="60px 40px"
         boxShadow="0px 0px 5px rgba(0, 0, 0, 0.265)"
+        filter="hue-rotate(-70deg)"
       >
         <Heading fontWeight="400" marginBottom="10px">
           Signup
@@ -178,7 +191,7 @@ export default function SignupForm() {
                   validateUsername(registerUsername);
                 }}
               />
-              <FormLabel>Username</FormLabel>
+              <FormLabel bg="white">Username</FormLabel>
 
               {usernameTouched && (
                 <>
@@ -201,7 +214,7 @@ export default function SignupForm() {
                 }}
                 onChange={handleEmailChange}
               />
-              <FormLabel>Email</FormLabel>
+              <FormLabel bg="white">Email</FormLabel>
               {emailTouched && (
                 <>
                   <FormErrorMessage>{emailError}</FormErrorMessage>
@@ -227,7 +240,7 @@ export default function SignupForm() {
                     validatePassword(registerPass);
                   }}
                 />
-                <FormLabel>Password</FormLabel>
+                <FormLabel bg="white">Password</FormLabel>
                 <InputRightElement width="4.5rem">
                   <Button
                     marginTop="auto"

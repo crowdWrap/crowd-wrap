@@ -81,7 +81,7 @@ export default function Events() {
     onClose: onClose2,
   } = useDisclosure();
 
-  const { refreshEvent, setRefreshEvent, userId } = useAuth();
+  const { refreshEvent, setRefreshEvent, user } = useAuth();
 
   useEffect(() => {
     let loaded = true;
@@ -173,7 +173,7 @@ export default function Events() {
                         }`}
                       </Heading>
 
-                      {`${userId}` === `${e.ownerId}` && (
+                      {`${user.id}` === `${e.ownerId}` && (
                         <Badge marginRight="-50%" colorScheme="green">
                           Owner
                         </Badge>
@@ -218,7 +218,7 @@ export default function Events() {
                           >
                             Go to event
                           </MenuItem>
-                          {`${userId}` === `${e.ownerId}` ? (
+                          {`${user.id}` === `${e.ownerId}` ? (
                             <MenuItem
                               onClick={() => {
                                 setSelectedEvent(e.id);

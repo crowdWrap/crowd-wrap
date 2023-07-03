@@ -6,8 +6,8 @@ import { Button, useToast } from "@chakra-ui/react";
 import { constants } from "../constants";
 
 export default function SignInGoogle({ loading, setLoading }: any) {
+  const { setAuthed, setUser } = useAuth();
   const navigate = useNavigate();
-  const { setAuthed } = useAuth();
   const toast = useToast();
 
   const succesfulSignIn = async (credentialResponse: any) => {
@@ -41,7 +41,9 @@ export default function SignInGoogle({ loading, setLoading }: any) {
             status: "success",
             duration: constants.toastDuration,
           });
+          setUser(newResponse.user);
           setAuthed(true);
+          setLoading(false);
         } else {
           toast({
             title: "Login failed.",

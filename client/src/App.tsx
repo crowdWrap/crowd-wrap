@@ -23,9 +23,9 @@ const router = createBrowserRouter(
       <Route path="/" element={<HomePage />} />
       <Route path="/register" element={<SignupForm />} />
       <Route path="/login" element={<LoginForm />} />
+      <Route path="/profile/setUsername" element={<SetUsername />} />
       <Route element={<RequiresAuth />}>
         <Route path="/profile" element={<LoggedIn />} />
-        <Route path="/register/setUsername" element={<SetUsername />} />
         <Route path="/events" element={<Events />}></Route>
         <Route path="/events/invite/:link" element={<EventInvite />} />
         <Route path="/events/:id" element={<TheEvent />} />

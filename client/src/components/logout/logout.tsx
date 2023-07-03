@@ -8,7 +8,6 @@ import {
   MenuItem,
   MenuList,
   SkeletonCircle,
-  Tooltip,
 } from "@chakra-ui/react";
 import {
   AiOutlineUser,
@@ -17,7 +16,7 @@ import {
 } from "react-icons/ai";
 
 export default function LogoutButton() {
-  const { profilePic, logout, loading } = useAuth();
+  const { user, logout, loading } = useAuth();
 
   return (
     <>
@@ -26,7 +25,7 @@ export default function LogoutButton() {
           // <Tooltip label="Account" bg="blackAlpha" color="black">
           <MenuButton
             style={{
-              backgroundImage: `url(${profilePic})`,
+              backgroundImage: `url(${user.picture})`,
               backgroundSize: "cover",
               borderRadius: "50%",
               height: "45px",
