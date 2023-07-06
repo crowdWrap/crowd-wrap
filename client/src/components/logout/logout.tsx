@@ -99,9 +99,29 @@ export default function LogoutButton() {
                     }
                   />
                   <Divider />
-                  <Buttoninfo text="Friend Feed" icon={BiGroup} />
+                  <Buttoninfo
+                    text="Friend Feed"
+                    icon={BiGroup}
+                    onClick={() => {
+                      if (location.pathname !== "/feed") {
+                        onClose();
+                        navigate("/feed");
+                      }
+                    }}
+                    isDisabled
+                    colorScheme={
+                      location.pathname === "/feed" ? "pink" : "gray"
+                    }
+                    backgroundColor={
+                      location.pathname === "/feed" ? "none" : "transparent"
+                    }
+                  />
                   <Divider />
-                  <Buttoninfo text="Upcoming" icon={AiOutlineFieldTime} />
+                  <Buttoninfo
+                    text="Upcoming"
+                    icon={AiOutlineFieldTime}
+                    isDisabled
+                  />
                   <Divider />
                   <Buttoninfo
                     text="Settings"

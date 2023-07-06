@@ -22,7 +22,7 @@ export default function CreateEventPop({
 
   const [loadingEvent, setLoadingEvent] = useState<boolean>(false);
 
-  const { setRefreshEvent } = useAuth();
+  const { setRefreshEvent, setUser } = useAuth();
 
   useEffect(() => {
     (async () => {
@@ -37,13 +37,14 @@ export default function CreateEventPop({
             date,
           });
 
-          fetch("/events", {
+          const response = await fetch("/events", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
             body: data,
           });
+          const receivedData = await response.json();
           setRefreshEvent(true);
         }
       } catch (e) {

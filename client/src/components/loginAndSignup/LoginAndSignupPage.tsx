@@ -10,7 +10,12 @@ export default function LoginAndSignupPage({
   const navigate = useNavigate();
   return (
     <Flex position="absolute" width="100%" height="100vh">
-      <Flex flexShrink="0" flexGrow="1" justifyContent="center" minWidth="35%">
+      <Flex
+        flexShrink="0"
+        flexGrow="1"
+        justifyContent="center"
+        minWidth={["100%", "100%", "70%", "50%", "35%"]}
+      >
         <Flex
           width="70%"
           justifyContent={"center"}
@@ -61,12 +66,31 @@ export default function LoginAndSignupPage({
       </Flex>
       <Image
         borderStartRadius="5px"
-        maxWidth="70%"
+        maxWidth={["100%", "100%", "30%", "50%", "70%"]}
+        height={"100%"}
+        zIndex={"-2"}
+        position={["absolute", "absolute", "relative", "relative", "relative"]}
         objectFit="cover"
         // onClick={() => navigate("/")}
         cursor={"pointer"}
         src="https://images.unsplash.com/photo-1520763185298-1b434c919102?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1332&q=80"
       />
+      <Flex
+        position="absolute"
+        zIndex={-1}
+        display={["flex", "flex", "none"]}
+        height="100%"
+        width="100%"
+        alignItems="center"
+        justifyContent="center"
+      >
+        <Box
+          backgroundColor="white"
+          height="60%"
+          borderRadius="25px"
+          width="90%"
+        />
+      </Flex>
     </Flex>
   );
 }

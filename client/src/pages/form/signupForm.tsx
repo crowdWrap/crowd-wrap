@@ -176,7 +176,10 @@ export default function SignupForm() {
 
         {usernameTouched && (
           <>
-            <FormErrorMessage position="absolute">
+            <FormErrorMessage
+              fontSize={["0.7rem", "0.8rem"]}
+              position="absolute"
+            >
               {usernameError}
             </FormErrorMessage>
           </>
@@ -203,7 +206,10 @@ export default function SignupForm() {
         </InputGroup>
         {emailTouched && (
           <>
-            <FormErrorMessage position="absolute">
+            <FormErrorMessage
+              fontSize={["0.7rem", "0.8rem"]}
+              position="absolute"
+            >
               {emailError}
             </FormErrorMessage>
           </>
@@ -241,7 +247,7 @@ export default function SignupForm() {
           </InputRightElement>
         </InputGroup>
         {passwordTouched && (
-          <FormErrorMessage position="absolute">
+          <FormErrorMessage fontSize={["0.7rem", "0.8rem"]} position="absolute">
             {passwordError}
           </FormErrorMessage>
         )}

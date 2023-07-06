@@ -6,16 +6,26 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { AiOutlineSetting, AiFillMoneyCollect } from "react-icons/ai";
+import {
+  AiOutlineSetting,
+  AiFillMoneyCollect,
+  AiOutlineForm,
+} from "react-icons/ai";
 import { BiShare } from "react-icons/bi";
 import PayPrompt from "./payPrompt";
 import { useAuth } from "../../hooks/authContext";
+import Recommendation from "./recommendationPrompt";
 
 export default function InnerOptions({ onCopy, events }: any) {
   const toast = useToast();
   const [ownerPaymentType, setOwnerPaymentType] = useState("none");
   const [loading, setLoading] = useState(false);
   const { onOpen, isOpen, onClose } = useDisclosure();
+  const {
+    onOpen: onOpen2,
+    isOpen: isOpen2,
+    onClose: onClose2,
+  } = useDisclosure();
   const { user } = useAuth();
 
   useEffect(() => {
@@ -51,6 +61,13 @@ export default function InnerOptions({ onCopy, events }: any) {
               />
             )}
           <IconButton
+            aria-label="recommendations"
+            boxSize="100px"
+            fontSize={"50px"}
+            onClick={onOpen2}
+            icon={<AiOutlineForm />}
+          />
+          <IconButton
             // will provide the option to change the name of the event, budget, etc
             boxSize="100px"
             fontSize={"50px"}
@@ -80,6 +97,7 @@ export default function InnerOptions({ onCopy, events }: any) {
         email={ownerPaymentType.substring(7)}
         events={events}
       />
+      <Recommendation isOpen={isOpen2} onClose={onClose2} />
     </>
   );
 }

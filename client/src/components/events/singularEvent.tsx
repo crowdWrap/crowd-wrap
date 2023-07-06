@@ -54,14 +54,26 @@ export default function SingularEvent({
   };
 
   const handleDate = (e: any) => {
-    const dateObj = new Date(e.deadlineDate);
-    const options: object = { month: "long", day: "numeric", year: "numeric" };
+    const dateObj: any = new Date(e.deadlineDate);
+    const options: object = { month: "long", day: "numeric", weekday: "short" };
     const formattedDate = dateObj.toLocaleDateString("en-US", options);
+
     return formattedDate;
+  };
+
+  const handleDateColor = (e: any) => {
+    const dateObj: any = new Date(e.deadlineDate);
+    const dateTime = Date.parse(dateObj);
+    if (Date.now() > dateTime) {
+      return "red.600";
+    } else {
+      return "green.600";
+    }
   };
 
   return (
     <Card
+      flexGrow="1"
       variant="outline"
       marginBottom="40px"
       marginTop="-40px"
@@ -70,19 +82,19 @@ export default function SingularEvent({
     >
       <CardHeader>
         <Flex>
-          <Flex flex="1" gap="4" alignItems="center" flexWrap="wrap">
+          <Flex flex="1" gap={["4"]} alignItems="center" flexWrap="wrap">
             <Flex
               marginTop="-10px"
               justifyContent="space-between"
               width="100%"
               alignItems="center"
             >
-              <Heading marginTop="5px" size="sm" color="grey">
+              <Heading marginTop="5px" size="sm" color={handleDateColor(e)}>
                 {`${e.deadlineDate === null ? "No Deadline" : handleDate(e)}`}
               </Heading>
 
               {`${user.id}` === `${e.ownerId}` && (
-                <Badge marginRight="-50%" colorScheme="green">
+                <Badge marginRight={["-30%", "-50%"]} colorScheme="green">
                   Owner
                 </Badge>
               )}
@@ -176,7 +188,7 @@ export default function SingularEvent({
       </CardBody>
 
       <CardFooter
-        marginTop="-10px"
+        marginTop="-30px"
         justify="space-between"
         flexWrap="wrap"
         sx={{
