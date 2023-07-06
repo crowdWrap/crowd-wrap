@@ -61,7 +61,13 @@ export default function SingularEvent({
   };
 
   return (
-    <Card marginTop="-10px" height="xs" width="md">
+    <Card
+      variant="outline"
+      marginBottom="40px"
+      marginTop="-40px"
+      height="xs"
+      width="md"
+    >
       <CardHeader>
         <Flex>
           <Flex flex="1" gap="4" alignItems="center" flexWrap="wrap">

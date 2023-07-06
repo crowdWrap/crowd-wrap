@@ -6,7 +6,6 @@ import {
   PopoverArrow,
   PopoverContent,
   PopoverTrigger,
-  useToast,
 } from "@chakra-ui/react";
 import { FaUserFriends } from "react-icons/fa";
 
@@ -22,7 +21,7 @@ export default function FriendsList() {
             margin={"0"}
             variant="outline"
             borderRadius="full"
-            colorScheme="pink"
+            colorScheme="black"
             aria-label="Friendlist"
             icon={<Icon as={FaUserFriends} />}
           />

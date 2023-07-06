@@ -5,7 +5,15 @@ export async function getProfileById(id: number) {
     where: {
       id,
     },
-    include: {
+    select: {
+      id: true,
+      username: true,
+      usernameSet: true,
+      paymentType: true,
+      email: true,
+      picture: true,
+      registeredWith: true,
+
       friends: {
         select: {
           id: true,
