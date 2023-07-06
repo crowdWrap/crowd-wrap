@@ -74,6 +74,18 @@ export async function updateUserUsernameSet(
   return updatedUser;
 }
 
+export async function updateEventToUserUsername(
+  userId: number,
+  newUsername: string
+) {
+  const updatedUser = await prisma.eventToUser.updateMany({
+    where: { userId },
+    data: { username: newUsername },
+  });
+
+  return updatedUser;
+}
+
 export async function updateUserCurrentFunds(
   eventId: number,
   userId: number,
@@ -97,4 +109,14 @@ export async function updateUserCurrentFunds(
   } else {
     throw new Error(`User ${userId} is not a participant in event ${eventId}`);
   }
+}
+
+export async function updateUserPassword(id: number, password: string) {
+  const user = prisma.user.update({
+    where: { id },
+    data: {
+      password,
+    },
+  });
+  return user;
 }

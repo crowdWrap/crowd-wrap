@@ -17,6 +17,7 @@ import EventInvite from "./pages/eventInvite";
 import RootLayout from "./layouts/layout";
 import RequiresAuth from "./protectRoute";
 import InnerProtection from "./components/innerEvents/protectInnerEvent";
+import Settings from "./pages/settings";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -27,6 +28,7 @@ const router = createBrowserRouter(
       <Route path="/profile/setUsername" element={<SetUsername />} />
       <Route element={<RequiresAuth />}>
         <Route path="/profile" element={<LoggedIn />} />
+        <Route path="/settings" element={<Settings />} />
         <Route path="/events" element={<Events />}></Route>
         <Route path="/events/invite/:link" element={<EventInvite />} />
         <Route

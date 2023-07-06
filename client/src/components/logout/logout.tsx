@@ -16,20 +16,20 @@ import {
   SkeletonCircle,
   useDisclosure,
 } from "@chakra-ui/react";
-import {
-  AiOutlineSetting,
-  AiOutlineLogout,
-  AiOutlineSchedule,
-  AiOutlineFolderView,
-  AiOutlineUserSwitch,
-} from "react-icons/ai";
-import React from "react";
+import { AiOutlineLogout, AiOutlineFieldTime } from "react-icons/ai";
+import { RiListSettingsLine } from "react-icons/ri";
+import React, { useEffect } from "react";
 import Buttoninfo from "./buttonInfo";
+import { BiGroup } from "react-icons/bi";
+import { useLocation, useNavigate } from "react-router-dom";
+import { RiFoldersLine } from "react-icons/ri";
 
 export default function LogoutButton() {
   const { user, logout, loading } = useAuth();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef<any>();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   // console.log(user);
   return (
@@ -82,11 +82,43 @@ export default function LogoutButton() {
 
               <DrawerBody>
                 <Flex direction="column" width="100%" gap={4}>
-                  <Buttoninfo text="Friend Feed" icon={AiOutlineUserSwitch} />
+                  <Buttoninfo
+                    text="Events"
+                    icon={RiFoldersLine}
+                    onClick={() => {
+                      if (location.pathname !== "/events") {
+                        onClose();
+                        navigate("/events");
+                      }
+                    }}
+                    colorScheme={
+                      location.pathname === "/events" ? "pink" : "gray"
+                    }
+                    backgroundColor={
+                      location.pathname === "/events" ? "none" : "transparent"
+                    }
+                  />
                   <Divider />
-                  <Buttoninfo text="Upcoming" icon={AiOutlineSchedule} />
+                  <Buttoninfo text="Friend Feed" icon={BiGroup} />
                   <Divider />
-                  <Buttoninfo text="Settings" icon={AiOutlineSetting} />
+                  <Buttoninfo text="Upcoming" icon={AiOutlineFieldTime} />
+                  <Divider />
+                  <Buttoninfo
+                    text="Settings"
+                    icon={RiListSettingsLine}
+                    onClick={() => {
+                      if (location.pathname !== "/settings") {
+                        onClose();
+                        navigate("/settings");
+                      }
+                    }}
+                    colorScheme={
+                      location.pathname === "/settings" ? "pink" : "gray"
+                    }
+                    backgroundColor={
+                      location.pathname === "/settings" ? "none" : "transparent"
+                    }
+                  />
                   {/* <Divider /> */}
                 </Flex>
               </DrawerBody>
@@ -105,7 +137,10 @@ export default function LogoutButton() {
                   icon={AiOutlineLogout}
                   flexContent={true}
                   _hover={{ color: "red" }}
-                  onClick={logout}
+                  onClick={() => {
+                    logout();
+                    onClose();
+                  }}
                 />
               </DrawerFooter>
             </DrawerContent>
