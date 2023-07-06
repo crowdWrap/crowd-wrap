@@ -1,6 +1,7 @@
 import { Button, useToast } from "@chakra-ui/react";
 import { GoogleLogin } from "@react-oauth/google";
 import { useNavigate } from "react-router-dom";
+import { constants } from "../constants";
 
 export default function SignUpGoogle({ loading, setLoading }: any) {
   const navigate = useNavigate();
@@ -27,7 +28,7 @@ export default function SignUpGoogle({ loading, setLoading }: any) {
             title: "Registration Succesful.",
             description: `${newResponse.message}`,
             status: "success",
-            duration: 4000,
+            duration: constants.toastDuration,
           });
           navigate("/login");
         } else {
@@ -35,7 +36,7 @@ export default function SignUpGoogle({ loading, setLoading }: any) {
             title: "Registration failed.",
             description: `${newResponse.message}`,
             status: "error",
-            duration: 4000,
+            duration: constants.toastDuration,
           });
         }
         setLoading(false);

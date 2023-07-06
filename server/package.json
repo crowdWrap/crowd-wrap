@@ -38,6 +38,7 @@
     "passport": "^0.6.0",
     "passport-local": "^1.0.0",
     "prisma": "^4.10.1",
-    "socket.io": "^4.6.2"
+    "socket.io": "^4.6.2",
+    "stripe": "^12.9.0"
   }
 }
