@@ -60,7 +60,7 @@ export default function LoginForm() {
     });
 
     const receivedData = await response.json();
-
+    setLoading(false);
     if (response.ok) {
       toast({
         title: "Login Succesful.",
