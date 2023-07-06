@@ -56,7 +56,7 @@ export default function SignInGoogle({ loading, setLoading }: any) {
   return (
     <>
       <Button
-        isDisabled={loading ? true : false}
+        isDisabled={loading}
         colorScheme="palevioletred"
         style={{
           border: "2px solid palevioletred",

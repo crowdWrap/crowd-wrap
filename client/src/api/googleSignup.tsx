@@ -48,7 +48,7 @@ export default function SignUpGoogle({ loading, setLoading }: any) {
   return (
     <>
       <Button
-        isLoading={loading ? true : false}
+        isLoading={loading}
         colorScheme="palevioletred"
         style={{
           border: "2px solid palevioletred",

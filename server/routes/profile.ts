@@ -84,8 +84,6 @@ router.post("/password/update", async (req, res, next) => {
           if (err) {
             throw new Error(String(err));
           } else if (result) {
-            const hashedPass = await bcrypt.hash(newPassword, 10);
-
             if (
               !newPassword ||
               newPassword.length < 8 ||
@@ -93,6 +91,8 @@ router.post("/password/update", async (req, res, next) => {
             ) {
               return res.status(400).json({ message: "Invalid fields" });
             }
+
+            const hashedPass = await bcrypt.hash(newPassword, 10);
 
             const updatedUser = await updateUserPassword(
               Number(req.session.user),

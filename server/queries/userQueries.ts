@@ -99,7 +99,7 @@ export async function updateUserCurrentFunds(
   });
 
   if (user) {
-    const updateFunds = prisma.eventToUser.update({
+    const updateFunds = await prisma.eventToUser.update({
       where: { id: user?.id },
       data: {
         currentMoney: user?.currentMoney + currentMoney,
@@ -112,11 +112,46 @@ export async function updateUserCurrentFunds(
 }
 
 export async function updateUserPassword(id: number, password: string) {
-  const user = prisma.user.update({
+  const user = await prisma.user.update({
     where: { id },
     data: {
       password,
     },
   });
   return user;
+}
+
+export async function updateUserResetToken(id: number, token: string) {
+  const expirationDate = new Date(Date.now() + 5 * 60 * 1000);
+  const user = await prisma.user.update({
+    where: { id },
+    data: {
+      resetToken: token,
+      resetTokenExpiration: expirationDate,
+    },
+  });
+  return user;
+}
+
+export async function validateUserResetToken(id: number, token: string) {
+  const user: any = await prisma.user.findUnique({
+    where: { id },
+  });
+
+  if (
+    user &&
+    user.resetToken == token &&
+    Date.now() < user.resetTokenExpiration
+  ) {
+    await prisma.user.update({
+      where: { id },
+      data: {
+        resetToken: null,
+        resetTokenExpiration: null,
+      },
+    });
+    return true;
+  } else {
+    return false;
+  }
 }

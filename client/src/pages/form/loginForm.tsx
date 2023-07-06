@@ -1,12 +1,10 @@
 import React, { useEffect } from "react";
-import { Form, Link as ReactLink, useLocation } from "react-router-dom";
+import { Link as ReactLink, useLocation } from "react-router-dom";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import SignInGoogle from "../../api/googleSignin";
 import { useAuth } from "../../hooks/authContext";
-import backgroundImage from "../.././assets/image_group/blue-pink-better-theme.png";
-
 import "@fontsource/inter";
 
 import {
@@ -14,16 +12,22 @@ import {
   FormLabel,
   Input,
   Link,
-  Box,
   Flex,
   InputGroup,
   InputRightElement,
   Button,
-  Heading,
   Text,
   useToast,
-  Highlight,
+  IconButton,
+  Icon,
+  InputRightAddon,
 } from "@chakra-ui/react";
+import LoginAndSignupPage from "../../components/loginAndSignup/LoginAndSignupPage";
+import {
+  AiOutlineEye,
+  AiOutlineEyeInvisible,
+  AiOutlineUser,
+} from "react-icons/ai";
 
 export default function LoginForm() {
   const navigate = useNavigate();
@@ -82,108 +86,84 @@ export default function LoginForm() {
   }
 
   return (
-    <Flex
-      borderColor={"red"}
-      height="100vh"
-      backgroundPosition="40%"
-      position="absolute"
-      top="0px"
-      width="100vw"
-      objectFit="cover"
-      justifyContent={"center"}
-      alignItems="center"
-      filter="hue-rotate(50deg)"
-      backgroundImage={backgroundImage}
+    <LoginAndSignupPage
+      handleSubmit={handleSubmit}
+      headingText={"Welcome Back"}
+      regText={"Please enter your details"}
     >
-      <Box
-        bgColor="white"
-        borderRadius="25px"
-        p="60px 40px"
-        boxShadow="0px 0px 5px rgba(0, 0, 0, 0.265)"
-        filter="hue-rotate(-50deg)"
+      <FormControl variant="floating" id="usernameEmail" isRequired>
+        <InputGroup>
+          <Input
+            placeholder=" "
+            onChange={(e) => setusernameOrEmail(e.target.value)}
+          />
+          <FormLabel bg="white">Username or Email</FormLabel>
+          <InputRightAddon userSelect="none">
+            <Icon as={AiOutlineUser} />@
+          </InputRightAddon>
+        </InputGroup>
+      </FormControl>
+      <FormControl variant="floating" id="password" isRequired>
+        <InputGroup size="md">
+          <Input
+            pr="4.5rem"
+            type={show ? "text" : "password"}
+            placeholder=" "
+            onChange={(e) => setLoginPassword(e.target.value)}
+          />
+          <FormLabel bg="white">Password</FormLabel>
+          <InputRightElement>
+            <IconButton
+              mr="10px"
+              aria-label="Show"
+              onClick={handleClick}
+              variant="unstyled"
+              _hover={{ color: "pink.500" }}
+              boxSize="6"
+              as={show ? AiOutlineEye : AiOutlineEyeInvisible}
+            />
+          </InputRightElement>
+        </InputGroup>
+      </FormControl>
+
+      <Link
+        as={ReactLink}
+        fontSize="0.8rem"
+        position="absolute"
+        right="0"
+        to="/login/forgot"
+        color="teal.500"
+        bottom="110"
       >
-        <Heading fontWeight="400" marginBottom="10px">
-          Login
-        </Heading>
-        <Text fontWeight="200" marginBottom="25px">
-          <Highlight
-            styles={{ px: "1", py: "1", rounded: "full", bg: "red.100" }}
-            query={"social"}
-          >
-            Gifting, but make it social
-          </Highlight>
+        Forgot Password?
+      </Link>
+      <Flex marginTop="15px" gap="5px" alignItems="center">
+        <Button
+          isLoading={loading}
+          flexGrow="1"
+          type="submit"
+          colorScheme="pink"
+        >
+          Sign in
+        </Button>
+        <GoogleOAuthProvider clientId={`${process.env.REACT_APP_CLIENTID}`}>
+          <SignInGoogle loading={loading} setLoading={setLoading} />
+        </GoogleOAuthProvider>
+      </Flex>
+
+      <Flex
+        marginTop="-10px"
+        alignItems="center"
+        gap="5px"
+        flexDirection="column"
+      >
+        <Text fontSize="0.9rem">
+          Don't have an account?{" "}
+          <Link as={ReactLink} to="/register" color="teal.500">
+            Sign up
+          </Link>
         </Text>
-        <Form onSubmit={handleSubmit}>
-          <Flex gap="30px" flexDir="column">
-            <FormControl variant="floating" id="usernameEmail" isRequired>
-              <Input
-                placeholder=" "
-                onChange={(e) => setusernameOrEmail(e.target.value)}
-              />
-              <FormLabel bg="white">Username or Email</FormLabel>
-            </FormControl>
-            <FormControl variant="floating" id="password" isRequired>
-              <InputGroup size="md">
-                <Input
-                  pr="4.5rem"
-                  type={show ? "text" : "password"}
-                  placeholder=" "
-                  onChange={(e) => setLoginPassword(e.target.value)}
-                />
-                <FormLabel bg="white">Password</FormLabel>
-                <InputRightElement width="4.5rem">
-                  <Button
-                    marginTop="auto"
-                    marginBottom="auto"
-                    variant="outline"
-                    colorScheme="blue"
-                    h="1.75rem"
-                    size="sm"
-                    onClick={handleClick}
-                  >
-                    {show ? "Hide" : "Show"}
-                  </Button>
-                </InputRightElement>
-              </InputGroup>
-            </FormControl>
-
-            <Flex flexDir="row" gap="8px">
-              {loading ? (
-                <Button flexGrow="1" isLoading type="submit" colorScheme="pink">
-                  Sign in
-                </Button>
-              ) : (
-                <Button flexGrow="1" type="submit" colorScheme="pink">
-                  Sign in
-                </Button>
-              )}
-              {/* <Button colorScheme="red" padding="0"> */}
-              <GoogleOAuthProvider
-                clientId={`${process.env.REACT_APP_CLIENTID}`}
-              >
-                <SignInGoogle loading={loading} setLoading={setLoading} />
-              </GoogleOAuthProvider>
-              {/* </Button> */}
-            </Flex>
-
-            <Flex alignItems="center" gap="5px" flexDirection="column">
-              <Text>
-                Dont have an account?{" "}
-                <Link as={ReactLink} to="/register" color="teal.500">
-                  Sign up
-                </Link>
-              </Text>
-
-              {/* <Text >
-              <Link color="teal.500">Forgot Password?</Link>{" "}
-            </Text>
-            <Text >
-              <Link color="teal.500">Need help?</Link>{" "}
-            </Text> */}
-            </Flex>
-          </Flex>
-        </Form>
-      </Box>
-    </Flex>
+      </Flex>
+    </LoginAndSignupPage>
   );
 }

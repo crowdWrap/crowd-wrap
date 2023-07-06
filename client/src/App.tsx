@@ -18,6 +18,7 @@ import RootLayout from "./layouts/layout";
 import RequiresAuth from "./protectRoute";
 import InnerProtection from "./components/innerEvents/protectInnerEvent";
 import Settings from "./pages/settings";
+import ForgotPassword from "./pages/forgotPassword";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -25,6 +26,7 @@ const router = createBrowserRouter(
       <Route path="/" element={<HomePage />} />
       <Route path="/register" element={<SignupForm />} />
       <Route path="/login" element={<LoginForm />} />
+      <Route path="/login/forgot" element={<ForgotPassword />} />
       <Route path="/profile/setUsername" element={<SetUsername />} />
       <Route element={<RequiresAuth />}>
         <Route path="/profile" element={<LoggedIn />} />
