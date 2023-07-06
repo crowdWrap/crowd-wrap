@@ -17,6 +17,7 @@ import {
   AiOutlineMore,
 } from "react-icons/ai";
 import { useAuth } from "../../../hooks/authContext";
+import { constants } from "../../../constants";
 
 export default function ReceivedFriend({
   item,
@@ -32,8 +33,7 @@ export default function ReceivedFriend({
           <Flex flex="1" gap="4" alignItems="center" flexWrap="wrap">
             <Avatar
               src={
-                item.profilePic ===
-                "https://vectorified.com/images/no-profile-picture-icon-28.png"
+                item.profilePic === constants.defaultProfilePic
                   ? null
                   : item.profilePic
               }
