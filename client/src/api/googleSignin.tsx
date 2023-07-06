@@ -3,10 +3,12 @@ import { GoogleLogin } from "@react-oauth/google";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/authContext";
 import { Button, useToast } from "@chakra-ui/react";
+import { constants } from "../constants";
 
 export default function SignInGoogle({ loading, setLoading }: any) {
   const { setAuthed, setUser } = useAuth();
   const toast = useToast();
+  const navigate = useNavigate();
 
   const succesfulSignIn = async (credentialResponse: any) => {
     try {
@@ -28,7 +30,7 @@ export default function SignInGoogle({ loading, setLoading }: any) {
             title: "Login Succesful.",
             description: `${newResponse.message}`,
             status: "success",
-            duration: 4000,
+            duration: constants.toastDuration,
           });
           setUser(newResponse.user);
           setAuthed(true);
@@ -38,7 +40,7 @@ export default function SignInGoogle({ loading, setLoading }: any) {
             title: "Login failed.",
             description: `${newResponse.message}.`,
             status: "error",
-            duration: 4000,
+            duration: constants.toastDuration,
           });
         }
       });
@@ -47,7 +49,7 @@ export default function SignInGoogle({ loading, setLoading }: any) {
         title: "Error.",
         description: `${error}.`,
         status: "error",
-        duration: 4000,
+        duration: constants.toastDuration,
       });
     }
   };

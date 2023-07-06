@@ -31,6 +31,7 @@ export default function LogoutButton() {
   const navigate = useNavigate();
   const location = useLocation();
 
+  // console.log(user);
   return (
     <>
       {!loading ? (

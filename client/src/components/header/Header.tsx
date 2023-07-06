@@ -46,8 +46,12 @@ export default function Header() {
 
           <>
             <Box className={styles["navbarCover"]}>
-              <CreateEventButton />
-              <FriendsList />
+              {user && user.usernameSet && (
+                <>
+                  <CreateEventButton />
+                  <FriendsList />
+                </>
+              )}
               <LogoutButton />
             </Box>
           </>

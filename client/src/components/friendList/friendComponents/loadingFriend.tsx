@@ -11,7 +11,6 @@ import { AiOutlineMore } from "react-icons/ai";
 
 export default function LoadingFriend() {
   return (
-    // key={item.username}
     <Card style={{ marginBottom: "5px" }} width="100%">
       <CardHeader>
         <Flex>

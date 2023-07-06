@@ -143,6 +143,8 @@ export default function SignupForm() {
       .catch((error) => console.error(error));
   };
 
+  // Implement Formik validation
+
   return (
     <LoginAndSignupPage
       handleSubmit={handleSubmit}
