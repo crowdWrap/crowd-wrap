@@ -5,6 +5,7 @@ import App from "./App";
 import AuthProvider from "./hooks/authContext";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import "@fontsource/inter";
+import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 
 const activeLabelStyles = {
   transform: "scale(0.85) translateY(-24px)",
@@ -72,13 +73,21 @@ const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 
+const initialOptions = {
+  clientId: `${process.env.REACT_APP_PAYPAL_CLIENT_ID}`,
+  components: "buttons",
+  currency: "USD",
+};
+
 root.render(
   <React.StrictMode>
-    <ChakraProvider theme={theme}>
-      <AuthProvider>
-        <App />
-      </AuthProvider>
-    </ChakraProvider>
+    <PayPalScriptProvider options={initialOptions}>
+      <ChakraProvider theme={theme}>
+        <AuthProvider>
+          <App />
+        </AuthProvider>
+      </ChakraProvider>
+    </PayPalScriptProvider>
   </React.StrictMode>
 );
 

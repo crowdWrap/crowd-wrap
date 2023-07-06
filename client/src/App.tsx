@@ -16,6 +16,7 @@ import Dashboard from "./pages/dashboard";
 import EventInvite from "./pages/eventInvite";
 import RootLayout from "./layouts/layout";
 import RequiresAuth from "./protectRoute";
+import InnerProtection from "./components/innerEvents/protectInnerEvent";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -28,7 +29,14 @@ const router = createBrowserRouter(
         <Route path="/profile" element={<LoggedIn />} />
         <Route path="/events" element={<Events />}></Route>
         <Route path="/events/invite/:link" element={<EventInvite />} />
-        <Route path="/events/:id" element={<TheEvent />} />
+        <Route
+          path="/events/:id"
+          element={
+            <InnerProtection>
+              <TheEvent />
+            </InnerProtection>
+          }
+        />
         <Route path="/dashboard" element={<Dashboard />} />
       </Route>
     </Route>

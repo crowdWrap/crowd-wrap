@@ -101,7 +101,11 @@ export async function getEventById(id: number) {
       id,
     },
     include: {
-      participants: true,
+      participants: {
+        orderBy: {
+          joinedAt: "asc",
+        },
+      },
     },
   });
   if (event) {
@@ -119,7 +123,11 @@ export async function getAllEventsByid(id: number) {
     include: {
       event: {
         include: {
-          participants: true,
+          participants: {
+            orderBy: {
+              joinedAt: "asc",
+            },
+          },
         },
       },
     },
@@ -182,5 +190,26 @@ export async function getParticipantById(id: number) {
   } else {
     console.log("Profile not found.");
     throw new Error(`Profile '${id}' doesn't exist.`);
+  }
+}
+
+export async function updateEventCurrentFunds(
+  eventId: number,
+  currentMoney: number
+) {
+  const event = await getEventById(eventId);
+
+  if (event) {
+    const updatedEvent = await prisma.event.update({
+      where: {
+        id: eventId,
+      },
+      data: {
+        Currentfunds: event?.Currentfunds + currentMoney,
+      },
+    });
+    return updatedEvent;
+  } else {
+    throw new Error(`${eventId} doesnt exist`);
   }
 }

@@ -11,15 +11,15 @@ datasource db {
 }
 
 model User {
-  id       Int      @id @default(autoincrement())
-  username String   @unique
-  email    String   @unique
-  password String
-  picture  String
-  session  Session?
+  id             Int      @id @default(autoincrement())
+  username       String   @unique
+  email          String   @unique
+  password       String
+  picture        String
+  session        Session?
   registeredWith String?
-  usernameSet Boolean @default(false)
-  stripeAccountId String?
+  usernameSet    Boolean  @default(false)
+  paymentType    String   @default("")
 
   friends  User[] @relation("Friend", map: "UserFriends")
   friendOf User[] @relation("Friend")
@@ -44,7 +44,7 @@ model Event {
   mode         String?
   createdAt    DateTime      @default(now())
   //more for specific things needed
-  Currentfunds Int
+  Currentfunds Float
   moneyGoal    String
   published    Boolean       @default(false)
   participants EventToUser[]
@@ -55,14 +55,15 @@ model Event {
 }
 
 model EventToUser {
-  id           Int     @id @default(autoincrement())
-  user         User    @relation(fields: [userId], references: [id])
+  id           Int      @id @default(autoincrement())
+  user         User     @relation(fields: [userId], references: [id])
   userId       Int
-  event        Event   @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  event        Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
   eventId      Int
   picture      String?
+  joinedAt     DateTime @default(now())
   username     String?
-  currentMoney Int?
+  currentMoney Float?
 
   @@unique([userId, eventId])
 }
@@ -79,7 +80,7 @@ model Session {
 
 model Message {
   id        Int      @id @default(autoincrement())
-  content   String   
+  content   String
   createdAt DateTime @default(now())
   userId    Int
   user      User     @relation(fields: [userId], references: [id])

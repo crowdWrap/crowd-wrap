@@ -62,15 +62,6 @@ export async function updateUserName(email: string, newUsername: string) {
   return updatedUser;
 }
 
-export async function updateStripeId(userId: number, stripeAccountId: string) {
-  const updatedUser = await prisma.user.update({
-    where: { id: userId },
-    data: { stripeAccountId },
-  });
-
-  return updatedUser;
-}
-
 export async function updateUserUsernameSet(
   userId: number,
   usernameSet: boolean
@@ -81,4 +72,29 @@ export async function updateUserUsernameSet(
   });
 
   return updatedUser;
+}
+
+export async function updateUserCurrentFunds(
+  eventId: number,
+  userId: number,
+  currentMoney: number
+) {
+  const user: any = await prisma.eventToUser.findFirst({
+    where: {
+      userId,
+      eventId,
+    },
+  });
+
+  if (user) {
+    const updateFunds = prisma.eventToUser.update({
+      where: { id: user?.id },
+      data: {
+        currentMoney: user?.currentMoney + currentMoney,
+      },
+    });
+    return updateFunds;
+  } else {
+    throw new Error(`User ${userId} is not a participant in event ${eventId}`);
+  }
 }

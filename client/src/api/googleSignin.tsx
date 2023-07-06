@@ -25,16 +25,7 @@ export default function SignInGoogle({ loading, setLoading }: any) {
         body: credential,
       }).then(async (response) => {
         const newResponse = await response.json();
-        setLoading(false);
-        if (newResponse.message === "Needs username") {
-          setAuthed(true);
-          toast({
-            title: "Please set username.",
-            status: "warning",
-            duration: constants.toastDuration,
-          });
-          navigate("/register/setUsername");
-        } else if (response.ok) {
+        if (response.ok) {
           toast({
             title: "Login Succesful.",
             description: `${newResponse.message}`,
