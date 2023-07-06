@@ -61,9 +61,9 @@ export default function AddFriendToEvent({
     });
 
     await setRefreshEvent(true);
-    setTimeout(() => {
-      setInviteLoading(null);
-    }, 1000);
+    // setTimeout(() => {
+    setInviteLoading(null);
+    // }, 1000);
     // Timeout because for some reason the loading symbol is going away before it refreshes
   };
 

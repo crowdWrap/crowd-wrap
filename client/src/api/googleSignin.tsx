@@ -7,8 +7,8 @@ import { constants } from "../constants";
 
 export default function SignInGoogle({ loading, setLoading }: any) {
   const { setAuthed, setUser } = useAuth();
-  const navigate = useNavigate();
   const toast = useToast();
+  const navigate = useNavigate();
 
   const succesfulSignIn = async (credentialResponse: any) => {
     try {

@@ -16,6 +16,7 @@ import {
   getEventById,
   removeParticipant,
   removeEvent,
+  getAllEventsByid,
 } from "../queries/eventQueries";
 import {
   createMessage,
@@ -44,7 +45,11 @@ async function eventsNotification(userIds: any, message: any, stats: any) {
   }
 }
 
-async function individalPersonEventNotification(userToSend: any, message: any) {
+async function individalPersonEventNotification(
+  userToSend: any,
+  message: any,
+  stats: any
+) {
   if (userToSend) {
     if (
       onlineUsers[userToSend.id] &&
@@ -52,6 +57,7 @@ async function individalPersonEventNotification(userToSend: any, message: any) {
     ) {
       io.to(onlineUsers[userToSend.id][0]).emit("eventUpdate", {
         message,
+        stats,
       });
     } else {
       console.log("theyre offline");
@@ -93,10 +99,51 @@ router.get("/invite/:link", async (req, res) => {
       const userId = Number(req.session.user);
       const inEvent = await isParticipantInEvent(userId, Number(eventId));
       if (!inEvent) {
-        addParticipant(userId, Number(eventId));
-        return res.status(200).json({ inEvent: false });
+        // addParticipant(userId, Number(eventId));
+        return res.status(200).json({ inEvent: false, event: theEvent });
       } else {
-        return res.status(200).json({ inEvent: true });
+        return res.status(200).json({ inEvent: true, event: theEvent });
+      }
+    } else {
+      return res.status(404).json({ invalidInvite: true });
+    }
+  } else {
+    return res.status(404).json({ notLoggedIn: true });
+  }
+});
+
+router.post("/invite/:link", async (req, res) => {
+  if (req.session.user) {
+    const link = req.params.link;
+    const theEvent: any = await getEventByLink(link);
+    if (theEvent) {
+      const eventId = theEvent.id;
+      const userId = Number(req.session.user);
+      const user = await getProfileById(userId);
+      const inEvent = await isParticipantInEvent(userId, Number(eventId));
+      if (!inEvent) {
+        if (theEvent.participants.length < 10) {
+          addParticipant(userId, Number(eventId));
+          eventsNotification(
+            theEvent.participants,
+            `${user.username} has been added to "${theEvent.title}"`,
+            "success"
+          );
+          individalPersonEventNotification(
+            user,
+            `You have been added to "${theEvent.title}"`,
+            "success"
+          );
+          return res.status(200).json({ inEvent: false, event: theEvent });
+        } else {
+          individalPersonEventNotification(
+            user,
+            `Maximum number of participants reached"`,
+            "error"
+          );
+        }
+      } else {
+        return res.status(404).json({ inEvent: true, event: theEvent });
       }
     } else {
       return res.status(404).json({ invalidInvite: true });
@@ -112,6 +159,8 @@ router.post("/participants/add", async (req, res) => {
     const user: any = await getProfileByUsername(username);
     const eventId: number = req.body.eventId;
     const theEvent: any = await getEventById(eventId);
+    const userId = Number(req.session.user);
+    const currentUser = await getProfileById(userId);
 
     if (theEvent.participants.length < 10) {
       addParticipant(Number(user.id), Number(eventId));
@@ -122,11 +171,12 @@ router.post("/participants/add", async (req, res) => {
       );
       individalPersonEventNotification(
         user,
-        `You have been added to "${theEvent.title}"`
+        `You have been added to "${theEvent.title}"`,
+        "success"
       );
     } else {
-      eventsNotification(
-        theEvent.participants,
+      individalPersonEventNotification(
+        currentUser,
         `Maximum number of participants reached"`,
         "error"
       );
@@ -154,12 +204,7 @@ router.delete("/participants/remove", async (req, res) => {
 
 router.get("/retrieve", async (req, res) => {
   if (req.session.user) {
-    const user = await getProfileById(Number(req.session.user));
-    const allEvents = await Promise.all(
-      user.events.map(async (e) => {
-        return await getEventById(e.eventId);
-      })
-    );
+    const allEvents = await getAllEventsByid(Number(req.session.user));
     return res.status(200).send(allEvents);
   }
 });
@@ -186,13 +231,12 @@ router.delete("/remove", async (req, res) => {
 
     if (ownerId == Number(req.session.user)) {
       removeMessages(eventId);
-      removeEvent(eventId);
-
       eventsNotification(
         theEvent.participants,
         `"${theEvent.title}" has been deleted`,
         "error"
       );
+      removeEvent(eventId);
     }
     return res.status(200).json({ message: "complete" });
   }

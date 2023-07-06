@@ -56,6 +56,7 @@ export default function TheEvent() {
   const { user } = useAuth();
   const [loading, setLoading] = useState(false);
   const [accounts, setAccounts] = useState<any>([]);
+  const [refreshInner, setRefreshInner] = useState(false);
   const navigate = useNavigate();
 
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -89,11 +90,34 @@ export default function TheEvent() {
       setEvents(await fetchEvent());
       setAccounts(await fetchData());
       setRefreshEvent(false);
+      setRefreshInner(false);
     })();
-  }, [eventId, refreshEvent, setRefreshEvent]);
+  }, [eventId, navigate, refreshEvent, setRefreshEvent, user.id, refreshInner]);
 
   useEffect(() => {
-    // setLoading(true);
+    socket.on("eventUpdate", (data) => {
+      setRefreshInner(true);
+      if (data.message !== "") {
+        toast({
+          title: "Event Notification.",
+          description: `${data.message}.`,
+          status: data.stats as
+            | "info"
+            | "warning"
+            | "success"
+            | "error"
+            | "loading",
+          duration: 4000,
+        });
+      }
+    });
+
+    return () => {
+      socket.off("eventUpdate");
+    };
+  }, [setRefreshEvent, toast]);
+
+  useEffect(() => {
     const fetchMessages = async () => {
       const response = await fetch(`/events/${eventId}/messages`, {
         method: "GET",
@@ -104,7 +128,7 @@ export default function TheEvent() {
 
     (async () => {
       setMessages(await fetchMessages());
-      // setLoading(false);
+
       setRefreshMessages(false);
     })();
   }, [eventId, refreshMessages]);
@@ -142,6 +166,37 @@ export default function TheEvent() {
     }
     messageToSendRef.current.value = "";
   };
+
+  useEffect(() => {
+    // setLoading(true);
+    const fetchMessages = async () => {
+      const response = await fetch(`/events/${eventId}/messages`, {
+        method: "GET",
+      });
+      const data = await response.json();
+      return data.messages;
+    };
+
+    (async () => {
+      setMessages(await fetchMessages());
+      // setLoading(false);
+      setRefreshMessages(false);
+    })();
+  }, [eventId, refreshMessages]);
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
+  useEffect(() => {
+    socket.on("sendMsg", () => {
+      setRefreshMessages(true);
+    });
+
+    return () => {
+      socket.off("sendMsg");
+    };
+  }, []);
 
   const handleDate = () => {
     const dateObj = new Date(events.deadlineDate);
@@ -183,6 +238,7 @@ export default function TheEvent() {
       colorMap.set(participant.userId, colors[index]);
     });
     return colorMap;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [events.participants]);
 
   return (
@@ -226,7 +282,7 @@ export default function TheEvent() {
               </ButtonGroup>
             </Flex>
           </Box>
-          <Box flexGrow="6.5">
+          <Box flexGrow="7.5">
             <Flex
               flexDirection="column"
               gap="20px"
@@ -301,12 +357,13 @@ export default function TheEvent() {
               </Box>
             </Flex>
           </Box>
-          <Box>
-            <Flex padding="10px" height="100%" overflowY="scroll">
+          <Box flexGrow="1">
+            <Flex padding="10px" height="100%" width="100%" overflowY="scroll">
               <AvatarGroup
                 max={11}
                 flexDir={"column-reverse"}
                 alignItems="center"
+                width="100%"
               >
                 {events.participants &&
                   events.participants.map((val: any, index: number) => (

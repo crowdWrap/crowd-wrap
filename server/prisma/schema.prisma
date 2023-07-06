@@ -42,6 +42,7 @@ model Event {
   image        String?
   gifts        String?
   mode         String?
+  createdAt    DateTime      @default(now())
   //more for specific things needed
   Currentfunds Int
   moneyGoal    String
