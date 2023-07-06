@@ -31,8 +31,9 @@ model User {
 
   ownedEvents Event[]   @relation("OwnedEvents")
   Message     Message[]
+  Posts       Posts[]
 
-  resetToken           String?   
+  resetToken           String?
   resetTokenExpiration DateTime?
 }
 
@@ -89,4 +90,13 @@ model Message {
   user      User     @relation(fields: [userId], references: [id])
   eventId   Int
   event     Event    @relation(fields: [eventId], references: [id])
+}
+
+model Posts {
+  id        Int      @id @default(autoincrement())
+  content   String
+  createdAt DateTime @default(now())
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+  public    Boolean  @default(false)
 }

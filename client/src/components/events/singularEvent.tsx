@@ -73,6 +73,7 @@ export default function SingularEvent({
 
   return (
     <Card
+      flexGrow="1"
       variant="outline"
       marginBottom="40px"
       marginTop="-40px"
@@ -187,7 +188,7 @@ export default function SingularEvent({
       </CardBody>
 
       <CardFooter
-        marginTop="-10px"
+        marginTop="-30px"
         justify="space-between"
         flexWrap="wrap"
         sx={{

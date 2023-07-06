@@ -97,7 +97,7 @@ export default function Events() {
       padding="9px"
       // justifyContent="center"
       paddingTop="70px"
-      gap="15px"
+      gap="35px"
       flexWrap="wrap"
     >
       {events &&

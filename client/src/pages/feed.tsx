@@ -52,6 +52,7 @@ export default function Feed() {
           backgroundColor="white"
           zIndex={5}
           paddingTop={"100px"}
+          paddingBottom="25px"
         >
           <TabList>
             <Tab>
@@ -66,7 +67,7 @@ export default function Feed() {
           </TabList>
         </Box>
 
-        <TabPanels marginTop="140px">
+        <TabPanels marginTop="135px">
           <TabPanel>
             <IndividualFeed />
             <IndividualFeed />
