@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "client": "react-script start",
-    "server": "node ./server/index.js",
+    "server": "node ./index.js",
     "start": "npm run server"
   },
   "repository": {
