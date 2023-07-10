@@ -10,8 +10,8 @@
     "client": "cd client && npm run start",
     "build:server": "cd server && tsc",
     "build": "cd client && npm run build",
-    "server": "node index.js",
-    "start": "cd server && node index.js"
+    "server": "cd server && node index.ts",
+    "start": "cd server && node index.ts"
   },
   "repository": {
     "type": "git",
