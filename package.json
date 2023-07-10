@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "client": "react-script start",
-    "server": "node ./crowd-wrap/server/index.js",
-    "start": "npm run server"
+    "server": "node index.js",
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
