@@ -8,7 +8,7 @@
     "client-install": "cd client && npm install",
     "server-install": "cd server && npm install",
     "client": "cd client && npm run start",
-    "build:server": "cd server && npx tsc",
+    "build:server": "cd server && npx tsc --jsx react-jsx",
     "build": "cd client && npm run build",
     "server": "cd server && node ./dist/index.js",
     "start": "cd server && node ./dist/index.js"
