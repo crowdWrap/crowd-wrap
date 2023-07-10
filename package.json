@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "client": "cd client && npm run start",
-    "server": "cd server && npm run start",
-    "start": "concurrently \"npm run server\" \"npm run client\""
+    "client": "react-script start",
+    "server": "node ./server/index.js",
+    "start": "npm run server"
   },
   "repository": {
     "type": "git",
