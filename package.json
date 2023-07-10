@@ -8,10 +8,10 @@
     "client-install": "cd client && npm install",
     "server-install": "cd server && npm install",
     "client": "cd client && npm run start",
-    "build:server": "cd server && tsc",
+    "build:server": "cd server && npx tsc",
     "build": "cd client && npm run build",
-    "server": "cd server && node index",
-    "start": "cd server && node index"
+    "server": "cd server && node ./dist/index.js",
+    "start": "cd server && node ./dist/index.js"
   },
   "repository": {
     "type": "git",
