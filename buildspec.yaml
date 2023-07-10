@@ -12,6 +12,8 @@ phases:
   pre_build:
     commands:
       - echo Prebuild step...
+      - echo Transpiling TypeScript server code...
+      - npm run build:server
   build:
     commands:
       - echo Build started on `date`
