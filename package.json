@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "client-install": "cd client && npm install",
     "client": "react-script start",
     "build": "react-script build",
     "server": "node index.js",
