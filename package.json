@@ -6,10 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "client-install": "cd client && npm install",
-    "client": "react-script start",
-    "build": "react-script build",
+    "client": "cd client && react-script start",
+    "build": "cd client && react-script build",
     "server": "node index.js",
-    "start": "node index.js"
+    "start": "cd server && node index.js"
   },
   "repository": {
     "type": "git",
