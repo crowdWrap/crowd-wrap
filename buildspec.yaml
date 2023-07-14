@@ -13,6 +13,7 @@ phases:
       - npm run server-install
       - echo Installing typescript
       - cd server && npm install typescript
+      - cd ..
   pre_build:
     commands:
       - echo Prebuild step...
