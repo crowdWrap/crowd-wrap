@@ -11,7 +11,7 @@
     "build:server": "cd server && npx tsc",
     "build": "cd client && npm run build",
     "server": "node ./server/index.ts",
-    "start": "node ./server/dist/index.js"
+    "start": "cd server npm run start"
   },
   "repository": {
     "type": "git",
