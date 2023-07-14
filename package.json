@@ -10,8 +10,8 @@
     "client": "cd client && npm run start",
     "build:server": "cd server && npx tsc",
     "build": "cd client && npm run build",
-    "server": "node ./server/index.ts",
-    "start": "cd server npm run start"
+    "server": "cd server && npm run start",
+    "start": "concurrently \"npm run server\" \"npm run client\""
   },
   "repository": {
     "type": "git",
@@ -24,13 +24,13 @@
   },
   "homepage": "https://github.com/crowdWrap/crowd-wrap#readme",
   "devDependencies": {
-    "@types/morgan": "^1.9.4",
-    "concurrently": "^7.6.0",
-    "nodemon": "^2.0.20"
+    "@types/morgan": "^1.9.4"
   },
   "dependencies": {
+    "concurrently": "^8.2.0",
     "dotenv": "^16.0.3",
     "morgan": "^1.10.0",
+    "nodemon": "^3.0.1",
     "typescript": "^5.1.6"
   }
 }
