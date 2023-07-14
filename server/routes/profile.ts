@@ -13,7 +13,7 @@ import {
 const router = Router();
 import bcrypt from "bcryptjs";
 
-router.get("/", async (req, res) => {
+router.get("/", async (req:any, res:any) => {
   if (req.session.user) {
     const user = await getProfileById(Number(req.session.user));
     res.setHeader("Content-Type", "application/json");
@@ -23,7 +23,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/setUsername", async (req, res) => {
+router.get("/setUsername", async (req:any, res:any) => {
   if (req.session.user) {
     const username: any = req.query.username;
     const usernameExists = await getProfileByUsername(username);
@@ -36,7 +36,7 @@ router.get("/setUsername", async (req, res) => {
   }
 });
 
-router.post("/setUsername", async (req, res) => {
+router.post("/setUsername", async (req:any, res:any) => {
   if (req.session.user) {
     const user = await getProfileById(Number(req.session.user));
     res.setHeader("Content-Type", "application/json");
@@ -70,7 +70,7 @@ router.post("/setUsername", async (req, res) => {
   }
 });
 
-router.post("/password/update", async (req, res, next) => {
+router.post("/password/update", async (req:any, res:any, next:any) => {
   if (req.session.user) {
     const oldPassword: string = req.body.oldPassword;
     const newPassword: string = req.body.newPassword;

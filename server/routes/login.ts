@@ -21,7 +21,7 @@ sgMail.setApiKey(process.env.SENDGRID_API as string);
 const client = new OAuth2Client(process.env.CLIENTID);
 const router = Router();
 
-router.get("/", async (req, res) => {
+router.get("/", async (req:any, res:any) => {
   if (req.session.user) {
     const user = await getProfileById(Number(req.session.user));
 
@@ -31,7 +31,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.post("/", async (req, res, next) => {
+router.post("/", async (req:any, res:any, next) => {
   passport.authenticate("local", (err: Error, user: any) => {
     if (err) {
       return next(err);
@@ -39,7 +39,7 @@ router.post("/", async (req, res, next) => {
     if (!user) {
       return res.status(401).json({ message: "This user does not exist!" });
     }
-    req.logIn(user, async (err) => {
+    req.logIn(user, async (err:any) => {
       if (err) {
         return next(err);
       }
@@ -52,7 +52,7 @@ router.post("/", async (req, res, next) => {
   })(req, res, next);
 });
 
-router.post("/googleOauth", async (req, res, next) => {
+router.post("/googleOauth", async (req:any, res:any, next) => {
   if (req.body.credential) {
     try {
       const token = req.body.credential;
@@ -78,7 +78,7 @@ router.post("/googleOauth", async (req, res, next) => {
 
         const user: any = await getProfileByEmail(email);
 
-        req.logIn(user, async (err) => {
+        req.logIn(user, async (err:any) => {
           if (err) {
             return next(err);
           }
@@ -99,7 +99,7 @@ router.post("/googleOauth", async (req, res, next) => {
   }
 });
 
-router.post("/forgot", async (req, res) => {
+router.post("/forgot", async (req:any, res:any) => {
   const usernameOrEmail = req.body.usernameEmail;
   let regex = new RegExp("[a-z0-9]+@[a-z]+.[a-z]{2,3}");
   let user;
@@ -132,7 +132,7 @@ router.post("/forgot", async (req, res) => {
   return res.status(200).json({ message: "Good to go!" });
 });
 
-router.post("/forgot/check", async (req, res) => {
+router.post("/forgot/check", async (req:any, res:any) => {
   const usernameOrEmail = req.body.usernameEmail;
   const token = req.body.token;
   let regex = new RegExp("[a-z0-9]+@[a-z]+.[a-z]{2,3}");
@@ -153,7 +153,7 @@ router.post("/forgot/check", async (req, res) => {
   return res.status(400).json({ valid: false });
 });
 
-router.post("/forgot/update", async (req, res) => {
+router.post("/forgot/update", async (req:any, res:any) => {
   const usernameOrEmail = req.body.usernameEmail;
   const password: string = req.body.password;
 

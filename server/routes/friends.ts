@@ -38,7 +38,7 @@ async function friendListNotification(userToSend: any, message: any) {
   }
 }
 
-router.get("/", async (req, res) => {
+router.get("/", async (req:any, res:any) => {
   let accounts;
   if (req.session.user) {
     const user = await getProfileById(Number(req.session.user));
@@ -68,7 +68,7 @@ router.get("/", async (req, res) => {
   res.send(accounts);
 });
 
-router.get("/search", async (req, res) => {
+router.get("/search", async (req:any, res:any) => {
   const userSearch: any = req.query.user_search;
   const user = await getProfileById(Number(req.session.user));
   const profiles = await getProfilesByPartialUsername(userSearch);
@@ -90,7 +90,7 @@ router.get("/search", async (req, res) => {
   res.send(accounts);
 });
 
-router.get("/list-search", async (req, res) => {
+router.get("/list-search", async (req:any, res:any) => {
   const userSearch: any = req.query.user_search;
   const user = await getProfileById(Number(req.session.user));
   const friends = await getFriendsByPartialUsername(userSearch, user.id);
@@ -104,7 +104,7 @@ router.get("/list-search", async (req, res) => {
   res.send(accounts);
 });
 
-router.post("/send-request", async (req, res) => {
+router.post("/send-request", async (req:any, res:any) => {
   let account;
   if (req.session.user) {
     const userToSendFriendRequest: any = req.body.username;
@@ -152,7 +152,7 @@ router.post("/send-request", async (req, res) => {
   }
 });
 
-router.get("/received", async (req, res) => {
+router.get("/received", async (req:any, res:any) => {
   let accounts;
   if (req.session.user) {
     const user = await getProfileById(Number(req.session.user));
@@ -169,7 +169,7 @@ router.get("/received", async (req, res) => {
   res.send(accounts);
 });
 
-router.delete("/received/remove", async (req, res) => {
+router.delete("/received/remove", async (req:any, res:any) => {
   if (req.session.user) {
     const usertoRemoveUsername: any = req.body.username;
     const userToRemove: any = await getProfileByUsername(usertoRemoveUsername);
@@ -182,7 +182,7 @@ router.delete("/received/remove", async (req, res) => {
   }
 });
 
-router.get("/sent", async (req, res) => {
+router.get("/sent", async (req:any, res:any) => {
   let accounts;
   if (req.session.user) {
     const user = await getProfileById(Number(req.session.user));
@@ -199,7 +199,7 @@ router.get("/sent", async (req, res) => {
   res.send(accounts);
 });
 
-router.delete("/sent/remove", async (req, res) => {
+router.delete("/sent/remove", async (req:any, res:any) => {
   if (req.session.user) {
     const usertoRemoveUsername: any = req.body.username;
     const currentUserID: number = Number(req.session.user);
@@ -213,7 +213,7 @@ router.delete("/sent/remove", async (req, res) => {
   }
 });
 
-router.post("/add", async (req, res) => {
+router.post("/add", async (req:any, res:any) => {
   if (req.session.user) {
     const usertoRemoveUsername: any = req.body.username;
     const currentUserID: number = Number(req.session.user);
@@ -234,7 +234,7 @@ router.post("/add", async (req, res) => {
   }
 });
 
-router.delete("/remove", async (req, res) => {
+router.delete("/remove", async (req:any, res:any) => {
   if (req.session.user) {
     const usertoRemoveUsername: any = req.body.username;
     const currentUserID: number = Number(req.session.user);

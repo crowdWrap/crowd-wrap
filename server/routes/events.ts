@@ -64,7 +64,7 @@ async function individalPersonEventNotification(
   }
 }
 
-router.post("/", async (req, res) => {
+router.post("/", async (req:any, res:any) => {
   if (req.session.user) {
     const inviteLink = crypto.randomUUID();
 
@@ -73,7 +73,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.get("/invite/:link", async (req, res) => {
+router.get("/invite/:link", async (req:any, res:any) => {
   if (req.session.user) {
     const link = req.params.link;
     const theEvent: any = await getEventByLink(link);
@@ -95,7 +95,7 @@ router.get("/invite/:link", async (req, res) => {
   }
 });
 
-router.post("/invite/:link", async (req, res) => {
+router.post("/invite/:link", async (req:any, res:any) => {
   if (req.session.user) {
     const link = req.params.link;
     const theEvent: any = await getEventByLink(link);
@@ -136,7 +136,7 @@ router.post("/invite/:link", async (req, res) => {
   }
 });
 
-router.post("/participants/add", async (req, res) => {
+router.post("/participants/add", async (req:any, res:any) => {
   if (req.session.user) {
     const username: string = req.body.username;
     const user: any = await getProfileByUsername(username);
@@ -168,7 +168,7 @@ router.post("/participants/add", async (req, res) => {
   }
 });
 
-router.delete("/participants/remove", async (req, res) => {
+router.delete("/participants/remove", async (req:any, res:any) => {
   if (req.session.user) {
     const userId = req.body.userId;
     const user = await getProfileById(Number(userId));
@@ -185,14 +185,14 @@ router.delete("/participants/remove", async (req, res) => {
   }
 });
 
-router.get("/retrieve", async (req, res) => {
+router.get("/retrieve", async (req:any, res:any) => {
   if (req.session.user) {
     const allEvents = await getAllEventsByid(Number(req.session.user));
     return res.status(200).send(allEvents);
   }
 });
 
-router.get("/id", async (req, res) => {
+router.get("/id", async (req:any, res:any) => {
   if (req.session.user) {
     const eventId: any = req.query.eventId;
     const event = await getEventById(Number(eventId));
@@ -204,7 +204,7 @@ router.get("/id", async (req, res) => {
   }
 });
 
-router.delete("/remove", async (req, res) => {
+router.delete("/remove", async (req:any, res:any) => {
   if (req.session.user) {
     const eventId: number = Number(req.body.eventId);
     const ownerId: number = Number(req.body.ownerId);
@@ -223,13 +223,13 @@ router.delete("/remove", async (req, res) => {
   }
 });
 
-router.get("/:eventId/messages", async (req, res) => {
+router.get("/:eventId/messages", async (req:any, res:any) => {
   const eventId = Number(req.params.eventId);
   const messages = await getMessagesById(eventId);
   return res.status(200).json({ messages });
 });
 
-router.post("/:eventId/messages", async (req, res) => {
+router.post("/:eventId/messages", async (req:any, res:any) => {
   const eventId = Number(req.params.eventId);
   const userId = Number(req.session.user);
   const content = req.body.content;

@@ -10,7 +10,7 @@ import {
 const client = new OAuth2Client(process.env.CLIENTID);
 const router = Router();
 
-router.post("/", async (req, res) => {
+router.post("/", async (req:any, res:any) => {
   try {
     const { username, email, password } = req.body;
 
@@ -48,7 +48,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.post("/googleOauth", async (req, res) => {
+router.post("/googleOauth", async (req:any, res:any) => {
   if (req.body.credential) {
     try {
       const token = req.body.credential;

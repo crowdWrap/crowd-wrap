@@ -1,8 +1,8 @@
 import { Router } from "express";
 const router = Router();
 
-router.get("/", (req, res) => {
-  req.logout(function (err) {
+router.get("/", (req:any, res:any) => {
+  req.logout(function (err:any) {
     if (err) {
       return res.status(401).json({ message: "Logout failed" });
     }

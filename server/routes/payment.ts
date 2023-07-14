@@ -28,7 +28,7 @@ async function eventsNotification(userIds: any, message: any, stats: any) {
   }
 }
 
-router.post("/update", async (req, res) => {
+router.post("/update", async (req:any, res:any) => {
   const paymentType: string = req.body.paymentType;
   const user = await updatePaymentTypeById(
     Number(req.session.user),
@@ -37,13 +37,13 @@ router.post("/update", async (req, res) => {
   return res.status(200).json({ user });
 });
 
-router.get("/update", async (req, res) => {
+router.get("/update", async (req:any, res:any) => {
   const userId: number = Number(req.query.userId);
   const paymentType = await getPaymentTypeById(userId);
   return res.status(200).json({ paymentType });
 });
 
-router.post("/complete", async (req, res) => {
+router.post("/complete", async (req:any, res:any) => {
   if (req.session.user) {
     const userId = req.body.userId;
     const user = await getProfileById(Number(userId));
