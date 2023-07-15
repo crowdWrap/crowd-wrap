@@ -3,8 +3,9 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      nodejs: 14
+      nodejs: latest
     commands:
+      - npm install -g typescript
       - echo Installing source NPM dependencies...
       - npm install --force
       - echo Installing client NPM dependencies...
@@ -12,15 +13,10 @@ phases:
       - echo Installing server NPM dependencies...
       - npm run server-install
       - echo Installing typescript
-      - cd server && npm install typescript
-      - cd ..
-  pre_build:
-    commands:
-      - echo Prebuild step...
-      - echo Transpiling TypeScript server code...
-      - npm run build:server
   build:
     commands:
+      - echo Transpiling TypeScript server code...
+      - npm run build:server
       - echo Build started on `date`
       - echo Building the client...
       - npm run build

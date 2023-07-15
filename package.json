@@ -7,10 +7,10 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "client-install": "cd client && npm install --force",
     "server-install": "cd server && npm install --force",
-    "client": "cd /var/app/current/client && npm run start",
-    "build:server": "cd server && npx tsc",
+    "client": "cd client && npm run start",
+    "build:server": "cd server && npx tsc && tsc",
     "build": "cd client && npm run build",
-    "server": "cd /var/app/current/server/dist && npm run start",
+    "server": "cd server && npm run start",
     "start": "concurrently \"npm run server\" \"npm run client\""
   },
   "repository": {
@@ -22,7 +22,7 @@
   "bugs": {
     "url": "https://github.com/crowdWrap/crowd-wrap/issues"
   },
-  "homepage": "https://github.com/crowdWrap/crowd-wrap#readme",
+  "homepage": "http://crowdwrap.us-east-2.elasticbeanstalk.com",
   "dependencies": {
     "@types/morgan": "^1.9.4",
     "concurrently": "^8.2.0",
