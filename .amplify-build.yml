@@ -24,7 +24,7 @@ frontend:
       commands:
         - echo Build completed on `date`
   artifacts:
-    baseDirectory: build
+    baseDirectory: "."
     files:
       - '**/*'
   cache:
