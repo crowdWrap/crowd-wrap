@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "proxy": "http://localhost:8000",
+  "homepage": "https://main.d24d1799szk92e.amplifyapp.com/",
   "dependencies": {
     "@chakra-ui/react": "^2.7.1",
     "@chakra-ui/visually-hidden": "^2.0.15",

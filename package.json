@@ -22,7 +22,7 @@
   "bugs": {
     "url": "https://github.com/crowdWrap/crowd-wrap/issues"
   },
-  "homepage": "http://crowdwrap.us-east-2.elasticbeanstalk.com",
+  "homepage": "https://main.d24d1799szk92e.amplifyapp.com/",
   "dependencies": {
     "@types/morgan": "^1.9.4",
     "concurrently": "^8.2.0",
