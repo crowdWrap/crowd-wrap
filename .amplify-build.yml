@@ -31,8 +31,6 @@ frontend:
     paths:
       - node_modules/**/*
 
-version: 1
-
 backend:
   phases:
     preBuild:
