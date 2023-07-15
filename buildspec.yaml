@@ -5,6 +5,9 @@ phases:
     runtime-versions:
       nodejs: latest
     commands:
+      - echo "Files in the current directory:$(pwd)"
+      - ls -al
+      - echo "-----------------------------"
       - npm install -g typescript
       - echo Installing source NPM dependencies...
       - npm install --force
@@ -20,6 +23,9 @@ phases:
       - echo Build started on `date`
       - echo Building the client...
       - npm run build
+      - echo "Files in the current directory:$(pwd)"
+      - ls -al
+      - echo "-----------------------------"
   post_build:
     commands:
       - echo Build completed on `date`
