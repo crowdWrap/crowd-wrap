@@ -5,13 +5,12 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "client-install": "cd client && npm install --force",
-    "server-install": "cd server && npm install --force",
     "client": "cd client && npm run start",
-    "build:server": "cd server && npx tsc --project tsconfig.json",
-    "build:client":"cd client && npx tsc --project tsconfig.json",
-    "build": "cd client && npm run build",
     "server": "cd server && npm run start",
+    "client-install": "cd client && npm ci",
+    "server-install": "cd server && npm ci",
+    "build:server": "cd server && npx tsc --project tsconfig.json",
+    "build:client":"cd client && npx tsc --project tsconfig.json && npm run build",
     "start": "concurrently \"npm run server\" \"npm run client\""
   },
   "repository": {
