@@ -1,34 +1,53 @@
 version: 1
 
-phases:
-  install:
-    runtime-versions:
-      nodejs: latest
-    commands:
-      - echo "Files in the current directory:$(pwd)"
-      - ls -al
-      - echo "-----------------------------"
-      - npm install -g typescript
-      - echo Installing source NPM dependencies...
-      - npm ci
-      - echo Installing client NPM dependencies...
-      - npm run client-install
-      - echo Installing server NPM dependencies...
-      - npm run server-install
-      - echo Installing typescript
-  build:
-    commands:
-      - echo Build started on `date`
-      - echo Transpiling TypeScript client code...
-      - npm run build:client
-      - echo Transpiling TypeScript server code...
-      - npm run build:server
-      - echo "Files in the current directory:$(pwd)"
-      - ls -al
-      - echo "-----------------------------"
-  post_build:
-    commands:
-      - echo Build completed on `date`
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - echo "Files in the current directory:$(pwd)"
+        - ls -al
+        - echo "-----------------------------"
+        - npm install -g typescript
+        - echo Installing source NPM dependencies...
+        - npm ci
+        - echo Installing client NPM dependencies...
+        - npm run client-install
+    build:
+      commands:
+        - echo Build started on `date`
+        - echo Transpiling TypeScript client code...
+        - npm run build:client
+        - echo "Files in the current directory:$(pwd)"
+        - ls -al
+        - echo "-----------------------------"
+    post_build:
+      commands:
+        - echo Build completed on `date`
+backend:
+  phases:
+      install:
+        runtime-versions:
+          nodejs: latest
+        commands:
+          - echo "Files in the current directory:$(pwd)"
+          - ls -al
+          - echo "-----------------------------"
+          - npm install -g typescript
+          - echo Installing source NPM dependencies...
+          - npm ci
+          - echo Installing server NPM dependencies...
+          - npm run server-install
+      build:
+        commands:
+          - echo Build started on `date`
+          - echo Transpiling TypeScript server code...
+          - npm run build:server
+          - echo "Files in the current directory:$(pwd)"
+          - ls -al
+          - echo "-----------------------------"
+      post_build:
+        commands:
+          - echo Build completed on `date`
 
 artifacts:
   baseDirectory: /
