@@ -18,6 +18,8 @@ phases:
       - echo Installing typescript
   build:
     commands:
+      - echo Transpiling TypeScript client code...
+      - npm run build:client
       - echo Transpiling TypeScript server code...
       - npm run build:server
       - echo Build started on `date`
