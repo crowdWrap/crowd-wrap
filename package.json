@@ -7,10 +7,10 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "client-install": "cd client && npm install",
     "server-install": "cd server && npm install",
-    "client": "cd client && npm run start",
+    "client": "cd /var/app/current/client && npm run start",
     "build:server": "cd server && npx tsc",
     "build": "cd client && npm run build",
-    "server": "cd server && npm run start",
+    "server": "cd /var/app/current/server/dist && npm run start",
     "start": "concurrently \"npm run server\" \"npm run client\""
   },
   "repository": {
