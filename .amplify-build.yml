@@ -18,7 +18,7 @@ frontend:
         - echo Transpiling TypeScript client code...
         - npm run build:client
         - echo "Files in the current directory:$(pwd)"
-        - ls -al
+        - cd client && ls -al
         - echo "-----------------------------"
     post_build:
       commands:
@@ -49,7 +49,7 @@ backend:
         - echo Transpiling TypeScript client code...
         - npm run build:server
         - echo "Files in the current directory:$(pwd)"
-        - ls -al
+        - cd server && ls -al
         - echo "-----------------------------"
     post_build:
       commands:
