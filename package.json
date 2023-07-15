@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "client-install": "cd client && npm install",
-    "server-install": "cd server && npm install",
+    "client-install": "cd client && npm install --force",
+    "server-install": "cd server && npm install --force",
     "client": "cd /var/app/current/client && npm run start",
     "build:server": "cd server && npx tsc",
     "build": "cd client && npm run build",
