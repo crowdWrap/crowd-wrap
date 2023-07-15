@@ -28,5 +28,6 @@ artifacts:
   files:
     - package.json
     - package-lock.json
+    - 'node_modules/**/*'
     - 'build/**/*'
   discard-paths: yes
