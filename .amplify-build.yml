@@ -4,6 +4,7 @@ frontend:
   phases:
     preBuild:
       commands:
+        - cd ../
         - echo "Files in the current directory:$(pwd)"
         - ls -al
         - echo "-----------------------------"
@@ -11,7 +12,6 @@ frontend:
         - echo Installing source NPM dependencies...
         - npm ci
         - echo Installing client NPM dependencies...
-        - cd ../
         - npm run client-install
     build:
       commands:
