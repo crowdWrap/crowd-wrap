@@ -66,7 +66,7 @@ const server = http.createServer(app);
 export const io = new Server(server, {
   pingTimeout: 60000,
   cors: {
-    origin: "http://localhost:3000",
+    origin: "https://main.d24d1799szk92e.amplifyapp.com",
     credentials: true,
   },
 });
@@ -117,6 +117,6 @@ app.use("/events", eventsRouter);
 
 app.use("/payment", paymentRouter);
 
-server.listen(8000, () => {
-  console.log(`Server is listening on port 8000`);
+server.listen(process.env.PORT || 8000, () => {
+  console.log(`Server is listening `);
 });
