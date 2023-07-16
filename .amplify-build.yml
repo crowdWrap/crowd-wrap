@@ -11,6 +11,7 @@ frontend:
         - echo Installing source NPM dependencies...
         - npm ci
         - echo Installing client NPM dependencies...
+        - cd ../
         - npm run client-install
     build:
       commands:
