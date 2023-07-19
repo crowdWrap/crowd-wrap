@@ -34,7 +34,7 @@ export default function ButtonWrapper({
       amountPaid: amount,
     });
 
-    const response: Response = await fetch("/payment/complete", {
+     await fetch("/payment/complete", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

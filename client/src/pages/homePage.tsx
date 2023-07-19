@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Button, Flex, Stack } from "@chakra-ui/react";
+import { Button, Flex } from "@chakra-ui/react";
 
 export default function HomePage() {
   return (

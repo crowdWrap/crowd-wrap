@@ -1,7 +1,6 @@
 import dotenv from "dotenv";
 dotenv.config();
 import express from "express";
-import morgan from "morgan";
 declare module "express-session" {
   interface Session {
     user: string;
@@ -28,6 +27,7 @@ import profileRouter from "./routes/profile";
 import friendsRouter from "./routes/friends";
 import eventsRouter from "./routes/events";
 import paymentRouter from "./routes/payment";
+const morgan = require("morgan");
 
 export const app = express();
 export const prisma = new PrismaClient();
@@ -52,7 +52,8 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(morgan("combined"));
+app.use(morgan("dev"));
+
 
 intializePassport(
   passport,
@@ -66,7 +67,7 @@ const server = http.createServer(app);
 export const io = new Server(server, {
   pingTimeout: 60000,
   cors: {
-    origin: "https://main.d24d1799szk92e.amplifyapp.com",
+    origin: "http://localhost:3001/",
     credentials: true,
   },
 });

@@ -48,7 +48,7 @@ export default function Events() {
     onClose: onClose2,
   } = useDisclosure();
 
-  const { refreshEvent, setRefreshEvent, user } = useAuth();
+  const { refreshEvent, setRefreshEvent } = useAuth();
 
   useEffect(() => {
     let loaded = true;

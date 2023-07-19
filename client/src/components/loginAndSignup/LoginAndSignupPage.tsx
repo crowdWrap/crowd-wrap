@@ -1,15 +1,16 @@
 import { Flex, Heading, Highlight, Box, Text, Image } from "@chakra-ui/react";
-import { Form, useNavigate } from "react-router-dom";
+import { Form } from "react-router-dom";
 
 export default function LoginAndSignupPage({
   handleSubmit,
   children,
   headingText,
   regText,
+  ...props
 }: any) {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   return (
-    <Flex position="absolute" width="100%" height="100vh">
+    <Flex position="absolute" width="100%" height="100vh" {...props}>
       <Flex
         flexShrink="0"
         flexGrow="1"

@@ -1,4 +1,4 @@
-import { Flex, Box, Button, Divider } from "@chakra-ui/react";
+import { Flex, Box, Button } from "@chakra-ui/react";
 
 export default function Buttoninfo({ text, icon, flexContent, ...props }: any) {
   return (

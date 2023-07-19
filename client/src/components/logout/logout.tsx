@@ -18,7 +18,7 @@ import {
 } from "@chakra-ui/react";
 import { AiOutlineLogout, AiOutlineFieldTime } from "react-icons/ai";
 import { RiListSettingsLine } from "react-icons/ri";
-import React, { useEffect } from "react";
+import React from "react";
 import Buttoninfo from "./buttonInfo";
 import { BiGroup } from "react-icons/bi";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -71,7 +71,7 @@ export default function LogoutButton() {
                       boxSize="16"
                     />
                     <Flex flexDir="column">
-                      <Heading fontSize={"1.8rem"}>{user.username}</Heading>
+                      <Heading fontSize={"1.8rem"}>{user.usernameSet ? user.username : "User"}</Heading>
                       <Heading fontSize="1rem" color="gray.500">
                         {user.email}
                       </Heading>

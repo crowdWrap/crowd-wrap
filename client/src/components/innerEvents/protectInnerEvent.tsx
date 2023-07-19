@@ -1,4 +1,4 @@
-import { Navigate, Outlet, useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 
 export default function InnerProtection({ children }: any) {
   const { id } = useParams();

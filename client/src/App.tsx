@@ -12,7 +12,6 @@ import LoggedIn from "./pages/loggedIn";
 import SetUsername from "./pages/form/setUsername";
 import Events from "./pages/events";
 import TheEvent from "./components/innerEvents/innerEvent";
-import Dashboard from "./pages/dashboard";
 import EventInvite from "./pages/eventInvite";
 import RootLayout from "./layouts/layout";
 import RequiresAuth from "./protectRoute";
@@ -43,7 +42,6 @@ const router = createBrowserRouter(
           }
         />
         <Route path="/feed" element={<Feed />}></Route>
-        <Route path="/dashboard" element={<Dashboard />} />
       </Route>
     </Route>
   )

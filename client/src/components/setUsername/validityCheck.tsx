@@ -1,7 +1,6 @@
 import { CircularProgress, Icon } from "@chakra-ui/react";
 import {
   AiFillCheckCircle,
-  AiFillExclamationCircle,
   AiOutlineExclamationCircle,
 } from "react-icons/ai";
 

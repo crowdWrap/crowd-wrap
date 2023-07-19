@@ -41,22 +41,23 @@ any) {
   const [event, setEvent] = useState<any>();
   const [inviteLoading, setInviteLoading] = useState<any>(null);
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [fetchedData, setFetchedData] = useState<any>(null);
   const [accounts, setAccounts] = useState<any>([]);
 
-  const handleDataUpdate = async (newData: any) => {
-    if (newData) {
-      const filteredData = newData.filter((valu: any) => {
-        const hasMatchingUser = event.participants.some(
-          (user: any) => user.username === valu.username
-        );
-        return !hasMatchingUser ? valu : null;
-      });
-      setFetchedData(filteredData);
-    } else {
-      setFetchedData(null);
-    }
-  };
+  // const handleDataUpdate = async (newData: any) => {
+  //   if (newData) {
+  //     const filteredData = newData.filter((valu: any) => {
+  //       const hasMatchingUser = event.participants.some(
+  //         (user: any) => user.username === valu.username
+  //       );
+  //       return !hasMatchingUser ? valu : null;
+  //     });
+  //     setFetchedData(filteredData);
+  //   } else {
+  //     setFetchedData(null);
+  //   }
+  // };
 
   const handleInvite = async (item: any, e: any) => {
     setInviteLoading(item.username);

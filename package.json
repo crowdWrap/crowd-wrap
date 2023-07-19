@@ -5,13 +5,16 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "client": "npm run start",
-    "server": "cd server/build && npm run start",
-    "client-install": "cd client && npm ci",
-    "server-install": "cd server && npm ci",
-    "build:client":"cd client && npx tsc --project tsconfig.json && npm run build",
+    "client": "cd client && npm run start",
+    "server": "cd server && npm run start",
+    "client-install": "cd client && npm install",
+    "server-install": "cd server && npm install",
+    "install": "npm run client-install && npm run server-install",
+    "build:client": "cd client && npx tsc --project tsconfig.json && npm run build",
     "build:server": "cd server && npx tsc --project tsconfig.json",
-    "start": "npm run server && npm run client"
+    "build": "npm run build:client && npm run build:server",
+    "serverAndClient": "concurrently  'npm run server' 'npm run client'",
+    "start": "cd server/prisma && npx prisma generate && cd ../.. &&  npm run serverAndClient "
   },
   "repository": {
     "type": "git",
@@ -22,13 +25,7 @@
   "bugs": {
     "url": "https://github.com/crowdWrap/crowd-wrap/issues"
   },
-  "homepage": "https://main.d24d1799szk92e.amplifyapp.com/",
   "dependencies": {
-    "@types/morgan": "^1.9.4",
-    "concurrently": "^8.2.0",
-    "dotenv": "^16.0.3",
-    "morgan": "^1.10.0",
-    "nodemon": "^3.0.1",
-    "typescript": "^5.1.6"
+    "concurrently": "^8.2.0"
   }
 }

@@ -1,29 +1,18 @@
 import {
-  Avatar,
   Box,
-  Card,
-  CardBody,
-  CardFooter,
   Flex,
-  Heading,
   Icon,
-  IconButton,
-  Image,
   Tab,
   TabList,
   TabPanel,
   TabPanels,
   Tabs,
-  Text,
 } from "@chakra-ui/react";
-import { useAuth } from "../hooks/authContext";
 import {
   AiOutlineGlobal,
-  AiOutlineHeart,
   AiOutlineUser,
   AiOutlineUsergroupAdd,
 } from "react-icons/ai";
-import { BiComment, BiHeart } from "react-icons/bi";
 import IndividualFeed from "../components/feed/individualFeed";
 
 export default function Feed() {

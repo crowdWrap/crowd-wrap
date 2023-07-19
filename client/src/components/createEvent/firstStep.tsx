@@ -4,12 +4,9 @@ import {
   FormControl,
   FormErrorMessage,
   FormLabel,
-  Image,
   Input,
   Textarea,
 } from "@chakra-ui/react";
-import { faUpload } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import { Form } from "react-router-dom";
 import FileUpload from "../setUsername/fileUpload";
@@ -29,7 +26,8 @@ export default function FirstStep({
   };
 
   const [titleError, setTitleError] = useState<string>("");
-  const [titleTouched, setTitleTouched] = useState<boolean>(false);
+  // const [titleTouched, setTitleTouched] = useState<boolean>(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [picture, setPicture] = useState(
     "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fopenclipart.org%2Fimage%2F800px%2F194868&f=1&nofb=1&ipt=7f38c85f61d7fd658da37dac1b44303ac8e34889e6c30c205008f75acdad79e2&ipo=images"
   );

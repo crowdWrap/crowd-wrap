@@ -29,6 +29,7 @@ import LoginAndSignupPage from "../components/loginAndSignup/LoginAndSignupPage"
 import { AiOutlineUser } from "react-icons/ai";
 
 export default function ForgotPassword() {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [loading, setLoading] = useState(false);
   const [codePage, setCodePage] = useState(false);
   const [enterPass, setEnterPass] = useState(false);

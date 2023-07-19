@@ -17,7 +17,7 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import Message from "./messenge";
+import Message from "./messege";
 import { BiPlus } from "react-icons/bi";
 import { socket } from "../../api/socket";
 import AddFriendToEvent from "../events/addFriend";
@@ -52,6 +52,7 @@ export default function TheEvent() {
   const messageToSendRef = useRef<any>("");
   const messagesEndRef = useRef<any>(null);
   const { user } = useAuth();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [loading, setLoading] = useState(false);
   const [accounts, setAccounts] = useState<any>([]);
   const [refreshInner, setRefreshInner] = useState(false);
@@ -190,12 +191,12 @@ export default function TheEvent() {
     messageToSendRef.current.value = "";
   };
 
-  const handleDate = () => {
-    const dateObj = new Date(events.deadlineDate);
-    const options: object = { month: "long", day: "numeric", year: "numeric" };
-    const formattedDate = dateObj.toLocaleDateString("en-US", options);
-    return formattedDate;
-  };
+  // const handleDate = () => {
+  //   const dateObj = new Date(events.deadlineDate);
+  //   const options: object = { month: "long", day: "numeric", year: "numeric" };
+  //   const formattedDate = dateObj.toLocaleDateString("en-US", options);
+  //   return formattedDate;
+  // };
 
   const handleProgress = (e: any) => {
     const match = e.moneyGoal.match(/\d+/g);

@@ -2,9 +2,7 @@ import { Form, useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/authContext";
 import { useEffect, useState } from "react";
 import {
-  Box,
   Button,
-  CircularProgress,
   Flex,
   FormControl,
   FormErrorMessage,
@@ -12,9 +10,9 @@ import {
   Input,
   useToast,
 } from "@chakra-ui/react";
-import backgroundImage from "../.././assets/image_group/blue-pink-better-theme.png";
-import FileUpload from "../../components/setUsername/fileUpload";
 import ValidityCheck from "../../components/setUsername/validityCheck";
+import LoginAndSignupPage from "../../components/loginAndSignup/LoginAndSignupPage";
+import { debounce } from "lodash";
 
 export default function SetUsername() {
   const { authed, user, setUser } = useAuth();
@@ -34,6 +32,7 @@ export default function SetUsername() {
     }
   }, [authed, navigate, user.usernameSet]);
 
+  
   const validateUsername = (username: string) => {
     if (username.length < 3 || username.length > 15) {
       setUsernameError("Username must be between 3 and 15 chars");
@@ -44,30 +43,36 @@ export default function SetUsername() {
     }
   };
 
+
+
+  const handleUsernamecheck = async (e: any) => {
+    if (e.target.value.length >= 3 && e.target.value.length < 15) {
+      const response = await fetch(
+        `/profile/setUsername?username=${e.target.value}`,
+        {
+          method: "GET",
+        }
+      );
+
+      const receiveData = await response.json();
+      setUsernameMsg(receiveData.isValid);
+      setLoading(false);
+
+    } else {
+      setUsernameMsg(false);
+      setLoading(false);
+    }
+  };
+
+  const debouncedHandleUsernamecheck = debounce(handleUsernamecheck, 550);
+
   const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUsername(e.target.value);
     if (usernameTouched) validateUsername(e.target.value);
+    setLoading(true);
+    debouncedHandleUsernamecheck(e);
   };
 
-  const handleUsernamecheck = (e: any) => {
-    if (e.target.value.length > 3 && e.target.value.length < 15) {
-      setLoading(true);
-      setTimeout(async () => {
-        const response = await fetch(
-          `/profile/setUsername?username=${e.target.value}`,
-          {
-            method: "GET",
-          }
-        );
-
-        const receiveData = await response.json();
-        setUsernameMsg(receiveData.isValid);
-        setLoading(false);
-      }, 250);
-    } else {
-      setUsernameMsg(false);
-    }
-  };
 
   async function handleSubmit() {
     if (usernameError) {
@@ -111,32 +116,21 @@ export default function SetUsername() {
   }
 
   return (
-    <Flex
-      justifyContent="center"
-      height="100vh"
-      width="100vw"
-      position="absolute"
-      top="0px"
-      backgroundImage={backgroundImage}
-      filter="hue-rotate(80deg)"
-      alignItems="center"
-    >
-      <Box
-        padding="40px"
-        borderRadius="2xl"
-        maxW="xl"
-        bg="white"
-        filter="hue-rotate(-80deg)"
-      >
+    <LoginAndSignupPage
+    handleSubmit={handleSubmit}
+    headingText={"Username selection"}
+    regText={"Please set your username"}
+    height='93vh'
+  >
         <Flex
           flexDir="column"
           justifyContent="space-around"
           gap="45px"
-          alignItems="center"
+          // alignItems="center"
         >
-          <Flex justifyContent="center">
+          {/* <Flex justifyContent="center">
             <FileUpload thePicture={user.picture} />
-          </Flex>
+          </Flex> */}
           <Form onSubmit={handleSubmit}>
             <Flex
               flexDir="column"
@@ -158,7 +152,7 @@ export default function SetUsername() {
                   maxLength={15}
                   onChange={(e) => {
                     handleUsernameChange(e);
-                    handleUsernamecheck(e);
+                    // handleUsernamecheck(e);
                   }}
                   onBlur={() => {
                     setUsernameTouched(true);
@@ -182,13 +176,12 @@ export default function SetUsername() {
                   </>
                 )}
               </FormControl>
-              <Button marginTop="15px" type="submit" bg="pink">
+              <Button width={'100%'}  type="submit" colorScheme="pink">
                 Continue
               </Button>
             </Flex>
           </Form>
         </Flex>
-      </Box>
-    </Flex>
+      </LoginAndSignupPage>
   );
 }

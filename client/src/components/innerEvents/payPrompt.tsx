@@ -7,14 +7,12 @@ import {
   Button,
   Box,
   Text,
-  Avatar,
   Flex,
   useToast,
-  Heading,
   Tooltip,
 } from "@chakra-ui/react";
 import ButtonWrapper from "./paypalPay";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import AmountPrompt from "./amountPrompt";
 
 export default function PayPrompt({ isOpen, onClose, email, events }: any) {

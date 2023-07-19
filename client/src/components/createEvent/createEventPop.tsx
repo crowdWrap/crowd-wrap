@@ -11,6 +11,7 @@ export default function CreateEventPop({
   onClose,
 }: any) {
   const [title, setTitle] = useState<string>("");
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [img, setImg] = useState<string>("default");
   const [description, setDescriptionValue] = useState<string>("");
 
@@ -22,7 +23,7 @@ export default function CreateEventPop({
 
   const [loadingEvent, setLoadingEvent] = useState<boolean>(false);
 
-  const { setRefreshEvent, setUser } = useAuth();
+  const { setRefreshEvent } = useAuth();
 
   useEffect(() => {
     (async () => {
@@ -37,14 +38,13 @@ export default function CreateEventPop({
             date,
           });
 
-          const response = await fetch("/events", {
+          await fetch("/events", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
             body: data,
           });
-          const receivedData = await response.json();
           setRefreshEvent(true);
         }
       } catch (e) {

@@ -1,23 +1,13 @@
 import {
   Avatar,
   AvatarBadge,
-  Badge,
   Card,
   CardHeader,
   Flex,
   Heading,
-  Icon,
-  IconButton,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
 } from "@chakra-ui/react";
-import { AiOutlineCrown, AiOutlineDelete, AiOutlineMore } from "react-icons/ai";
-import { useAuth } from "../../hooks/authContext";
 
 export default function IndividualReccomendation() {
-  const { user, setRefreshEvent } = useAuth();
   return (
     <Card
       style={{ marginBottom: "5px" }}

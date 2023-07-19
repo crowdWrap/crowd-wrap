@@ -24,7 +24,6 @@ import {
 import { AiOutlineUserAdd, AiOutlineEnter } from "react-icons/ai";
 import { BiBomb, BiExit, BiShare } from "react-icons/bi";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import events from "../../pages/events";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/authContext";
 

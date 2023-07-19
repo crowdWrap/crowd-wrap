@@ -1,6 +1,4 @@
 import { GoogleLogin } from "@react-oauth/google";
-// eslint-disable-next-line
-import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/authContext";
 import { Button, useToast } from "@chakra-ui/react";
 import { constants } from "../constants";
@@ -8,7 +6,6 @@ import { constants } from "../constants";
 export default function SignInGoogle({ loading, setLoading }: any) {
   const { setAuthed, setUser } = useAuth();
   const toast = useToast();
-  const navigate = useNavigate();
 
   const succesfulSignIn = async (credentialResponse: any) => {
     try {
@@ -42,6 +39,7 @@ export default function SignInGoogle({ loading, setLoading }: any) {
             status: "error",
             duration: constants.toastDuration,
           });
+          setLoading(false);
         }
       });
     } catch (error) {

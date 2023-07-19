@@ -1,7 +1,4 @@
 import { Divider, Flex } from "@chakra-ui/react";
-import { Form } from "react-router-dom";
-import FileUpload from "../components/setUsername/fileUpload";
-import ValidityCheck from "../components/setUsername/validityCheck";
 import { useAuth } from "../hooks/authContext";
 import { useEffect, useState } from "react";
 import PasswordPortion from "../components/settings/passwordPortion";

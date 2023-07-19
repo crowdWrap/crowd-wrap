@@ -3,25 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "proxy": "http://localhost:8000",
-  "homepage": "https://main.d24d1799szk92e.amplifyapp.com/",
+  "homepage": "/",
   "dependencies": {
     "@chakra-ui/react": "^2.7.1",
     "@chakra-ui/visually-hidden": "^2.0.15",
-    "@emotion/react": "^11.10.8",
-    "@emotion/styled": "^11.10.8",
     "@fontsource/inter": "^5.0.1",
-    "@fortawesome/fontawesome-svg-core": "^6.3.0",
-    "@fortawesome/free-regular-svg-icons": "^6.3.0",
-    "@fortawesome/free-solid-svg-icons": "^6.3.0",
-    "@fortawesome/react-fontawesome": "^0.2.0",
     "@paypal/react-paypal-js": "^8.0.0",
     "@react-oauth/google": "^0.8.0",
-    "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
+    "@types/javascript-time-ago": "^2.0.3",
     "framer-motion": "^10.12.18",
+    "javascript-time-ago": "^2.5.9",
+    "lodash": "^4.17.21",
     "react": "^18.2.0",
-    "react-burger-menu": "^3.0.9",
     "react-dom": "^18.2.0",
     "react-dom-confetti": "^0.2.0",
     "react-dropzone": "^14.2.3",
@@ -29,11 +22,10 @@
     "react-router-dom": "^6.10.0",
     "react-scripts": "5.0.1",
     "socket.io-client": "^4.6.2",
-    "timeago.js": "^4.0.2",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "PORT=3000 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -57,10 +49,7 @@
     ]
   },
   "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-    "@types/jest": "^27.5.2",
     "@types/react": "^18.2.0",
-    "@types/react-burger-menu": "^2.8.3",
     "@types/react-dom": "^18.2.1",
     "@types/styled-components": "^5.1.26",
     "sass": "^1.60.0"

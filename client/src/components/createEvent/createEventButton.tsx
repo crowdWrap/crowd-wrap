@@ -4,8 +4,6 @@ import {
   Box,
   Button,
   ButtonGroup,
-  Flex,
-  Heading,
   Icon,
   IconButton,
   Modal,
@@ -23,7 +21,6 @@ import {
   StepStatus,
   StepTitle,
   Stepper,
-  Text,
   useDisclosure,
   useSteps,
 } from "@chakra-ui/react";
