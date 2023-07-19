@@ -8,6 +8,7 @@ import {
 } from "@chakra-ui/react";
 import { BsSearch } from "react-icons/bs";
 import AddFriend from "./friendComponents/addFriend";
+import { DebounceInput } from "react-debounce-input";
 
 interface Account {
   username: string;
@@ -86,6 +87,8 @@ export function FriendListAddSearch({ setSearchText }: any) {
         <Icon color="gray.300" as={BsSearch} />
       </InputLeftElement>
       <Input
+      as={DebounceInput}
+      debounceTimeout={325}
         onChange={(e) => setSearchText(e.target.value)}
         type="text"
         placeholder="Add Friends"

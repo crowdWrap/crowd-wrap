@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 
 import { BsSearch } from "react-icons/bs";
 import { useAuth } from "../../hooks/authContext";
+import { DebounceInput } from "react-debounce-input";
 
 async function fetchData(searchText: string) {
   if (searchText.length >= 3) {
@@ -47,6 +48,8 @@ export default function FriendsListSearch({ updateData, eventUse }: any) {
             <Icon color="gray.300" as={BsSearch} />
           </InputLeftElement>
           <Input
+          as={DebounceInput}
+          debounceTimeout={325}
             onChange={(e) => setSearchText(e.target.value)}
             type="text"
             placeholder="Search Friends"

@@ -32,7 +32,7 @@ import {
 export default function LoginForm() {
   const navigate = useNavigate();
   let location = useLocation();
-  let { from } = location.state || { from: { pathname: "/profile" } };
+  let { from } = location.state || { from: { pathname: "/events" } };
   const [usernameOrEmail, setusernameOrEmail] = useState<string>("");
   const [loginPass, setLoginPassword] = useState<string>("");
   const { authed, setAuthed, setUser } = useAuth();

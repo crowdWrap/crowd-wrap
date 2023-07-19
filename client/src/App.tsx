@@ -8,7 +8,6 @@ import {
 import HomePage from "./pages/homePage";
 import LoginForm from "./pages/form/loginForm";
 import SignupForm from "./pages/form/signupForm";
-import LoggedIn from "./pages/loggedIn";
 import SetUsername from "./pages/form/setUsername";
 import Events from "./pages/events";
 import TheEvent from "./components/innerEvents/innerEvent";
@@ -29,7 +28,6 @@ const router = createBrowserRouter(
       <Route path="/login/forgot" element={<ForgotPassword />} />
       <Route path="/profile/setUsername" element={<SetUsername />} />
       <Route element={<RequiresAuth />}>
-        <Route path="/profile" element={<LoggedIn />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="/events" element={<Events />}></Route>
         <Route path="/events/invite/:link" element={<EventInvite />} />

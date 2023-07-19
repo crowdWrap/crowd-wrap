@@ -1,4 +1,4 @@
-import { Form, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/authContext";
 import { useEffect, useState } from "react";
 import {
@@ -12,7 +12,7 @@ import {
 } from "@chakra-ui/react";
 import ValidityCheck from "../../components/setUsername/validityCheck";
 import LoginAndSignupPage from "../../components/loginAndSignup/LoginAndSignupPage";
-import { debounce } from "lodash";
+import { DebounceInput } from 'react-debounce-input'
 
 export default function SetUsername() {
   const { authed, user, setUser } = useAuth();
@@ -28,7 +28,7 @@ export default function SetUsername() {
     if (!authed) {
       navigate("/login");
     } else if (authed && user.usernameSet) {
-      navigate("/profile");
+      navigate("/events");
     }
   }, [authed, navigate, user.usernameSet]);
 
@@ -46,7 +46,9 @@ export default function SetUsername() {
 
 
   const handleUsernamecheck = async (e: any) => {
+    console.log('hi')
     if (e.target.value.length >= 3 && e.target.value.length < 15) {
+
       const response = await fetch(
         `/profile/setUsername?username=${e.target.value}`,
         {
@@ -64,17 +66,15 @@ export default function SetUsername() {
     }
   };
 
-  const debouncedHandleUsernamecheck = debounce(handleUsernamecheck, 550);
-
   const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUsername(e.target.value);
     if (usernameTouched) validateUsername(e.target.value);
     setLoading(true);
-    debouncedHandleUsernamecheck(e);
   };
 
 
   async function handleSubmit() {
+    setLoading(true);
     if (usernameError) {
       toast({
         title: "Set username failed.",
@@ -113,6 +113,7 @@ export default function SetUsername() {
       });
       setUser(receivedData.user);
     }
+    setLoading(false);
   }
 
   return (
@@ -131,7 +132,7 @@ export default function SetUsername() {
           {/* <Flex justifyContent="center">
             <FileUpload thePicture={user.picture} />
           </Flex> */}
-          <Form onSubmit={handleSubmit}>
+          <FormControl>
             <Flex
               flexDir="column"
               justifyContent="space-around"
@@ -145,14 +146,16 @@ export default function SetUsername() {
                 isInvalid={usernameError === "" ? false : true}
               >
                 <Input
+                as={DebounceInput}
                   // borderColor="white"
                   placeholder=" "
                   transition="0.25s ease-in-out"
                   minLength={3}
                   maxLength={15}
+                  debounceTimeout={250}
                   onChange={(e) => {
                     handleUsernameChange(e);
-                    // handleUsernamecheck(e);
+                    handleUsernamecheck(e);
                   }}
                   onBlur={() => {
                     setUsernameTouched(true);
@@ -180,7 +183,7 @@ export default function SetUsername() {
                 Continue
               </Button>
             </Flex>
-          </Form>
+          </FormControl>
         </Flex>
       </LoginAndSignupPage>
   );
