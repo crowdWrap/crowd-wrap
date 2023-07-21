@@ -14,7 +14,8 @@
     "build:server": "cd server && npx tsc --project tsconfig.json",
     "build": "npm run build:client && npm run build:server",
     "serverAndClient": "concurrently  'npm run server' 'npm run client'",
-    "start": "cd server/prisma && npx prisma generate && cd ../.. &&  npm run serverAndClient "
+    "dev": "cd server/prisma && npx prisma generate && cd ../.. &&  npm run serverAndClient ",
+    "production":"pm2 start server/build/index.js && pm2 start client/app.config.json"
   },
   "repository": {
     "type": "git",

@@ -15,7 +15,7 @@ const profileQueries_1 = require("./profileQueries");
 function createUser(username, email, password, registeredWith, usernameSet) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            yield index_1.prisma.user.create({
+            const user = yield index_1.prisma.user.create({
                 data: {
                     username,
                     email,

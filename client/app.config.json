@@ -1,0 +1,10 @@
+{
+    "apps": [
+      {
+        "name": "react-app",
+        "script": "npx",
+        "interpreter": "none",
+        "args": "react-scripts start"
+      }
+    ]
+  }

@@ -1,6 +1,13 @@
 import { Avatar, Box, Flex, Link, Text } from "@chakra-ui/react";
 import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
+import { useEffect, useState } from "react";
+
+const useTimeAgo:any = () => {
+  TimeAgo.addDefaultLocale(en);
+  return new TimeAgo('en-US');
+}
+
 
 export default function Message({
   own,
@@ -11,10 +18,9 @@ export default function Message({
 }: any) {
   const urlRegex = /(https?:\/\/[^\s]+)/g;
   const segments = content.split(urlRegex);
-
-TimeAgo.addDefaultLocale(en)
-const timeAgo = new TimeAgo('en-US')
-
+  const [createdAtDate, setCreatedAtDate] = useState(new Date(createdAt));
+  const [timeAgo, setTimeAgo] = useState<any>(useTimeAgo);
+  
   return (
     <Flex flexDir="column" alignItems={own ? "flex-end" : "flex-start"}>
       <Box
@@ -91,7 +97,7 @@ const timeAgo = new TimeAgo('en-US')
         )}
       </Box>
       <Text marginTop="8px" fontSize="12px">
-        {timeAgo.format(createdAt)}
+        {timeAgo.format(createdAtDate)}
       </Text>
     </Flex>
   );

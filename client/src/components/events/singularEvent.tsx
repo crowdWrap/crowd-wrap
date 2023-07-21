@@ -72,7 +72,7 @@ export default function SingularEvent({
 
   return (
     <Card
-      flexGrow="1"
+      flexGrow="0.25"
       variant="outline"
       marginBottom="40px"
       marginTop="-40px"

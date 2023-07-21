@@ -9,7 +9,7 @@ export async function createUser(
   usernameSet: boolean
 ) {
   try {
-    await prisma.user.create({
+    const user = await prisma.user.create({
       data: {
         username,
         email,
@@ -32,6 +32,7 @@ export async function createUser(
         },
       },
     });
+
   } catch (error) {
     console.error("create user error", error);
     throw new Error(
