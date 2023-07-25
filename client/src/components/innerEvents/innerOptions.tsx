@@ -1,8 +1,5 @@
 import {
-  ButtonGroup,
-  Flex,
   Icon,
-  IconButton,
   MenuItem,
   MenuList,
   useClipboard,
@@ -11,7 +8,6 @@ import {
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import {
-  AiOutlineSetting,
   AiFillMoneyCollect,
   AiOutlineForm,
 } from "react-icons/ai";
@@ -62,6 +58,13 @@ export default function InnerOptions({ events }: any) {
             <MenuItem icon={<Icon boxSize={4} as={GiSettingsKnobs} />}>
               Event Settings
             </MenuItem>
+            {!loading &&
+            ownerPaymentType !== "none" &&
+            user.id !== events.ownerId && (
+            <MenuItem onClick={onOpen} icon={<Icon boxSize={4} as={AiFillMoneyCollect} />}>
+              Pay with Paypal
+            </MenuItem>
+            )}
             <MenuItem onClick={() => {
               onCopy();
               toast({
@@ -72,23 +75,8 @@ export default function InnerOptions({ events }: any) {
             }} icon={<Icon boxSize={4} as={BiShare} />}>
               Share
             </MenuItem>
+            
           </MenuList>
-      <ButtonGroup>
-        <Flex gap="25px" flexDir="column" >
-          {!loading &&
-            ownerPaymentType !== "none" &&
-            user.id !== events.ownerId && (
-              <IconButton
-                // pay with venmo
-                boxSize="100px"
-                fontSize={"50px"}
-                icon={<Icon boxSize={4} as={AiFillMoneyCollect} />}
-                aria-label="setting"
-                onClick={onOpen}
-              />
-            )}
-        </Flex>
-      </ButtonGroup>
       <PayPrompt
         isOpen={isOpen}
         onClose={onClose}

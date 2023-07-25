@@ -6,13 +6,10 @@ import { useAuth } from "../../hooks/authContext";
 import {
   AvatarGroup,
   Box,
-  CircularProgress,
-  CircularProgressLabel,
   Flex,
   Icon,
   IconButton,
   Textarea,
-  useClipboard,
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
@@ -20,7 +17,6 @@ import Message from "./messege";
 import { BiPlus } from "react-icons/bi";
 import { socket } from "../../api/socket";
 import AddFriendToEvent from "../events/addFriend";
-import InnerOptions from "./innerOptions";
 import { AiOutlineSend } from "react-icons/ai";
 import Confetti from "react-dom-confetti";
 
@@ -44,8 +40,8 @@ export default function TheEvent() {
   const [events, setEvents] = useState<any>([]);
   const { refreshEvent, setRefreshEvent, setCurrentEvent } = useAuth();
   const toast = useToast();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [inviteLink, setInviteLink] = useState<string>("Loading...");
-  const { onCopy } = useClipboard(inviteLink);
   const [messages, setMessages] = useState<any>([]);
   const [refreshMessages, setRefreshMessages] = useState(false);
   const messageToSendRef = useRef<any>("");
@@ -197,10 +193,6 @@ export default function TheEvent() {
   //   return formattedDate;
   // };
 
-  const handleProgress = (e: any) => {
-    const match = e.moneyGoal.match(/\d+/g);
-    return match[0];
-  };
 
   const colors = [
     "pink",
@@ -232,42 +224,7 @@ export default function TheEvent() {
         {events.title}
       </Heading> */}
       <Flex overflow="hidden" h="calc(100vh - 65px)">
-        <Box>
-          <Flex
-          flexGrow={'1'}
-            padding="10px"
-            justifyContent="space-between "
-            alignItems="center"
-            flexDir="column"
-            height="70%"
-          >
-            {events && events.Currentfunds ? (
-              <>
-                <CircularProgress
-                
-                  marginTop="50px"
-                  value={Number(
-                    `${(events.Currentfunds / handleProgress(events)) * 100}`
-                  )}
-                  size="100px"
-                  color="green.400"
-                >
-                  <CircularProgressLabel>
-                    ${events.Currentfunds}
-                  </CircularProgressLabel>
-                </CircularProgress>
-                
-              </>
-            ) : (
-              <>
-                <CircularProgress value={0} size="100px" color="green.400">
-                  <CircularProgressLabel>$0</CircularProgressLabel>
-                </CircularProgress>
-                {/* <InnerOptions onCopy={onCopy} events={events} /> */}
-              </>
-            )}
-          </Flex>
-        </Box>
+
 
         <Box flexGrow="11.5">
           <Flex
@@ -288,6 +245,7 @@ export default function TheEvent() {
             >
               {messages.map((msg: any) => {
                 const currentColor = participantColors.get(msg.userId);
+                console.log(msg)
                 return (
                   <Message
                     content={msg.content}
@@ -295,6 +253,7 @@ export default function TheEvent() {
                     createdAt={msg.createdAt}
                     own={Number(user.id) === Number(msg.userId) ? true : false}
                     color={currentColor}
+                    msg={msg.user ? msg : ""}
                   />
                 );
               })}

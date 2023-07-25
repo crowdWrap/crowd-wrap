@@ -73,7 +73,7 @@ export default function SingularEvent({
   return (
     <Card
       as={motion.div}
-      whileHover={{ scale: 1.01  }}
+      // whileHover={{ scale: 1.01  }}
       transition='0.15s linear'
       // flexGrow="0.25"
       variant="outline"

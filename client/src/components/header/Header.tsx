@@ -1,7 +1,7 @@
 import styles from "./header.module.css";
 import { Link } from "react-router-dom";
 import logoPrint from "../../assets/image_group/crowdwrap-print.svg";
-import { Box, Button, ButtonGroup, Heading, Icon, IconButton, Image, Menu, MenuButton, MenuItem, MenuList, Progress } from "@chakra-ui/react";
+import { Box, Button, ButtonGroup, CircularProgress, CircularProgressLabel, Flex, Heading, Icon, IconButton, Image, Menu, MenuButton, Progress } from "@chakra-ui/react";
 import LogoutButton from "../logout/logout";
 import CreateEventButton from "../createEvent/createEventButton";
 import FriendsList from "../friendList/friendslist";
@@ -18,6 +18,14 @@ export default function Header() {
   useEffect(() => {}, [user, user.usernameSet]);
   const location:any = useLocation().pathname;
   const pathnameSegments = location.split('/');
+
+  const handleProgress = (e: any) => {
+    const match = e.moneyGoal.match(/\d+/g);
+    return match[0];
+  };
+
+
+
   return (
     <>
       {loading && (
@@ -71,7 +79,35 @@ export default function Header() {
         </Menu>
   
          </ButtonGroup>
+            <Flex alignItems={'center'} gap={'15px'}>
+            {currentEvent && currentEvent.Currentfunds ? (
+              <>
+                <CircularProgress
+                
+                  marginTop="50px"
+                  value={Number(
+                    `${(currentEvent.Currentfunds / handleProgress(currentEvent)) * 100}`
+                  )}
+                  size="55px"
+                  color="green.400"
+                >
+                  <CircularProgressLabel>
+                    ${currentEvent.Currentfunds}
+                  </CircularProgressLabel>
+                </CircularProgress>
+                
+              </>
+            ) : (
+              <>
+                <CircularProgress value={0} size="55px" color="green.400">
+                  <CircularProgressLabel>$0</CircularProgressLabel>
+                </CircularProgress>
+                {/* <InnerOptions onCopy={onCopy} events={events} /> */}
+              </>
+            )}
             <Heading size="lg">{currentEvent.title}</Heading>
+            </Flex>
+
             <Box className={styles["navbarCover"]}>
                 {user && user.usernameSet && (
                   <>
