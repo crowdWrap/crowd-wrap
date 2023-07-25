@@ -87,9 +87,9 @@ export default function LoginAndSignupPage({
       >
         <Box
           backgroundColor="white"
-          height="60%"
+          height="70%"
           borderRadius="25px"
-          width="90%"
+          width="99%"
         />
       </Flex>
     </Flex>

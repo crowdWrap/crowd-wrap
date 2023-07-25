@@ -88,7 +88,7 @@ any) {
       });
 
       const receivedData = await response.json();
-      setInviteLink(`http://localhost:3000/events/invite/${receivedData[0].inviteLink}`);
+      setInviteLink(`https://crowdwrap.works/events/invite/${receivedData[0].inviteLink}`);
 
       const friendResponse = await fetch(`/friends`, {
         method: "GET",

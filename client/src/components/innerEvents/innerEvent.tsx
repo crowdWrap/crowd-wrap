@@ -9,7 +9,6 @@ import {
   CircularProgress,
   CircularProgressLabel,
   Flex,
-  Heading,
   Icon,
   IconButton,
   Textarea,
@@ -43,7 +42,7 @@ export default function TheEvent() {
   const dashIndex: any = id?.lastIndexOf("-");
   const eventId: any = id?.substring(dashIndex + 1);
   const [events, setEvents] = useState<any>([]);
-  const { refreshEvent, setRefreshEvent } = useAuth();
+  const { refreshEvent, setRefreshEvent, setCurrentEvent } = useAuth();
   const toast = useToast();
   const [inviteLink, setInviteLink] = useState<string>("Loading...");
   const { onCopy } = useClipboard(inviteLink);
@@ -81,20 +80,20 @@ export default function TheEvent() {
       });
 
       const data = await response.json();
-
       if (!data.event) {
         navigate("/events");
         return;
       }
 
-      const isInside = data.event.participants.filter(
+
+      setCurrentEvent(data.event)
+      const isInside = await data.event.participants.filter(
         (participant: any) => Number(participant.userId) === Number(user.id)
       );
-
       if (isInside.length === 0) {
         navigate("/events");
       } else {
-        setInviteLink(`http://localhost:3000/events/invite/${data.inviteLink}`);
+        setInviteLink(`https://crowdwrap.works/events/invite/${data.event.inviteLink}`);
         return data.event;
       }
     };
@@ -107,7 +106,7 @@ export default function TheEvent() {
       setRefreshInner(false);
       setLoading(false);
     })();
-  }, [eventId, navigate, refreshEvent, setRefreshEvent, user.id, refreshInner]);
+  }, [eventId, navigate, refreshEvent, setRefreshEvent, user.id, refreshInner, setCurrentEvent]);
 
   useEffect(() => {
     socket.on("eventUpdate", (data) => {
@@ -229,12 +228,13 @@ export default function TheEvent() {
     <>
       {/* need to title the event */}
       {/* {!loading && events && ( */}
-      <Heading padding="10px" position="absolute">
+      {/* <Heading padding="10px" position="absolute">
         {events.title}
-      </Heading>
-      <Flex overflow="hidden" h="calc(100vh - 57px)">
+      </Heading> */}
+      <Flex overflow="hidden" h="calc(100vh - 65px)">
         <Box>
           <Flex
+          flexGrow={'1'}
             padding="10px"
             justifyContent="space-between "
             alignItems="center"
@@ -244,6 +244,7 @@ export default function TheEvent() {
             {events && events.Currentfunds ? (
               <>
                 <CircularProgress
+                
                   marginTop="50px"
                   value={Number(
                     `${(events.Currentfunds / handleProgress(events)) * 100}`
@@ -255,14 +256,14 @@ export default function TheEvent() {
                     ${events.Currentfunds}
                   </CircularProgressLabel>
                 </CircularProgress>
-                <InnerOptions onCopy={onCopy} events={events} />
+                
               </>
             ) : (
               <>
                 <CircularProgress value={0} size="100px" color="green.400">
                   <CircularProgressLabel>$0</CircularProgressLabel>
                 </CircularProgress>
-                <InnerOptions onCopy={onCopy} events={events} />
+                {/* <InnerOptions onCopy={onCopy} events={events} /> */}
               </>
             )}
           </Flex>
@@ -324,7 +325,7 @@ export default function TheEvent() {
           </Flex>
         </Box>
         <Box flexGrow="1">
-          <Flex padding="10px" height="100%" width="100%" overflowY="scroll">
+          <Flex padding="10px" marginTop={'5px'} height="100%" width="100%" overflowY="scroll">
             <AvatarGroup
               max={11}
               flexDir={"column-reverse"}

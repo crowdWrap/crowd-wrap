@@ -6,6 +6,8 @@ import {
   getProfileByEmail,
   getProfileByUsername,
 } from "../queries/profileQueries";
+import { createEvent } from "../queries/eventQueries";
+import crypto from "crypto";
 
 const client = new OAuth2Client(process.env.CLIENTID);
 const router = Router();
@@ -30,17 +32,30 @@ router.post("/", async (req:any, res:any) => {
     const emailExists = await getProfileByEmail(email);
     const usernameExists = await getProfileByUsername(username);
 
-    if (emailExists || usernameExists) {
+    if (usernameExists) {
       return res
         .status(400)
         .json({ message: "This user exists, please login!" });
+    }else if(emailExists){
+      return res
+      .status(400)
+      .json({ message: "This email has already been used, please login!" });
     }
 
     //then continues normal process
     const hashedPass = await bcrypt.hash(password, 10);
 
     //Create user and send to DB
-    createUser(username, email, hashedPass, "local", true);
+    const user = await createUser(username, email, hashedPass, "local", true);
+    const currentDate = new Date();
+
+    // Extract the individual components of the date
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth() + 1; 
+    const day = currentDate.getDate();
+    const formattedDate = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+
+    createEvent(Number(user.id), {title:"Welcome!", description:"This is an example event, to make your own press the plus on the top right", moneyGoal:"0", img:"default", date:formattedDate}, crypto.randomUUID())
     return res.status(201).json({ message: `${username} has been created` });
   } catch (e) {
     console.log("Registration Error:", e);

@@ -12,7 +12,6 @@ import {
 import { FAQSection } from "../components/homePage/faqSection";
 import { Feature } from "../components/homePage/feature";
 import { HeroSection } from "../components/homePage/heroSection";
-import { Layout } from "../components/homePage/layout";
 import { PricingSection } from "../components/homePage/pricingSection";
 import { Helmet } from "react-helmet";
 
@@ -100,113 +99,108 @@ const features: FeatureType[] = [
 
 export default function HomePage() {
   return (
-    <Layout>
-    <Helmet>
+    <><Helmet>
       <meta charSet="utf-8" />
       <title>Crowdwrap | Streamline gift giving</title>
-    </Helmet>
-    <Box bg="gray.50">
-      <HeroSection />
-      <Container maxW="container.xl">
-        <Center p={[0, 10]}>
-          <video
-            playsInline
-            autoPlay
-            muted
-            poster="https://launchman-space.nyc3.digitaloceanspaces.com/biller-hero-2.png"
-            loop
+    </Helmet><Box bg="gray.50">
+        <HeroSection />
+        <Container maxW="container.xl">
+          <Center p={[0, 10]}>
+            <video
+              playsInline
+              autoPlay
+              muted
+              poster="https://launchman-space.nyc3.digitaloceanspaces.com/biller-hero-2.png"
+              loop
+            >
+              <source
+                src="https://launchman-space.nyc3.digitaloceanspaces.com/biller-hero-2.webm"
+                type="video/mp4" />
+            </video>
+          </Center>
+        </Container>
+
+        <Container maxW="container.2xl" centerContent py={[20]}>
+          <Text color="gray.600" fontSize="lg">
+            Used by teams worldwide
+          </Text>
+
+          <Wrap
+            spacing={[10, 20]}
+            mt={8}
+            align="center"
+            justify="center"
+            w="full"
           >
-            <source
-              src="https://launchman-space.nyc3.digitaloceanspaces.com/biller-hero-2.webm"
-              type="video/mp4"
-            />
-          </video>
-        </Center>
-      </Container>
+            <WrapItem>
+              <Image src="microsoft-logo.svg" alt="Microsoft logo" />
+            </WrapItem>
 
-      <Container maxW="container.2xl" centerContent py={[20]}>
-        <Text color="gray.600" fontSize="lg">
-          Used by teams worldwide
-        </Text>
+            <WrapItem>
+              <Image src="adobe-logo.svg" alt="Adobe logo" />
+            </WrapItem>
 
-        <Wrap
-          spacing={[10, 20]}
-          mt={8}
-          align="center"
-          justify="center"
+            <WrapItem>
+              <Image src="microsoft-logo.svg" alt="Microsoft logo" />
+            </WrapItem>
+
+            <WrapItem>
+              <Image src="adobe-logo.svg" alt="Adobe logo" />
+            </WrapItem>
+          </Wrap>
+        </Container>
+
+        <VStack
+          backgroundColor="white"
           w="full"
+          id="features"
+          spacing={16}
+          py={[16, 0]}
         >
-          <WrapItem>
-            <Image src="microsoft-logo.svg" alt="Microsoft logo" />
-          </WrapItem>
+          {features.map(
+            ({ title, description, image }: FeatureType, i: number) => {
+              return (
+                <Feature
+                  key={`feature_${i}`}
+                  title={title}
+                  description={description}
+                  image={image}
+                  reverse={i % 2 === 1} />
+              );
+            }
+          )}
+        </VStack>
 
-          <WrapItem>
-            <Image src="adobe-logo.svg" alt="Adobe logo" />
-          </WrapItem>
+        <Container maxW="container.md" centerContent py={[8, 28]}>
+          <SimpleGrid spacingX={10} spacingY={20} minChildWidth="300px">
+            {highlights.map(({ title, description, icon }, i: number) => (
+              <Box p={4} rounded="md" key={`highlight_${i}`}>
+                <Text fontSize="4xl">{icon}</Text>
 
-          <WrapItem>
-            <Image src="microsoft-logo.svg" alt="Microsoft logo" />
-          </WrapItem>
+                <Text fontWeight={500}>{title}</Text>
 
-          <WrapItem>
-            <Image src="adobe-logo.svg" alt="Adobe logo" />
-          </WrapItem>
-        </Wrap>
-      </Container>
+                <Text color="gray.500" mt={4}>
+                  {description}
+                </Text>
+              </Box>
+            ))}
+          </SimpleGrid>
+        </Container>
 
-      <VStack
-        backgroundColor="white"
-        w="full"
-        id="features"
-        spacing={16}
-        py={[16, 0]}
-      >
-        {features.map(
-          ({ title, description, image }: FeatureType, i: number) => {
-            return (
-              <Feature
-                key={`feature_${i}`}
-                title={title}
-                description={description}
-                image={image}
-                reverse={i % 2 === 1}
-              />
-            );
-          }
-        )}
-      </VStack>
+        <Container py={28} maxW="container.lg" w="full" id="pricing">
+          <PricingSection />
+        </Container>
 
-      <Container maxW="container.md" centerContent py={[8, 28]}>
-        <SimpleGrid spacingX={10} spacingY={20} minChildWidth="300px">
-          {highlights.map(({ title, description, icon }, i: number) => (
-            <Box p={4} rounded="md" key={`highlight_${i}`}>
-              <Text fontSize="4xl">{icon}</Text>
-
-              <Text fontWeight={500}>{title}</Text>
-
-              <Text color="gray.500" mt={4}>
-                {description}
+        <Container py={28} maxW="container.md">
+          <Box w="full">
+            <VStack spacing={10} w="full">
+              <Text fontWeight={500} fontSize="2xl" align="center">
+                Frequently asked questions
               </Text>
-            </Box>
-          ))}
-        </SimpleGrid>
-      </Container>
-
-      <Container py={28} maxW="container.lg" w="full" id="pricing">
-        <PricingSection />
-      </Container>
-
-      <Container py={28} maxW="container.md">
-        <Box w="full">
-          <VStack spacing={10} w="full">
-            <Text fontWeight={500} fontSize="2xl" align="center">
-              Frequently asked questions
-            </Text>
-            <FAQSection items={faqs} />
-          </VStack>
-        </Box>
-      </Container>
-    </Box>
-  </Layout>
+              <FAQSection items={faqs} />
+            </VStack>
+          </Box>
+        </Container>
+      </Box></>
   );
 }
