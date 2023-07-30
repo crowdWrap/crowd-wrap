@@ -41,7 +41,7 @@ export default function Header() {
           isIndeterminate
         />
       )}
-      {!loading && authed && (location !== "/" && location !== "/register" && location !== "/login" && location !== "/login/forgot") && (
+      {!loading && authed && (location !== "/" && location !== "/register" && location !== "/login" && !location.includes('/invite') &&  location !== "/login/forgot") && (
         <Box
           shadow="0px 0px 5px rgba(0, 0, 0, 0.164)"
           className={styles["header"]}

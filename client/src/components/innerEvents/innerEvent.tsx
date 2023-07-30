@@ -54,6 +54,9 @@ export default function TheEvent() {
   const [confetti, setConfetti] = useState(false);
   const navigate = useNavigate();
 
+  const [inviteLoading, setInviteLoading] = useState<any>(null);
+
+
   const confettiConfig = {
     angle: 90,
     spread: 460,
@@ -101,6 +104,7 @@ export default function TheEvent() {
       setRefreshEvent(false);
       setRefreshInner(false);
       setLoading(false);
+      setInviteLoading(null);
     })();
   }, [eventId, navigate, refreshEvent, setRefreshEvent, user.id, refreshInner, setCurrentEvent]);
 
@@ -283,7 +287,7 @@ export default function TheEvent() {
             </Box>
           </Flex>
         </Box>
-        <Box flexGrow="1">
+        <Box flexGrow="1" display={["none","none","none","flex"]}>
           <Flex padding="10px" marginTop={'5px'} height="100%" width="100%" overflowY="scroll">
             <AvatarGroup
               max={11}
@@ -320,6 +324,8 @@ export default function TheEvent() {
         e={events}
         onClose2={onClose}
         accounts={accounts}
+        setInviteLoading={setInviteLoading}
+        inviteLoading={inviteLoading}
       />
       {/* )} */}
       <Box position="absolute" top={"40%"} left={"50%"}>

@@ -35,6 +35,7 @@ export default function SingularEvent({
   onOpen1,
   onOpen2,
   needMenu,
+  ...props
 }: any) {
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -80,7 +81,8 @@ export default function SingularEvent({
       marginBottom="40px"
       marginTop="-40px"
       height="xs"
-      width="lg"
+      width={["xs","sm","sm","md","xl"]}
+      {...props}
       
     >
       <CardHeader>
@@ -206,6 +208,7 @@ export default function SingularEvent({
               <Avatar key={val.id} src={val.picture} />
             ))}
         </AvatarGroup>
+        {needMenu && (
         <Button
           marginTop="5px"
           flex="0.5"
@@ -223,6 +226,7 @@ export default function SingularEvent({
         >
           Share
         </Button>
+        )}
       </CardFooter>
     </Card>
   );

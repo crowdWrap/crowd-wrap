@@ -6,19 +6,22 @@ export default function LoginAndSignupPage({
   children,
   headingText,
   regText,
+  full,
   ...props
 }: any) {
   // const navigate = useNavigate();
   return (
     <Flex position="absolute" width="100%" height="100vh" {...props}>
       <Flex
-        flexShrink="0"
+        flexShrink="1"
         flexGrow="1"
         justifyContent="center"
         minWidth={["100%", "100%", "70%", "50%", "35%"]}
       >
         <Flex
-          width="70%"
+          width={!full ? "70%" : ""}
+          padding={full ? '25px' : ""}
+          flexShrink={'1'}
           justifyContent={"center"}
           alignItems="center"
           flexDir="column"
@@ -30,7 +33,14 @@ export default function LoginAndSignupPage({
             // alignItems="center"
           >
             <Heading letterSpacing="-1px" marginBottom="4px" fontWeight="700">
-              {headingText}
+              <Highlight                 styles={{
+                  px: "1",
+                  py: "0",
+                  rounded: "full",
+                  bg: "red.100",
+                }} query={"event"} >
+                {headingText}
+              </Highlight>
             </Heading>
             <Text
               marginLeft="0.5"
@@ -87,9 +97,9 @@ export default function LoginAndSignupPage({
       >
         <Box
           backgroundColor="white"
-          height="70%"
+          height={full?"100%":"75%"}
           borderRadius="25px"
-          width="99%"
+          width="100vw"
         />
       </Flex>
     </Flex>

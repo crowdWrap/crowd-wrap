@@ -37,6 +37,8 @@ export default function Events() {
   const toast = useToast();
   const [selectedEvent, setSelectedEvent] = useState<string>("");
 
+  const [inviteLoading, setInviteLoading] = useState<any>(null);
+
   const {
     isOpen: isOpen1,
     onOpen: onOpen1,
@@ -61,6 +63,7 @@ export default function Events() {
         fetchEvents(setEvents);
         setAccounts(await fetchData());
         setRefreshEvent(false);
+        setInviteLoading(null);
       }
     })();
     return () => {
@@ -94,8 +97,15 @@ export default function Events() {
 
   return (
     <Flex
-      padding="9px"
-      // justifyContent="center"
+    justifyContent={'center'}
+    >
+      
+    <Flex
+      // bg={'black'} 
+      // maxWidth='95%'
+      // padding="9px"
+      
+      justifyContent="center"
       paddingTop="70px"
       gap="35px"
       flexWrap="wrap"
@@ -119,6 +129,8 @@ export default function Events() {
                 onClose2={onClose2}
                 accounts={accounts}
                 setSelectedEvent={(val: string) => setSelectedEvent(val)}
+                setInviteLoading={setInviteLoading}
+                inviteLoading={inviteLoading}
               />
             )}
 
@@ -132,6 +144,8 @@ export default function Events() {
             )}
           </React.Fragment>
         ))}
+    </Flex>
+
     </Flex>
   );
 }

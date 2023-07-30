@@ -27,10 +27,12 @@ export default function AddFriendToEvent({
   accounts,
   e,
   setSelectedEvent,
+  setInviteLoading,
+  inviteLoading
 }: any) {
   const { setRefreshEvent } = useAuth();
   const [fetchedData, setFetchedData] = useState<any>(null);
-  const [inviteLoading, setInviteLoading] = useState<any>(null);
+
 
   const handleDataUpdate = async (newData: any) => {
     if (newData) {
@@ -62,7 +64,7 @@ export default function AddFriendToEvent({
 
     await setRefreshEvent(true);
     // setTimeout(() => {
-    setInviteLoading(null);
+   
     // }, 1000);
     // Timeout because for some reason the loading symbol is going away before it refreshes
   };
