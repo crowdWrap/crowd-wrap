@@ -67,6 +67,8 @@ export default function FriendsListSearch({ updateData, eventUse }: any) {
             <Icon color="gray.300" as={BsSearch} />
           </InputLeftElement>
           <Input
+           as={DebounceInput}
+           debounceTimeout={225}
             onChange={(e) => setSearchText(e.target.value)}
             type="text"
             placeholder="Search Friends"

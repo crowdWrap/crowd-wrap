@@ -51,25 +51,25 @@ export default function PaymentPortion({
   };
 
   return (
-    <Flex justifyContent="space-evenly">
-      <Flex flexDir="column" alignItems="flex-start">
+    <Flex flexDir={["column","column","column","row"]} justifyContent="space-evenly">
+      <Flex paddingTop={["20px","20px","20px", "0px"]} flexDir="column" alignItems="flex-start">
         <Heading size="md">Payment</Heading>
         <Heading size="xs" color="gray.600">
           Your preffered settings, change at any time
         </Heading>
       </Flex>
       <Stack
-        shadow="md"
+   shadow={["none","none","none","md"]}
         borderRadius="15px"
         spacing={8}
         direction="column"
-        paddingLeft="40px"
-        paddingRight="40px"
-        paddingTop="20px"
+        paddingLeft={["0px","0px","0px","40px"]}
+        paddingRight={["0px","0px","0px","40px"]}
+        paddingTop={["40px","40px","40px", "20px"]}
         paddingBottom="20px"
         height="4xs"
-        width="3xl"
-        borderWidth="0.5px"
+        width={["","","","3xl"]}
+        borderWidth={["0", "0","0","0.5px"]}
       >
         <Form onSubmit={handleSubmit}>
           <Flex

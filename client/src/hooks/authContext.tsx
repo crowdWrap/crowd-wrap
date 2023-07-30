@@ -10,6 +10,7 @@ export default function AuthProvider({ children }: any) {
   const [user, setUser] = useState({});
   const [loading, setLoading] = useState<boolean>(true);
   const [refreshEvent, setRefreshEvent] = useState<boolean>(false);
+  const [currentEvent, setCurrentEvent] = useState<any>("");
 
   useEffect(() => {
     (async () => {
@@ -57,6 +58,8 @@ export default function AuthProvider({ children }: any) {
         setRefreshEvent,
         user,
         setUser,
+        setCurrentEvent,
+        currentEvent
       }}
     >
       {children}

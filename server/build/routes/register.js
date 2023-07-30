@@ -17,6 +17,8 @@ const userQueries_1 = require("../queries/userQueries");
 const google_auth_library_1 = require("google-auth-library");
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const profileQueries_1 = require("../queries/profileQueries");
+const eventQueries_1 = require("../queries/eventQueries");
+const crypto_1 = __importDefault(require("crypto"));
 const client = new google_auth_library_1.OAuth2Client(process.env.CLIENTID);
 const router = (0, express_1.Router)();
 router.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -35,15 +37,27 @@ router.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         //makes sure that the user doesnt exist
         const emailExists = yield (0, profileQueries_1.getProfileByEmail)(email);
         const usernameExists = yield (0, profileQueries_1.getProfileByUsername)(username);
-        if (emailExists || usernameExists) {
+        if (usernameExists) {
             return res
                 .status(400)
                 .json({ message: "This user exists, please login!" });
         }
+        else if (emailExists) {
+            return res
+                .status(400)
+                .json({ message: "This email has already been used, please login!" });
+        }
         //then continues normal process
         const hashedPass = yield bcryptjs_1.default.hash(password, 10);
         //Create user and send to DB
-        (0, userQueries_1.createUser)(username, email, hashedPass, "local", true);
+        const user = yield (0, userQueries_1.createUser)(username, email, hashedPass, "local", true);
+        const currentDate = new Date();
+        // Extract the individual components of the date
+        const year = currentDate.getFullYear();
+        const month = currentDate.getMonth() + 1;
+        const day = currentDate.getDate();
+        const formattedDate = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+        (0, eventQueries_1.createEvent)(Number(user.id), { title: "Welcome!", description: "This is an example event, to make your own press the plus on the top right", moneyGoal: "0", img: "default", date: formattedDate }, crypto_1.default.randomUUID());
         return res.status(201).json({ message: `${username} has been created` });
     }
     catch (e) {

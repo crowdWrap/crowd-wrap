@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import backgroundImage from ".././assets/image_group/blue-pink-better-theme.png";
-import { Button, Flex, Heading, useToast } from "@chakra-ui/react";
+import {  useLocation, useNavigate, useParams } from "react-router-dom";
+
+import { Button, useToast } from "@chakra-ui/react";
 import SingularEvent from "../components/events/singularEvent";
 import { socket } from "../api/socket";
+import LoginAndSignupPage from "../components/loginAndSignup/LoginAndSignupPage";
 
 export default function EventInvite() {
   const navigate = useNavigate();
@@ -13,6 +14,7 @@ export default function EventInvite() {
   const [event, setEvent] = useState<any>();
   const [loading, setLoading] = useState(false);
   const toast = useToast();
+  let location = useLocation();
   useEffect(() => {
     (async () => {
       try {
@@ -28,8 +30,9 @@ export default function EventInvite() {
           setButtonStatus("😞");
         } else {
           if (responded.notLoggedIn) {
-            setInviteStatus("Please log in!");
-            setButtonStatus("😞");
+            setInviteStatus("Please log in to join!");
+            setButtonStatus("Log in");
+            setEvent(responded.event);
           } else {
             if (responded.inEvent) {
               setInviteStatus(
@@ -38,7 +41,7 @@ export default function EventInvite() {
               setButtonStatus("Go to event");
               setEvent(responded.event);
             } else {
-              setInviteStatus("You have been invited to join!");
+              setInviteStatus("");
               setButtonStatus("Join");
               setEvent(responded.event);
             }
@@ -71,6 +74,10 @@ export default function EventInvite() {
   }, [link, toast]);
 
   const handleButton = async () => {
+    if (buttonStatus === "Log in"){
+      sessionStorage.setItem("loginState", JSON.stringify({ from: location }));
+      navigate("/login");
+     }
     if (event) {
       if (buttonStatus === "Join") {
         await fetch(`/events/invite/${link}`, {
@@ -79,48 +86,35 @@ export default function EventInvite() {
         navigate(`/events/${event.title}-${event.id}`);
       } else if (buttonStatus === "Go to event") {
         navigate(`/events/${event.title}-${event.id}`);
-      }
+      } 
     }
   };
 
   return (
     <>
       {!loading && (
-        <Flex
-          justifyContent="center"
-          height="100vh"
-          width="100vw"
-          position="absolute"
-          top="0px"
-          backgroundImage={backgroundImage}
-          filter="hue-rotate(120deg)"
-          alignItems="center"
-        >
-          <Flex
-            padding="40px"
-            borderRadius="2xl"
-            maxW="xl"
-            bg="white"
-            filter="hue-rotate(-120deg)"
-            flexDir="column"
-            gap="35px"
-            alignItems="center"
+            <LoginAndSignupPage
+            // handleSubmit={handleSubmit}
+            headingText={"You've been invited to an event!"}
+            regText={inviteStatus}
+            full={true}
           >
-            <Heading size="lg" textAlign={"center"}>
-              {inviteStatus}
-            </Heading>
             {event && (
               <SingularEvent
                 e={event}
                 inviteLink={`http://localhost:3000/events/invite/${link}`}
                 events={event}
+                variant="none"
+                width={["xs","sm","sm","sm","sm", "md"]}
+                marginTop='15px'
+                // ml={["-15px",'0px']}
               />
             )}
             <Button onClick={handleButton} size="lg" colorScheme="pink">
               {buttonStatus}
             </Button>
-          </Flex>
-        </Flex>
+    
+        </LoginAndSignupPage>
       )}
     </>
   );

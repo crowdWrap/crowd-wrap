@@ -91,7 +91,9 @@ router.get("/invite/:link", async (req:any, res:any) => {
       return res.status(404).json({ invalidInvite: true });
     }
   } else {
-    return res.status(404).json({ notLoggedIn: true });
+    const link = req.params.link;
+    const theEvent: any = await getEventByLink(link);
+    return res.status(400).json({ notLoggedIn: true, event: theEvent});
   }
 });
 

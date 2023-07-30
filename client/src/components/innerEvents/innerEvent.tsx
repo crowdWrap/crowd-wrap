@@ -6,14 +6,10 @@ import { useAuth } from "../../hooks/authContext";
 import {
   AvatarGroup,
   Box,
-  CircularProgress,
-  CircularProgressLabel,
   Flex,
-  Heading,
   Icon,
   IconButton,
   Textarea,
-  useClipboard,
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
@@ -21,7 +17,6 @@ import Message from "./messege";
 import { BiPlus } from "react-icons/bi";
 import { socket } from "../../api/socket";
 import AddFriendToEvent from "../events/addFriend";
-import InnerOptions from "./innerOptions";
 import { AiOutlineSend } from "react-icons/ai";
 import Confetti from "react-dom-confetti";
 
@@ -43,10 +38,10 @@ export default function TheEvent() {
   const dashIndex: any = id?.lastIndexOf("-");
   const eventId: any = id?.substring(dashIndex + 1);
   const [events, setEvents] = useState<any>([]);
-  const { refreshEvent, setRefreshEvent } = useAuth();
+  const { refreshEvent, setRefreshEvent, setCurrentEvent } = useAuth();
   const toast = useToast();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [inviteLink, setInviteLink] = useState<string>("Loading...");
-  const { onCopy } = useClipboard(inviteLink);
   const [messages, setMessages] = useState<any>([]);
   const [refreshMessages, setRefreshMessages] = useState(false);
   const messageToSendRef = useRef<any>("");
@@ -58,6 +53,9 @@ export default function TheEvent() {
   const [refreshInner, setRefreshInner] = useState(false);
   const [confetti, setConfetti] = useState(false);
   const navigate = useNavigate();
+
+  const [inviteLoading, setInviteLoading] = useState<any>(null);
+
 
   const confettiConfig = {
     angle: 90,
@@ -81,20 +79,20 @@ export default function TheEvent() {
       });
 
       const data = await response.json();
-
       if (!data.event) {
         navigate("/events");
         return;
       }
 
-      const isInside = data.event.participants.filter(
+
+      setCurrentEvent(data.event)
+      const isInside = await data.event.participants.filter(
         (participant: any) => Number(participant.userId) === Number(user.id)
       );
-
       if (isInside.length === 0) {
         navigate("/events");
       } else {
-        setInviteLink(`http://localhost:3000/events/invite/${data.inviteLink}`);
+        setInviteLink(`https://crowdwrap.works/events/invite/${data.event.inviteLink}`);
         return data.event;
       }
     };
@@ -106,8 +104,9 @@ export default function TheEvent() {
       setRefreshEvent(false);
       setRefreshInner(false);
       setLoading(false);
+      setInviteLoading(null);
     })();
-  }, [eventId, navigate, refreshEvent, setRefreshEvent, user.id, refreshInner]);
+  }, [eventId, navigate, refreshEvent, setRefreshEvent, user.id, refreshInner, setCurrentEvent]);
 
   useEffect(() => {
     socket.on("eventUpdate", (data) => {
@@ -172,9 +171,11 @@ export default function TheEvent() {
   }, []);
 
   const handleSubmit = async () => {
+    
     const data = JSON.stringify({
       content: messageToSendRef.current.value,
     });
+    
     const response = await fetch(`/events/${eventId}/messages`, {
       method: "POST",
       headers: {
@@ -182,13 +183,14 @@ export default function TheEvent() {
       },
       body: data,
     });
+    messageToSendRef.current.value = "";
     const receivedData = await response.json();
     if (messages.length > 0) {
       setMessages([...messages, receivedData.messageWithPicture]);
     } else {
       setMessages([receivedData.messageWithPicture]);
     }
-    messageToSendRef.current.value = "";
+    
   };
 
   // const handleDate = () => {
@@ -198,10 +200,6 @@ export default function TheEvent() {
   //   return formattedDate;
   // };
 
-  const handleProgress = (e: any) => {
-    const match = e.moneyGoal.match(/\d+/g);
-    return match[0];
-  };
 
   const colors = [
     "pink",
@@ -229,44 +227,11 @@ export default function TheEvent() {
     <>
       {/* need to title the event */}
       {/* {!loading && events && ( */}
-      <Heading padding="10px" position="absolute">
+      {/* <Heading padding="10px" position="absolute">
         {events.title}
-      </Heading>
-      <Flex overflow="hidden" h="calc(100vh - 57px)">
-        <Box>
-          <Flex
-            padding="10px"
-            justifyContent="space-between "
-            alignItems="center"
-            flexDir="column"
-            height="70%"
-          >
-            {events && events.Currentfunds ? (
-              <>
-                <CircularProgress
-                  marginTop="50px"
-                  value={Number(
-                    `${(events.Currentfunds / handleProgress(events)) * 100}`
-                  )}
-                  size="100px"
-                  color="green.400"
-                >
-                  <CircularProgressLabel>
-                    ${events.Currentfunds}
-                  </CircularProgressLabel>
-                </CircularProgress>
-                <InnerOptions onCopy={onCopy} events={events} />
-              </>
-            ) : (
-              <>
-                <CircularProgress value={0} size="100px" color="green.400">
-                  <CircularProgressLabel>$0</CircularProgressLabel>
-                </CircularProgress>
-                <InnerOptions onCopy={onCopy} events={events} />
-              </>
-            )}
-          </Flex>
-        </Box>
+      </Heading> */}
+      <Flex overflow="hidden" h="calc(100vh - 65px)">
+
 
         <Box flexGrow="11.5">
           <Flex
@@ -294,6 +259,7 @@ export default function TheEvent() {
                     createdAt={msg.createdAt}
                     own={Number(user.id) === Number(msg.userId) ? true : false}
                     color={currentColor}
+                    msg={msg.user ? msg : ""}
                   />
                 );
               })}
@@ -311,6 +277,11 @@ export default function TheEvent() {
                     resize="none"
                     placeholder="Send Message"
                     isRequired
+                    onKeyDown={(e)=>{
+                      if(e.key === "Enter" && e.shiftKey === false){
+                        handleSubmit()
+                      }
+                    }}
                   />
                   <IconButton
                     colorScheme="pink"
@@ -323,8 +294,8 @@ export default function TheEvent() {
             </Box>
           </Flex>
         </Box>
-        <Box flexGrow="1">
-          <Flex padding="10px" height="100%" width="100%" overflowY="scroll">
+        <Box flexGrow="1" display={["none","none","none","flex"]}>
+          <Flex padding="10px" marginTop={'5px'} height="100%" width="100%" overflowY="scroll">
             <AvatarGroup
               max={11}
               flexDir={"column-reverse"}
@@ -360,6 +331,8 @@ export default function TheEvent() {
         e={events}
         onClose2={onClose}
         accounts={accounts}
+        setInviteLoading={setInviteLoading}
+        inviteLoading={inviteLoading}
       />
       {/* )} */}
       <Box position="absolute" top={"40%"} left={"50%"}>

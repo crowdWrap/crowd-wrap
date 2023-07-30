@@ -33,6 +33,8 @@ export async function createUser(
       },
     });
 
+    return user;
+
   } catch (error) {
     console.error("create user error", error);
     throw new Error(

@@ -37,6 +37,7 @@ function createUser(username, email, password, registeredWith, usernameSet) {
                     },
                 },
             });
+            return user;
         }
         catch (error) {
             console.error("create user error", error);

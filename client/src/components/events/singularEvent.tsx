@@ -26,6 +26,7 @@ import { BiBomb, BiExit, BiShare } from "react-icons/bi";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/authContext";
+import { motion } from "framer-motion";
 
 export default function SingularEvent({
   e,
@@ -34,12 +35,13 @@ export default function SingularEvent({
   onOpen1,
   onOpen2,
   needMenu,
+  ...props
 }: any) {
   const { user } = useAuth();
   const navigate = useNavigate();
   const toast = useToast();
   const { onCopy } = useClipboard(
-    `http://localhost:3000/events/invite/${e.inviteLink}`
+    `https://crowdwrap.works/events/invite/${e.inviteLink}`
   );
 
   const handleProgress = (e: any) => {
@@ -47,8 +49,7 @@ export default function SingularEvent({
     return match[0];
   };
 
-  const navigateEvent = (e: any) => {
-    console.log(e);
+  const navigateEvent = (e: any) => {;
     navigate(`/events/${e.title}-${e.id}`);
   };
 
@@ -72,12 +73,17 @@ export default function SingularEvent({
 
   return (
     <Card
-      flexGrow="0.25"
+      as={motion.div}
+      // whileHover={{ scale: 1.01  }}
+      transition='0.15s linear'
+      // flexGrow="0.25"
       variant="outline"
       marginBottom="40px"
       marginTop="-40px"
       height="xs"
-      width="md"
+      width={["xs","sm","sm","md","xl"]}
+      {...props}
+      
     >
       <CardHeader>
         <Flex>
@@ -202,6 +208,7 @@ export default function SingularEvent({
               <Avatar key={val.id} src={val.picture} />
             ))}
         </AvatarGroup>
+        {needMenu && (
         <Button
           marginTop="5px"
           flex="0.5"
@@ -219,6 +226,7 @@ export default function SingularEvent({
         >
           Share
         </Button>
+        )}
       </CardFooter>
     </Card>
   );

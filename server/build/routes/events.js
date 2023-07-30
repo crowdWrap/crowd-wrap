@@ -83,7 +83,9 @@ router.get("/invite/:link", (req, res) => __awaiter(void 0, void 0, void 0, func
         }
     }
     else {
-        return res.status(404).json({ notLoggedIn: true });
+        const link = req.params.link;
+        const theEvent = yield (0, eventQueries_1.getEventByLink)(link);
+        return res.status(400).json({ notLoggedIn: true, event: theEvent });
     }
 }));
 router.post("/invite/:link", (req, res) => __awaiter(void 0, void 0, void 0, function* () {

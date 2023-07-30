@@ -1,7 +1,7 @@
 import { Avatar, Box, Flex, Link, Text } from "@chakra-ui/react";
 import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const useTimeAgo:any = () => {
   TimeAgo.addDefaultLocale(en);
@@ -15,21 +15,25 @@ export default function Message({
   picture,
   color,
   createdAt,
+  msg
 }: any) {
   const urlRegex = /(https?:\/\/[^\s]+)/g;
   const segments = content.split(urlRegex);
-  const [createdAtDate, setCreatedAtDate] = useState(new Date(createdAt));
-  const [timeAgo, setTimeAgo] = useState<any>(useTimeAgo);
+  const [createdAtDate] = useState(new Date(createdAt));
+  const [timeAgo] = useState<any>(useTimeAgo);
   
   return (
     <Flex flexDir="column" alignItems={own ? "flex-end" : "flex-start"}>
+       
+       <Text marginTop="20px" fontWeight={'bold'}>{!own ? msg.user.username : ""}</Text>
       <Box
-        marginTop="20px"
+        
         display="flex"
         flexDir={own ? "row-reverse" : "row"}
         alignItems="center"
         gap="15px"
       >
+
         {picture ? (
           <Avatar
             width="32px"
@@ -40,6 +44,7 @@ export default function Message({
         ) : (
           <Avatar width="32px" borderRadius="full" height="32px"></Avatar>
         )}
+      
         {own ? (
           <Text
             position="relative"

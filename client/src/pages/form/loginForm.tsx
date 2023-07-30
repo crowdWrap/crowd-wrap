@@ -43,7 +43,15 @@ export default function LoginForm() {
 
   useEffect(() => {
     if (authed) {
-      navigate(from);
+      const loginState:any = JSON.parse(sessionStorage.getItem("loginState") || "null");
+      if (loginState && loginState !== "null") {
+        const fromLocation = loginState.from;
+        sessionStorage.removeItem("loginState");
+        navigate(fromLocation);
+      }else{
+        navigate(from);
+      }
+      
     }
   }, [authed, from, navigate]);
 

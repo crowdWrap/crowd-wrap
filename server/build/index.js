@@ -32,6 +32,7 @@ const profile_1 = __importDefault(require("./routes/profile"));
 const friends_1 = __importDefault(require("./routes/friends"));
 const events_1 = __importDefault(require("./routes/events"));
 const payment_1 = __importDefault(require("./routes/payment"));
+// import path from "path"
 const morgan = require("morgan");
 exports.app = (0, express_1.default)();
 exports.prisma = new client_1.PrismaClient();
@@ -62,6 +63,9 @@ exports.io = new socket_io_1.Server(server, {
         credentials: true,
     },
 });
+// const buildPath = path.join(__dirname, "../../client/build");
+// app.use('/static', express.static(path.join(__dirname, '../../client/build/static')))
+// app.use('/static', express.static(path.join(__dirname, '../client/build/static')));
 exports.io.use((socket, next) => {
     sessionMiddleware(socket.request, socket.request.res || {}, next);
 });
@@ -95,6 +99,10 @@ exports.app.use("/profile", profile_1.default);
 exports.app.use("/friends", friends_1.default);
 exports.app.use("/events", events_1.default);
 exports.app.use("/payment", payment_1.default);
-server.listen(process.env.PORT || 8000, () => {
-    console.log(`Server is listening `);
+// app.get('*', function (req, res) {
+//   res.sendFile(path.join(buildPath, 'index.html'));
+// });
+const port = process.env.PORT || 8000;
+server.listen(port, () => {
+    console.log(`Server is listening ${port}`);
 });

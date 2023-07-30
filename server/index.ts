@@ -27,6 +27,7 @@ import profileRouter from "./routes/profile";
 import friendsRouter from "./routes/friends";
 import eventsRouter from "./routes/events";
 import paymentRouter from "./routes/payment";
+// import path from "path"
 const morgan = require("morgan");
 
 export const app = express();
@@ -62,6 +63,8 @@ intializePassport(
   getProfileByEmail
 );
 
+
+
 const server = http.createServer(app);
 
 export const io = new Server(server, {
@@ -71,6 +74,11 @@ export const io = new Server(server, {
     credentials: true,
   },
 });
+
+
+// const buildPath = path.join(__dirname, "../../client/build");
+// app.use('/static', express.static(path.join(__dirname, '../../client/build/static')))
+// app.use('/static', express.static(path.join(__dirname, '../client/build/static')));
 
 io.use((socket: any, next: any) => {
   sessionMiddleware(socket.request, socket.request.res || {}, next);
@@ -118,6 +126,12 @@ app.use("/events", eventsRouter);
 
 app.use("/payment", paymentRouter);
 
-server.listen(process.env.PORT || 8000, () => {
-  console.log(`Server is listening `);
+
+// app.get('*', function (req, res) {
+//   res.sendFile(path.join(buildPath, 'index.html'));
+// });
+
+const port = process.env.PORT || 8000
+server.listen(port, () => {
+  console.log(`Server is listening ${port}`);
 });
