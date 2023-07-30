@@ -4,7 +4,7 @@
         "name": "react-app",
         "script": "npx",
         "interpreter": "none",
-        "args": "react-scripts start"
+        "args": "react-scripts --max_old_space_size=4096 start"
       }
     ]
   }
