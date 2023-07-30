@@ -12,10 +12,10 @@
     "install": "npm run client-install && npm run server-install",
     "build:client": "cd client && npx tsc --project tsconfig.json && npm run build",
     "build:server": "cd server && npx tsc --project tsconfig.json",
-    "build": "npm run build:client && npm run build:server",
+    "build": "npm run build:server && npm run build:client",
     "serverAndClient": "concurrently  'npm run server' 'npm run client'",
     "dev": "cd server/prisma && npx prisma generate && cd ../.. &&  npm run serverAndClient ",
-    "production":"pm2 start server/build/index.js && pm2 start client/app.config.json"
+    "production": "pm2 start server/build/index.js && pm2 start client/app.config.json"
   },
   "repository": {
     "type": "git",

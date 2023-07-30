@@ -11,6 +11,16 @@
   },
   "author": "",
   "license": "ISC",
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.2",
+    "@types/cookie-parser": "^1.4.3",
+    "@types/cors": "^2.8.13",
+    "@types/express": "^4.17.16",
+    "@types/express-session": "^1.17.6",
+    "@types/node": "^18.11.18",
+    "@types/passport": "^1.0.12",
+    "@types/passport-local": "^1.0.35"
+  },
   "dependencies": {
     "@prisma/client": "^5.0.0",
     "@quixo3/prisma-session-store": "^3.1.11",

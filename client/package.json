@@ -5,6 +5,7 @@
   "proxy": "http://localhost:8000",
   "homepage": "/client/build",
   "dependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@chakra-ui/react": "^2.7.1",
     "@chakra-ui/visually-hidden": "^2.0.15",
     "@fontsource/inter": "^5.0.1",
