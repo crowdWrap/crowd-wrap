@@ -5,24 +5,32 @@ import {
   Wrap,
   WrapItem,
   Text,
-  Image,
   VStack,
   SimpleGrid,
 } from "@chakra-ui/react";
 import { FAQSection } from "../components/homePage/faqSection";
 import { Feature } from "../components/homePage/feature";
-import { HeroSection } from "../components/homePage/heroSection";
-import { PricingSection } from "../components/homePage/pricingSection";
+import { HeroSection } from "../components/homePage/heroSection"; 
 import { Helmet } from "react-helmet";
+import first from "../assets/1.png"
+import second from "../assets/2.png"
+import third from "../assets/3.png"
+import vid from "../assets/vid.webm"
+import newvid from "../assets/video-2023-07-30_06.48.10.mp4"
 
 const faqs: any[] = [
   {
-    q: "How many clients can I bring on?",
-    a: "You can bring on 3 clients with the Free plan. Upgrade to Pro for additional seats.",
+    q: "How many people can I add to an event?",
+    a: "You can bring on 10 people currently.",
   },
   {
-    q: "Can I connect it to my CRM?",
-    a: "Yes! We support Notion and PipeDrive currently.",
+    q: "Are there still features being added?",
+    a: "Yes! I am currently still adding more things.",
+  },
+
+  {
+    q: "How does payment work?",
+    a: "You will be prompted when you need to pay, and the funds will be sent directly to the hosts paypal."
   },
   {
     q: "Do you support international payments?",
@@ -30,7 +38,7 @@ const faqs: any[] = [
   },
   {
     q: "Who can I connect to for support?",
-    a: "Email me at sukh@saasbase.dev",
+    a: "Email me at crowdwrap@gmail.com",
   },
 ];
 
@@ -55,15 +63,15 @@ const highlights: HighlightType[] = [
   },
   {
     icon: "😃",
-    title: "Rapid experimenting",
+    title: "",
     description:
-      "You don't have to wait hours to update your hard-coded landing pages. Figure out what resonates with your customers the most and update the copy in seconds",
+      "",
   },
   {
     icon: "🔌",
-    title: "Rapid experimenting",
+    title: "",
     description:
-      "You don't have to wait hours to update your hard-coded landing pages. Figure out what resonates with your customers the most and update the copy in seconds",
+      "",
   },
 ];
 
@@ -75,25 +83,25 @@ interface FeatureType {
 
 const features: FeatureType[] = [
   {
-    title: "Detailed Analytics",
+    title: "Easy events",
     description:
-      "No more spending hours writing formulas in Excel to figure out how much you're making. We surface important metrics to keep your business going strong.",
+      "No more spending time to figure out how much you're gifting. Easily create events and assign a budget to your friends in one place.",
     image:
-      "https://launchman-space.nyc3.digitaloceanspaces.com/chakra-ui-landing-page-feature-1.png",
+      second,
   },
   {
-    title: "Track your clients",
+    title: "Real-time chat",
     description:
-      "Know when and how your projects are going so you can stay on top of delivery dates.",
+      "Know when and how your events are going to be handled.",
     image:
-      "https://launchman-space.nyc3.digitaloceanspaces.com/chakra-ui-landing-page-feature-2.png",
+     first,
   },
   {
-    title: "Manage projects",
+    title: "Simple payment",
     description:
-      "You don't have to hunt your email inbox to find that one conversation. Every task, project, and client information is just a click away.",
+      "You don't have to hunt for a payment from each person. Easily use the integrated payment to send funds to the host",
     image:
-      "https://launchman-space.nyc3.digitaloceanspaces.com/chakra-ui-landing-page-feature-3.png",
+      third,
   },
 ];
 
@@ -102,7 +110,8 @@ export default function HomePage() {
     <><Helmet>
       <meta charSet="utf-8" />
       <title>Crowdwrap | Streamline gift giving</title>
-    </Helmet><Box bg="gray.50">
+    </Helmet>
+    <Box bg="gray.50">
         <HeroSection />
         <Container maxW="container.xl">
           <Center p={[0, 10]}>
@@ -110,42 +119,41 @@ export default function HomePage() {
               playsInline
               autoPlay
               muted
-              poster="https://launchman-space.nyc3.digitaloceanspaces.com/biller-hero-2.png"
               loop
             >
               <source
-                src="https://launchman-space.nyc3.digitaloceanspaces.com/biller-hero-2.webm"
-                type="video/mp4" />
+                src={newvid} />
             </video>
           </Center>
         </Container>
 
         <Container maxW="container.2xl" centerContent py={[20]}>
-          <Text color="gray.600" fontSize="lg">
-            Used by teams worldwide
-          </Text>
-
           <Wrap
-            spacing={[10, 20]}
+            spacing={[10, 40]}
             mt={8}
             align="center"
             justify="center"
             w="full"
           >
-            <WrapItem>
-              <Image src="microsoft-logo.svg" alt="Microsoft logo" />
+            <WrapItem bg={'#93D9F8'} padding={'8px'} borderRadius={'25px'}>
+              <Text>Easy and fast</Text>
             </WrapItem>
 
-            <WrapItem>
-              <Image src="adobe-logo.svg" alt="Adobe logo" />
+            <WrapItem bg={"blackAlpha.100"} padding={'8px'} borderRadius={'25px'}>
+            <Text>Always in touch</Text>
             </WrapItem>
 
-            <WrapItem>
-              <Image src="microsoft-logo.svg" alt="Microsoft logo" />
+            <WrapItem bg={'pink.100'} padding={'8px'} borderRadius={'25px'}>
+            <Text>Social gifting</Text>
             </WrapItem>
 
-            <WrapItem>
-              <Image src="adobe-logo.svg" alt="Adobe logo" />
+            <WrapItem bg={"blackAlpha.100"} padding={'8px'} borderRadius={'25px'}>
+            <Text>Split and pool</Text>
+            </WrapItem>
+
+
+            <WrapItem  bg={'#E9F6FD'} padding={'8px'} borderRadius={'25px'}>
+            <Text>Manage wisely</Text>
             </WrapItem>
           </Wrap>
         </Container>
@@ -171,7 +179,7 @@ export default function HomePage() {
           )}
         </VStack>
 
-        <Container maxW="container.md" centerContent py={[8, 28]}>
+        {/* <Container maxW="container.md" centerContent py={[8, 28]}>
           <SimpleGrid spacingX={10} spacingY={20} minChildWidth="300px">
             {highlights.map(({ title, description, icon }, i: number) => (
               <Box p={4} rounded="md" key={`highlight_${i}`}>
@@ -185,11 +193,7 @@ export default function HomePage() {
               </Box>
             ))}
           </SimpleGrid>
-        </Container>
-
-        <Container py={28} maxW="container.lg" w="full" id="pricing">
-          <PricingSection />
-        </Container>
+        </Container> */}
 
         <Container py={28} maxW="container.md">
           <Box w="full">

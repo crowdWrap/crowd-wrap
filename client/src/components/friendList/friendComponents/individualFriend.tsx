@@ -50,6 +50,7 @@ export default function IndividualFriend({ item, handleButtonClick }: any) {
             />
             <MenuList>
               <MenuItem
+              isDisabled
                 icon={<Icon color="green" boxSize={5} as={AiOutlineUserAdd} />}
               >
                 Add to event

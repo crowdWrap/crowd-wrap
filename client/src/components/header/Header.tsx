@@ -105,7 +105,7 @@ export default function Header() {
                 {/* <InnerOptions onCopy={onCopy} events={events} /> */}
               </>
             )}
-            <Heading size="lg">{currentEvent.title}</Heading>
+            <Heading display={["none", "contents"]} fontWeight={"extrabold"} size="lg">{currentEvent.title}</Heading>
             </Flex>
 
             <Box className={styles["navbarCover"]}>
@@ -129,17 +129,18 @@ export default function Header() {
         shadow="0px 0px 5px rgba(0, 0, 0, 0.164)"
         className={styles["header"]}
       >
-            <Link to="/">
-            <Image
-              src={logoPrint}
-              alt="CrowdWrap-Title"
-              className={styles["img"]}
-            />
+            <Link  to="/">
+              <Image
+                display={["none", "block"]}
+                src={logoPrint}
+                alt="CrowdWrap-Title"
+                className={styles["img"]}
+              />
           </Link>
-          <Box className={styles["navbarCover"]}>
-            <Button as={Link} to="/register" colorScheme="red">Sign up for free</Button>
+          <Flex justifyContent={['space-between', "end"]} width={['100%', "fit-content"]} className={styles["navbarCover"]}>
+            <Button  as={Link} to="/register" colorScheme="red">Sign up for free</Button>
             <Button as={Link} to="/login" >Sign in</Button>
-            </Box>
+            </Flex>
           </Box>
       )}
     </>

@@ -24,7 +24,7 @@ export default function Settings() {
     <>
       {!loading && (
         <Flex
-          padding="100px 120px"
+          padding={["15px","100px 120px"]}
           flexDir="column"
           justifyContent="space-evenly"
           // height="90vh"

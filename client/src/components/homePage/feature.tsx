@@ -9,6 +9,7 @@ import {
     Image,
   } from "@chakra-ui/react";
   import { FunctionComponent } from "react";
+import { useNavigate } from "react-router-dom";
   
   interface FeatureProps {
     title: string;
@@ -24,6 +25,7 @@ import {
     reverse,
   }: FeatureProps) => {
     const rowDirection = reverse ? "row-reverse" : "row";
+    const navigate = useNavigate();
     return (
       <Center w="full" minH={[null, "90vh"]}>
         <Container maxW="container.xl" rounded="lg">
@@ -36,6 +38,7 @@ import {
           >
             <Box rounded="lg">
               <Image
+                objectFit="scale-down"
                 src={image}
                 width={684}
                 height={433}
@@ -58,6 +61,7 @@ import {
                 colorScheme="brand"
                 variant="link"
                 textAlign={["center", "left"]}
+                onClick={()=>navigate("/register")}
               >
                 Learn more →
               </Button>

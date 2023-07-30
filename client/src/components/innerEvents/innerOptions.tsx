@@ -49,15 +49,18 @@ export default function InnerOptions({ events }: any) {
   return (
     <>
               <MenuList>
-            <MenuItem icon={<Icon boxSize={4} as={BiGroup} />} >
+            <MenuItem isDisabled icon={<Icon boxSize={4} as={BiGroup} />} >
               Members
             </MenuItem>
-            <MenuItem  onClick={onOpen2} icon={<Icon boxSize={4} as={AiOutlineForm} />}>
+            <MenuItem  isDisabled onClick={onOpen2} icon={<Icon boxSize={4} as={AiOutlineForm} />}>
               Gift Recommendations
             </MenuItem>
-            <MenuItem icon={<Icon boxSize={4} as={GiSettingsKnobs} />}>
+            {!loading && 
+            user.id === events.ownerId && (
+            <MenuItem isDisabled icon={<Icon boxSize={4} as={GiSettingsKnobs} />}>
               Event Settings
             </MenuItem>
+            )}
             {!loading &&
             ownerPaymentType !== "none" &&
             user.id !== events.ownerId && (

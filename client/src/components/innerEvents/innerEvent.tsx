@@ -171,9 +171,11 @@ export default function TheEvent() {
   }, []);
 
   const handleSubmit = async () => {
+    
     const data = JSON.stringify({
       content: messageToSendRef.current.value,
     });
+    
     const response = await fetch(`/events/${eventId}/messages`, {
       method: "POST",
       headers: {
@@ -181,13 +183,14 @@ export default function TheEvent() {
       },
       body: data,
     });
+    messageToSendRef.current.value = "";
     const receivedData = await response.json();
     if (messages.length > 0) {
       setMessages([...messages, receivedData.messageWithPicture]);
     } else {
       setMessages([receivedData.messageWithPicture]);
     }
-    messageToSendRef.current.value = "";
+    
   };
 
   // const handleDate = () => {
@@ -249,7 +252,6 @@ export default function TheEvent() {
             >
               {messages.map((msg: any) => {
                 const currentColor = participantColors.get(msg.userId);
-                console.log(msg)
                 return (
                   <Message
                     content={msg.content}
@@ -275,6 +277,11 @@ export default function TheEvent() {
                     resize="none"
                     placeholder="Send Message"
                     isRequired
+                    onKeyDown={(e)=>{
+                      if(e.key === "Enter" && e.shiftKey === false){
+                        handleSubmit()
+                      }
+                    }}
                   />
                   <IconButton
                     colorScheme="pink"
