@@ -6,7 +6,6 @@ import {
   WrapItem,
   Text,
   VStack,
-  SimpleGrid,
 } from "@chakra-ui/react";
 import { FAQSection } from "../components/homePage/faqSection";
 import { Feature } from "../components/homePage/feature";
@@ -15,7 +14,6 @@ import { Helmet } from "react-helmet";
 import first from "../assets/1.png"
 import second from "../assets/2.png"
 import third from "../assets/3.png"
-import vid from "../assets/vid.webm"
 import newvid from "../assets/video-2023-07-30_06.48.10.mp4"
 
 const faqs: any[] = [
@@ -47,33 +45,6 @@ export interface HighlightType {
   title: string;
   description: string;
 }
-
-const highlights: HighlightType[] = [
-  {
-    icon: "✨",
-    title: "No-code",
-    description:
-      "We are No-Code friendly. There is no coding required to get started. Launchman connects with Airtable and lets you generate a new page per row. It's just that easy!",
-  },
-  {
-    icon: "🎉",
-    title: "Make Google happy",
-    description:
-      "We render all our pages server-side; when Google's robots come to index your site, the page does not have to wait for JS to be fetched. This helps you get ranked higher.",
-  },
-  {
-    icon: "😃",
-    title: "",
-    description:
-      "",
-  },
-  {
-    icon: "🔌",
-    title: "",
-    description:
-      "",
-  },
-];
 
 interface FeatureType {
   title: string;

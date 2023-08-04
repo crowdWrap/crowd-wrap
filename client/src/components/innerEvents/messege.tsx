@@ -4,7 +4,7 @@ import en from 'javascript-time-ago/locale/en'
 import { useState } from "react";
 
 const useTimeAgo:any = () => {
-  TimeAgo.addDefaultLocale(en);
+  TimeAgo.addLocale(en);
   return new TimeAgo('en-US');
 }
 
@@ -21,9 +21,9 @@ export default function Message({
   const segments = content.split(urlRegex);
   const [createdAtDate] = useState(new Date(createdAt));
   const [timeAgo] = useState<any>(useTimeAgo);
-  
+
   return (
-    <Flex flexDir="column" alignItems={own ? "flex-end" : "flex-start"}>
+    <Flex key={createdAt}  flexDir="column" alignItems={own ? "flex-end" : "flex-start"}>
        
        <Text marginTop="20px" fontWeight={'bold'}>{!own ? msg.user.username : ""}</Text>
       <Box
@@ -76,7 +76,7 @@ export default function Message({
                   </Link>
                 );
               } else {
-                return <Text key={index}>{segment}</Text>;
+                return (segment);
               }
             })}
           </Text>

@@ -35,7 +35,7 @@ export default function FriendAvatar({ item, events, color }: any) {
   };
 
   return (
-    <Card style={{ marginBottom: "5px" }} key={item.userId} width="100%">
+    <Card style={{ marginBottom: "5px" }} variant={"outline"} key={item.userId} width="100%">
       <CardHeader>
         <Flex alignItems="center">
           <Flex flex="1" gap="4" alignItems="center" flexWrap="wrap">

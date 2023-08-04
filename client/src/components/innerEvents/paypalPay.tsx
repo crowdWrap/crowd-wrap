@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
 import { useAuth } from "../../hooks/authContext";
+import { Flex, useToast } from "@chakra-ui/react";
 
 const style = { layout: "vertical" };
 
@@ -11,11 +12,10 @@ export default function ButtonWrapper({
   email,
   onClose,
   events,
-  setStatus,
 }: any) {
   const [{ options, isPending }, dispatch] = usePayPalScriptReducer();
   const { user } = useAuth();
-
+  const toast = useToast();
   useEffect(() => {
     dispatch({
       type: "resetOptions",
@@ -44,11 +44,27 @@ export default function ButtonWrapper({
   };
 
   return (
-    <>
+    <Flex overflowY={'scroll'} width={'100%'} justifyContent={'center'}>
       {showSpinner && isPending && <div className="spinner" />}
       <PayPalButtons
-        style={{ layout: "vertical" }}
-        disabled={false}
+        style={{  
+        color: "blue",
+        shape: "pill",
+        label: "pay",
+        tagline: false, 
+        layout: "horizontal",
+        height:45
+      }}
+        disabled={amount !== 0 ? false : true}
+        onClick={()=>{
+          if (amount === 0) {
+            toast({
+              description: `Select a value other than zero!.`,
+              status: "error",
+              duration: 4000,
+            });
+          }
+        }}
         forceReRender={[amount, currency, style]}
         fundingSource={undefined}
         createOrder={(data: any, actions: any) => {
@@ -74,12 +90,11 @@ export default function ButtonWrapper({
         }}
         onApprove={function (data: any, actions: any) {
           return actions.order.capture().then(function () {
-            onClose();
-            setStatus("amount");
+            onClose();;
             handleFundUpdate();
           });
         }}
       />
-    </>
+    </Flex>
   );
 }

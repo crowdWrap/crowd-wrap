@@ -230,7 +230,7 @@ export default function TheEvent() {
       {/* <Heading padding="10px" position="absolute">
         {events.title}
       </Heading> */}
-      <Flex overflow="hidden" h="calc(100vh - 65px)">
+      <Flex overflow="hidden" position={'relative'} h="calc(100vh - 65px)" >
 
 
         <Box flexGrow="11.5">
@@ -238,8 +238,10 @@ export default function TheEvent() {
             flexDirection="column"
             gap="20px"
             padding="10px"
-            paddingRight="10px"
+            paddingRight="15px"
             height="100%"
+            
+           
           >
             <Box
               width="100%"
@@ -249,6 +251,7 @@ export default function TheEvent() {
               paddingRight="20px"
               paddingLeft="20px"
               overflowX="hidden"
+              
             >
               {messages.map((msg: any) => {
                 const currentColor = participantColors.get(msg.userId);
@@ -271,6 +274,15 @@ export default function TheEvent() {
                   justifyContent="space-between"
                   gap="20px"
                   alignItems="center"
+                  bg={'white'}
+                  position={'relative'}
+                  
+                  paddingRight={'20px'}
+                  marginRight={'-15px'}
+                  paddingTop={'20px'}
+                  zIndex={'999'}
+                  borderRadius={'-15px'}
+                  shadow={'inset  0  5px 5px -5px rgba(0, 0, 0, 0.104)'}
                 >
                   <Textarea
                     ref={messageToSendRef}
@@ -294,8 +306,8 @@ export default function TheEvent() {
             </Box>
           </Flex>
         </Box>
-        <Box flexGrow="1" display={["none","none","none","flex"]}>
-          <Flex padding="10px" marginTop={'5px'} height="100%" width="100%" overflowY="scroll">
+        <Box flexGrow="1" position={'relative'} zIndex={100}shadow="0px 0px 5px rgba(0, 0, 0, 0.104)"  bg={'white'}  padding={'0'}  display={["none","none","none","flex"]}>
+          <Flex                   marginBottom={'10px'} padding="10px"width="100%" overflowY="scroll">
             <AvatarGroup
               max={11}
               flexDir={"column-reverse"}
@@ -317,6 +329,9 @@ export default function TheEvent() {
                   marginTop={"10px"}
                   aria-label="add"
                   onClick={onOpen}
+                  width={'100%'}
+                  padding={'10px'}
+
                   icon={<Icon as={BiPlus} />}
                 />
               )}

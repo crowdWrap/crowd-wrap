@@ -23,6 +23,7 @@ export default function AmountPrompt({ events, setAmount }: any) {
       defaultValue={0}
       min={0}
       max={100}
+      width={'250px'}
       colorScheme="teal"
       onChange={(v) => setSliderValue(v)}
       onMouseEnter={() => setShowTooltip(true)}

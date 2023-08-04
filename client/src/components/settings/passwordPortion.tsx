@@ -142,25 +142,25 @@ export default function PasswordPortion({ user, username, setUsername }: any) {
   };
 
   return (
-    <Flex flexDir={["column","column","column","row"]} justifyContent="space-evenly">
-      <Flex  paddingTop={["20px","20px","20px", "0px"]} flexDir="column" alignItems="flex-start">
+    <Flex flexDir={["column","column","column"]} justifyContent="space-evenly">
+      <Flex         paddingLeft={["0px","0px","0px","0px","240px"]}  paddingTop={["20px","20px","20px"]} flexDir="column" alignItems="flex-start">
         <Heading size="md">Account Settings</Heading>
         <Heading size="xs" color="gray.600">
           Your account details, change at any time
         </Heading>
       </Flex>
       <Stack
-        shadow={["none","none","none","md"]}
+        shadow={["none","none","none"]}
         borderRadius="15px"
         spacing={8}
         direction="column"
-        paddingLeft={["0px","0px","0px","40px"]}
-        paddingRight={["0px","0px","0px","40px"]}
-        paddingTop={["40px","40px","40px", "20px"]}
+        paddingLeft={["0px","0px","0px","0px","240px"]}
+        paddingRight={["0px","0px","0px","0px","240px"]}
+        paddingTop={["40px","40px","40px", "40px"]}
         paddingBottom="20px"
         height={user.registeredWith !== "google" ? "xl" : "4xs"}
-        width={["","","","3xl"]}
-        borderWidth={["0","0","0", "0.5px"]}
+        width={["","",""]}
+        borderWidth={["0","0","0"]}
       >
         <Flex justifyContent="center">
           <FileUpload thePicture={user.picture} />

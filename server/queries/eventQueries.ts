@@ -213,3 +213,60 @@ export async function updateEventCurrentFunds(
     throw new Error(`${eventId} doesnt exist`);
   }
 }
+
+export async function updateEvent(
+  eventId:number, title:string, description:string, budget:string
+){
+  const event = await getEventById(eventId);
+
+  if (event) {
+    const updatedEvent = await prisma.event.update({
+      where: {
+        id: eventId,
+      },
+      data: {
+        title,
+        description,
+        moneyGoal:budget
+      },
+      include: {
+        participants: {
+          orderBy: {
+            joinedAt: "asc",
+          },
+        },
+      }
+    });
+    return updatedEvent;
+  } else {
+    throw new Error(`${eventId} doesnt exist`);
+  }
+}
+
+
+export async function updateEventBrainstorm(
+  eventId:number, value:string
+){
+  const event = await getEventById(eventId);
+
+  if (event) {
+    const updatedEvent = await prisma.event.update({
+      where: {
+        id: eventId,
+      },
+      data: {
+        gifts:value
+      },
+      include: {
+        participants: {
+          orderBy: {
+            joinedAt: "asc",
+          },
+        },
+      }
+    });
+    return updatedEvent;
+  } else {
+    throw new Error(`${eventId} doesnt exist`);
+  }
+}

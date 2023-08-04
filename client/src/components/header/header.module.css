@@ -1,5 +1,6 @@
 :local .header {
-  width: 100vw;
+
+  /* width: 81.5vw; */
   height: 4rem;
   position: sticky;
   z-index: 99;
@@ -11,6 +12,7 @@
   display: flex;
   top: 0;
   background: #ffffff;
+  
 }
 
 :local .header img {

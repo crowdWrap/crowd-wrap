@@ -174,7 +174,7 @@ export default function SingularEvent({
                 size={"lg"}
                 src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fopenclipart.org%2Fimage%2F800px%2F194868&f=1&nofb=1&ipt=7f38c85f61d7fd658da37dac1b44303ac8e34889e6c30c205008f75acdad79e2&ipo=images"
               />
-              <Box>
+              <Box wordBreak={"break-word"}>
                 <Heading size="md">{e.title}</Heading>
                 <Text fontSize="0.8rem">{e.description}</Text>
               </Box>

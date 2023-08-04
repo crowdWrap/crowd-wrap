@@ -55,7 +55,7 @@ export default function CreateEventPop({
   }, [showEventComplete]);
 
   return (
-    <div>
+    <>
       {activeStep === 0 && (
         <FirstStep
           currentValue={setTitle}
@@ -103,6 +103,6 @@ export default function CreateEventPop({
           onClose={onClose}
         />
       )}
-    </div>
+    </>
   );
 }

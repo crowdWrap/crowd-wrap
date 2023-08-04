@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateEventCurrentFunds = exports.getParticipantById = exports.isParticipantInEvent = exports.getEventByLink = exports.getAllEventsByid = exports.getEventById = exports.addParticipant = exports.removeParticipant = exports.removeEvent = exports.createEvent = void 0;
+exports.updateEventBrainstorm = exports.updateEvent = exports.updateEventCurrentFunds = exports.getParticipantById = exports.isParticipantInEvent = exports.getEventByLink = exports.getAllEventsByid = exports.getEventById = exports.addParticipant = exports.removeParticipant = exports.removeEvent = exports.createEvent = void 0;
 const index_1 = require("../index");
 const profileQueries_1 = require("./profileQueries");
 function createEvent(id, eventInfo, inviteLink) {
@@ -239,3 +239,59 @@ function updateEventCurrentFunds(eventId, currentMoney) {
     });
 }
 exports.updateEventCurrentFunds = updateEventCurrentFunds;
+function updateEvent(eventId, title, description, budget) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const event = yield getEventById(eventId);
+        if (event) {
+            const updatedEvent = yield index_1.prisma.event.update({
+                where: {
+                    id: eventId,
+                },
+                data: {
+                    title,
+                    description,
+                    moneyGoal: budget
+                },
+                include: {
+                    participants: {
+                        orderBy: {
+                            joinedAt: "asc",
+                        },
+                    },
+                }
+            });
+            return updatedEvent;
+        }
+        else {
+            throw new Error(`${eventId} doesnt exist`);
+        }
+    });
+}
+exports.updateEvent = updateEvent;
+function updateEventBrainstorm(eventId, value) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const event = yield getEventById(eventId);
+        if (event) {
+            const updatedEvent = yield index_1.prisma.event.update({
+                where: {
+                    id: eventId,
+                },
+                data: {
+                    gifts: value
+                },
+                include: {
+                    participants: {
+                        orderBy: {
+                            joinedAt: "asc",
+                        },
+                    },
+                }
+            });
+            return updatedEvent;
+        }
+        else {
+            throw new Error(`${eventId} doesnt exist`);
+        }
+    });
+}
+exports.updateEventBrainstorm = updateEventBrainstorm;

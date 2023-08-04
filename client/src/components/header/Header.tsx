@@ -1,7 +1,7 @@
 import styles from "./header.module.css";
 import { Link } from "react-router-dom";
 import logoPrint from "../../assets/image_group/crowdwrap-print.svg";
-import { Box, Button, ButtonGroup, CircularProgress, CircularProgressLabel, Flex, Heading, Icon, IconButton, Image, Menu, MenuButton, Progress } from "@chakra-ui/react";
+import { Box, Button, ButtonGroup, CircularProgress, CircularProgressLabel, Flex, Heading, Icon, IconButton, Image, Progress, useDisclosure } from "@chakra-ui/react";
 import LogoutButton from "../logout/logout";
 import CreateEventButton from "../createEvent/createEventButton";
 import FriendsList from "../friendList/friendslist";
@@ -11,13 +11,14 @@ import { useEffect } from "react";
 import { useLocation } from 'react-router-dom'
 import { FaAngleLeft } from "react-icons/fa";
 import { AiOutlineSetting } from "react-icons/ai";
-import InnerOptions from "../innerEvents/innerOptions";
+import OptionCover from "../innerEvents/options/optionCover";
 
 export default function Header() {
   const { authed, loading, user, currentEvent} = useAuth();
   useEffect(() => {}, [user, user.usernameSet]);
   const location:any = useLocation().pathname;
   const pathnameSegments = location.split('/');
+  const { onOpen, isOpen, onClose } = useDisclosure();
 
   const handleProgress = (e: any) => {
     const match = e.moneyGoal.match(/\d+/g);
@@ -41,9 +42,9 @@ export default function Header() {
           isIndeterminate
         />
       )}
-      {!loading && authed && (location !== "/" && location !== "/register" && location !== "/login" && !location.includes('/invite') &&  location !== "/login/forgot") && (
+      {!loading && authed && (location !== "/" && location !== "/register" && location !== "/login" && !location.includes('/invite') &&  !location.includes('/profile') && location !== "/login/forgot") && (
         <Box
-          shadow="0px 0px 5px rgba(0, 0, 0, 0.164)"
+          shadow="0px 0px 5px rgba(0, 0, 0, 0.104)"
           className={styles["header"]}
         >
           {!pathnameSegments[2] ? (
@@ -68,18 +69,16 @@ export default function Header() {
             <>
          <ButtonGroup >
          <IconButton marginRight={'-12px'} as={Link} to="/events" backgroundColor={'transparent'} color={'pink.500'} aria-label="back to events" icon={<Icon boxSize={8} as={FaAngleLeft} />} />
-         <Menu>
-          <MenuButton
-            as={IconButton}
+          <IconButton
             aria-label='Options'
             icon={<Icon color={'gray.600'} boxSize={7} as={AiOutlineSetting} />}
             variant='ghost'
+            onClick={onOpen}
           />
-            <InnerOptions events={currentEvent} />
-        </Menu>
-  
+          
+          <OptionCover isOpen={isOpen} onClose={onClose} events={currentEvent}/>
          </ButtonGroup>
-            <Flex alignItems={'center'} gap={'15px'}>
+            <Flex alignItems={'center'}  gap={'15px'}>
             {currentEvent && currentEvent.Currentfunds ? (
               <>
                 <CircularProgress
@@ -105,7 +104,7 @@ export default function Header() {
                 {/* <InnerOptions onCopy={onCopy} events={events} /> */}
               </>
             )}
-            <Heading display={["none", "contents"]} fontWeight={"extrabold"} size="lg">{currentEvent.title}</Heading>
+            <Heading display={["none", "block"]} fontWeight={"extrabold"} size="lg">{currentEvent.title}</Heading>
             </Flex>
 
             <Box className={styles["navbarCover"]}>

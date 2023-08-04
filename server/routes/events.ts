@@ -16,6 +16,8 @@ import {
   removeParticipant,
   removeEvent,
   getAllEventsByid,
+  updateEvent,
+  updateEventBrainstorm,
 } from "../queries/eventQueries";
 import {
   createMessage,
@@ -72,6 +74,32 @@ router.post("/", async (req:any, res:any) => {
     return res.status(200).json({ message: "complete" });
   }
 });
+
+router.post("/update", async(req:any, res:any)=>{
+  if(req.session.user){
+    const {eventId, title, description, budget} = req.body
+    const event = await updateEvent(eventId, title, description, budget);
+    if(event){
+      return res.status(200).json({ message: "Settings sucessfully saved!", event });
+    }else{
+      return res.status(400).json({ message: "Error saving!" });
+    }
+   
+  }
+})
+
+router.post("/update/brainstorm", async(req:any, res:any)=>{
+  if(req.session.user){
+    const {eventId, value} = req.body
+    const event = await updateEventBrainstorm(eventId, value);
+    if(event){
+      return res.status(200).json({ message: "Text sucessfully saved!", event });
+    }else{
+      return res.status(400).json({ message: "Error saving!" });
+    }
+  }
+})
+
 
 router.get("/invite/:link", async (req:any, res:any) => {
   if (req.session.user) {

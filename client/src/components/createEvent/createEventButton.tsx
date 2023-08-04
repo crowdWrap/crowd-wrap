@@ -131,7 +131,7 @@ export default function CreateEventButton() {
             </ModalHeader>
           )}
           <ModalCloseButton />
-          <ModalBody overflow="hidden">
+          <ModalBody >
             {user.paymentType !== "" ? (
               <CreateEventPop
                 activeStep={activeStep}

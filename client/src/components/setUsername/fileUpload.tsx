@@ -2,7 +2,7 @@ import { useColorModeValue, Center, Avatar } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 
-export default function FileUpload({ thePicture }: any) {
+export default function FileUpload({ thePicture, ...props }: any) {
   const [profilePic, setProfilePic] = useState<any>({ preview: thePicture });
 
   useEffect(() => {
@@ -41,7 +41,7 @@ export default function FileUpload({ thePicture }: any) {
       {...getRootProps()}
     >
       <input {...getInputProps()} />
-      <Avatar boxSize="100px" objectFit="cover" src={profilePic.preview} />
+      <Avatar boxSize="100px" objectFit="cover" src={profilePic.preview} {...props} />
     </Center>
   );
 }

@@ -62,6 +62,30 @@ router.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         return res.status(200).json({ message: "complete" });
     }
 }));
+router.post("/update", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    if (req.session.user) {
+        const { eventId, title, description, budget } = req.body;
+        const event = yield (0, eventQueries_1.updateEvent)(eventId, title, description, budget);
+        if (event) {
+            return res.status(200).json({ message: "Settings sucessfully saved!", event });
+        }
+        else {
+            return res.status(400).json({ message: "Error saving!" });
+        }
+    }
+}));
+router.post("/update/brainstorm", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    if (req.session.user) {
+        const { eventId, value } = req.body;
+        const event = yield (0, eventQueries_1.updateEventBrainstorm)(eventId, value);
+        if (event) {
+            return res.status(200).json({ message: "Text sucessfully saved!", event });
+        }
+        else {
+            return res.status(400).json({ message: "Error saving!" });
+        }
+    }
+}));
 router.get("/invite/:link", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     if (req.session.user) {
         const link = req.params.link;

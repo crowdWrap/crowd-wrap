@@ -43,8 +43,9 @@ export default function ThirdStep({
       flexDir="column"
       alignItems="center"
       gap="10px"
+    
     >
-      <Card marginTop="-10px" width="md">
+      <Card    position={'relative'} zIndex={'99999'} marginTop={'-20px'}  variant={'outline'} width="md">
         <CardHeader>
           <Flex>
             <Flex flex="1" gap="4" alignItems="center" flexWrap="wrap">
@@ -77,7 +78,7 @@ export default function ThirdStep({
                   size={"lg"}
                   src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fopenclipart.org%2Fimage%2F800px%2F194868&f=1&nofb=1&ipt=7f38c85f61d7fd658da37dac1b44303ac8e34889e6c30c205008f75acdad79e2&ipo=images"
                 />
-                <Box>
+                <Box wordBreak={"break-word"}>
                   <Heading size="md">{title}</Heading>
                   <Text fontSize="0.8rem">{description}</Text>
                 </Box>
