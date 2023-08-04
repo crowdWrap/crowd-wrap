@@ -12,7 +12,6 @@ import { Feature } from "../components/homePage/feature";
 import { HeroSection } from "../components/homePage/heroSection"; 
 import { Helmet } from "react-helmet";
 import first from "../assets/test.png"
-import second from "../assets/2.png"
 import third from "../assets/3.png"
 import fourth from "../assets/4.png"
 import newvid from "../assets/latest.mp4"
