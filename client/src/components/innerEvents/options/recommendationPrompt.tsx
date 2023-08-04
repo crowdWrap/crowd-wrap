@@ -44,10 +44,7 @@ export default function RecommendationPrompt({event}:any){
   }, 500);
   // (e)=>console.log(e.currentTarget.innerText)
 
-  // Brainstorm time! <br /><br />
-      
-  // dogs r cool - garv
-  // (ps you can edit this)
+
     return(
 
 <div className={styles.paper}>

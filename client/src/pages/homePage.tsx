@@ -11,10 +11,11 @@ import { FAQSection } from "../components/homePage/faqSection";
 import { Feature } from "../components/homePage/feature";
 import { HeroSection } from "../components/homePage/heroSection"; 
 import { Helmet } from "react-helmet";
-import first from "../assets/1.png"
+import first from "../assets/test.png"
 import second from "../assets/2.png"
 import third from "../assets/3.png"
-import newvid from "../assets/video-2023-07-30_06.48.10.mp4"
+import fourth from "../assets/4.png"
+import newvid from "../assets/latest.mp4"
 
 const faqs: any[] = [
   {
@@ -58,21 +59,21 @@ const features: FeatureType[] = [
     description:
       "No more spending time to figure out how much you're gifting. Easily create events and assign a budget to your friends in one place.",
     image:
-      second,
+    fourth,
   },
   {
     title: "Real-time chat",
     description:
       "Know when and how your events are going to be handled.",
     image:
-     first,
+    third,
   },
   {
     title: "Simple payment",
     description:
       "You don't have to hunt for a payment from each person. Easily use the integrated payment to send funds to the host",
     image:
-      third,
+      first,
   },
 ];
 
